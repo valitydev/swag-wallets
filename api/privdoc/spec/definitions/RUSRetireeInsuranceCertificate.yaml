@@ -1,0 +1,18 @@
+description: |
+  Открытые данные страхового свидетельства обязательного пенсионного страхования
+  гражданина РФ
+allOf:
+  - $ref: '#/definitions/SecuredPrivateDocument'
+  - type: object
+    properties:
+      type:
+        description: |
+          Страховое свидетельство обязательного пенсионного страхования
+        type: string
+        readOnly: true
+      numberMasked:
+        description: |
+          Маскированный [СНИЛС](https://ru.wikipedia.org/wiki/Страховой_номер_индивидуального_лицевого_счёта)
+        type: string
+        example: "12*-***-*** *4"
+        readOnly: true

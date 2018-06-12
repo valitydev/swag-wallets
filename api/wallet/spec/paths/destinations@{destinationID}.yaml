@@ -1,0 +1,17 @@
+get:
+  operationId: getDestination
+  summary: Получить приёмник средств
+  tags:
+    - Withdrawals
+  parameters:
+    - $ref: '#/parameters/requestID'
+    - $ref: '#/parameters/destinationID'
+  responses:
+    '200':
+      description: Приёмник средств найден
+      schema:
+        $ref: '#/definitions/Destination'
+    '400':
+      $ref: '#/responses/BadRequest'
+    '404':
+      $ref: '#/responses/NotFound'

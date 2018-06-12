@@ -1,0 +1,17 @@
+get:
+  operationId: getProvider
+  summary: Получить данные провайдера
+  tags:
+    - Providers
+  parameters:
+    - $ref: '#/parameters/requestID'
+    - $ref: '#/parameters/providerID'
+  responses:
+    '200':
+      description: Провайдер найден
+      schema:
+        $ref: '#/definitions/Provider'
+    '404':
+      $ref: '#/responses/NotFound'
+    '400':
+      $ref: '#/responses/BadRequest'

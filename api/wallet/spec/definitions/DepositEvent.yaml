@@ -1,0 +1,21 @@
+description: |
+  Событие, возникшее в процессе ввода средств
+type: object
+required:
+  - eventID
+  - occuredAt
+  - changes
+properties:
+  eventID:
+    description: Идентификатор события вывода средств
+    type: integer
+    format: int32
+    example: 42
+  occuredAt:
+    description: Дата и время возникновения события
+    type: string
+    format: date-time
+  changes:
+    type: array
+    items:
+      $ref: '#/definitions/DepositEventChange'

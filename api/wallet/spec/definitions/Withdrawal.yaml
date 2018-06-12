@@ -1,0 +1,53 @@
+description: Данные вывода денежных средств
+allOf:
+  - type: object
+    required:
+      - wallet
+      - destination
+      - body
+    properties:
+      id:
+        x-rebillyMerge:
+          - $ref: '#/definitions/WithdrawalID'
+          - readOnly: true
+      createdAt:
+        description: Дата и время запуска вывода
+        type: string
+        format: date-time
+        readOnly: true
+      wallet:
+        x-rebillyMerge:
+          - $ref: '#/definitions/WalletID'
+      walletGrant:
+        x-rebillyMerge:
+          - description: |
+              Токен, дающий право на списание с кошелька для оплаты вывода.
+
+              Необходимо предоставить в том случае, если оплата производится засчёт средств _чужого_
+              кошелька. Владелец указанного кошелька может
+              [выдать на это право](#operation/issueWalletGrant).
+          - $ref: '#/definitions/GrantToken'
+      destination:
+        x-rebillyMerge:
+          - $ref: '#/definitions/DestinationID'
+      destinationGrant:
+        x-rebillyMerge:
+          - description: |
+              Токен, дающий право вывода.
+
+              Необходимо предоставить в том случае, если вывод производится посредством _чужого_ приёмника
+              средств. Владелец указанного приёмника может
+              [выдать на это право](#operation/issueDestinationGrant).
+          - $ref: '#/definitions/GrantToken'
+      body:
+        allOf:
+          - description: Объём средств, которые необходимо вывести
+          - $ref: '#/definitions/Asset'
+      metadata:
+        description: |
+          Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с
+          данным выводом
+        type: object
+        example:
+          notify_email: iliketrains@example.com
+  - $ref: '#/definitions/WithdrawalStatus'

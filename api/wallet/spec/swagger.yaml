@@ -1,0 +1,236 @@
+swagger: '2.0'
+info:
+  version: '0.0.1'
+  title: RBKmoney Wallet API
+  description: >
+
+    RBKmoney Wallet API является базовой и единственной точкой взаимодействия с
+    платформой кошельков. Все изменения состояний платформы осуществляются с
+    помощью вызовов соответствующих методов API. Любые сторонние приложения,
+    включая наши веб-сайты и другие UI-интерфейсы являются внешними
+    приложениями-клиентами.
+
+    RBKmoney API работает поверх HTTP-протокола. Мы используем REST архитектуру,
+    схема описывается в соответствии со [Swagger](http://swagger.io/). Коды
+    возврата описываются соответствующими HTTP-статусами. Платформа принимает и
+    возвращает значения JSON в теле запросов и ответов.
+
+    ## Формат содержимого
+
+    Любой запрос к API должен выполняться в кодировке UTF-8 и с указанием
+    содержимого в формате JSON.
+
+    ```
+      Content-Type: application/json; charset=utf-8
+    ```
+
+    ## Формат дат
+
+    Платформа принимает значения date-time в стандарте RFC 3339 с обязательным
+    указанием UTC-оффсета, например:
+
+    ```
+      2017-01-01T00:00:00Z
+      2017-01-01T00:00:01+00:00
+    ```
+
+    ## Ошибки обработки запросов
+
+    В процессе обработки запросов силами нашей платформы могут происходить
+    различные непредвиденные ситуации. Об их появлении платформа сигнализирует
+    по протоколу HTTP соответствующими [статусами][5xx], обозначающими ошибки
+    сервера.
+
+     |  Код    |  Описание  |
+     | ------- | ---------- |
+     | **500** | В процессе обработки платформой запроса возникла непредвиденная ситуация. При получении подобного кода ответа мы рекомендуем обратиться в техническую поддержку. |
+     | **503** | Платформа временно недоступна и не готова обслуживать данный запрос. Запрос гарантированно не выполнен, при получении подобного кода ответа попробуйте выполнить его позднее, когда доступность платформы будет восстановлена. |
+     | **504** | Платформа превысила допустимое время обработки запроса, результат запроса не определён. Попробуйте отправить запрос повторно или выяснить результат выполнения исходного запроса, если повторное исполнение запроса нежелательно. |
+
+    [5xx]: https://tools.ietf.org/html/rfc7231#section-6.6
+
+  termsOfService: http://rbk.money/
+  contact:
+    name: RBKmoney support team
+    email: support@rbk.money
+    url: https://rbk.money
+host: api.rbk.money
+basePath: /wallet/v0
+schemes:
+  - https
+consumes:
+  - application/json; charset=utf-8
+produces:
+  - application/json; charset=utf-8
+securityDefinitions:
+  bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: >
+      Для аутентификации вызовов мы используем [JWT](https://jwt.io).
+      Cоответствующий ключ передается в заголовке.
+
+      ```shell
+       Authorization: Bearer {TOKENIZATION|PRIVATE_JWT}
+      ```
+
+security:
+  - bearer: []
+
+responses:
+
+  BadRequest:
+    description: Недопустимые для операции входные данные
+    schema:
+      $ref: '#/definitions/BadRequest'
+
+  NotFound:
+    description: Искомая сущность не найдена
+
+  Conflict:
+    description: Операция вызывает конфликт
+
+parameters:
+
+  requestID:
+    name: X-Request-ID
+    in: header
+    description: Уникальный идентификатор запроса к системе
+    required: true
+    type: string
+    maxLength: 32
+    minLength: 1
+
+  providerID:
+    name: providerID
+    in: path
+    description: Идентификатор провайдера
+    required: true
+    type: string
+    maxLength: 40
+    minLength: 1
+
+  identityID:
+    name: identityID
+    in: path
+    description: Идентификатор личности владельца
+    required: true
+    type: string
+    maxLength: 40
+    minLength: 1
+
+  challengeID:
+    name: challengeID
+    in: path
+    description: Идентификатор процедуры идентификации личности
+    required: true
+    type: string
+    maxLength: 40
+    minLength: 1
+
+  walletID:
+    name: walletID
+    in: path
+    description: Идентификатор кошелька
+    required: true
+    type: string
+    maxLength: 40
+    minLength: 1
+
+  depositID:
+    name: depositID
+    in: path
+    description: Идентификатор ввода денежных средств
+    required: true
+    type: string
+    maxLength: 40
+    minLength: 1
+
+  destinationID:
+    name: destinationID
+    in: path
+    description: Идентификатор приёмника средств
+    required: true
+    type: string
+    maxLength: 40
+    minLength: 1
+
+  withdrawalID:
+    name: withdrawalID
+    in: path
+    description: Идентификатор вывода денежных средств
+    required: true
+    type: string
+    maxLength: 40
+    minLength: 1
+
+  residence:
+    name: residence
+    in: query
+    description: |
+      Резиденция, в рамках которой производится оказание услуг,
+      код страны или региона по стандарту [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)
+    type: string
+    pattern: '^[A-Z]{2}$'
+    required: false
+
+  eventLimit:
+    name: limit
+    in: query
+    description: Лимит выборки
+    required: true
+    type: integer
+    format: int32
+    minimum: 1
+
+  eventCursor:
+    name: eventCursor
+    in: query
+    description: |
+      Идентификатор последнего известного события.
+
+      Все события, произошедшие _после_ указанного, попадут в выборку.
+      Если этот параметр не указан, в выборку попадут события, начиная с самого первого.
+    required: false
+    type: integer
+    format: int32
+
+  eventID:
+    name: eventID
+    in: path
+    description: |
+      Идентификатор события процедуры идентификации.
+    required: true
+    type: integer
+    format: int32
+
+tags:
+
+  - name: Providers
+    x-displayName: Провайдеры услуг
+    description: ""
+
+  - name: Identities
+    x-displayName: Владельцы
+    description: ""
+
+  - name: Wallets
+    x-displayName: Кошельки
+    description: ""
+
+  - name: Deposits
+    x-displayName: Вводы
+    description: ""
+
+  - name: Withdrawals
+    x-displayName: Выводы
+    description: ""
+
+  - name: Residences
+    x-displayName: Резиденции
+    description: ""
+
+  - name: Currencies
+    x-displayName: Валюты
+    description: ""

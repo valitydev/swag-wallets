@@ -1,0 +1,17 @@
+get:
+  operationId: getIdentity
+  summary: Получить данные личности владельца
+  tags:
+    - Identities
+  parameters:
+    - $ref: '#/parameters/requestID'
+    - $ref: '#/parameters/identityID'
+  responses:
+    '200':
+      description: Личность владельца найдена
+      schema:
+        $ref: '#/definitions/Identity'
+    '404':
+      $ref: '#/responses/NotFound'
+    '400':
+      $ref: '#/responses/BadRequest'

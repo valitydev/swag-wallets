@@ -1,0 +1,3 @@
+description: Банковский перевод
+allOf:
+  - $ref: '#/definitions/PaymentResource'

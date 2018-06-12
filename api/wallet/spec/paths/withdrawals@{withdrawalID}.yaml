@@ -1,0 +1,17 @@
+get:
+  operationId: getWithdrawal
+  summary: Получить состояние вывода средств
+  tags:
+    - Withdrawals
+  parameters:
+    - $ref: '#/parameters/requestID'
+    - $ref: '#/parameters/withdrawalID'
+  responses:
+    '200':
+      description: Вывод найден
+      schema:
+        $ref: '#/definitions/Withdrawal'
+    '400':
+      $ref: '#/responses/BadRequest'
+    '404':
+      $ref: '#/responses/NotFound'

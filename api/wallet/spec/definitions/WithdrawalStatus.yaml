@@ -1,0 +1,26 @@
+type: object
+properties:
+  status:
+    description: |
+      Статус вывода денежных средств.
+
+      | Значение    | Пояснение                                  |
+      | ----------- | ------------------------------------------ |
+      | `Pending`   | Вывод в процессе выполнения                |
+      | `Succeeded` | Вывод средств произведён успешно           |
+      | `Failed`    | Вывод средств завершился неудачей          |
+
+    type: string
+    enum:
+      - Pending
+      - Succeeded
+      - Failed
+    readOnly: true
+  failure:
+    allOf:
+      - description: |
+          > Если `status` == `Failed`
+
+          Пояснение причины неудачи
+        readOnly: true
+      - $ref: '#/definitions/WithdrawalFailure'

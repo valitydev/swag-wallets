@@ -1,0 +1,15 @@
+description: Запрос на право управления выводами на приёмник средств
+type: object
+required:
+  - validUntil
+properties:
+  token:
+    x-rebillyMerge:
+      - description: Токен, дающий право управления выводами
+      - $ref: '#/definitions/GrantToken'
+      - readOnly: true
+  validUntil:
+    description: |
+      Дата и время, до наступления которого выданное право действительно
+    type: string
+    format: date-time

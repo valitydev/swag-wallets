@@ -1,0 +1,17 @@
+get:
+  operationId: getDeposit
+  summary: Получить состояние ввода средств
+  tags:
+    - Deposits
+  parameters:
+    - $ref: '#/parameters/requestID'
+    - $ref: '#/parameters/depositID'
+  responses:
+    '200':
+      description: Ввод средств найден
+      schema:
+        $ref: '#/definitions/Deposit'
+    '400':
+      $ref: '#/responses/BadRequest'
+    '404':
+      $ref: '#/responses/NotFound'

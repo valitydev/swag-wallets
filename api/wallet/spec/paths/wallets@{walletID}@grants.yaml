@@ -1,0 +1,27 @@
+post:
+  operationId: issueWalletGrant
+  summary: Выдать право управления средствами
+  tags:
+    - Wallets
+  parameters:
+    - $ref: '#/parameters/requestID'
+    - $ref: '#/parameters/walletID'
+    - name: request
+      description: Запрос на право управления средствами на кошельке
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/WalletGrantRequest'
+  responses:
+    '201':
+      description: Единоразовое право выдано
+      schema:
+        $ref: '#/definitions/WalletGrantRequest'
+    '404':
+      $ref: '#/responses/NotFound'
+    '400':
+      $ref: '#/responses/BadRequest'
+    '422':
+      description: Неверные данные для выдачи
+      schema:
+        $ref: '#/definitions/InvalidOperationParameters'

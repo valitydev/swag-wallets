@@ -1,0 +1,35 @@
+box: node:7
+
+build:
+  steps:
+    - npm-install
+    - npm-test
+    - script:
+      name: build docsite
+      code: npm run build -- ${WERCKER_OUTPUT_DIR}
+  after-steps:
+    - slack-notifier:
+      url: ${SLACK_WEBHOOK_URL}
+      username: "wercker"
+
+dev:
+  steps:
+    - npm-install
+    - npm-test
+    - internal/shell
+
+release:
+  steps:
+    - script:
+      name: prepare release artifacts for a branch
+      code: mkdir -p out && cp ./swagger.{yaml,json} out/
+    - lordlothar99/git-push:
+      gh_oauth: ${GITHUB_API_TOKEN}
+      branch: release/${WERCKER_GIT_BRANCH}
+      basedir: out
+      message: |
+        [${WERCKER_GIT_BRANCH}] release ${WERCKER_GIT_OWNER}/${WERCKER_GIT_REPOSITORY}@${WERCKER_GIT_COMMIT}
+  after-steps:
+    - slack-notifier:
+      url: ${SLACK_WEBHOOK_URL}
+      username: "wercker"

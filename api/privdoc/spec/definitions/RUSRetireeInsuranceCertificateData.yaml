@@ -1,0 +1,19 @@
+description: |
+  Исходные данные страхового свидетельства обязательного пенсионного страхования
+  гражданина РФ
+allOf:
+  - $ref: '#/definitions/PrivateDocument'
+  - type: object
+    required:
+      - number
+    properties:
+      type:
+        description: |
+          Страховое свидетельство обязательного пенсионного страхования
+        type: string
+      number:
+        description: |
+          [СНИЛС](https://ru.wikipedia.org/wiki/Страховой_номер_индивидуального_лицевого_счёта)
+        type: string
+        example: "123-456-789 64"
+        pattern: "^[0-9]{3}-[0-9]{3}-[0-9]{3} [0-9]{2}$"

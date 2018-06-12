@@ -1,0 +1,29 @@
+post:
+  operationId: createWithdrawal
+  summary: Запустить вывод средств
+  tags:
+    - Withdrawals
+  parameters:
+    - $ref: '#/parameters/requestID'
+    - name: withdrawal
+      description: Данные вывода
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/Withdrawal'
+  responses:
+    '202':
+      description: Вывод запущен
+      headers:
+        Location:
+          description: URI запущенного вывода
+          type: string
+          format: uri
+      schema:
+        $ref: '#/definitions/Withdrawal'
+    '400':
+      $ref: '#/responses/BadRequest'
+    '422':
+      description: Неверные данные для осуществления вывода
+      schema:
+        $ref: '#/definitions/InvalidOperationParameters'

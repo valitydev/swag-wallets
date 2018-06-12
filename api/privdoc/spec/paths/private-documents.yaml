@@ -1,0 +1,20 @@
+post:
+  operationId: storePrivateDocument
+  summary: Сохранить персональный документ
+  tags:
+    - Private Documents
+  parameters:
+    - $ref: '#/parameters/requestID'
+    - name: proof
+      description: Данные документа
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/PrivateDocument'
+  responses:
+    '201':
+      description: Документ токенизирован
+      schema:
+        $ref: '#/definitions/SecuredPrivateDocument'
+    '400':
+      $ref: '#/responses/BadRequest'

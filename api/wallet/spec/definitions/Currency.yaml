@@ -1,0 +1,35 @@
+description: Описание валюты
+type: object
+required:
+  - id
+  - numericCode
+  - name
+  - exponent
+properties:
+  id:
+    x-rebillyMerge:
+      - $ref: '#/definitions/CurrencyID'
+  numericCode:
+    description: |
+      Цифровой код валюты согласно
+      [ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm)
+    type: string
+    pattern: '^[0-9]{3}$'
+    example: '643'
+  name:
+    description: |
+      Человекочитаемое название валюты
+    type: string
+    example: Российский рубль
+  sign:
+    description: |
+      Знак единицы валюты
+    type: string
+    example: '₽'
+  exponent:
+    description: |
+      Количество допустимых знаков после запятой в сумме средств, в которых может
+      указываться количество минорных денежных единиц
+    type: integer
+    minimum: 0
+    example: 2

@@ -1,0 +1,24 @@
+post:
+  operationId: storeBankCard
+  summary: Сохранить банковскую карту
+  tags:
+    - Payment Resources
+  parameters:
+    - $ref: '#/parameters/requestID'
+    - name: bankCard
+      description: Данные банковской карты
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/BankCard'
+  responses:
+    '201':
+      description: Карта сохранена
+      schema:
+        $ref: '#/definitions/SecuredBankCard'
+    '400':
+      $ref: '#/responses/BadRequest'
+    '422':
+      description: Непригодные данные банковской карты
+      schema:
+        $ref: '#/definitions/InvalidBankCard'

@@ -1,0 +1,22 @@
+get:
+  operationId: getProviderIdentityClass
+  summary: Получить описание класса личностей
+  tags:
+    - Providers
+  parameters:
+    - $ref: '#/parameters/requestID'
+    - $ref: '#/parameters/providerID'
+    - name: identityClassID
+      description: Класс личности владельца
+      in: path
+      required: true
+      type: string
+  responses:
+    '200':
+      description: Класс личностей найден
+      schema:
+        $ref: '#/definitions/IdentityClass'
+    '404':
+      $ref: '#/responses/NotFound'
+    '400':
+      $ref: '#/responses/BadRequest'

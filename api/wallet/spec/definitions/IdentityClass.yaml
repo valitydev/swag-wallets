@@ -1,0 +1,10 @@
+type: object
+properties:
+  id:
+    x-rebillyMerge:
+      - $ref: '#/definitions/IdentityClassID'
+  name:
+    description: |
+      Человекочитаемое название класса
+    type: string
+    example: Частное лицо

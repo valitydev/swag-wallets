@@ -1,0 +1,61 @@
+get:
+  operationId: listWallets
+  summary: Перечислить кошельки
+  tags:
+    - Wallets
+  parameters:
+    - $ref: '#/parameters/requestID'
+    - name: identity
+      description: Фильтр по личности владельца
+      in: query
+      required: false
+      type: string
+      maxLength: 40
+      minLength: 1
+    - name: currency
+      description: |
+        Фильтр по валюте кошелька,
+        символьный код согласно [ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).
+      in: query
+      required: false
+      type: string
+      pattern: '^[A-Z]{3}$'
+  responses:
+    '200':
+      description: Кошельки найдены
+      schema:
+        type: array
+        items:
+          $ref: '#/definitions/Wallet'
+    '400':
+      $ref: '#/responses/BadRequest'
+
+post:
+  operationId: createWallet
+  summary: Завести новый кошелёк
+  tags:
+    - Wallets
+  parameters:
+    - $ref: '#/parameters/requestID'
+    - name: wallet
+      description: Данные создаваемого кошелька
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/Wallet'
+  responses:
+    '201':
+      description: Кошелёк создан
+      headers:
+        Location:
+          description: URI созданного кошелька
+          type: string
+          format: uri
+      schema:
+        $ref: '#/definitions/Wallet'
+    '400':
+      $ref: '#/responses/BadRequest'
+    '422':
+      description: Неверные данные кошелька
+      schema:
+        $ref: '#/definitions/InvalidOperationParameters'

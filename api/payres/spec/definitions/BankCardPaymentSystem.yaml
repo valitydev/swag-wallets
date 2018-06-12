@@ -1,0 +1,13 @@
+description: Платежная система
+type: string
+enum:
+  - visa
+  - mastercard
+  - visaelectron
+  - maestro
+  - amex
+  - dinersclub
+  - discover
+  - unionpay
+  - jcb
+  - nspkmir

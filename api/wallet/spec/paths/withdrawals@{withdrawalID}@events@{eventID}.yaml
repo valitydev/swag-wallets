@@ -1,0 +1,18 @@
+get:
+  operationId: getWithdrawalEvents
+  summary: Получить событие вывода средств
+  tags:
+    - Withdrawals
+  parameters:
+    - $ref: '#/parameters/requestID'
+    - $ref: '#/parameters/withdrawalID'
+    - $ref: '#/parameters/eventID'
+  responses:
+    '200':
+      description: Событие найдено
+      schema:
+        $ref: '#/definitions/WithdrawalEvent'
+    '400':
+      $ref: '#/responses/BadRequest'
+    '404':
+      $ref: '#/responses/NotFound'

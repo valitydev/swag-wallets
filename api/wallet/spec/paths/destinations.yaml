@@ -1,0 +1,61 @@
+get:
+  operationId: listDestinations
+  summary: Перечислить приёмники средств
+  tags:
+    - Withdrawals
+  parameters:
+    - $ref: '#/parameters/requestID'
+    - name: identity
+      description: Фильтр по личности владельца
+      in: query
+      required: false
+      type: string
+      maxLength: 40
+      minLength: 1
+    - name: currency
+      description: |
+        Фильтр по валюте приёмника средств,
+        символьный код согласно [ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).
+      in: query
+      required: false
+      type: string
+      pattern: '^[A-Z]{3}$'
+  responses:
+    '200':
+      description: Приёмники средств найдены
+      schema:
+        type: array
+        items:
+          $ref: '#/definitions/Destination'
+    '400':
+      $ref: '#/responses/BadRequest'
+
+post:
+  operationId: createDestination
+  summary: Завести приёмник средств
+  tags:
+    - Withdrawals
+  parameters:
+    - $ref: '#/parameters/requestID'
+    - name: destination
+      description: Данные приёмника средств
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/Destination'
+  responses:
+    '201':
+      description: Приёмник средств создан
+      headers:
+        Location:
+          description: URI созданного приёмника средств
+          type: string
+          format: uri
+      schema:
+        $ref: '#/definitions/Destination'
+    '400':
+      $ref: '#/responses/BadRequest'
+    '422':
+      description: Неверные данные приёмника средств
+      schema:
+        $ref: '#/definitions/InvalidOperationParameters'

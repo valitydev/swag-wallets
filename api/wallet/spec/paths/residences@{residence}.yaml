@@ -1,0 +1,24 @@
+get:
+  operationId: getResidence
+  summary: Получить описание региона резиденции
+  tags:
+    - Residences
+  parameters:
+    - $ref: '#/parameters/requestID'
+    - name: residence
+      in: path
+      description: |
+        Резиденция, в рамках которой производится оказание услуг,
+        код страны или региона по стандарту [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)
+      type: string
+      pattern: '^[A-Z]{2}$'
+      required: true
+  responses:
+    '200':
+      description: Регион резиденции найден
+      schema:
+        $ref: '#/definitions/Residence'
+    '404':
+      $ref: '#/responses/NotFound'
+    '400':
+      $ref: '#/responses/BadRequest'

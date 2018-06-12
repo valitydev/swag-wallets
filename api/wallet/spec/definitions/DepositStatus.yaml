@@ -1,0 +1,26 @@
+type: object
+properties:
+  status:
+    description: |
+      Статус ввода денежных средств.
+
+      | Значение    | Пояснение                                 |
+      | ----------- | ----------------------------------------- |
+      | `Pending`   | Ввод в процессе выполнения                |
+      | `Succeeded` | Ввод средств произведён успешно           |
+      | `Failed`    | Ввод средств завершился неудачей          |
+
+    type: string
+    enum:
+      - Pending
+      - Succeeded
+      - Failed
+    readOnly: true
+  failure:
+    allOf:
+      - description: |
+          > Если `status` == `Failed`
+
+          Пояснение причины неудачи
+        readOnly: true
+      - $ref: '#/definitions/DepositFailure'

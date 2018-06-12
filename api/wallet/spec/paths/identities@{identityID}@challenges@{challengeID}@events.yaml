@@ -1,0 +1,22 @@
+get:
+  operationId: pollIdentityChallengeEvents
+  summary: Запросить события процедуры идентификации
+  tags:
+    - Identities
+  parameters:
+    - $ref: '#/parameters/requestID'
+    - $ref: '#/parameters/identityID'
+    - $ref: '#/parameters/challengeID'
+    - $ref: '#/parameters/eventLimit'
+    - $ref: '#/parameters/eventCursor'
+  responses:
+    '200':
+      description: События найдены
+      schema:
+        type: array
+        items:
+          $ref: '#/definitions/IdentityChallengeEvent'
+    '404':
+      $ref: '#/responses/NotFound'
+    '400':
+      $ref: '#/responses/BadRequest'

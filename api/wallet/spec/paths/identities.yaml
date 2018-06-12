@@ -1,0 +1,67 @@
+get:
+  operationId: listIdentities
+  summary: Перечислить личности владельцев
+  tags:
+    - Identities
+  parameters:
+    - $ref: '#/parameters/requestID'
+    - name: provider
+      description: Фильтр по провайдеру услуг
+      in: query
+      required: false
+      type: string
+      maxLength: 40
+      minLength: 1
+    - name: class
+      description: Фильтр по классу личности
+      in: query
+      required: false
+      type: string
+      maxLength: 40
+      minLength: 1
+    - name: level
+      description: Фильтр по уровню идентификации
+      in: query
+      required: false
+      type: string
+      maxLength: 40
+      minLength: 1
+  responses:
+    '201':
+      description: Личности владельцев найдены
+      schema:
+        type: array
+        items:
+          $ref: '#/definitions/Identity'
+    '400':
+      $ref: '#/responses/BadRequest'
+
+post:
+  operationId: createIdentity
+  summary: Создать личность владельца
+  tags:
+    - Identities
+  parameters:
+    - $ref: '#/parameters/requestID'
+    - name: identity
+      description: Данные создаваемой личности
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/Identity'
+  responses:
+    '201':
+      description: Личность владельца создана
+      headers:
+        Location:
+          description: URI созданной личности
+          type: string
+          format: uri
+      schema:
+        $ref: '#/definitions/Identity'
+    '400':
+      $ref: '#/responses/BadRequest'
+    '422':
+      description: Неверные данные личности владельца
+      schema:
+        $ref: '#/definitions/InvalidOperationParameters'

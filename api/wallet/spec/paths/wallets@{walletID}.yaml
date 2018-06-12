@@ -1,0 +1,17 @@
+get:
+  operationId: getWallet
+  summary: Получить данные кошелька
+  tags:
+    - Wallets
+  parameters:
+    - $ref: '#/parameters/requestID'
+    - $ref: '#/parameters/walletID'
+  responses:
+    '200':
+      description: Кошелёк найден
+      schema:
+        $ref: '#/definitions/Wallet'
+    '404':
+      $ref: '#/responses/NotFound'
+    '400':
+      $ref: '#/responses/BadRequest'

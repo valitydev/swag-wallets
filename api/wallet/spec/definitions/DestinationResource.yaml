@@ -1,0 +1,14 @@
+description: Ресурс приёмника денежных средств, используемый для осуществления выводов
+type: object
+discriminator: type
+required:
+  - type
+properties:
+  type:
+    description: |
+      Тип ресурса приёмника средств.
+
+      См. [RBKmoney Payment Resource API](/?api/payres/swagger.yaml).
+    type: string
+    enum:
+      - BankCardDestinationResource

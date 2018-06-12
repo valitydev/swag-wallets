@@ -1,0 +1,12 @@
+description: Исходные чувствительные данные персональные документа
+type: object
+discriminator: type
+required:
+  - type
+properties:
+  type:
+    description: Вид документа
+    type: string
+    enum:
+      - RUSDomesticPassportData
+      - RUSRetireeInsuranceCertificateData

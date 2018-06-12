@@ -1,0 +1,4 @@
+description: Банковская карта
+allOf:
+  - $ref: '#/definitions/DestinationResource'
+  - $ref: '#/definitions/SecuredBankCard'

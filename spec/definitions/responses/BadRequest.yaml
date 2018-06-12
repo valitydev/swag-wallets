@@ -1,0 +1,25 @@
+type: object
+required:
+  - errorType
+properties:
+  errorType:
+    description: Тип ошибки в данных
+    type: string
+    enum:
+      - SchemaViolated
+      - NotFound
+      - WrongType
+      - NotInRange
+      - WrongSize
+      - WrongLength
+      - WrongArray
+      - NoMatch
+    example: NotFound
+  name:
+    description: Имя или идентификатор элемента сообщения, содержащего недопустимые данные
+    type: string
+    example: X-Request-ID
+  description:
+    description: Пояснение, почему данные считаются недопустимыми
+    type: string
+    example: Required parameter was not sent

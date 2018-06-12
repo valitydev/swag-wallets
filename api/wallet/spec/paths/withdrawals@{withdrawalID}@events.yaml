@@ -1,0 +1,21 @@
+get:
+  operationId: pollWithdrawalEvents
+  summary: Запросить события вывода средств
+  tags:
+    - Withdrawals
+  parameters:
+    - $ref: '#/parameters/requestID'
+    - $ref: '#/parameters/withdrawalID'
+    - $ref: '#/parameters/eventLimit'
+    - $ref: '#/parameters/eventCursor'
+  responses:
+    '200':
+      description: События найдены
+      schema:
+        type: array
+        items:
+          $ref: '#/definitions/WithdrawalEvent'
+    '400':
+      $ref: '#/responses/BadRequest'
+    '404':
+      $ref: '#/responses/NotFound'
