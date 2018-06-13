@@ -22,7 +22,7 @@ release:
   steps:
     - script:
       name: prepare release artifacts for a branch
-      code: mkdir -p out && cp -frv dist/api out/
+      code: mkdir -p out && cp -frv ./api out/
     - lordlothar99/git-push:
       gh_oauth: ${GITHUB_API_TOKEN}
       branch: release/${WERCKER_GIT_BRANCH}
