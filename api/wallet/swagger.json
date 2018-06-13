@@ -1,0 +1,2853 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.0.1",
+    "title": "RBKmoney Wallet API",
+    "description": "\nRBKmoney Wallet API является базовой и единственной точкой взаимодействия с платформой кошельков. Все изменения состояний платформы осуществляются с помощью вызовов соответствующих методов API. Любые сторонние приложения, включая наши веб-сайты и другие UI-интерфейсы являются внешними приложениями-клиентами.\nRBKmoney API работает поверх HTTP-протокола. Мы используем REST архитектуру, схема описывается в соответствии со [Swagger](http://swagger.io/). Коды возврата описываются соответствующими HTTP-статусами. Платформа принимает и возвращает значения JSON в теле запросов и ответов.\n## Формат содержимого\nЛюбой запрос к API должен выполняться в кодировке UTF-8 и с указанием содержимого в формате JSON.\n```\n  Content-Type: application/json; charset=utf-8\n```\n## Формат дат\nПлатформа принимает значения date-time в стандарте RFC 3339 с обязательным указанием UTC-оффсета, например:\n```\n  2017-01-01T00:00:00Z\n  2017-01-01T00:00:01+00:00\n```\n## Ошибки обработки запросов\nВ процессе обработки запросов силами нашей платформы могут происходить различные непредвиденные ситуации. Об их появлении платформа сигнализирует по протоколу HTTP соответствующими [статусами][5xx], обозначающими ошибки сервера.\n\n |  Код    |  Описание  |\n | ------- | ---------- |\n | **500** | В процессе обработки платформой запроса возникла непредвиденная ситуация. При получении подобного кода ответа мы рекомендуем обратиться в техническую поддержку. |\n | **503** | Платформа временно недоступна и не готова обслуживать данный запрос. Запрос гарантированно не выполнен, при получении подобного кода ответа попробуйте выполнить его позднее, когда доступность платформы будет восстановлена. |\n | **504** | Платформа превысила допустимое время обработки запроса, результат запроса не определён. Попробуйте отправить запрос повторно или выяснить результат выполнения исходного запроса, если повторное исполнение запроса нежелательно. |\n\n[5xx]: https://tools.ietf.org/html/rfc7231#section-6.6\n",
+    "termsOfService": "http://rbk.money/",
+    "contact": {
+      "name": "RBKmoney support team",
+      "email": "support@rbk.money",
+      "url": "https://rbk.money"
+    }
+  },
+  "host": "api.rbk.money",
+  "basePath": "/wallet/v0",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json; charset=utf-8"
+  ],
+  "produces": [
+    "application/json; charset=utf-8"
+  ],
+  "securityDefinitions": {
+    "bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Для аутентификации вызовов мы используем [JWT](https://jwt.io). Cоответствующий ключ передается в заголовке.\n```shell\n Authorization: Bearer {TOKENIZATION|PRIVATE_JWT}\n```\n"
+    }
+  },
+  "security": [
+    {
+      "bearer": []
+    }
+  ],
+  "responses": {
+    "BadRequest": {
+      "description": "Недопустимые для операции входные данные",
+      "schema": {
+        "$ref": "#/definitions/BadRequest"
+      }
+    },
+    "NotFound": {
+      "description": "Искомая сущность не найдена"
+    },
+    "Conflict": {
+      "description": "Операция вызывает конфликт"
+    }
+  },
+  "parameters": {
+    "requestID": {
+      "name": "X-Request-ID",
+      "in": "header",
+      "description": "Уникальный идентификатор запроса к системе",
+      "required": true,
+      "type": "string",
+      "maxLength": 32,
+      "minLength": 1
+    },
+    "providerID": {
+      "name": "providerID",
+      "in": "path",
+      "description": "Идентификатор провайдера",
+      "required": true,
+      "type": "string",
+      "maxLength": 40,
+      "minLength": 1
+    },
+    "identityID": {
+      "name": "identityID",
+      "in": "path",
+      "description": "Идентификатор личности владельца",
+      "required": true,
+      "type": "string",
+      "maxLength": 40,
+      "minLength": 1
+    },
+    "challengeID": {
+      "name": "challengeID",
+      "in": "path",
+      "description": "Идентификатор процедуры идентификации личности",
+      "required": true,
+      "type": "string",
+      "maxLength": 40,
+      "minLength": 1
+    },
+    "walletID": {
+      "name": "walletID",
+      "in": "path",
+      "description": "Идентификатор кошелька",
+      "required": true,
+      "type": "string",
+      "maxLength": 40,
+      "minLength": 1
+    },
+    "depositID": {
+      "name": "depositID",
+      "in": "path",
+      "description": "Идентификатор ввода денежных средств",
+      "required": true,
+      "type": "string",
+      "maxLength": 40,
+      "minLength": 1
+    },
+    "destinationID": {
+      "name": "destinationID",
+      "in": "path",
+      "description": "Идентификатор приёмника средств",
+      "required": true,
+      "type": "string",
+      "maxLength": 40,
+      "minLength": 1
+    },
+    "withdrawalID": {
+      "name": "withdrawalID",
+      "in": "path",
+      "description": "Идентификатор вывода денежных средств",
+      "required": true,
+      "type": "string",
+      "maxLength": 40,
+      "minLength": 1
+    },
+    "residence": {
+      "name": "residence",
+      "in": "query",
+      "description": "Резиденция, в рамках которой производится оказание услуг,\nкод страны или региона по стандарту [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)\n",
+      "type": "string",
+      "pattern": "^[A-Z]{2}$",
+      "required": false
+    },
+    "eventLimit": {
+      "name": "limit",
+      "in": "query",
+      "description": "Лимит выборки",
+      "required": true,
+      "type": "integer",
+      "format": "int32",
+      "minimum": 1
+    },
+    "eventCursor": {
+      "name": "eventCursor",
+      "in": "query",
+      "description": "Идентификатор последнего известного события.\n\nВсе события, произошедшие _после_ указанного, попадут в выборку.\nЕсли этот параметр не указан, в выборку попадут события, начиная с самого первого.\n",
+      "required": false,
+      "type": "integer",
+      "format": "int32"
+    },
+    "eventID": {
+      "name": "eventID",
+      "in": "path",
+      "description": "Идентификатор события процедуры идентификации.\n",
+      "required": true,
+      "type": "integer",
+      "format": "int32"
+    }
+  },
+  "tags": [
+    {
+      "name": "Providers",
+      "x-displayName": "Провайдеры услуг",
+      "description": ""
+    },
+    {
+      "name": "Identities",
+      "x-displayName": "Владельцы",
+      "description": ""
+    },
+    {
+      "name": "Wallets",
+      "x-displayName": "Кошельки",
+      "description": ""
+    },
+    {
+      "name": "Deposits",
+      "x-displayName": "Вводы",
+      "description": ""
+    },
+    {
+      "name": "Withdrawals",
+      "x-displayName": "Выводы",
+      "description": ""
+    },
+    {
+      "name": "Residences",
+      "x-displayName": "Резиденции",
+      "description": ""
+    },
+    {
+      "name": "Currencies",
+      "x-displayName": "Валюты",
+      "description": ""
+    }
+  ],
+  "paths": {
+    "/currencies/{currencyID}": {
+      "get": {
+        "operationId": "getCurrency",
+        "summary": "Получить описание валюты",
+        "tags": [
+          "Currencies"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "name": "currencyID",
+            "in": "path",
+            "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+            "type": "string",
+            "required": true,
+            "pattern": "^[A-Z]{3}$"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Валюта найдена",
+            "schema": {
+              "$ref": "#/definitions/Currency"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/deposits": {
+      "post": {
+        "operationId": "createDeposit",
+        "summary": "Запустить ввод средств",
+        "tags": [
+          "Deposits"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "name": "deposit",
+            "description": "Данные ввода средств",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Deposit"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Ввод средств запущен",
+            "headers": {
+              "Location": {
+                "description": "URI запущенного ввода средств",
+                "type": "string",
+                "format": "uri"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/Deposit"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "422": {
+            "description": "Неверные данные для осуществления ввода",
+            "schema": {
+              "$ref": "#/definitions/InvalidOperationParameters"
+            }
+          }
+        }
+      }
+    },
+    "/deposits/{depositID}": {
+      "get": {
+        "operationId": "getDeposit",
+        "summary": "Получить состояние ввода средств",
+        "tags": [
+          "Deposits"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/depositID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ввод средств найден",
+            "schema": {
+              "$ref": "#/definitions/Deposit"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/deposits/{depositID}/events": {
+      "get": {
+        "operationId": "pollDepositEvents",
+        "summary": "Запросить события ввода средств",
+        "tags": [
+          "Deposits"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/depositID"
+          },
+          {
+            "$ref": "#/parameters/eventLimit"
+          },
+          {
+            "$ref": "#/parameters/eventCursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "События найдены",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/DepositEvent"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/deposits/{depositID}/events/{eventID}": {
+      "get": {
+        "operationId": "getDepositEvents",
+        "summary": "Получить событие ввода средств",
+        "tags": [
+          "Deposits"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/depositID"
+          },
+          {
+            "$ref": "#/parameters/eventID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Событие найдено",
+            "schema": {
+              "$ref": "#/definitions/DepositEvent"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/destinations": {
+      "get": {
+        "operationId": "listDestinations",
+        "summary": "Перечислить приёмники средств",
+        "tags": [
+          "Withdrawals"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "name": "identity",
+            "description": "Фильтр по личности владельца",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "maxLength": 40,
+            "minLength": 1
+          },
+          {
+            "name": "currency",
+            "description": "Фильтр по валюте приёмника средств,\nсимвольный код согласно [ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "pattern": "^[A-Z]{3}$"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Приёмники средств найдены",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Destination"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          }
+        }
+      },
+      "post": {
+        "operationId": "createDestination",
+        "summary": "Завести приёмник средств",
+        "tags": [
+          "Withdrawals"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "name": "destination",
+            "description": "Данные приёмника средств",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Destination"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Приёмник средств создан",
+            "headers": {
+              "Location": {
+                "description": "URI созданного приёмника средств",
+                "type": "string",
+                "format": "uri"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/Destination"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "422": {
+            "description": "Неверные данные приёмника средств",
+            "schema": {
+              "$ref": "#/definitions/InvalidOperationParameters"
+            }
+          }
+        }
+      }
+    },
+    "/destinations/{destinationID}": {
+      "get": {
+        "operationId": "getDestination",
+        "summary": "Получить приёмник средств",
+        "tags": [
+          "Withdrawals"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/destinationID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Приёмник средств найден",
+            "schema": {
+              "$ref": "#/definitions/Destination"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/destinations/{destinationID}/grants": {
+      "post": {
+        "operationId": "issueDestinationGrant",
+        "summary": "Выдать право управления приёмником средств",
+        "tags": [
+          "Withdrawals"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/destinationID"
+          },
+          {
+            "name": "request",
+            "description": "Запрос на право управления приёмником средств",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DestinationGrantRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Право выдано",
+            "schema": {
+              "$ref": "#/definitions/DestinationGrantRequest"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "422": {
+            "description": "Неверные данные для выдачи",
+            "schema": {
+              "$ref": "#/definitions/InvalidOperationParameters"
+            }
+          }
+        }
+      }
+    },
+    "/identities": {
+      "get": {
+        "operationId": "listIdentities",
+        "summary": "Перечислить личности владельцев",
+        "tags": [
+          "Identities"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "name": "provider",
+            "description": "Фильтр по провайдеру услуг",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "maxLength": 40,
+            "minLength": 1
+          },
+          {
+            "name": "class",
+            "description": "Фильтр по классу личности",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "maxLength": 40,
+            "minLength": 1
+          },
+          {
+            "name": "level",
+            "description": "Фильтр по уровню идентификации",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "maxLength": 40,
+            "minLength": 1
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Личности владельцев найдены",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Identity"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          }
+        }
+      },
+      "post": {
+        "operationId": "createIdentity",
+        "summary": "Создать личность владельца",
+        "tags": [
+          "Identities"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "name": "identity",
+            "description": "Данные создаваемой личности",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Identity"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Личность владельца создана",
+            "headers": {
+              "Location": {
+                "description": "URI созданной личности",
+                "type": "string",
+                "format": "uri"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/Identity"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "422": {
+            "description": "Неверные данные личности владельца",
+            "schema": {
+              "$ref": "#/definitions/InvalidOperationParameters"
+            }
+          }
+        }
+      }
+    },
+    "/identities/{identityID}": {
+      "get": {
+        "operationId": "getIdentity",
+        "summary": "Получить данные личности владельца",
+        "tags": [
+          "Identities"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/identityID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Личность владельца найдена",
+            "schema": {
+              "$ref": "#/definitions/Identity"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/identities/{identityID}/challenges": {
+      "get": {
+        "operationId": "listIdentityChallenges",
+        "summary": "Перечислить процедуры идентификации",
+        "tags": [
+          "Identities"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/identityID"
+          },
+          {
+            "name": "status",
+            "description": "Статус процедуры идентификации личности.\n\n| Значение    | Пояснение                       |\n| ----------- | ------------------------------- |\n| `Pending`   | Процедура в процессе выполнения |\n| `Completed` | Процедура пройдена успешно      |\n| `Failed`    | Процедура не пройдена           |\n| `Cancelled` | Процедура отменена              |\n",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "Pending",
+              "Completed",
+              "Failed",
+              "Cancelled"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Процедуры идентификации найдены",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/IdentityChallenge"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      },
+      "post": {
+        "operationId": "startIdentityChallenge",
+        "summary": "Запустить процедуру идентификации",
+        "tags": [
+          "Identities"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/identityID"
+          },
+          {
+            "name": "challenge",
+            "description": "Данные для запуска процедуры идентификации",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IdentityChallenge"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Процедура идентификации запущена",
+            "headers": {
+              "Location": {
+                "description": "URI запущенной процедуры",
+                "type": "string",
+                "format": "uri"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/IdentityChallenge"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "409": {
+            "description": "Ранее запущенная процедура ещё не завершена"
+          },
+          "422": {
+            "description": "Неверные данные для проведения процедуры",
+            "schema": {
+              "$ref": "#/definitions/InvalidOperationParameters"
+            }
+          }
+        }
+      }
+    },
+    "/identities/{identityID}/challenges/{challengeID}": {
+      "get": {
+        "operationId": "getIdentityChallenge",
+        "summary": "Получить данные процедуры идентификации",
+        "tags": [
+          "Identities"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/identityID"
+          },
+          {
+            "$ref": "#/parameters/challengeID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Процедура идентификации найдена",
+            "schema": {
+              "$ref": "#/definitions/IdentityChallenge"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      },
+      "patch": {
+        "operationId": "cancelIdentityChallenge",
+        "summary": "Отменить процедуру идентификации",
+        "tags": [
+          "Identities"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/identityID"
+          },
+          {
+            "$ref": "#/parameters/challengeID"
+          },
+          {
+            "name": "challenge",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "status"
+              ],
+              "properties": {
+                "status": {
+                  "description": "Целевой статус процедуры",
+                  "type": "string",
+                  "enum": [
+                    "Cancelled"
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Процедура идентификации отменена",
+            "schema": {
+              "$ref": "#/definitions/IdentityChallenge"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/responses/Conflict"
+          }
+        }
+      }
+    },
+    "/identities/{identityID}/challenges/{challengeID}/events": {
+      "get": {
+        "operationId": "pollIdentityChallengeEvents",
+        "summary": "Запросить события процедуры идентификации",
+        "tags": [
+          "Identities"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/identityID"
+          },
+          {
+            "$ref": "#/parameters/challengeID"
+          },
+          {
+            "$ref": "#/parameters/eventLimit"
+          },
+          {
+            "$ref": "#/parameters/eventCursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "События найдены",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/IdentityChallengeEvent"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/identities/{identityID}/challenges/{challengeID}/events/{eventID}": {
+      "get": {
+        "operationId": "getIdentityChallengeEvent",
+        "summary": "Получить событие процедуры идентификации",
+        "tags": [
+          "Identities"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/identityID"
+          },
+          {
+            "$ref": "#/parameters/challengeID"
+          },
+          {
+            "$ref": "#/parameters/eventID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Событие найдено",
+            "schema": {
+              "$ref": "#/definitions/IdentityChallengeEvent"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/providers": {
+      "get": {
+        "operationId": "listProviders",
+        "summary": "Перечислить доступных провайдеров",
+        "tags": [
+          "Providers"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/residence"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Провайдеры найдены",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Provider"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/providers/{providerID}": {
+      "get": {
+        "operationId": "getProvider",
+        "summary": "Получить данные провайдера",
+        "tags": [
+          "Providers"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/providerID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Провайдер найден",
+            "schema": {
+              "$ref": "#/definitions/Provider"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/providers/{providerID}/identity-classes": {
+      "get": {
+        "operationId": "listProviderIdentityClasses",
+        "summary": "Перечислить классы личностей",
+        "tags": [
+          "Providers"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/providerID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Классы личностей найдены",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/IdentityClass"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/providers/{providerID}/identity-classes/{identityClassID}": {
+      "get": {
+        "operationId": "getProviderIdentityClass",
+        "summary": "Получить описание класса личностей",
+        "tags": [
+          "Providers"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/providerID"
+          },
+          {
+            "name": "identityClassID",
+            "description": "Класс личности владельца",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Класс личностей найден",
+            "schema": {
+              "$ref": "#/definitions/IdentityClass"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/providers/{providerID}/identity-classes/{identityClassID}/levels": {
+      "get": {
+        "operationId": "listProviderIdentityLevels",
+        "summary": "Перечислить уровни идентификации личности",
+        "tags": [
+          "Providers"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/providerID"
+          },
+          {
+            "name": "identityClassID",
+            "description": "Класс личности владельца",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Уровни идентификации найдены",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/IdentityLevel"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/providers/{providerID}/identity-classes/{identityClassID}/levels/{identityLevelID}": {
+      "get": {
+        "operationId": "getProviderIdentityLevel",
+        "summary": "Получить описание уровня идентификации",
+        "tags": [
+          "Providers"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/providerID"
+          },
+          {
+            "name": "identityClassID",
+            "description": "Класс личности владельца",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "identityLevelID",
+            "description": "Уровень идентификации",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Уровень идентификации найден",
+            "schema": {
+              "$ref": "#/definitions/IdentityLevel"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/residences/{residence}": {
+      "get": {
+        "operationId": "getResidence",
+        "summary": "Получить описание региона резиденции",
+        "tags": [
+          "Residences"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "name": "residence",
+            "in": "path",
+            "description": "Резиденция, в рамках которой производится оказание услуг,\nкод страны или региона по стандарту [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)\n",
+            "type": "string",
+            "pattern": "^[A-Z]{2}$",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Регион резиденции найден",
+            "schema": {
+              "$ref": "#/definitions/Residence"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/wallets": {
+      "get": {
+        "operationId": "listWallets",
+        "summary": "Перечислить кошельки",
+        "tags": [
+          "Wallets"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "name": "identity",
+            "description": "Фильтр по личности владельца",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "maxLength": 40,
+            "minLength": 1
+          },
+          {
+            "name": "currency",
+            "description": "Фильтр по валюте кошелька,\nсимвольный код согласно [ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "pattern": "^[A-Z]{3}$"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Кошельки найдены",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Wallet"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          }
+        }
+      },
+      "post": {
+        "operationId": "createWallet",
+        "summary": "Завести новый кошелёк",
+        "tags": [
+          "Wallets"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "name": "wallet",
+            "description": "Данные создаваемого кошелька",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Wallet"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Кошелёк создан",
+            "headers": {
+              "Location": {
+                "description": "URI созданного кошелька",
+                "type": "string",
+                "format": "uri"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/Wallet"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "422": {
+            "description": "Неверные данные кошелька",
+            "schema": {
+              "$ref": "#/definitions/InvalidOperationParameters"
+            }
+          }
+        }
+      }
+    },
+    "/wallets/{walletID}": {
+      "get": {
+        "operationId": "getWallet",
+        "summary": "Получить данные кошелька",
+        "tags": [
+          "Wallets"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/walletID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Кошелёк найден",
+            "schema": {
+              "$ref": "#/definitions/Wallet"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/wallets/{walletID}/account": {
+      "get": {
+        "operationId": "getWalletAccount",
+        "summary": "Получить состояние счёта",
+        "tags": [
+          "Wallets"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/walletID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Счёт кошелька получен",
+            "schema": {
+              "$ref": "#/definitions/WalletAccount"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/wallets/{walletID}/grants": {
+      "post": {
+        "operationId": "issueWalletGrant",
+        "summary": "Выдать право управления средствами",
+        "tags": [
+          "Wallets"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/walletID"
+          },
+          {
+            "name": "request",
+            "description": "Запрос на право управления средствами на кошельке",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/WalletGrantRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Единоразовое право выдано",
+            "schema": {
+              "$ref": "#/definitions/WalletGrantRequest"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "422": {
+            "description": "Неверные данные для выдачи",
+            "schema": {
+              "$ref": "#/definitions/InvalidOperationParameters"
+            }
+          }
+        }
+      }
+    },
+    "/withdrawals": {
+      "post": {
+        "operationId": "createWithdrawal",
+        "summary": "Запустить вывод средств",
+        "tags": [
+          "Withdrawals"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "name": "withdrawal",
+            "description": "Данные вывода",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Withdrawal"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Вывод запущен",
+            "headers": {
+              "Location": {
+                "description": "URI запущенного вывода",
+                "type": "string",
+                "format": "uri"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/Withdrawal"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "422": {
+            "description": "Неверные данные для осуществления вывода",
+            "schema": {
+              "$ref": "#/definitions/InvalidOperationParameters"
+            }
+          }
+        }
+      }
+    },
+    "/withdrawals/{withdrawalID}": {
+      "get": {
+        "operationId": "getWithdrawal",
+        "summary": "Получить состояние вывода средств",
+        "tags": [
+          "Withdrawals"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/withdrawalID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Вывод найден",
+            "schema": {
+              "$ref": "#/definitions/Withdrawal"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/withdrawals/{withdrawalID}/events": {
+      "get": {
+        "operationId": "pollWithdrawalEvents",
+        "summary": "Запросить события вывода средств",
+        "tags": [
+          "Withdrawals"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/withdrawalID"
+          },
+          {
+            "$ref": "#/parameters/eventLimit"
+          },
+          {
+            "$ref": "#/parameters/eventCursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "События найдены",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/WithdrawalEvent"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/withdrawals/{withdrawalID}/events/{eventID}": {
+      "get": {
+        "operationId": "getWithdrawalEvents",
+        "summary": "Получить событие вывода средств",
+        "tags": [
+          "Withdrawals"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/withdrawalID"
+          },
+          {
+            "$ref": "#/parameters/eventID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Событие найдено",
+            "schema": {
+              "$ref": "#/definitions/WithdrawalEvent"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Asset": {
+      "description": "Объём денежных средств\n",
+      "type": "object",
+      "required": [
+        "amount",
+        "currency"
+      ],
+      "properties": {
+        "amount": {
+          "description": "Сумма денежных средств в минорных единицах, например, в копейках\n",
+          "type": "integer",
+          "format": "int64",
+          "minimum": 0,
+          "example": 1430000
+        },
+        "currency": {
+          "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "example": "RUB"
+        }
+      }
+    },
+    "BankCardDestinationResource": {
+      "description": "Банковская карта",
+      "allOf": [
+        {
+          "$ref": "#/definitions/DestinationResource"
+        },
+        {
+          "$ref": "#/definitions/SecuredBankCard"
+        }
+      ]
+    },
+    "BankCardPaymentResource": {
+      "description": "Банковская карта",
+      "allOf": [
+        {
+          "$ref": "#/definitions/PaymentResource"
+        },
+        {
+          "$ref": "#/definitions/SecuredBankCard"
+        }
+      ]
+    },
+    "BankWirePaymentResource": {
+      "description": "Банковский перевод",
+      "allOf": [
+        {
+          "$ref": "#/definitions/PaymentResource"
+        }
+      ]
+    },
+    "Currency": {
+      "description": "Описание валюты",
+      "type": "object",
+      "required": [
+        "id",
+        "numericCode",
+        "name",
+        "exponent"
+      ],
+      "properties": {
+        "id": {
+          "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "example": "RUB"
+        },
+        "numericCode": {
+          "description": "Цифровой код валюты согласно\n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm)\n",
+          "type": "string",
+          "pattern": "^[0-9]{3}$",
+          "example": "643"
+        },
+        "name": {
+          "description": "Человекочитаемое название валюты\n",
+          "type": "string",
+          "example": "Российский рубль"
+        },
+        "sign": {
+          "description": "Знак единицы валюты\n",
+          "type": "string",
+          "example": "₽"
+        },
+        "exponent": {
+          "description": "Количество допустимых знаков после запятой в сумме средств, в которых может\nуказываться количество минорных денежных единиц\n",
+          "type": "integer",
+          "minimum": 0,
+          "example": 2
+        }
+      }
+    },
+    "CurrencyID": {
+      "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "example": "RUB"
+    },
+    "Deposit": {
+      "description": "Данные ввода денежных средств",
+      "allOf": [
+        {
+          "type": "object",
+          "required": [
+            "source",
+            "wallet",
+            "body"
+          ],
+          "properties": {
+            "id": {
+              "description": "Идентификатор ввода денежных средств",
+              "type": "string",
+              "example": "zXtgir1hlP",
+              "readOnly": true
+            },
+            "createdAt": {
+              "description": "Дата и время запуска ввода",
+              "type": "string",
+              "format": "date-time",
+              "readOnly": true
+            },
+            "source": {
+              "$ref": "#/definitions/PaymentResource"
+            },
+            "wallet": {
+              "description": "Идентификатор кошелька",
+              "type": "string",
+              "example": "10068321"
+            },
+            "body": {
+              "allOf": [
+                {
+                  "description": "Объём вводимых средств"
+                },
+                {
+                  "$ref": "#/definitions/Asset"
+                }
+              ]
+            },
+            "metadata": {
+              "description": "Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных\nс данным вводом средств\n",
+              "type": "object",
+              "example": {
+                "notify_email": "ilikemonorail@example.com"
+              }
+            }
+          }
+        },
+        {
+          "$ref": "#/definitions/DepositStatus"
+        }
+      ]
+    },
+    "DepositEvent": {
+      "description": "Событие, возникшее в процессе ввода средств\n",
+      "type": "object",
+      "required": [
+        "eventID",
+        "occuredAt",
+        "changes"
+      ],
+      "properties": {
+        "eventID": {
+          "description": "Идентификатор события вывода средств",
+          "type": "integer",
+          "format": "int32",
+          "example": 42
+        },
+        "occuredAt": {
+          "description": "Дата и время возникновения события",
+          "type": "string",
+          "format": "date-time"
+        },
+        "changes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DepositEventChange"
+          }
+        }
+      }
+    },
+    "DepositEventChange": {
+      "description": "Изменение, возникшее в процессе ввода средств\n",
+      "type": "object",
+      "discriminator": "type",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "description": "Тип произошедшего изменения",
+          "type": "string",
+          "enum": [
+            "DepositStatusChanged"
+          ]
+        }
+      }
+    },
+    "DepositFailure": {
+      "type": "object",
+      "required": [
+        "code"
+      ],
+      "properties": {
+        "code": {
+          "description": "Код ошибки ввода",
+          "type": "string"
+        }
+      }
+    },
+    "DepositID": {
+      "description": "Идентификатор ввода денежных средств",
+      "type": "string",
+      "example": "zXtgir1hlP"
+    },
+    "DepositStatus": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "description": "Статус ввода денежных средств.\n\n| Значение    | Пояснение                                 |\n| ----------- | ----------------------------------------- |\n| `Pending`   | Ввод в процессе выполнения                |\n| `Succeeded` | Ввод средств произведён успешно           |\n| `Failed`    | Ввод средств завершился неудачей          |\n",
+          "type": "string",
+          "enum": [
+            "Pending",
+            "Succeeded",
+            "Failed"
+          ],
+          "readOnly": true
+        },
+        "failure": {
+          "allOf": [
+            {
+              "description": "> Если `status` == `Failed`\n\nПояснение причины неудачи\n",
+              "readOnly": true
+            },
+            {
+              "$ref": "#/definitions/DepositFailure"
+            }
+          ]
+        }
+      }
+    },
+    "DepositStatusChanged": {
+      "description": "Изменение статуса ввода средств",
+      "allOf": [
+        {
+          "$ref": "#/definitions/DepositEventChange"
+        },
+        {
+          "$ref": "#/definitions/DepositStatus"
+        }
+      ]
+    },
+    "Destination": {
+      "description": "Данные приёмника денежных средств",
+      "allOf": [
+        {
+          "type": "object",
+          "required": [
+            "name",
+            "identity",
+            "currency",
+            "resource"
+          ],
+          "properties": {
+            "id": {
+              "description": "Идентификатор приёмника денежных средств",
+              "type": "string",
+              "example": "107498",
+              "readOnly": true
+            },
+            "name": {
+              "description": "Человекочитаемое название приёмника средств, по которому его легко узнать\n",
+              "type": "string",
+              "example": "Squarey plastic thingy"
+            },
+            "createdAt": {
+              "description": "Дата и время создания приёмника средств",
+              "type": "string",
+              "format": "date-time",
+              "readOnly": true
+            },
+            "isBlocked": {
+              "description": "Заблокирован ли приёмник средств?",
+              "type": "boolean",
+              "readOnly": true,
+              "example": false
+            },
+            "identity": {
+              "description": "Идентификатор личности владельца кошелька",
+              "type": "string",
+              "example": "10036274"
+            },
+            "currency": {
+              "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+              "type": "string",
+              "pattern": "^[A-Z]{3}$",
+              "example": "RUB"
+            },
+            "resource": {
+              "$ref": "#/definitions/DestinationResource"
+            },
+            "metadata": {
+              "description": "Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с\nданным приёмником\n",
+              "type": "object",
+              "example": {
+                "display_name": "Картофан СБЕР"
+              }
+            }
+          }
+        },
+        {
+          "$ref": "#/definitions/DestinationStatus"
+        }
+      ]
+    },
+    "DestinationGrantRequest": {
+      "description": "Запрос на право управления выводами на приёмник средств",
+      "type": "object",
+      "required": [
+        "validUntil"
+      ],
+      "properties": {
+        "token": {
+          "description": "Токен, дающий право управления выводами",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000,
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n",
+          "readOnly": true
+        },
+        "validUntil": {
+          "description": "Дата и время, до наступления которого выданное право действительно\n",
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "DestinationID": {
+      "description": "Идентификатор приёмника денежных средств",
+      "type": "string",
+      "example": "107498"
+    },
+    "DestinationResource": {
+      "description": "Ресурс приёмника денежных средств, используемый для осуществления выводов",
+      "type": "object",
+      "discriminator": "type",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "description": "Тип ресурса приёмника средств.\n\nСм. [RBKmoney Payment Resource API](/?api/payres/swagger.yaml).\n",
+          "type": "string",
+          "enum": [
+            "BankCardDestinationResource"
+          ]
+        }
+      }
+    },
+    "DestinationStatus": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "description": "Статус приёмника денежных средств.\n\n| Значение       | Пояснение                                  |\n| -------------- | ------------------------------------------ |\n| `Unauthorized` | Не авторизован владельцем на вывод средств |\n| `Authorized`   | Авторизован владельцем на вывод средств    |\n",
+          "type": "string",
+          "enum": [
+            "Unauthorized",
+            "Authorized"
+          ],
+          "readOnly": true,
+          "example": "Authorized"
+        },
+        "validUntil": {
+          "description": "> Если `status` == `Authorized`\n\nДата и время, до наступления которого авторизация действительна\n",
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        }
+      }
+    },
+    "InvalidOperationParameters": {
+      "description": "Неверные входные данные для операции",
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "No such identity challenge type: fms.\n"
+        }
+      }
+    },
+    "GrantToken": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4000,
+      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n"
+    },
+    "Identity": {
+      "description": "Данные личности владельца кошельков",
+      "type": "object",
+      "required": [
+        "name",
+        "provider",
+        "class"
+      ],
+      "properties": {
+        "id": {
+          "description": "Идентификатор личности владельца кошелька",
+          "type": "string",
+          "example": "10036274",
+          "readOnly": true
+        },
+        "name": {
+          "description": "Человекочитаемое имя личности владельца, по которому его легко опознать\n",
+          "type": "string",
+          "example": "Keyn Fawkes"
+        },
+        "createdAt": {
+          "description": "Дата и время создания личности владельца",
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "provider": {
+          "description": "Идентификатор провайдера услуг",
+          "type": "string",
+          "example": "ncoeps"
+        },
+        "class": {
+          "description": "Класс личности владельцев",
+          "type": "string",
+          "example": "person"
+        },
+        "level": {
+          "description": "Уровень идентификации личности",
+          "type": "string",
+          "example": "partial",
+          "readOnly": true
+        },
+        "effectiveChallenge": {
+          "description": "Идентификатор успешно пройденной процедура идентификации, результат которой действителен на\nтекущий момент\n",
+          "type": "string",
+          "example": "1",
+          "readOnly": true
+        },
+        "isBlocked": {
+          "description": "Заблокирована ли личность владельца?",
+          "type": "boolean",
+          "readOnly": true,
+          "example": false
+        },
+        "metadata": {
+          "description": "Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с\nданной личностью владельца\n",
+          "type": "object",
+          "example": {
+            "lkDisplayName": "Серёга на созвоне"
+          }
+        }
+      }
+    },
+    "IdentityChallenge": {
+      "description": "Процедура идентификации личности",
+      "allOf": [
+        {
+          "type": "object",
+          "required": [
+            "level",
+            "type",
+            "proofs"
+          ],
+          "properties": {
+            "id": {
+              "description": "Идентификатор процедуры идентификации личности",
+              "type": "string",
+              "example": "1",
+              "readOnly": true
+            },
+            "createdAt": {
+              "description": "Дата и время запуска процедуры",
+              "type": "string",
+              "format": "date-time",
+              "readOnly": true
+            },
+            "level": {
+              "description": "Необходимый уровень идентификации личности",
+              "type": "string",
+              "example": "partial"
+            },
+            "type": {
+              "description": "Тип процедуры идентификации личности",
+              "type": "string",
+              "example": "esia"
+            },
+            "proofs": {
+              "description": "Набор представленных доказательств.\n\nСм. [RBKmoney Private Documents API](/?api/privdoc/swagger.json).\n",
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/definitions/SecuredPrivateDocument"
+              }
+            }
+          }
+        },
+        {
+          "$ref": "#/definitions/IdentityChallengeStatus"
+        }
+      ]
+    },
+    "IdentityChallengeEvent": {
+      "description": "Событие, возникшее в процессе процедуры идентификации\n",
+      "type": "object",
+      "required": [
+        "eventID",
+        "occuredAt",
+        "changes"
+      ],
+      "properties": {
+        "eventID": {
+          "description": "Идентификатор события процедуры идентификации",
+          "type": "integer",
+          "format": "int32",
+          "example": 42
+        },
+        "occuredAt": {
+          "description": "Дата и время возникновения события",
+          "type": "string",
+          "format": "date-time"
+        },
+        "changes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/IdentityChallengeEventChange"
+          }
+        }
+      }
+    },
+    "IdentityChallengeEventChange": {
+      "description": "Изменение, возникшее в процессе процедуры идентификации\n",
+      "type": "object",
+      "discriminator": "type",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "description": "Тип произошедшего изменения",
+          "type": "string",
+          "enum": [
+            "IdentityChallengeStatusChanged"
+          ]
+        }
+      }
+    },
+    "IdentityChallengeID": {
+      "description": "Идентификатор процедуры идентификации личности",
+      "type": "string",
+      "example": "1"
+    },
+    "IdentityChallengeStatus": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "description": "Статус процедуры идентификации личности.\n\n| Значение    | Пояснение                       |\n| ----------- | ------------------------------- |\n| `Pending`   | Процедура в процессе выполнения |\n| `Completed` | Процедура пройдена успешно      |\n| `Failed`    | Процедура не пройдена           |\n| `Cancelled` | Процедура отменена              |\n",
+          "type": "string",
+          "enum": [
+            "Pending",
+            "Completed",
+            "Failed",
+            "Cancelled"
+          ],
+          "readOnly": true
+        },
+        "validUntil": {
+          "description": "> Если `status` == `Completed`\n\nДата и время, до наступления которого результат процедуры действителен\n",
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "failureReason": {
+          "description": "> Если `status` == `Failed`\n\nОписание причины неудачного завершения процедуры\n",
+          "type": "string",
+          "example": "Proof incomplete",
+          "readOnly": true
+        }
+      }
+    },
+    "IdentityChallengeStatusChanged": {
+      "description": "Изменение статуса процедуры идентификации",
+      "allOf": [
+        {
+          "$ref": "#/definitions/IdentityChallengeEventChange"
+        },
+        {
+          "$ref": "#/definitions/IdentityChallengeStatus"
+        }
+      ]
+    },
+    "IdentityChallengeStatusValue": {
+      "description": "Статус процедуры идентификации личности.\n\n| Значение    | Пояснение                       |\n| ----------- | ------------------------------- |\n| `Pending`   | Процедура в процессе выполнения |\n| `Completed` | Процедура пройдена успешно      |\n| `Failed`    | Процедура не пройдена           |\n| `Cancelled` | Процедура отменена              |\n",
+      "type": "string",
+      "enum": [
+        "Pending",
+        "Completed",
+        "Failed",
+        "Cancelled"
+      ]
+    },
+    "IdentityChallengeType": {
+      "description": "Описание типа процедуры идентификации личности",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Тип процедуры идентификации личности",
+          "type": "string",
+          "example": "esia"
+        },
+        "name": {
+          "description": "Человекочитаемое название процедуры идентификации\n",
+          "type": "string",
+          "example": "Упрощённая идентификация"
+        },
+        "requiredProofs": {
+          "description": "Набор доказательств, которые необходимо предоставить\n",
+          "type": "array",
+          "items": {
+            "description": "Тип документа",
+            "type": "string",
+            "enum": [
+              "RUSDomesticPassport",
+              "RUSRetireeInsuranceCertificate"
+            ]
+          },
+          "example": [
+            "RUSDomesticPassport",
+            "RUSRetireeInsuranceCertificate"
+          ]
+        }
+      }
+    },
+    "IdentityChallengeTypeID": {
+      "description": "Тип процедуры идентификации личности",
+      "type": "string",
+      "example": "esia"
+    },
+    "IdentityClass": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Класс личности владельцев",
+          "type": "string",
+          "example": "person"
+        },
+        "name": {
+          "description": "Человекочитаемое название класса\n",
+          "type": "string",
+          "example": "Частное лицо"
+        }
+      }
+    },
+    "IdentityClassID": {
+      "description": "Класс личности владельцев",
+      "type": "string",
+      "example": "person"
+    },
+    "IdentityID": {
+      "description": "Идентификатор личности владельца кошелька",
+      "type": "string",
+      "example": "10036274"
+    },
+    "IdentityLevel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Уровень идентификации личности",
+          "type": "string",
+          "example": "partial"
+        },
+        "name": {
+          "description": "Человекочитаемое название уровня идентификации\n",
+          "type": "string",
+          "example": "Частично идентифицирован"
+        },
+        "challenges": {
+          "description": "Список возможных процедур, которые необходимо пройти для достижения этого\nуровня\n",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/IdentityChallengeType"
+          }
+        }
+      }
+    },
+    "IdentityLevelID": {
+      "description": "Уровень идентификации личности",
+      "type": "string",
+      "example": "partial"
+    },
+    "BadRequest": {
+      "type": "object",
+      "required": [
+        "errorType"
+      ],
+      "properties": {
+        "errorType": {
+          "description": "Тип ошибки в данных",
+          "type": "string",
+          "enum": [
+            "SchemaViolated",
+            "NotFound",
+            "WrongType",
+            "NotInRange",
+            "WrongSize",
+            "WrongLength",
+            "WrongArray",
+            "NoMatch"
+          ],
+          "example": "NotFound"
+        },
+        "name": {
+          "description": "Имя или идентификатор элемента сообщения, содержащего недопустимые данные",
+          "type": "string",
+          "example": "X-Request-ID"
+        },
+        "description": {
+          "description": "Пояснение, почему данные считаются недопустимыми",
+          "type": "string",
+          "example": "Required parameter was not sent"
+        }
+      }
+    },
+    "BankCardPaymentSystem": {
+      "description": "Платежная система",
+      "type": "string",
+      "enum": [
+        "visa",
+        "mastercard",
+        "visaelectron",
+        "maestro",
+        "amex",
+        "dinersclub",
+        "discover",
+        "unionpay",
+        "jcb",
+        "nspkmir"
+      ]
+    },
+    "SecuredBankCard": {
+      "description": "Безопасные данные банковской карты",
+      "type": "object",
+      "required": [
+        "token"
+      ],
+      "properties": {
+        "token": {
+          "description": "Токен, идентифицирующий исходные данные карты",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000,
+          "example": "zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQg9xMkh"
+        },
+        "authData": {
+          "description": "Данные для авторизации платежа по карте",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000,
+          "example": "GVpEyibo60jJwyoJqriv1nAjiwfvzC9KVqFFjhhUA"
+        },
+        "paymentSystem": {
+          "description": "Платежная система",
+          "type": "string",
+          "enum": [
+            "visa",
+            "mastercard",
+            "visaelectron",
+            "maestro",
+            "amex",
+            "dinersclub",
+            "discover",
+            "unionpay",
+            "jcb",
+            "nspkmir"
+          ],
+          "readOnly": true
+        },
+        "bin": {
+          "description": "[Идентификационный номер][1] банка-эмитента карты\n\n[1]: https://en.wikipedia.org/wiki/Payment_card_number#Issuer_identification_number_(IIN)\n",
+          "type": "string",
+          "pattern": "^\\d{6,8}$",
+          "example": "4242",
+          "readOnly": true
+        },
+        "lastDigits": {
+          "description": "Последние цифры номера карты",
+          "type": "string",
+          "pattern": "^\\d{2,4}$",
+          "example": "4242",
+          "readOnly": true
+        }
+      }
+    },
+    "RUSDomesticPassport": {
+      "description": "Открытые данные национального паспорта гражданина РФ",
+      "allOf": [
+        {
+          "$ref": "#/definitions/SecuredPrivateDocument"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "description": "Национальный паспорт гражданина РФ",
+              "type": "string",
+              "readOnly": true
+            },
+            "seriesMasked": {
+              "description": "Маскированная серия паспорта",
+              "type": "string",
+              "example": "45**",
+              "readOnly": true
+            },
+            "numberMasked": {
+              "description": "Маскированный номер паспорта",
+              "type": "string",
+              "example": "*****6",
+              "readOnly": true
+            },
+            "fullnameMasked": {
+              "description": "Маскированное полное имя гражданина",
+              "type": "string",
+              "example": "И***** И.И.",
+              "readOnly": true
+            }
+          }
+        }
+      ]
+    },
+    "RUSRetireeInsuranceCertificate": {
+      "description": "Открытые данные страхового свидетельства обязательного пенсионного страхования\nгражданина РФ\n",
+      "allOf": [
+        {
+          "$ref": "#/definitions/SecuredPrivateDocument"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "description": "Страховое свидетельство обязательного пенсионного страхования\n",
+              "type": "string",
+              "readOnly": true
+            },
+            "numberMasked": {
+              "description": "Маскированный [СНИЛС](https://ru.wikipedia.org/wiki/Страховой_номер_индивидуального_лицевого_счёта)\n",
+              "type": "string",
+              "example": "12*-***-*** *4",
+              "readOnly": true
+            }
+          }
+        }
+      ]
+    },
+    "SecuredPrivateDocument": {
+      "description": "Персональный документ, токенизированный с целью сокрытия чувствительных данных\n",
+      "type": "object",
+      "discriminator": "type",
+      "required": [
+        "token"
+      ],
+      "properties": {
+        "type": {
+          "description": "Тип документа",
+          "type": "string",
+          "enum": [
+            "RUSDomesticPassport",
+            "RUSRetireeInsuranceCertificate"
+          ],
+          "readOnly": true
+        },
+        "token": {
+          "description": "Токен, уникально идентифицирующий исходные данные",
+          "type": "string",
+          "example": "7kodCm5gr68ji4O11KpVn0"
+        }
+      }
+    },
+    "SecuredPrivateDocumentType": {
+      "description": "Тип документа",
+      "type": "string",
+      "enum": [
+        "RUSDomesticPassport",
+        "RUSRetireeInsuranceCertificate"
+      ]
+    },
+    "PaymentResource": {
+      "description": "Ресурс для осуществления платежей",
+      "type": "object",
+      "discriminator": "type",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "description": "Тип платёжного ресурса.\n\nСм. [RBKmoney Payment Resource API](/?api/payres/swagger.yaml).\n",
+          "type": "string",
+          "enum": [
+            "BankCardPaymentResource",
+            "BankWirePaymentResource"
+          ]
+        }
+      }
+    },
+    "Provider": {
+      "description": "Данные провайдера услуг",
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "residences"
+      ],
+      "properties": {
+        "id": {
+          "description": "Идентификатор провайдера услуг",
+          "type": "string",
+          "example": "ncoeps"
+        },
+        "name": {
+          "description": "Человекочитаемое наименование провайдера услуг\n",
+          "type": "string",
+          "example": "НКО «ЭПС»"
+        },
+        "residences": {
+          "type": "array",
+          "description": "Резиденции, в которых провайдер предоставляет услуги\n",
+          "items": {
+            "description": "Резиденция, символьный код по стандарту [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)\n",
+            "type": "string",
+            "pattern": "^[A-Z]{3}$",
+            "example": "RUS"
+          }
+        }
+      }
+    },
+    "ProviderID": {
+      "description": "Идентификатор провайдера услуг",
+      "type": "string",
+      "example": "ncoeps"
+    },
+    "Residence": {
+      "description": "Описание региона резиденции",
+      "type": "object",
+      "required": [
+        "id",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "description": "Резиденция, символьный код по стандарту [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)\n",
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "example": "RUS"
+        },
+        "name": {
+          "description": "Человекочитаемое название региона резиденции\n",
+          "type": "string",
+          "example": "Российская федерация"
+        },
+        "flag": {
+          "description": "Флаг региона резиденции\n",
+          "type": "string",
+          "example": "🇷🇺"
+        }
+      }
+    },
+    "ResidenceID": {
+      "description": "Резиденция, символьный код по стандарту [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)\n",
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "example": "RUS"
+    },
+    "Wallet": {
+      "description": "Данные кошелька",
+      "type": "object",
+      "required": [
+        "name",
+        "identity",
+        "currency"
+      ],
+      "properties": {
+        "id": {
+          "description": "Идентификатор кошелька",
+          "type": "string",
+          "example": "10068321",
+          "readOnly": true
+        },
+        "name": {
+          "description": "Человекочитаемое название кошелька, по которому его легко узнать\n",
+          "type": "string",
+          "example": "Worldwide PHP Awareness Initiative"
+        },
+        "createdAt": {
+          "description": "Дата и время создания кошелька",
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "isBlocked": {
+          "description": "Заблокирован ли кошелёк?",
+          "type": "boolean",
+          "readOnly": true,
+          "example": false
+        },
+        "identity": {
+          "description": "Идентификатор личности владельца кошелька",
+          "type": "string",
+          "example": "10036274"
+        },
+        "currency": {
+          "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "example": "RUB"
+        },
+        "metadata": {
+          "description": "Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с\nданным кошельком\n",
+          "type": "object",
+          "example": {
+            "client_locale": "RU_ru"
+          }
+        }
+      }
+    },
+    "WalletAccount": {
+      "description": "Состояние счёта кошелька",
+      "type": "object",
+      "required": [
+        "own",
+        "available"
+      ],
+      "properties": {
+        "own": {
+          "allOf": [
+            {
+              "description": "Собственные средства\n"
+            },
+            {
+              "$ref": "#/definitions/Asset"
+            }
+          ]
+        },
+        "available": {
+          "allOf": [
+            {
+              "description": "Доступные к использованию средства, обычно равны собственным средствам\nза вычетом сумм всех незавершённых операций\n",
+              "example": {
+                "amount": 1200000,
+                "currency": "RUB"
+              }
+            },
+            {
+              "$ref": "#/definitions/Asset"
+            }
+          ]
+        }
+      }
+    },
+    "WalletGrantRequest": {
+      "description": "Запрос на единоразовое право управления средствами на кошельке",
+      "type": "object",
+      "required": [
+        "asset",
+        "validUntil"
+      ],
+      "properties": {
+        "token": {
+          "description": "Токен, дающий право единоразового управления средствами на кошельке",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000,
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n",
+          "readOnly": true
+        },
+        "asset": {
+          "allOf": [
+            {
+              "description": "Допустимый к использованию объём средств"
+            },
+            {
+              "$ref": "#/definitions/Asset"
+            }
+          ]
+        },
+        "validUntil": {
+          "description": "Дата и время, до наступления которого выданное право действительно\n",
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "WalletID": {
+      "description": "Идентификатор кошелька",
+      "type": "string",
+      "example": "10068321"
+    },
+    "WalletSource": {
+      "description": "Кошелёк как источник средств для вывода",
+      "type": "object",
+      "required": [
+        "walletID"
+      ],
+      "properties": {
+        "walletID": {
+          "description": "Идентификатор кошелька",
+          "type": "string",
+          "example": "10068321"
+        },
+        "walletGrant": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000,
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n"
+        }
+      }
+    },
+    "Withdrawal": {
+      "description": "Данные вывода денежных средств",
+      "allOf": [
+        {
+          "type": "object",
+          "required": [
+            "wallet",
+            "destination",
+            "body"
+          ],
+          "properties": {
+            "id": {
+              "description": "Идентификатор вывода денежных средств",
+              "type": "string",
+              "example": "tZ0jUmlsV0",
+              "readOnly": true
+            },
+            "createdAt": {
+              "description": "Дата и время запуска вывода",
+              "type": "string",
+              "format": "date-time",
+              "readOnly": true
+            },
+            "wallet": {
+              "description": "Идентификатор кошелька",
+              "type": "string",
+              "example": "10068321"
+            },
+            "walletGrant": {
+              "description": "Токен, дающий право на списание с кошелька для оплаты вывода.\n\nНеобходимо предоставить в том случае, если оплата производится засчёт средств _чужого_\nкошелька. Владелец указанного кошелька может\n[выдать на это право](#operation/issueWalletGrant).\n",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4000,
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n"
+            },
+            "destination": {
+              "description": "Идентификатор приёмника денежных средств",
+              "type": "string",
+              "example": "107498"
+            },
+            "destinationGrant": {
+              "description": "Токен, дающий право вывода.\n\nНеобходимо предоставить в том случае, если вывод производится посредством _чужого_ приёмника\nсредств. Владелец указанного приёмника может\n[выдать на это право](#operation/issueDestinationGrant).\n",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4000,
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n"
+            },
+            "body": {
+              "allOf": [
+                {
+                  "description": "Объём средств, которые необходимо вывести"
+                },
+                {
+                  "$ref": "#/definitions/Asset"
+                }
+              ]
+            },
+            "metadata": {
+              "description": "Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с\nданным выводом\n",
+              "type": "object",
+              "example": {
+                "notify_email": "iliketrains@example.com"
+              }
+            }
+          }
+        },
+        {
+          "$ref": "#/definitions/WithdrawalStatus"
+        }
+      ]
+    },
+    "WithdrawalEvent": {
+      "description": "Событие, возникшее в процессе вывода средств\n",
+      "type": "object",
+      "required": [
+        "eventID",
+        "occuredAt",
+        "changes"
+      ],
+      "properties": {
+        "eventID": {
+          "description": "Идентификатор события вывода средств",
+          "type": "integer",
+          "format": "int32",
+          "example": 42
+        },
+        "occuredAt": {
+          "description": "Дата и время возникновения события",
+          "type": "string",
+          "format": "date-time"
+        },
+        "changes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WithdrawalEventChange"
+          }
+        }
+      }
+    },
+    "WithdrawalEventChange": {
+      "description": "Изменение, возникшее в процессе вывода средств\n",
+      "type": "object",
+      "discriminator": "type",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "description": "Тип произошедшего изменения",
+          "type": "string",
+          "enum": [
+            "WithdrawalStatusChanged"
+          ]
+        }
+      }
+    },
+    "WithdrawalFailure": {
+      "type": "object",
+      "required": [
+        "code"
+      ],
+      "properties": {
+        "code": {
+          "description": "Код ошибки вывода",
+          "type": "string"
+        }
+      }
+    },
+    "WithdrawalID": {
+      "description": "Идентификатор вывода денежных средств",
+      "type": "string",
+      "example": "tZ0jUmlsV0"
+    },
+    "WithdrawalStatus": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "description": "Статус вывода денежных средств.\n\n| Значение    | Пояснение                                  |\n| ----------- | ------------------------------------------ |\n| `Pending`   | Вывод в процессе выполнения                |\n| `Succeeded` | Вывод средств произведён успешно           |\n| `Failed`    | Вывод средств завершился неудачей          |\n",
+          "type": "string",
+          "enum": [
+            "Pending",
+            "Succeeded",
+            "Failed"
+          ],
+          "readOnly": true
+        },
+        "failure": {
+          "allOf": [
+            {
+              "description": "> Если `status` == `Failed`\n\nПояснение причины неудачи\n",
+              "readOnly": true
+            },
+            {
+              "$ref": "#/definitions/WithdrawalFailure"
+            }
+          ]
+        }
+      }
+    },
+    "WithdrawalStatusChanged": {
+      "description": "Изменение статуса вывода средств",
+      "allOf": [
+        {
+          "$ref": "#/definitions/WithdrawalEventChange"
+        },
+        {
+          "$ref": "#/definitions/WithdrawalStatus"
+        }
+      ]
+    }
+  }
+}

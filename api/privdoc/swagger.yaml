@@ -1,0 +1,263 @@
+swagger: '2.0'
+info:
+  version: 0.0.1
+  title: RBKmoney Private Document API
+  description: |
+
+    RBKmoney Private Document API служит для токенизации чувствительных данных персональных документов пользователей.
+  termsOfService: 'http://rbk.money/'
+  contact:
+    name: RBKmoney support team
+    email: support@rbk.money
+    url: 'https://rbk.money'
+host: api.rbk.money
+basePath: /privdoc/v0
+schemes:
+  - https
+consumes:
+  - application/json; charset=utf-8
+produces:
+  - application/json; charset=utf-8
+securityDefinitions:
+  bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: |
+      Для аутентификации вызовов мы используем [JWT](https://jwt.io). Cоответствующий ключ передается в заголовке.
+      ```shell
+       Authorization: Bearer {TOKENIZATION|PRIVATE_JWT}
+      ```
+security:
+  - bearer: []
+responses:
+  BadRequest:
+    description: Недопустимые для операции входные данные
+    schema:
+      $ref: '#/definitions/BadRequest'
+parameters:
+  requestID:
+    name: X-Request-ID
+    in: header
+    description: Уникальный идентификатор запроса к системе
+    required: true
+    type: string
+    maxLength: 32
+    minLength: 1
+tags:
+  - name: Private Documents
+    x-displayName: Персональные документы
+    description: ''
+paths:
+  /private-documents:
+    post:
+      operationId: storePrivateDocument
+      summary: Сохранить персональный документ
+      tags:
+        - Private Documents
+      parameters:
+        - $ref: '#/parameters/requestID'
+        - name: proof
+          description: Данные документа
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/PrivateDocument'
+      responses:
+        '201':
+          description: Документ токенизирован
+          schema:
+            $ref: '#/definitions/SecuredPrivateDocument'
+        '400':
+          $ref: '#/responses/BadRequest'
+definitions:
+  BadRequest:
+    type: object
+    required:
+      - errorType
+    properties:
+      errorType:
+        description: Тип ошибки в данных
+        type: string
+        enum:
+          - SchemaViolated
+          - NotFound
+          - WrongType
+          - NotInRange
+          - WrongSize
+          - WrongLength
+          - WrongArray
+          - NoMatch
+        example: NotFound
+      name:
+        description: 'Имя или идентификатор элемента сообщения, содержащего недопустимые данные'
+        type: string
+        example: X-Request-ID
+      description:
+        description: 'Пояснение, почему данные считаются недопустимыми'
+        type: string
+        example: Required parameter was not sent
+  PrivateDocument:
+    description: Исходные чувствительные данные персональные документа
+    type: object
+    discriminator: type
+    required:
+      - type
+    properties:
+      type:
+        description: Вид документа
+        type: string
+        enum:
+          - RUSDomesticPassportData
+          - RUSRetireeInsuranceCertificateData
+  RUSDomesticPassport:
+    description: Открытые данные национального паспорта гражданина РФ
+    allOf:
+      - $ref: '#/definitions/SecuredPrivateDocument'
+      - type: object
+        properties:
+          type:
+            description: Национальный паспорт гражданина РФ
+            type: string
+            readOnly: true
+          seriesMasked:
+            description: Маскированная серия паспорта
+            type: string
+            example: 45**
+            readOnly: true
+          numberMasked:
+            description: Маскированный номер паспорта
+            type: string
+            example: '*****6'
+            readOnly: true
+          fullnameMasked:
+            description: Маскированное полное имя гражданина
+            type: string
+            example: И***** И.И.
+            readOnly: true
+  RUSDomesticPassportData:
+    description: Исходные данные национального паспорта гражданина РФ
+    allOf:
+      - $ref: '#/definitions/PrivateDocument'
+      - type: object
+        required:
+          - series
+          - number
+          - issuer
+          - issuedAt
+          - familyName
+          - firstName
+          - birthDate
+          - birthPlace
+        properties:
+          type:
+            description: Национальный паспорт гражданина РФ
+            type: string
+          series:
+            description: Серия паспорта
+            type: string
+            example: '4567'
+            pattern: '^[0-9]{4}$'
+          number:
+            description: Номер паспорта
+            type: string
+            example: '123456'
+            pattern: '^[0-9]{6}$'
+          issuer:
+            description: Наименование выдавшего паспорт органа
+            type: string
+            example: |
+              Отделение УФМС России по Кемеровской области в Упоровском районе
+            maxLength: 1000
+          issuedAt:
+            description: Дата выдачи паспорта
+            type: string
+            format: date
+          familyName:
+            description: Фамилия гражданина
+            type: string
+            example: Иванов
+            pattern: '^[А-Яа-я''-]{1,100}$'
+          firstName:
+            description: Имя гражданина
+            type: string
+            example: Иван
+            pattern: '^[А-Яа-я''-]{1,100}$'
+          patronymic:
+            description: Отчество гражданина
+            type: string
+            example: Иванович
+            pattern: '^[А-Яа-я''-]{1,100}$'
+          birthDate:
+            description: Дата рождения гражданина
+            type: string
+            format: date
+          birthPlace:
+            description: Место рождения гражданина
+            type: string
+            pattern: '^[ .0-9А-Яа-я''-]{1,100}$'
+            example: дер. Упоровка
+  RUSRetireeInsuranceCertificate:
+    description: |
+      Открытые данные страхового свидетельства обязательного пенсионного страхования
+      гражданина РФ
+    allOf:
+      - $ref: '#/definitions/SecuredPrivateDocument'
+      - type: object
+        properties:
+          type:
+            description: |
+              Страховое свидетельство обязательного пенсионного страхования
+            type: string
+            readOnly: true
+          numberMasked:
+            description: |
+              Маскированный [СНИЛС](https://ru.wikipedia.org/wiki/Страховой_номер_индивидуального_лицевого_счёта)
+            type: string
+            example: 12*-***-*** *4
+            readOnly: true
+  RUSRetireeInsuranceCertificateData:
+    description: |
+      Исходные данные страхового свидетельства обязательного пенсионного страхования
+      гражданина РФ
+    allOf:
+      - $ref: '#/definitions/PrivateDocument'
+      - type: object
+        required:
+          - number
+        properties:
+          type:
+            description: |
+              Страховое свидетельство обязательного пенсионного страхования
+            type: string
+          number:
+            description: |
+              [СНИЛС](https://ru.wikipedia.org/wiki/Страховой_номер_индивидуального_лицевого_счёта)
+            type: string
+            example: 123-456-789 64
+            pattern: '^[0-9]{3}-[0-9]{3}-[0-9]{3} [0-9]{2}$'
+  SecuredPrivateDocument:
+    description: |
+      Персональный документ, токенизированный с целью сокрытия чувствительных данных
+    type: object
+    discriminator: type
+    required:
+      - token
+    properties:
+      type:
+        description: Тип документа
+        type: string
+        enum:
+          - RUSDomesticPassport
+          - RUSRetireeInsuranceCertificate
+        readOnly: true
+      token:
+        description: 'Токен, уникально идентифицирующий исходные данные'
+        type: string
+        example: 7kodCm5gr68ji4O11KpVn0
+  SecuredPrivateDocumentType:
+    description: Тип документа
+    type: string
+    enum:
+      - RUSDomesticPassport
+      - RUSRetireeInsuranceCertificate

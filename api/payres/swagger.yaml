@@ -1,0 +1,232 @@
+swagger: '2.0'
+info:
+  version: 0.0.1
+  title: RBKmoney Payment Resource API
+  description: |
+
+    RBKmoney Payment Resource API служит для токенизации чувствительных данных платёжных ресурсов пользователей.
+  termsOfService: 'http://rbk.money/'
+  contact:
+    name: RBKmoney support team
+    email: support@rbk.money
+    url: 'https://rbk.money'
+host: api.rbk.money
+basePath: /privdoc/v0
+schemes:
+  - https
+consumes:
+  - application/json; charset=utf-8
+produces:
+  - application/json; charset=utf-8
+securityDefinitions:
+  bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: |
+      Для аутентификации вызовов мы используем [JWT](https://jwt.io). Cоответствующий ключ передается в заголовке.
+      ```shell
+       Authorization: Bearer {TOKENIZATION|PRIVATE_JWT}
+      ```
+security:
+  - bearer: []
+responses:
+  NotFound:
+    description: Искомая сущность не найдена
+  BadRequest:
+    description: Недопустимые для операции входные данные
+    schema:
+      $ref: '#/definitions/BadRequest'
+parameters:
+  requestID:
+    name: X-Request-ID
+    in: header
+    description: Уникальный идентификатор запроса к системе
+    required: true
+    type: string
+    maxLength: 32
+    minLength: 1
+tags:
+  - name: Payment Resources
+    x-displayName: Платёжные ресурсы
+    description: ''
+paths:
+  /bank-cards:
+    post:
+      operationId: storeBankCard
+      summary: Сохранить банковскую карту
+      tags:
+        - Payment Resources
+      parameters:
+        - $ref: '#/parameters/requestID'
+        - name: bankCard
+          description: Данные банковской карты
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/BankCard'
+      responses:
+        '201':
+          description: Карта сохранена
+          schema:
+            $ref: '#/definitions/SecuredBankCard'
+        '400':
+          $ref: '#/responses/BadRequest'
+        '422':
+          description: Непригодные данные банковской карты
+          schema:
+            $ref: '#/definitions/InvalidBankCard'
+  '/bank-cards/{token}':
+    get:
+      operationId: getBankCard
+      summary: Получить данные банковской карты
+      tags:
+        - Payment Resources
+      parameters:
+        - $ref: '#/parameters/requestID'
+        - name: token
+          description: Данные банковской карты
+          in: path
+          required: true
+          type: string
+          minLength: 1
+          maxLength: 1000
+      responses:
+        '200':
+          description: Данные карты найдены
+          schema:
+            $ref: '#/definitions/SecuredBankCard'
+        '400':
+          $ref: '#/responses/BadRequest'
+        '404':
+          $ref: '#/responses/NotFound'
+definitions:
+  BankCard:
+    description: Данные банковской карты
+    type: object
+    required:
+      - cardNumber
+      - expDate
+    properties:
+      type:
+        description: Банковская карта
+        type: string
+        enum:
+          - BankCard
+      cardNumber:
+        description: Номер банковской карты
+        type: string
+        pattern: '^\d{12,19}$'
+        example: '4242424242424242'
+      expDate:
+        description: Срок действия банковской карты
+        type: string
+        pattern: '^\d{2}\/(\d{2}|\d{4})$'
+        example: 12/21
+      cardHolder:
+        description: Имя держателя карты
+        type: string
+        minLength: 1
+        maxLength: 100
+        pattern: '^[A-Z0-9 .,''/\-]+$'
+        example: LEXA SVOTIN
+      cvv:
+        description: Код верификации
+        type: string
+        pattern: '^\d{3,4}$'
+        example: '321'
+  BankCardPaymentSystem:
+    description: Платежная система
+    type: string
+    enum:
+      - visa
+      - mastercard
+      - visaelectron
+      - maestro
+      - amex
+      - dinersclub
+      - discover
+      - unionpay
+      - jcb
+      - nspkmir
+  InvalidBankCard:
+    type: object
+    properties:
+      message:
+        type: string
+        example: |
+          Card is expired.
+  BadRequest:
+    type: object
+    required:
+      - errorType
+    properties:
+      errorType:
+        description: Тип ошибки в данных
+        type: string
+        enum:
+          - SchemaViolated
+          - NotFound
+          - WrongType
+          - NotInRange
+          - WrongSize
+          - WrongLength
+          - WrongArray
+          - NoMatch
+        example: NotFound
+      name:
+        description: 'Имя или идентификатор элемента сообщения, содержащего недопустимые данные'
+        type: string
+        example: X-Request-ID
+      description:
+        description: 'Пояснение, почему данные считаются недопустимыми'
+        type: string
+        example: Required parameter was not sent
+  SecuredBankCard:
+    description: Безопасные данные банковской карты
+    type: object
+    required:
+      - token
+    properties:
+      token:
+        description: 'Токен, идентифицирующий исходные данные карты'
+        type: string
+        minLength: 1
+        maxLength: 1000
+        example: zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQg9xMkh
+      authData:
+        description: Данные для авторизации платежа по карте
+        type: string
+        minLength: 1
+        maxLength: 1000
+        example: GVpEyibo60jJwyoJqriv1nAjiwfvzC9KVqFFjhhUA
+      paymentSystem:
+        description: Платежная система
+        type: string
+        enum:
+          - visa
+          - mastercard
+          - visaelectron
+          - maestro
+          - amex
+          - dinersclub
+          - discover
+          - unionpay
+          - jcb
+          - nspkmir
+        readOnly: true
+      bin:
+        description: |
+          [Идентификационный номер][1] банка-эмитента карты
+
+          [1]: https://en.wikipedia.org/wiki/Payment_card_number#Issuer_identification_number_(IIN)
+        type: string
+        pattern: '^\d{6,8}$'
+        example: '4242'
+        readOnly: true
+      lastDigits:
+        description: Последние цифры номера карты
+        type: string
+        pattern: '^\d{2,4}$'
+        example: '4242'
+        readOnly: true
