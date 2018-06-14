@@ -11,7 +11,7 @@ info:
     email: support@rbk.money
     url: 'https://rbk.money'
 host: api.rbk.money
-basePath: /privdoc/v0
+basePath: /payres/v0
 schemes:
   - https
 consumes:
@@ -69,7 +69,9 @@ paths:
         '201':
           description: Карта сохранена
           schema:
-            $ref: '#/definitions/SecuredBankCard'
+            allOf:
+              - $ref: '#/definitions/SecuredBankCard'
+              - $ref: '#/definitions/AuthData'
         '400':
           $ref: '#/responses/BadRequest'
         '422':
@@ -101,6 +103,15 @@ paths:
         '404':
           $ref: '#/responses/NotFound'
 definitions:
+  AuthData:
+    type: object
+    properties:
+      authData:
+        description: Данные для авторизации платежа по карте
+        type: string
+        minLength: 1
+        maxLength: 1000
+        example: GVpEyibo60jJwyoJqriv1nAjiwfvzC9KVqFFjhhUA
   BankCard:
     description: Данные банковской карты
     type: object
@@ -194,12 +205,6 @@ definitions:
         minLength: 1
         maxLength: 1000
         example: zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQg9xMkh
-      authData:
-        description: Данные для авторизации платежа по карте
-        type: string
-        minLength: 1
-        maxLength: 1000
-        example: GVpEyibo60jJwyoJqriv1nAjiwfvzC9KVqFFjhhUA
       paymentSystem:
         description: Платежная система
         type: string
