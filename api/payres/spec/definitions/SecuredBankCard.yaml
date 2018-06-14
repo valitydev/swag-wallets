@@ -9,12 +9,6 @@ properties:
     minLength: 1
     maxLength: 1000
     example: zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQg9xMkh
-  authData:
-    description: Данные для авторизации платежа по карте
-    type: string
-    minLength: 1
-    maxLength: 1000
-    example: GVpEyibo60jJwyoJqriv1nAjiwfvzC9KVqFFjhhUA
   paymentSystem:
     x-rebillyMerge:
       - $ref: '#/definitions/BankCardPaymentSystem'

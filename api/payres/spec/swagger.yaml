@@ -13,7 +13,7 @@ info:
     email: support@rbk.money
     url: https://rbk.money
 host: api.rbk.money
-basePath: /privdoc/v0
+basePath: /payres/v0
 schemes:
   - https
 consumes:
