@@ -33,3 +33,17 @@ release:
     - slack-notifier:
       url: ${SLACK_WEBHOOK_URL}
       username: "wercker"
+
+deploy:
+  steps:
+    - leipert/git-push@0.7.6
+    - git-push:
+         gh_oauth: ${GITHUB_API_TOKEN}
+         gh_pages: true
+         basedir: out
+         repo: wallets-api
+         destdir: ${WERCKER_GIT_BRANCH}
+  after-steps:
+    - slack-notifier:
+      url: ${SLACK_WEBHOOK_URL}
+      username: "wercker"
