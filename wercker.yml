@@ -36,12 +36,10 @@ release:
 
 deploy:
   steps:
-    - leipert/git-push@0.7.6
-    - git-push:
+    - lordlothar99/git-push:
          gh_oauth: ${GITHUB_API_TOKEN}
+         repo: rbkmoney/wallets-api
          gh_pages: true
-         basedir: out
-         repo: wallets-api
          destdir: ${WERCKER_GIT_BRANCH}
   after-steps:
     - slack-notifier:
