@@ -20,13 +20,11 @@ dev:
 
 release:
   steps:
-    - script:
-      name: prepare release artifacts for a branch
-      code: mkdir -p out && cp -frv ./api out/
     - lordlothar99/git-push:
       gh_oauth: ${GITHUB_API_TOKEN}
       branch: release/${WERCKER_GIT_BRANCH}
-      basedir: out
+      basedir: api
+      destdir: api
       message: |
         [${WERCKER_GIT_BRANCH}] release ${WERCKER_GIT_OWNER}/${WERCKER_GIT_REPOSITORY}@${WERCKER_GIT_COMMIT}
   after-steps:
@@ -37,10 +35,10 @@ release:
 deploy:
   steps:
     - lordlothar99/git-push:
-         gh_oauth: ${GITHUB_API_TOKEN}
-         repo: rbkmoney/wallets-api
-         gh_pages: true
-         destdir: ${WERCKER_GIT_BRANCH}
+      gh_oauth: ${GITHUB_API_TOKEN}
+      repo: rbkmoney/wallets-api
+      gh_pages: true
+      destdir: ${WERCKER_GIT_BRANCH}
   after-steps:
     - slack-notifier:
       url: ${SLACK_WEBHOOK_URL}
