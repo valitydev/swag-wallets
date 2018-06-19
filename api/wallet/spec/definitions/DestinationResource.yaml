@@ -8,7 +8,7 @@ properties:
     description: |
       Тип ресурса приёмника средств.
 
-      См. [RBKmoney Payment Resource API](/?api/payres/swagger.yaml).
+      См. [RBKmoney Payment Resource API](?api/payres/swagger.yaml).
     type: string
     enum:
       - BankCardDestinationResource

@@ -26,7 +26,7 @@ allOf:
         description: |
           Набор представленных доказательств.
 
-          См. [RBKmoney Private Documents API](/?api/privdoc/swagger.json).
+          См. [RBKmoney Private Documents API](?api/privdoc/swagger.json).
         type: array
         uniqueItems: true
         items:
