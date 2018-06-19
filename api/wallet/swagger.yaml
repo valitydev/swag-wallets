@@ -1314,7 +1314,7 @@ definitions:
         description: |
           Тип ресурса приёмника средств.
 
-          См. [RBKmoney Payment Resource API](/?api/payres/swagger.yaml).
+          См. [RBKmoney Payment Resource API](?api/payres/swagger.yaml).
         type: string
         enum:
           - BankCardDestinationResource
@@ -1444,7 +1444,7 @@ definitions:
             description: |
               Набор представленных доказательств.
 
-              См. [RBKmoney Private Documents API](/?api/privdoc/swagger.json).
+              См. [RBKmoney Private Documents API](?api/privdoc/swagger.json).
             type: array
             uniqueItems: true
             items:
@@ -1781,7 +1781,7 @@ definitions:
         description: |
           Тип платёжного ресурса.
 
-          См. [RBKmoney Payment Resource API](/?api/payres/swagger.yaml).
+          См. [RBKmoney Payment Resource API](?api/payres/swagger.yaml).
         type: string
         enum:
           - BankCardPaymentResource

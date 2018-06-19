@@ -1910,7 +1910,7 @@
       ],
       "properties": {
         "type": {
-          "description": "Тип ресурса приёмника средств.\n\nСм. [RBKmoney Payment Resource API](/?api/payres/swagger.yaml).\n",
+          "description": "Тип ресурса приёмника средств.\n\nСм. [RBKmoney Payment Resource API](?api/payres/swagger.yaml).\n",
           "type": "string",
           "enum": [
             "BankCardDestinationResource"
@@ -2052,7 +2052,7 @@
               "example": "esia"
             },
             "proofs": {
-              "description": "Набор представленных доказательств.\n\nСм. [RBKmoney Private Documents API](/?api/privdoc/swagger.json).\n",
+              "description": "Набор представленных доказательств.\n\nСм. [RBKmoney Private Documents API](?api/privdoc/swagger.json).\n",
               "type": "array",
               "uniqueItems": true,
               "items": {
@@ -2451,7 +2451,7 @@
       ],
       "properties": {
         "type": {
-          "description": "Тип платёжного ресурса.\n\nСм. [RBKmoney Payment Resource API](/?api/payres/swagger.yaml).\n",
+          "description": "Тип платёжного ресурса.\n\nСм. [RBKmoney Payment Resource API](?api/payres/swagger.yaml).\n",
           "type": "string",
           "enum": [
             "BankCardPaymentResource",
