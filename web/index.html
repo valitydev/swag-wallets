@@ -23,14 +23,24 @@
 <body>
     <div id='redoc'></div>
     <script type="text/javascript">
-      Redoc.init('api/wallet/swagger.json', {
-          theme: {
-              breakpoints: {
-                  //3-panel view fix
-                  medium: '75rem',
+      // Since we serve three different specs from a single domain we hack up a
+      // simple way to redirect user to one or another
+      var spec = window.location.search.substring(1);
+      if (spec.length == 0) {
+          spec = "api/wallet/swagger.json";
+      }
+      Redoc.init(
+          spec,
+          {
+              theme: {
+                  breakpoints: {
+                      // 3-panel view fix
+                      medium: '75rem'
+                  }
               }
-          }
-      }, document.getElementById('redoc'));
+          },
+          document.getElementById('redoc')
+      );
     </script>
 </body>
 
