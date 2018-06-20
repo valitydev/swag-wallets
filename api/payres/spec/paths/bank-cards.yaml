@@ -15,9 +15,7 @@ post:
     '201':
       description: Карта сохранена
       schema:
-        allOf:
-          - $ref: '#/definitions/SecuredBankCard'
-          - $ref: '#/definitions/AuthData'
+        $ref: '#/definitions/StoreBankCardResponse'
     '400':
       $ref: '#/responses/BadRequest'
     '422':
