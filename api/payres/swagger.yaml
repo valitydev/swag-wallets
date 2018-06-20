@@ -69,9 +69,7 @@ paths:
         '201':
           description: Карта сохранена
           schema:
-            allOf:
-              - $ref: '#/definitions/SecuredBankCard'
-              - $ref: '#/definitions/AuthData'
+            $ref: '#/definitions/StoreBankCardResponse'
         '400':
           $ref: '#/responses/BadRequest'
         '422':
@@ -235,3 +233,8 @@ definitions:
         pattern: '^\d{2,4}$'
         example: '4242'
         readOnly: true
+  StoreBankCardResponse:
+    type: object
+    allOf:
+      - $ref: '#/definitions/SecuredBankCard'
+      - $ref: '#/definitions/AuthData'

@@ -90,14 +90,7 @@
           "201": {
             "description": "Карта сохранена",
             "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/definitions/SecuredBankCard"
-                },
-                {
-                  "$ref": "#/definitions/AuthData"
-                }
-              ]
+              "$ref": "#/definitions/StoreBankCardResponse"
             }
           },
           "400": {
@@ -310,6 +303,17 @@
           "readOnly": true
         }
       }
+    },
+    "StoreBankCardResponse": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/SecuredBankCard"
+        },
+        {
+          "$ref": "#/definitions/AuthData"
+        }
+      ]
     }
   }
 }
