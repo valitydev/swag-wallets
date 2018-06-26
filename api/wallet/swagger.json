@@ -1421,7 +1421,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Withdrawal"
+              "$ref": "#/definitions/WithdrawalParameters"
             }
           }
         ],
@@ -2700,24 +2700,10 @@
               "type": "string",
               "example": "10068321"
             },
-            "walletGrant": {
-              "description": "Токен, дающий право на списание с кошелька для оплаты вывода.\n\nНеобходимо предоставить в том случае, если оплата производится засчёт средств _чужого_\nкошелька. Владелец указанного кошелька может\n[выдать на это право](#operation/issueWalletGrant).\n",
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 4000,
-              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n"
-            },
             "destination": {
               "description": "Идентификатор приёмника денежных средств",
               "type": "string",
               "example": "107498"
-            },
-            "destinationGrant": {
-              "description": "Токен, дающий право вывода.\n\nНеобходимо предоставить в том случае, если вывод производится посредством _чужого_ приёмника\nсредств. Владелец указанного приёмника может\n[выдать на это право](#operation/issueDestinationGrant).\n",
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 4000,
-              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n"
             },
             "body": {
               "allOf": [
@@ -2804,6 +2790,33 @@
       "description": "Идентификатор вывода денежных средств",
       "type": "string",
       "example": "tZ0jUmlsV0"
+    },
+    "WithdrawalParameters": {
+      "description": "Параметры создаваемого вывода",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Withdrawal"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "walletGrant": {
+              "description": "Токен, дающий право на списание с кошелька для оплаты вывода.\n\nНеобходимо предоставить в том случае, если оплата производится засчёт средств _чужого_\nкошелька. Владелец указанного кошелька может\n[выдать на это право](#operation/issueWalletGrant).\n",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4000,
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n"
+            },
+            "destinationGrant": {
+              "description": "Токен, дающий право вывода.\n\nНеобходимо предоставить в том случае, если вывод производится посредством _чужого_ приёмника\nсредств. Владелец указанного приёмника может\n[выдать на это право](#operation/issueDestinationGrant).\n",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4000,
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n"
+            }
+          }
+        }
+      ]
     },
     "WithdrawalStatus": {
       "type": "object",
