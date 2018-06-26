@@ -10,7 +10,7 @@ post:
       in: body
       required: true
       schema:
-        $ref: '#/definitions/Withdrawal'
+        $ref: '#/definitions/WithdrawalParameters'
   responses:
     '202':
       description: Вывод запущен
