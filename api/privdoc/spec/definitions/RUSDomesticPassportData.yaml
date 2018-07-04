@@ -6,6 +6,7 @@ allOf:
       - series
       - number
       - issuer
+      - issuerCode
       - issuedAt
       - familyName
       - firstName
@@ -31,6 +32,12 @@ allOf:
         example: |
           Отделение УФМС России по Кемеровской области в Упоровском районе
         maxLength: 1000
+      issuerCode:
+        description: Код подразделения выдавшего паспорт органа
+        type: string
+        example: |
+          666-777
+        pattern: '^[0-9]{3}-[0-9]{3}$'
       issuedAt:
         description: Дата выдачи паспорта
         type: string
