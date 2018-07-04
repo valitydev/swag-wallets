@@ -197,6 +197,7 @@
             "series",
             "number",
             "issuer",
+            "issuerCode",
             "issuedAt",
             "familyName",
             "firstName",
@@ -225,6 +226,12 @@
               "type": "string",
               "example": "Отделение УФМС России по Кемеровской области в Упоровском районе\n",
               "maxLength": 1000
+            },
+            "issuerCode": {
+              "description": "Код подразделения выдавшего паспорт органа",
+              "type": "string",
+              "example": "666-777\n",
+              "pattern": "^[0-9]{3}-[0-9]{3}$"
             },
             "issuedAt": {
               "description": "Дата выдачи паспорта",
