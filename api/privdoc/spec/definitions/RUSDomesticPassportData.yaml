@@ -46,17 +46,20 @@ allOf:
         description: Фамилия гражданина
         type: string
         example: "Иванов"
-        pattern: "^[А-Яа-я'-]{1,100}$"
+        # pattern: "^[А-Яа-я'-]{1,100}$"
+        maxLength: 100
       firstName:
         description: Имя гражданина
         type: string
         example: "Иван"
-        pattern: "^[А-Яа-я'-]{1,100}$"
+        # pattern: "^[А-Яа-я'-]{1,100}$"
+        maxLength: 100
       patronymic:
         description: Отчество гражданина
         type: string
         example: "Иванович"
-        pattern: "^[А-Яа-я'-]{1,100}$"
+        # pattern: "^[А-Яа-я'-]{1,100}$"
+        maxLength: 100
       birthDate:
         description: Дата рождения гражданина
         type: string
@@ -64,5 +67,6 @@ allOf:
       birthPlace:
         description: Место рождения гражданина
         type: string
-        pattern: "^[ .0-9А-Яа-я'-]{1,100}$"
+        # pattern: "^[ .0-9А-Яа-я'-]{1,100}$"
+        maxLength: 100
         example: "дер. Упоровка"
