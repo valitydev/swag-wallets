@@ -1186,7 +1186,7 @@
             "in": "path",
             "description": "Резиденция, в рамках которой производится оказание услуг,\nкод страны или региона по стандарту [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)\n",
             "type": "string",
-            "pattern": "^[A-Z]{2}$",
+            "pattern": "^[A-Z]{3}$",
             "required": true
           }
         ],
