@@ -1418,7 +1418,6 @@ definitions:
     allOf:
       - type: object
         required:
-          - level
           - type
           - proofs
         properties:
@@ -1432,10 +1431,6 @@ definitions:
             type: string
             format: date-time
             readOnly: true
-          level:
-            description: Необходимый уровень идентификации личности
-            type: string
-            example: partial
           type:
             description: Тип процедуры идентификации личности
             type: string
