@@ -2,7 +2,6 @@ description: Процедура идентификации личности
 allOf:
   - type: object
     required:
-      - level
       - type
       - proofs
     properties:
@@ -15,10 +14,6 @@ allOf:
         type: string
         format: date-time
         readOnly: true
-      level:
-        x-rebillyMerge:
-          - $ref: '#/definitions/IdentityLevelID'
-          - description: Необходимый уровень идентификации личности
       type:
         x-rebillyMerge:
           - $ref: '#/definitions/IdentityChallengeTypeID'
