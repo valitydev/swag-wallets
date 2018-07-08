@@ -172,7 +172,7 @@ parameters:
       Резиденция, в рамках которой производится оказание услуг,
       код страны или региона по стандарту [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)
     type: string
-    pattern: '^[A-Z]{2}$'
+    pattern: '^[A-Za-z]{2}$'
     required: false
 
   eventLimit:
