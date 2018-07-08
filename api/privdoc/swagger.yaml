@@ -168,7 +168,7 @@ definitions:
             description: Наименование выдавшего паспорт органа
             type: string
             example: |
-              Отделение УФМС России по Кемеровской области в Упоровском районе
+              Отделение УФМС России по Кемеровской области в Юргинском районе
             maxLength: 1000
           issuerCode:
             description: Код подразделения выдавшего паспорт органа
@@ -203,7 +203,7 @@ definitions:
             description: Место рождения гражданина
             type: string
             maxLength: 100
-            example: дер. Упоровка
+            example: дер. Белянино
   RUSRetireeInsuranceCertificate:
     description: |
       Открытые данные страхового свидетельства обязательного пенсионного страхования

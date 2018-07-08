@@ -1277,7 +1277,7 @@ definitions:
               данным приёмником
             type: object
             example:
-              display_name: Картофан СБЕР
+              color_hint: olive-green
       - $ref: '#/definitions/DestinationStatus'
   DestinationGrantRequest:
     description: Запрос на право управления выводами на приёмник средств
@@ -1412,7 +1412,7 @@ definitions:
           данной личностью владельца
         type: object
         example:
-          lkDisplayName: Серёга на созвоне
+          lkDisplayName: Сергей Иванович
   IdentityChallenge:
     description: Процедура идентификации личности
     allOf:
