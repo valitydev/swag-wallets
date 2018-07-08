@@ -12,7 +12,7 @@ get:
         4217](http://www.iso.org/iso/home/standards/currency_codes.htm).
       type: string
       required: true
-      pattern: '^[A-Z]{3}$'
+      pattern: '^[A-Za-z]{3}$'
   responses:
     '200':
       description: Валюта найдена
