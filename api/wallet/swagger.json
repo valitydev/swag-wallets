@@ -127,7 +127,7 @@
       "in": "query",
       "description": "Резиденция, в рамках которой производится оказание услуг,\nкод страны или региона по стандарту [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)\n",
       "type": "string",
-      "pattern": "^[A-Za-z]{2}$",
+      "pattern": "^[A-Za-z]{3}$",
       "required": false
     },
     "eventLimit": {
