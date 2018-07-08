@@ -40,5 +40,5 @@ allOf:
           данным приёмником
         type: object
         example:
-          display_name: Картофан СБЕР
+          color_hint: olive-green
   - $ref: '#/definitions/DestinationStatus'

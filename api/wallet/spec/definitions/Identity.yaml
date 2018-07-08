@@ -47,4 +47,4 @@ properties:
       данной личностью владельца
     type: object
     example:
-      lkDisplayName: Серёга на созвоне
+      lkDisplayName: Сергей Иванович
