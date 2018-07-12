@@ -2646,26 +2646,6 @@
       "type": "string",
       "example": "10068321"
     },
-    "WalletSource": {
-      "description": "Кошелёк как источник средств для вывода",
-      "type": "object",
-      "required": [
-        "walletID"
-      ],
-      "properties": {
-        "walletID": {
-          "description": "Идентификатор кошелька",
-          "type": "string",
-          "example": "10068321"
-        },
-        "walletGrant": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 4000,
-          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n"
-        }
-      }
-    },
     "Withdrawal": {
       "description": "Данные вывода денежных средств",
       "allOf": [
@@ -2795,18 +2775,24 @@
           "type": "object",
           "properties": {
             "walletGrant": {
-              "description": "Токен, дающий право на списание с кошелька для оплаты вывода.\n\nНеобходимо предоставить в том случае, если оплата производится засчёт средств _чужого_\nкошелька. Владелец указанного кошелька может\n[выдать на это право](#operation/issueWalletGrant).\n",
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 4000,
-              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n"
+              "allOf": [
+                {
+                  "$ref": "#/definitions/GrantToken"
+                },
+                {
+                  "description": "Токен, дающий право на списание с кошелька для оплаты вывода.\n\nНеобходимо предоставить в том случае, если оплата производится засчёт средств _чужого_\nкошелька. Владелец указанного кошелька может\n[выдать на это право](#operation/issueWalletGrant).\n"
+                }
+              ]
             },
             "destinationGrant": {
-              "description": "Токен, дающий право вывода.\n\nНеобходимо предоставить в том случае, если вывод производится посредством _чужого_ приёмника\nсредств. Владелец указанного приёмника может\n[выдать на это право](#operation/issueDestinationGrant).\n",
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 4000,
-              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n"
+              "allOf": [
+                {
+                  "$ref": "#/definitions/GrantToken"
+                },
+                {
+                  "description": "Токен, дающий право вывода.\n\nНеобходимо предоставить в том случае, если вывод производится посредством _чужого_ приёмника\nсредств. Владелец указанного приёмника может\n[выдать на это право](#operation/issueDestinationGrant).\n"
+                }
+              ]
             }
           }
         }

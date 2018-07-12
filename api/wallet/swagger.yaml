@@ -1937,23 +1937,6 @@ definitions:
     description: Идентификатор кошелька
     type: string
     example: '10068321'
-  WalletSource:
-    description: Кошелёк как источник средств для вывода
-    type: object
-    required:
-      - walletID
-    properties:
-      walletID:
-        description: Идентификатор кошелька
-        type: string
-        example: '10068321'
-      walletGrant:
-        type: string
-        minLength: 1
-        maxLength: 4000
-        example: |
-          eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M
-          DIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o
   Withdrawal:
     description: Данные вывода денежных средств
     allOf:
@@ -2047,31 +2030,23 @@ definitions:
       - type: object
         properties:
           walletGrant:
-            description: |
-              Токен, дающий право на списание с кошелька для оплаты вывода.
+            allOf:
+              - $ref: '#/definitions/GrantToken'
+              - description: |
+                  Токен, дающий право на списание с кошелька для оплаты вывода.
 
-              Необходимо предоставить в том случае, если оплата производится засчёт средств _чужого_
-              кошелька. Владелец указанного кошелька может
-              [выдать на это право](#operation/issueWalletGrant).
-            type: string
-            minLength: 1
-            maxLength: 4000
-            example: |
-              eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M
-              DIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o
+                  Необходимо предоставить в том случае, если оплата производится засчёт средств _чужого_
+                  кошелька. Владелец указанного кошелька может
+                  [выдать на это право](#operation/issueWalletGrant).
           destinationGrant:
-            description: |
-              Токен, дающий право вывода.
+            allOf:
+              - $ref: '#/definitions/GrantToken'
+              - description: |
+                  Токен, дающий право вывода.
 
-              Необходимо предоставить в том случае, если вывод производится посредством _чужого_ приёмника
-              средств. Владелец указанного приёмника может
-              [выдать на это право](#operation/issueDestinationGrant).
-            type: string
-            minLength: 1
-            maxLength: 4000
-            example: |
-              eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M
-              DIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o
+                  Необходимо предоставить в том случае, если вывод производится посредством _чужого_ приёмника
+                  средств. Владелец указанного приёмника может
+                  [выдать на это право](#operation/issueDestinationGrant).
   WithdrawalStatus:
     type: object
     properties:
