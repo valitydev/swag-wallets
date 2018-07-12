@@ -88,9 +88,6 @@ responses:
   NotFound:
     description: Искомая сущность не найдена
 
-  Conflict:
-    description: Операция вызывает конфликт
-
 parameters:
 
   requestID:

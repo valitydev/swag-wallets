@@ -16,37 +16,3 @@ get:
       $ref: '#/responses/NotFound'
     '400':
       $ref: '#/responses/BadRequest'
-
-patch:
-  operationId: cancelIdentityChallenge
-  summary: Отменить процедуру идентификации
-  tags:
-    - Identities
-  parameters:
-    - $ref: '#/parameters/requestID'
-    - $ref: '#/parameters/identityID'
-    - $ref: '#/parameters/challengeID'
-    - name: challenge
-      in: body
-      required: true
-      schema:
-        type: object
-        required:
-          - status
-        properties:
-          status:
-            description: Целевой статус процедуры
-            type: string
-            enum:
-              - Cancelled
-  responses:
-    '200':
-      description: Процедура идентификации отменена
-      schema:
-        $ref: '#/definitions/IdentityChallenge'
-    '404':
-      $ref: '#/responses/NotFound'
-    '400':
-      $ref: '#/responses/BadRequest'
-    '409':
-      $ref: '#/responses/Conflict'
