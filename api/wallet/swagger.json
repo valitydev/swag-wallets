@@ -92,15 +92,6 @@
       "maxLength": 40,
       "minLength": 1
     },
-    "depositID": {
-      "name": "depositID",
-      "in": "path",
-      "description": "Идентификатор ввода денежных средств",
-      "required": true,
-      "type": "string",
-      "maxLength": 40,
-      "minLength": 1
-    },
     "destinationID": {
       "name": "destinationID",
       "in": "path",
@@ -170,11 +161,6 @@
       "description": ""
     },
     {
-      "name": "Deposits",
-      "x-displayName": "Вводы",
-      "description": ""
-    },
-    {
       "name": "Withdrawals",
       "x-displayName": "Выводы",
       "description": ""
@@ -216,158 +202,6 @@
             "description": "Валюта найдена",
             "schema": {
               "$ref": "#/definitions/Currency"
-            }
-          },
-          "400": {
-            "$ref": "#/responses/BadRequest"
-          },
-          "404": {
-            "$ref": "#/responses/NotFound"
-          }
-        }
-      }
-    },
-    "/deposits": {
-      "post": {
-        "operationId": "createDeposit",
-        "summary": "Запустить ввод средств",
-        "tags": [
-          "Deposits"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/parameters/requestID"
-          },
-          {
-            "name": "deposit",
-            "description": "Данные ввода средств",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Deposit"
-            }
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Ввод средств запущен",
-            "headers": {
-              "Location": {
-                "description": "URI запущенного ввода средств",
-                "type": "string",
-                "format": "uri"
-              }
-            },
-            "schema": {
-              "$ref": "#/definitions/Deposit"
-            }
-          },
-          "400": {
-            "$ref": "#/responses/BadRequest"
-          },
-          "422": {
-            "description": "Неверные данные для осуществления ввода",
-            "schema": {
-              "$ref": "#/definitions/InvalidOperationParameters"
-            }
-          }
-        }
-      }
-    },
-    "/deposits/{depositID}": {
-      "get": {
-        "operationId": "getDeposit",
-        "summary": "Получить состояние ввода средств",
-        "tags": [
-          "Deposits"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/parameters/requestID"
-          },
-          {
-            "$ref": "#/parameters/depositID"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Ввод средств найден",
-            "schema": {
-              "$ref": "#/definitions/Deposit"
-            }
-          },
-          "400": {
-            "$ref": "#/responses/BadRequest"
-          },
-          "404": {
-            "$ref": "#/responses/NotFound"
-          }
-        }
-      }
-    },
-    "/deposits/{depositID}/events": {
-      "get": {
-        "operationId": "pollDepositEvents",
-        "summary": "Запросить события ввода средств",
-        "tags": [
-          "Deposits"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/parameters/requestID"
-          },
-          {
-            "$ref": "#/parameters/depositID"
-          },
-          {
-            "$ref": "#/parameters/eventLimit"
-          },
-          {
-            "$ref": "#/parameters/eventCursor"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "События найдены",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/DepositEvent"
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/responses/BadRequest"
-          },
-          "404": {
-            "$ref": "#/responses/NotFound"
-          }
-        }
-      }
-    },
-    "/deposits/{depositID}/events/{eventID}": {
-      "get": {
-        "operationId": "getDepositEvents",
-        "summary": "Получить событие ввода средств",
-        "tags": [
-          "Deposits"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/parameters/requestID"
-          },
-          {
-            "$ref": "#/parameters/depositID"
-          },
-          {
-            "$ref": "#/parameters/eventID"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Событие найдено",
-            "schema": {
-              "$ref": "#/definitions/DepositEvent"
             }
           },
           "400": {
@@ -1534,25 +1368,6 @@
         }
       ]
     },
-    "BankCardPaymentResource": {
-      "description": "Банковская карта",
-      "allOf": [
-        {
-          "$ref": "#/definitions/PaymentResource"
-        },
-        {
-          "$ref": "#/definitions/SecuredBankCard"
-        }
-      ]
-    },
-    "BankWirePaymentResource": {
-      "description": "Банковский перевод",
-      "allOf": [
-        {
-          "$ref": "#/definitions/PaymentResource"
-        }
-      ]
-    },
     "Currency": {
       "description": "Описание валюты",
       "type": "object",
@@ -1598,160 +1413,6 @@
       "type": "string",
       "pattern": "^[A-Z]{3}$",
       "example": "RUB"
-    },
-    "Deposit": {
-      "description": "Данные ввода денежных средств",
-      "allOf": [
-        {
-          "type": "object",
-          "required": [
-            "source",
-            "wallet",
-            "body"
-          ],
-          "properties": {
-            "id": {
-              "description": "Идентификатор ввода денежных средств",
-              "type": "string",
-              "example": "zXtgir1hlP",
-              "readOnly": true
-            },
-            "createdAt": {
-              "description": "Дата и время запуска ввода",
-              "type": "string",
-              "format": "date-time",
-              "readOnly": true
-            },
-            "source": {
-              "$ref": "#/definitions/PaymentResource"
-            },
-            "wallet": {
-              "description": "Идентификатор кошелька",
-              "type": "string",
-              "example": "10068321"
-            },
-            "body": {
-              "allOf": [
-                {
-                  "description": "Объём вводимых средств"
-                },
-                {
-                  "$ref": "#/definitions/Asset"
-                }
-              ]
-            },
-            "metadata": {
-              "description": "Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных\nс данным вводом средств\n",
-              "type": "object",
-              "example": {
-                "notify_email": "ilikemonorail@example.com"
-              }
-            }
-          }
-        },
-        {
-          "$ref": "#/definitions/DepositStatus"
-        }
-      ]
-    },
-    "DepositEvent": {
-      "description": "Событие, возникшее в процессе ввода средств\n",
-      "type": "object",
-      "required": [
-        "eventID",
-        "occuredAt",
-        "changes"
-      ],
-      "properties": {
-        "eventID": {
-          "description": "Идентификатор события вывода средств",
-          "type": "integer",
-          "format": "int32",
-          "example": 42
-        },
-        "occuredAt": {
-          "description": "Дата и время возникновения события",
-          "type": "string",
-          "format": "date-time"
-        },
-        "changes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/DepositEventChange"
-          }
-        }
-      }
-    },
-    "DepositEventChange": {
-      "description": "Изменение, возникшее в процессе ввода средств\n",
-      "type": "object",
-      "discriminator": "type",
-      "required": [
-        "type"
-      ],
-      "properties": {
-        "type": {
-          "description": "Тип произошедшего изменения",
-          "type": "string",
-          "enum": [
-            "DepositStatusChanged"
-          ]
-        }
-      }
-    },
-    "DepositFailure": {
-      "type": "object",
-      "required": [
-        "code"
-      ],
-      "properties": {
-        "code": {
-          "description": "Код ошибки ввода",
-          "type": "string"
-        }
-      }
-    },
-    "DepositID": {
-      "description": "Идентификатор ввода денежных средств",
-      "type": "string",
-      "example": "zXtgir1hlP"
-    },
-    "DepositStatus": {
-      "type": "object",
-      "properties": {
-        "status": {
-          "description": "Статус ввода денежных средств.\n\n| Значение    | Пояснение                                 |\n| ----------- | ----------------------------------------- |\n| `Pending`   | Ввод в процессе выполнения                |\n| `Succeeded` | Ввод средств произведён успешно           |\n| `Failed`    | Ввод средств завершился неудачей          |\n",
-          "type": "string",
-          "enum": [
-            "Pending",
-            "Succeeded",
-            "Failed"
-          ],
-          "readOnly": true
-        },
-        "failure": {
-          "allOf": [
-            {
-              "description": "> Если `status` == `Failed`\n\nПояснение причины неудачи\n",
-              "readOnly": true
-            },
-            {
-              "$ref": "#/definitions/DepositFailure"
-            }
-          ]
-        }
-      }
-    },
-    "DepositStatusChanged": {
-      "description": "Изменение статуса ввода средств",
-      "allOf": [
-        {
-          "$ref": "#/definitions/DepositEventChange"
-        },
-        {
-          "$ref": "#/definitions/DepositStatus"
-        }
-      ]
     },
     "Destination": {
       "description": "Данные приёмника денежных средств",
@@ -2377,24 +2038,6 @@
         "RUSDomesticPassport",
         "RUSRetireeInsuranceCertificate"
       ]
-    },
-    "PaymentResource": {
-      "description": "Ресурс для осуществления платежей",
-      "type": "object",
-      "discriminator": "type",
-      "required": [
-        "type"
-      ],
-      "properties": {
-        "type": {
-          "description": "Тип платёжного ресурса.\n\nСм. [RBKmoney Payment Resource API](?api/payres/swagger.yaml).\n",
-          "type": "string",
-          "enum": [
-            "BankCardPaymentResource",
-            "BankWirePaymentResource"
-          ]
-        }
-      }
     },
     "Provider": {
       "description": "Данные провайдера услуг",
