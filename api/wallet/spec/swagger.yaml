@@ -135,15 +135,6 @@ parameters:
     maxLength: 40
     minLength: 1
 
-  depositID:
-    name: depositID
-    in: path
-    description: Идентификатор ввода денежных средств
-    required: true
-    type: string
-    maxLength: 40
-    minLength: 1
-
   destinationID:
     name: destinationID
     in: path
@@ -214,10 +205,6 @@ tags:
 
   - name: Wallets
     x-displayName: Кошельки
-    description: ""
-
-  - name: Deposits
-    x-displayName: Вводы
     description: ""
 
   - name: Withdrawals

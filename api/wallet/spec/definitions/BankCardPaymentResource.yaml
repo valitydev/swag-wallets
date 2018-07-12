@@ -1,4 +1,0 @@
-description: Банковская карта
-allOf:
-  - $ref: '#/definitions/PaymentResource'
-  - $ref: '#/definitions/SecuredBankCard'

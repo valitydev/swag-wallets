@@ -1,4 +1,0 @@
-description: Изменение статуса ввода средств
-allOf:
-  - $ref: '#/definitions/DepositEventChange'
-  - $ref: '#/definitions/DepositStatus'
