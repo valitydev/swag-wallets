@@ -59,8 +59,6 @@ responses:
       $ref: '#/definitions/BadRequest'
   NotFound:
     description: Искомая сущность не найдена
-  Conflict:
-    description: Операция вызывает конфликт
 parameters:
   requestID:
     name: X-Request-ID
@@ -582,39 +580,6 @@ paths:
           $ref: '#/responses/BadRequest'
         '404':
           $ref: '#/responses/NotFound'
-    patch:
-      operationId: cancelIdentityChallenge
-      summary: Отменить процедуру идентификации
-      tags:
-        - Identities
-      parameters:
-        - $ref: '#/parameters/requestID'
-        - $ref: '#/parameters/identityID'
-        - $ref: '#/parameters/challengeID'
-        - name: challenge
-          in: body
-          required: true
-          schema:
-            type: object
-            required:
-              - status
-            properties:
-              status:
-                description: Целевой статус процедуры
-                type: string
-                enum:
-                  - Cancelled
-      responses:
-        '200':
-          description: Процедура идентификации отменена
-          schema:
-            $ref: '#/definitions/IdentityChallenge'
-        '400':
-          $ref: '#/responses/BadRequest'
-        '404':
-          $ref: '#/responses/NotFound'
-        '409':
-          $ref: '#/responses/Conflict'
   '/identities/{identityID}/challenges/{challengeID}/events':
     get:
       operationId: pollIdentityChallengeEvents
