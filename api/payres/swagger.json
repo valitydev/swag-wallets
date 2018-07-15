@@ -292,7 +292,7 @@
           "description": "[Идентификационный номер][1] банка-эмитента карты\n\n[1]: https://en.wikipedia.org/wiki/Payment_card_number#Issuer_identification_number_(IIN)\n",
           "type": "string",
           "pattern": "^\\d{6,8}$",
-          "example": "4242",
+          "example": "424242",
           "readOnly": true
         },
         "lastDigits": {
