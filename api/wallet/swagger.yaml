@@ -1620,19 +1620,52 @@ definitions:
       - available
     properties:
       own:
-        allOf:
-          - description: |
-              Собственные средства
-          - $ref: '#/definitions/Asset'
+        description: |
+          Объём денежных средств
+        type: object
+        required:
+          - amount
+          - currency
+        properties:
+          amount:
+            description: |
+              Сумма денежных средств в минорных единицах, например, в копейках
+            type: integer
+            format: int64
+            minimum: 0
+            example: 1430000
+          currency:
+            description: |
+              Валюта, символьный код согласно [ISO
+              4217](http://www.iso.org/iso/home/standards/currency_codes.htm).
+            type: string
+            pattern: '^[A-Z]{3}$'
+            example: RUB
       available:
-        allOf:
-          - description: |
-              Доступные к использованию средства, обычно равны собственным средствам
-              за вычетом сумм всех незавершённых операций
-            example:
-              amount: 1200000
-              currency: RUB
-          - $ref: '#/definitions/Asset'
+        description: |
+          Объём денежных средств
+        example:
+          amount: 1200000
+          currency: RUB
+        type: object
+        required:
+          - amount
+          - currency
+        properties:
+          amount:
+            description: |
+              Сумма денежных средств в минорных единицах, например, в копейках
+            type: integer
+            format: int64
+            minimum: 0
+            example: 1430000
+          currency:
+            description: |
+              Валюта, символьный код согласно [ISO
+              4217](http://www.iso.org/iso/home/standards/currency_codes.htm).
+            type: string
+            pattern: '^[A-Z]{3}$'
+            example: RUB
   WalletGrantRequest:
     description: Запрос на единоразовое право управления средствами на кошельке
     type: object
@@ -1650,9 +1683,27 @@ definitions:
           DIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o
         readOnly: true
       asset:
-        allOf:
-          - description: Допустимый к использованию объём средств
-          - $ref: '#/definitions/Asset'
+        description: |
+          Объём денежных средств
+        type: object
+        required:
+          - amount
+          - currency
+        properties:
+          amount:
+            description: |
+              Сумма денежных средств в минорных единицах, например, в копейках
+            type: integer
+            format: int64
+            minimum: 0
+            example: 1430000
+          currency:
+            description: |
+              Валюта, символьный код согласно [ISO
+              4217](http://www.iso.org/iso/home/standards/currency_codes.htm).
+            type: string
+            pattern: '^[A-Z]{3}$'
+            example: RUB
       validUntil:
         description: |
           Дата и время, до наступления которого выданное право действительно
@@ -1690,9 +1741,27 @@ definitions:
             type: string
             example: '107498'
           body:
-            allOf:
-              - description: 'Объём средств, которые необходимо вывести'
-              - $ref: '#/definitions/Asset'
+            description: |
+              Объём денежных средств
+            type: object
+            required:
+              - amount
+              - currency
+            properties:
+              amount:
+                description: |
+                  Сумма денежных средств в минорных единицах, например, в копейках
+                type: integer
+                format: int64
+                minimum: 0
+                example: 1430000
+              currency:
+                description: |
+                  Валюта, символьный код согласно [ISO
+                  4217](http://www.iso.org/iso/home/standards/currency_codes.htm).
+                type: string
+                pattern: '^[A-Z]{3}$'
+                example: RUB
           metadata:
             description: |
               Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с
@@ -1755,23 +1824,31 @@ definitions:
       - type: object
         properties:
           walletGrant:
-            allOf:
-              - $ref: '#/definitions/GrantToken'
-              - description: |
-                  Токен, дающий право на списание с кошелька для оплаты вывода.
+            type: string
+            minLength: 1
+            maxLength: 4000
+            example: |
+              eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M
+              DIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o
+            description: |
+              Токен, дающий право на списание с кошелька для оплаты вывода.
 
-                  Необходимо предоставить в том случае, если оплата производится засчёт средств _чужого_
-                  кошелька. Владелец указанного кошелька может
-                  [выдать на это право](#operation/issueWalletGrant).
+              Необходимо предоставить в том случае, если оплата производится засчёт средств _чужого_
+              кошелька. Владелец указанного кошелька может
+              [выдать на это право](#operation/issueWalletGrant).
           destinationGrant:
-            allOf:
-              - $ref: '#/definitions/GrantToken'
-              - description: |
-                  Токен, дающий право вывода.
+            type: string
+            minLength: 1
+            maxLength: 4000
+            example: |
+              eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M
+              DIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o
+            description: |
+              Токен, дающий право вывода.
 
-                  Необходимо предоставить в том случае, если вывод производится посредством _чужого_ приёмника
-                  средств. Владелец указанного приёмника может
-                  [выдать на это право](#operation/issueDestinationGrant).
+              Необходимо предоставить в том случае, если вывод производится посредством _чужого_ приёмника
+              средств. Владелец указанного приёмника может
+              [выдать на это право](#operation/issueDestinationGrant).
   WithdrawalStatus:
     type: object
     properties:
@@ -1791,13 +1868,18 @@ definitions:
           - Failed
         readOnly: true
       failure:
-        allOf:
-          - description: |
-              > Если `status` == `Failed`
+        description: |
+          > Если `status` == `Failed`
 
-              Пояснение причины неудачи
-            readOnly: true
-          - $ref: '#/definitions/WithdrawalFailure'
+          Пояснение причины неудачи
+        readOnly: true
+        type: object
+        required:
+          - code
+        properties:
+          code:
+            description: Код ошибки вывода
+            type: string
   WithdrawalStatusChanged:
     description: Изменение статуса вывода средств
     allOf:
