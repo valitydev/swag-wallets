@@ -4,7 +4,7 @@ allOf:
   - type: object
     properties:
       walletGrant:
-        allOf:
+        x-rebillyMerge:
           - $ref: '#/definitions/GrantToken'
           - description: |
               Токен, дающий право на списание с кошелька для оплаты вывода.
@@ -13,7 +13,7 @@ allOf:
               кошелька. Владелец указанного кошелька может
               [выдать на это право](#operation/issueWalletGrant).
       destinationGrant:
-        allOf:
+        x-rebillyMerge:
           - $ref: '#/definitions/GrantToken'
           - description: |
               Токен, дающий право вывода.

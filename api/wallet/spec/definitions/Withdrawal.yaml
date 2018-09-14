@@ -22,7 +22,7 @@ allOf:
         x-rebillyMerge:
           - $ref: '#/definitions/DestinationID'
       body:
-        allOf:
+        x-rebillyMerge:
           - description: Объём средств, которые необходимо вывести
           - $ref: '#/definitions/Asset'
       metadata:

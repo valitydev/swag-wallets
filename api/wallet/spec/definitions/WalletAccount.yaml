@@ -5,12 +5,12 @@ required:
   - available
 properties:
   own:
-    allOf:
+    x-rebillyMerge:
       - description: |
           Собственные средства
       - $ref: '#/definitions/Asset'
   available:
-    allOf:
+    x-rebillyMerge:
       - description: |
           Доступные к использованию средства, обычно равны собственным средствам
           за вычетом сумм всех незавершённых операций

@@ -35,3 +35,7 @@ node_modules
 
 # CI
 .wercker
+
+# Generated
+web_deploy/
+package-lock.json

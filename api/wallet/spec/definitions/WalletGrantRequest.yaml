@@ -10,7 +10,7 @@ properties:
       - $ref: '#/definitions/GrantToken'
       - readOnly: true
   asset:
-    allOf:
+    x-rebillyMerge:
       - description: Допустимый к использованию объём средств
       - $ref: '#/definitions/Asset'
   validUntil:

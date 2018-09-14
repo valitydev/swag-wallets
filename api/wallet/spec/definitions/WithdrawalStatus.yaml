@@ -17,7 +17,7 @@ properties:
       - Failed
     readOnly: true
   failure:
-    allOf:
+    x-rebillyMerge:
       - description: |
           > Если `status` == `Failed`
 
