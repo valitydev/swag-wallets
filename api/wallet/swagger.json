@@ -1346,7 +1346,6 @@
           "description": "Сумма денежных средств в минорных единицах, например, в копейках\n",
           "type": "integer",
           "format": "int64",
-          "minimum": 0,
           "example": 1430000
         },
         "currency": {
@@ -2179,7 +2178,6 @@
               "description": "Сумма денежных средств в минорных единицах, например, в копейках\n",
               "type": "integer",
               "format": "int64",
-              "minimum": 0,
               "example": 1430000
             },
             "currency": {
@@ -2206,7 +2204,6 @@
               "description": "Сумма денежных средств в минорных единицах, например, в копейках\n",
               "type": "integer",
               "format": "int64",
-              "minimum": 0,
               "example": 1430000
             },
             "currency": {
@@ -2247,7 +2244,6 @@
               "description": "Сумма денежных средств в минорных единицах, например, в копейках\n",
               "type": "integer",
               "format": "int64",
-              "minimum": 0,
               "example": 1430000
             },
             "currency": {
@@ -2315,7 +2311,6 @@
                   "description": "Сумма денежных средств в минорных единицах, например, в копейках\n",
                   "type": "integer",
                   "format": "int64",
-                  "minimum": 0,
                   "example": 1430000
                 },
                 "currency": {

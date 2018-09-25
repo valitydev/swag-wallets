@@ -908,7 +908,6 @@ definitions:
           Сумма денежных средств в минорных единицах, например, в копейках
         type: integer
         format: int64
-        minimum: 0
         example: 1430000
       currency:
         description: |
@@ -1632,7 +1631,6 @@ definitions:
               Сумма денежных средств в минорных единицах, например, в копейках
             type: integer
             format: int64
-            minimum: 0
             example: 1430000
           currency:
             description: |
@@ -1657,7 +1655,6 @@ definitions:
               Сумма денежных средств в минорных единицах, например, в копейках
             type: integer
             format: int64
-            minimum: 0
             example: 1430000
           currency:
             description: |
@@ -1695,7 +1692,6 @@ definitions:
               Сумма денежных средств в минорных единицах, например, в копейках
             type: integer
             format: int64
-            minimum: 0
             example: 1430000
           currency:
             description: |
@@ -1753,7 +1749,6 @@ definitions:
                   Сумма денежных средств в минорных единицах, например, в копейках
                 type: integer
                 format: int64
-                minimum: 0
                 example: 1430000
               currency:
                 description: |
