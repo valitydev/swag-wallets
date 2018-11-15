@@ -125,7 +125,29 @@ parameters:
     type: string
     pattern: '^[A-Za-z]{3}$'
     required: false
-  eventLimit:
+  amountFrom:
+    name: amountFrom
+    in: query
+    description: Сумма денежных средств в минорных единицах
+    type: integer
+    format: int64
+    required: false
+  amountTo:
+    name: amountTo
+    in: query
+    description: Сумма денежных средств в минорных единицах
+    type: integer
+    format: int64
+    required: false
+  currencyID:
+    name: currencyID
+    in: query
+    description: |
+      Валюта, символьный код согласно [ISO
+      4217](http://www.iso.org/iso/home/standards/currency_codes.htm).
+    type: string
+    pattern: '^[A-Z]{3}$'
+  limit:
     name: limit
     in: query
     description: Лимит выборки
@@ -133,6 +155,7 @@ parameters:
     type: integer
     format: int32
     minimum: 1
+    maximum: 1000
   eventCursor:
     name: eventCursor
     in: query
@@ -490,7 +513,7 @@ paths:
         - $ref: '#/parameters/requestID'
         - $ref: '#/parameters/identityID'
         - $ref: '#/parameters/challengeID'
-        - $ref: '#/parameters/eventLimit'
+        - $ref: '#/parameters/limit'
         - $ref: '#/parameters/eventCursor'
       responses:
         '200':
@@ -688,28 +711,40 @@ paths:
         - Wallets
       parameters:
         - $ref: '#/parameters/requestID'
-        - name: identity
-          description: Фильтр по личности владельца
+        - name: identityID
+          description: Идентификатор личности владельца
           in: query
           required: false
           type: string
           maxLength: 40
           minLength: 1
-        - name: currency
-          description: |
-            Фильтр по валюте кошелька,
-            символьный код согласно [ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).
+        - $ref: '#/parameters/currencyID'
+        - $ref: '#/parameters/limit'
+        - name: continuationToken
           in: query
           required: false
+          description: |
+            Токен, сигнализирующий о том, что в ответе передана только часть данных.
+            Для получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.
+            Если токена нет, получена последняя часть данных.
           type: string
-          pattern: '^[A-Z]{3}$'
       responses:
         '200':
-          description: Кошельки найдены
+          description: Результат поиска
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/Wallet'
+            type: object
+            properties:
+              continuationToken:
+                description: |
+                  Токен, сигнализирующий о том, что в ответе передана только часть данных.
+                  Для получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.
+                  Если токена нет, получена последняя часть данных.
+                type: string
+              result:
+                description: Найденные кошельки
+                type: array
+                items:
+                  $ref: '#/definitions/Wallet'
         '400':
           $ref: '#/responses/BadRequest'
     post:
@@ -806,6 +841,85 @@ paths:
           schema:
             $ref: '#/definitions/InvalidOperationParameters'
   /withdrawals:
+    get:
+      operationId: listWithdrawals
+      summary: Поиск выводов
+      tags:
+        - Withdrawals
+      parameters:
+        - $ref: '#/parameters/requestID'
+        - name: walletID
+          in: query
+          description: Идентификатор кошелька
+          type: string
+          maxLength: 40
+          minLength: 1
+          required: false
+        - name: identityID
+          in: query
+          description: Идентификатор личности владельца
+          type: string
+          maxLength: 40
+          minLength: 1
+          required: false
+        - name: destinationID
+          in: query
+          description: Идентификатор приёмника средств
+          type: string
+          maxLength: 40
+          minLength: 1
+          required: false
+        - name: status
+          in: query
+          type: string
+          enum:
+            - Pending
+            - Succeeded
+            - Failed
+          required: false
+        - name: createdAtFrom
+          in: query
+          description: Дата создания с
+          type: string
+          format: date-time
+          required: false
+        - name: createdAtTo
+          in: query
+          description: Дата создания до
+          type: string
+          format: date-time
+          required: false
+        - $ref: '#/parameters/amountFrom'
+        - $ref: '#/parameters/amountTo'
+        - $ref: '#/parameters/currencyID'
+        - $ref: '#/parameters/limit'
+        - name: continuationToken
+          in: query
+          required: false
+          description: |
+            Токен, сигнализирующий о том, что в ответе передана только часть данных.
+            Для получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.
+            Если токена нет, получена последняя часть данных.
+          type: string
+      responses:
+        '200':
+          description: Результат поиска
+          schema:
+            type: object
+            properties:
+              continuationToken:
+                description: |
+                  Токен, сигнализирующий о том, что в ответе передана только часть данных.
+                  Для получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.
+                  Если токена нет, получена последняя часть данных.
+                type: string
+              result:
+                description: Найденные выводы
+                type: array
+                items:
+                  $ref: '#/definitions/Withdrawal'
+        '400':
+          $ref: '#/responses/BadRequest'
     post:
       operationId: createWithdrawal
       summary: Запустить вывод средств
@@ -862,7 +976,7 @@ paths:
       parameters:
         - $ref: '#/parameters/requestID'
         - $ref: '#/parameters/withdrawalID'
-        - $ref: '#/parameters/eventLimit'
+        - $ref: '#/parameters/limit'
         - $ref: '#/parameters/eventCursor'
       responses:
         '200':
@@ -921,6 +1035,12 @@ definitions:
     allOf:
       - $ref: '#/definitions/DestinationResource'
       - $ref: '#/definitions/SecuredBankCard'
+  ContinuationToken:
+    description: |
+      Токен, сигнализирующий о том, что в ответе передана только часть данных.
+      Для получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.
+      Если токена нет, получена последняя часть данных.
+    type: string
   Currency:
     description: Описание валюты
     type: object
@@ -1579,8 +1699,7 @@ definitions:
         example: '10068321'
         readOnly: true
       name:
-        description: |
-          Человекочитаемое название кошелька, по которому его легко узнать
+        description: 'Человекочитаемое название кошелька, по которому его легко узнать'
         type: string
         example: Worldwide PHP Awareness Initiative
       createdAt:
@@ -1620,7 +1739,7 @@ definitions:
     properties:
       own:
         description: |
-          Объём денежных средств
+          Собственные средства
         type: object
         required:
           - amount
@@ -1641,10 +1760,8 @@ definitions:
             example: RUB
       available:
         description: |
-          Объём денежных средств
-        example:
-          amount: 1200000
-          currency: RUB
+          Доступные к использованию средства, обычно равны собственным средствам
+          за вычетом сумм всех незавершённых операций
         type: object
         required:
           - amount
@@ -1663,6 +1780,9 @@ definitions:
             type: string
             pattern: '^[A-Z]{3}$'
             example: RUB
+        example:
+          amount: 1200000
+          currency: RUB
   WalletGrantRequest:
     description: Запрос на единоразовое право управления средствами на кошельке
     type: object
@@ -1680,8 +1800,7 @@ definitions:
           DIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o
         readOnly: true
       asset:
-        description: |
-          Объём денежных средств
+        description: Допустимый к использованию объём средств
         type: object
         required:
           - amount
@@ -1709,6 +1828,10 @@ definitions:
     description: Идентификатор кошелька
     type: string
     example: '10068321'
+  WalletName:
+    description: 'Человекочитаемое название кошелька, по которому его легко узнать'
+    type: string
+    example: Worldwide PHP Awareness Initiative
   Withdrawal:
     description: Данные вывода денежных средств
     allOf:
@@ -1737,8 +1860,27 @@ definitions:
             type: string
             example: '107498'
           body:
-            description: |
-              Объём денежных средств
+            description: 'Объём средств, которые необходимо вывести'
+            type: object
+            required:
+              - amount
+              - currency
+            properties:
+              amount:
+                description: |
+                  Сумма денежных средств в минорных единицах, например, в копейках
+                type: integer
+                format: int64
+                example: 1430000
+              currency:
+                description: |
+                  Валюта, символьный код согласно [ISO
+                  4217](http://www.iso.org/iso/home/standards/currency_codes.htm).
+                type: string
+                pattern: '^[A-Z]{3}$'
+                example: RUB
+          fee:
+            description: Сумма коммисии
             type: object
             required:
               - amount

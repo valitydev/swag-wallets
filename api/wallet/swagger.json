@@ -118,14 +118,38 @@
       "pattern": "^[A-Za-z]{3}$",
       "required": false
     },
-    "eventLimit": {
+    "amountFrom": {
+      "name": "amountFrom",
+      "in": "query",
+      "description": "Сумма денежных средств в минорных единицах",
+      "type": "integer",
+      "format": "int64",
+      "required": false
+    },
+    "amountTo": {
+      "name": "amountTo",
+      "in": "query",
+      "description": "Сумма денежных средств в минорных единицах",
+      "type": "integer",
+      "format": "int64",
+      "required": false
+    },
+    "currencyID": {
+      "name": "currencyID",
+      "in": "query",
+      "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+      "type": "string",
+      "pattern": "^[A-Z]{3}$"
+    },
+    "limit": {
       "name": "limit",
       "in": "query",
       "description": "Лимит выборки",
       "required": true,
       "type": "integer",
       "format": "int32",
-      "minimum": 1
+      "minimum": 1,
+      "maximum": 1000
     },
     "eventCursor": {
       "name": "eventCursor",
@@ -664,7 +688,7 @@
             "$ref": "#/parameters/challengeID"
           },
           {
-            "$ref": "#/parameters/eventLimit"
+            "$ref": "#/parameters/limit"
           },
           {
             "$ref": "#/parameters/eventCursor"
@@ -994,8 +1018,8 @@
             "$ref": "#/parameters/requestID"
           },
           {
-            "name": "identity",
-            "description": "Фильтр по личности владельца",
+            "name": "identityID",
+            "description": "Идентификатор личности владельца",
             "in": "query",
             "required": false,
             "type": "string",
@@ -1003,21 +1027,36 @@
             "minLength": 1
           },
           {
-            "name": "currency",
-            "description": "Фильтр по валюте кошелька,\nсимвольный код согласно [ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+            "$ref": "#/parameters/currencyID"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "name": "continuationToken",
             "in": "query",
             "required": false,
-            "type": "string",
-            "pattern": "^[A-Z]{3}$"
+            "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Кошельки найдены",
+            "description": "Результат поиска",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Wallet"
+              "type": "object",
+              "properties": {
+                "continuationToken": {
+                  "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
+                  "type": "string"
+                },
+                "result": {
+                  "description": "Найденные кошельки",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Wallet"
+                  }
+                }
               }
             }
           },
@@ -1181,6 +1220,115 @@
       }
     },
     "/withdrawals": {
+      "get": {
+        "operationId": "listWithdrawals",
+        "summary": "Поиск выводов",
+        "tags": [
+          "Withdrawals"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "name": "walletID",
+            "in": "query",
+            "description": "Идентификатор кошелька",
+            "type": "string",
+            "maxLength": 40,
+            "minLength": 1,
+            "required": false
+          },
+          {
+            "name": "identityID",
+            "in": "query",
+            "description": "Идентификатор личности владельца",
+            "type": "string",
+            "maxLength": 40,
+            "minLength": 1,
+            "required": false
+          },
+          {
+            "name": "destinationID",
+            "in": "query",
+            "description": "Идентификатор приёмника средств",
+            "type": "string",
+            "maxLength": 40,
+            "minLength": 1,
+            "required": false
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string",
+            "enum": [
+              "Pending",
+              "Succeeded",
+              "Failed"
+            ],
+            "required": false
+          },
+          {
+            "name": "createdAtFrom",
+            "in": "query",
+            "description": "Дата создания с",
+            "type": "string",
+            "format": "date-time",
+            "required": false
+          },
+          {
+            "name": "createdAtTo",
+            "in": "query",
+            "description": "Дата создания до",
+            "type": "string",
+            "format": "date-time",
+            "required": false
+          },
+          {
+            "$ref": "#/parameters/amountFrom"
+          },
+          {
+            "$ref": "#/parameters/amountTo"
+          },
+          {
+            "$ref": "#/parameters/currencyID"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "name": "continuationToken",
+            "in": "query",
+            "required": false,
+            "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Результат поиска",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "continuationToken": {
+                  "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
+                  "type": "string"
+                },
+                "result": {
+                  "description": "Найденные выводы",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Withdrawal"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          }
+        }
+      },
       "post": {
         "operationId": "createWithdrawal",
         "summary": "Запустить вывод средств",
@@ -1273,7 +1421,7 @@
             "$ref": "#/parameters/withdrawalID"
           },
           {
-            "$ref": "#/parameters/eventLimit"
+            "$ref": "#/parameters/limit"
           },
           {
             "$ref": "#/parameters/eventCursor"
@@ -1366,6 +1514,10 @@
           "$ref": "#/definitions/SecuredBankCard"
         }
       ]
+    },
+    "ContinuationToken": {
+      "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
+      "type": "string"
     },
     "Currency": {
       "description": "Описание валюты",
@@ -2122,7 +2274,7 @@
           "readOnly": true
         },
         "name": {
-          "description": "Человекочитаемое название кошелька, по которому его легко узнать\n",
+          "description": "Человекочитаемое название кошелька, по которому его легко узнать",
           "type": "string",
           "example": "Worldwide PHP Awareness Initiative"
         },
@@ -2167,7 +2319,7 @@
       ],
       "properties": {
         "own": {
-          "description": "Объём денежных средств\n",
+          "description": "Собственные средства\n",
           "type": "object",
           "required": [
             "amount",
@@ -2189,11 +2341,7 @@
           }
         },
         "available": {
-          "description": "Объём денежных средств\n",
-          "example": {
-            "amount": 1200000,
-            "currency": "RUB"
-          },
+          "description": "Доступные к использованию средства, обычно равны собственным средствам\nза вычетом сумм всех незавершённых операций\n",
           "type": "object",
           "required": [
             "amount",
@@ -2212,6 +2360,10 @@
               "pattern": "^[A-Z]{3}$",
               "example": "RUB"
             }
+          },
+          "example": {
+            "amount": 1200000,
+            "currency": "RUB"
           }
         }
       }
@@ -2233,7 +2385,7 @@
           "readOnly": true
         },
         "asset": {
-          "description": "Объём денежных средств\n",
+          "description": "Допустимый к использованию объём средств",
           "type": "object",
           "required": [
             "amount",
@@ -2265,6 +2417,11 @@
       "description": "Идентификатор кошелька",
       "type": "string",
       "example": "10068321"
+    },
+    "WalletName": {
+      "description": "Человекочитаемое название кошелька, по которому его легко узнать",
+      "type": "string",
+      "example": "Worldwide PHP Awareness Initiative"
     },
     "Withdrawal": {
       "description": "Данные вывода денежных средств",
@@ -2300,7 +2457,29 @@
               "example": "107498"
             },
             "body": {
-              "description": "Объём денежных средств\n",
+              "description": "Объём средств, которые необходимо вывести",
+              "type": "object",
+              "required": [
+                "amount",
+                "currency"
+              ],
+              "properties": {
+                "amount": {
+                  "description": "Сумма денежных средств в минорных единицах, например, в копейках\n",
+                  "type": "integer",
+                  "format": "int64",
+                  "example": 1430000
+                },
+                "currency": {
+                  "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+                  "type": "string",
+                  "pattern": "^[A-Z]{3}$",
+                  "example": "RUB"
+                }
+              }
+            },
+            "fee": {
+              "description": "Сумма коммисии",
               "type": "object",
               "required": [
                 "amount",
