@@ -6,7 +6,7 @@ get:
   parameters:
     - $ref: '#/parameters/requestID'
     - $ref: '#/parameters/withdrawalID'
-    - $ref: '#/parameters/eventLimit'
+    - $ref: '#/parameters/limit'
     - $ref: '#/parameters/eventCursor'
   responses:
     '200':

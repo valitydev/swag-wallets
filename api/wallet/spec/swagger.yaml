@@ -163,7 +163,32 @@ parameters:
     pattern: '^[A-Za-z]{3}$'
     required: false
 
-  eventLimit:
+  amountFrom:
+    name: amountFrom
+    in: query
+    description: Сумма денежных средств в минорных единицах
+    type: integer
+    format: int64
+    required: false
+
+  amountTo:
+    name: amountTo
+    in: query
+    description: Сумма денежных средств в минорных единицах
+    type: integer
+    format: int64
+    required: false
+
+  currencyID:
+    name: currencyID
+    in: query
+    description: |
+      Валюта, символьный код согласно [ISO
+      4217](http://www.iso.org/iso/home/standards/currency_codes.htm).
+    type: string
+    pattern: '^[A-Z]{3}$'
+
+  limit:
     name: limit
     in: query
     description: Лимит выборки
@@ -171,6 +196,7 @@ parameters:
     type: integer
     format: int32
     minimum: 1
+    maximum: 1000
 
   eventCursor:
     name: eventCursor

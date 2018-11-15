@@ -5,28 +5,34 @@ get:
     - Wallets
   parameters:
     - $ref: '#/parameters/requestID'
-    - name: identity
-      description: Фильтр по личности владельца
+    - name: identityID
+      description: Идентификатор личности владельца
       in: query
       required: false
       type: string
       maxLength: 40
       minLength: 1
-    - name: currency
-      description: |
-        Фильтр по валюте кошелька,
-        символьный код согласно [ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).
-      in: query
-      required: false
-      type: string
-      pattern: '^[A-Z]{3}$'
+    - $ref: '#/parameters/currencyID'
+    - $ref: '#/parameters/limit'
+    - x-rebillyMerge:
+      - name: continuationToken
+        in: query
+        required: false
+      - $ref: '#/definitions/ContinuationToken'
   responses:
     '200':
-      description: Кошельки найдены
+      description: Результат поиска
       schema:
-        type: array
-        items:
-          $ref: '#/definitions/Wallet'
+        type: object
+        properties:
+          continuationToken:
+            x-rebillyMerge:
+              - $ref: '#/definitions/ContinuationToken'
+          result:
+            description: Найденные кошельки
+            type: array
+            items:
+              $ref: '#/definitions/Wallet'
     '400':
       $ref: '#/responses/BadRequest'
 

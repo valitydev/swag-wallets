@@ -11,8 +11,8 @@ properties:
       - readOnly: true
   asset:
     x-rebillyMerge:
-      - description: Допустимый к использованию объём средств
       - $ref: '#/definitions/Asset'
+      - description: Допустимый к использованию объём средств
   validUntil:
     description: |
       Дата и время, до наступления которого выданное право действительно

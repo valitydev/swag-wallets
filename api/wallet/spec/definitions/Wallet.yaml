@@ -10,10 +10,8 @@ properties:
       - $ref: '#/definitions/WalletID'
       - readOnly: true
   name:
-    description: |
-      Человекочитаемое название кошелька, по которому его легко узнать
-    type: string
-    example: Worldwide PHP Awareness Initiative
+    x-rebillyMerge:
+      - $ref: '#/definitions/WalletName'
   createdAt:
     description: Дата и время создания кошелька
     type: string

@@ -23,8 +23,12 @@ allOf:
           - $ref: '#/definitions/DestinationID'
       body:
         x-rebillyMerge:
-          - description: Объём средств, которые необходимо вывести
           - $ref: '#/definitions/Asset'
+          - description: Объём средств, которые необходимо вывести
+      fee:
+        x-rebillyMerge:
+          - $ref: '#/definitions/Asset'
+          - description: Сумма коммисии
       metadata:
         description: |
           Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с

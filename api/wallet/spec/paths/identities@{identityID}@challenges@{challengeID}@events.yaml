@@ -7,7 +7,7 @@ get:
     - $ref: '#/parameters/requestID'
     - $ref: '#/parameters/identityID'
     - $ref: '#/parameters/challengeID'
-    - $ref: '#/parameters/eventLimit'
+    - $ref: '#/parameters/limit'
     - $ref: '#/parameters/eventCursor'
   responses:
     '200':

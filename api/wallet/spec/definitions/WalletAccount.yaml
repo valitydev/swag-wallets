@@ -6,15 +6,15 @@ required:
 properties:
   own:
     x-rebillyMerge:
+      - $ref: '#/definitions/Asset'
       - description: |
           Собственные средства
-      - $ref: '#/definitions/Asset'
   available:
     x-rebillyMerge:
+      - $ref: '#/definitions/Asset'
       - description: |
           Доступные к использованию средства, обычно равны собственным средствам
           за вычетом сумм всех незавершённых операций
         example:
           amount: 1200000
           currency: RUB
-      - $ref: '#/definitions/Asset'
