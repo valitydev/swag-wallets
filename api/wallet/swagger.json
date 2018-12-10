@@ -42,6 +42,12 @@
         "$ref": "#/definitions/BadRequest"
       }
     },
+    "ConflictRequest": {
+      "description": "Конфликт входных данных операции",
+      "schema": {
+        "$ref": "#/definitions/ConflictRequest"
+      }
+    },
     "NotFound": {
       "description": "Искомая сущность не найдена"
     }
@@ -318,6 +324,9 @@
           "400": {
             "$ref": "#/responses/BadRequest"
           },
+          "409": {
+            "$ref": "#/responses/ConflictRequest"
+          },
           "422": {
             "description": "Неверные данные приёмника средств",
             "schema": {
@@ -494,6 +503,9 @@
           },
           "400": {
             "$ref": "#/responses/BadRequest"
+          },
+          "409": {
+            "$ref": "#/responses/ConflictRequest"
           },
           "422": {
             "description": "Неверные данные личности владельца",
@@ -1102,6 +1114,9 @@
           "400": {
             "$ref": "#/responses/BadRequest"
           },
+          "409": {
+            "$ref": "#/responses/ConflictRequest"
+          },
           "422": {
             "description": "Неверные данные кошелька",
             "schema": {
@@ -1366,6 +1381,9 @@
           "400": {
             "$ref": "#/responses/BadRequest"
           },
+          "409": {
+            "$ref": "#/responses/ConflictRequest"
+          },
           "422": {
             "description": "Неверные данные для осуществления вывода",
             "schema": {
@@ -1620,6 +1638,11 @@
               "example": {
                 "color_hint": "olive-green"
               }
+            },
+            "externalID": {
+              "description": "Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n",
+              "type": "string",
+              "example": "10036274"
             }
           }
         },
@@ -1703,6 +1726,11 @@
         }
       }
     },
+    "ExternalID": {
+      "description": "Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n",
+      "type": "string",
+      "example": "10036274"
+    },
     "GrantToken": {
       "type": "string",
       "minLength": 1,
@@ -1769,6 +1797,11 @@
           "example": {
             "lkDisplayName": "Сергей Иванович"
           }
+        },
+        "externalID": {
+          "description": "Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n",
+          "type": "string",
+          "example": "10036274"
         }
       }
     },
@@ -2032,6 +2065,16 @@
           "description": "Пояснение, почему данные считаются недопустимыми",
           "type": "string",
           "example": "Required parameter was not sent"
+        }
+      }
+    },
+    "ConflictRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Идентификатор конфликтующей сущности",
+          "type": "string",
+          "example": "12345151362762"
         }
       }
     },
@@ -2307,6 +2350,11 @@
           "example": {
             "client_locale": "RU_ru"
           }
+        },
+        "externalID": {
+          "description": "Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n",
+          "type": "string",
+          "example": "10036274"
         }
       }
     },
@@ -2506,6 +2554,11 @@
               "example": {
                 "notify_email": "iliketrains@example.com"
               }
+            },
+            "externalID": {
+              "description": "Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n",
+              "type": "string",
+              "example": "10036274"
             }
           }
         },

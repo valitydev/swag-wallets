@@ -57,6 +57,10 @@ responses:
     description: Недопустимые для операции входные данные
     schema:
       $ref: '#/definitions/BadRequest'
+  ConflictRequest:
+    description: Конфликт входных данных операции
+    schema:
+      $ref: '#/definitions/ConflictRequest'
   NotFound:
     description: Искомая сущность не найдена
 parameters:
@@ -277,6 +281,8 @@ paths:
             $ref: '#/definitions/Destination'
         '400':
           $ref: '#/responses/BadRequest'
+        '409':
+          $ref: '#/responses/ConflictRequest'
         '422':
           description: Неверные данные приёмника средств
           schema:
@@ -390,6 +396,8 @@ paths:
             $ref: '#/definitions/Identity'
         '400':
           $ref: '#/responses/BadRequest'
+        '409':
+          $ref: '#/responses/ConflictRequest'
         '422':
           description: Неверные данные личности владельца
           schema:
@@ -772,6 +780,8 @@ paths:
             $ref: '#/definitions/Wallet'
         '400':
           $ref: '#/responses/BadRequest'
+        '409':
+          $ref: '#/responses/ConflictRequest'
         '422':
           description: Неверные данные кошелька
           schema:
@@ -945,6 +955,8 @@ paths:
             $ref: '#/definitions/Withdrawal'
         '400':
           $ref: '#/responses/BadRequest'
+        '409':
+          $ref: '#/responses/ConflictRequest'
         '422':
           description: Неверные данные для осуществления вывода
           schema:
@@ -1138,6 +1150,13 @@ definitions:
             type: object
             example:
               color_hint: olive-green
+          externalID:
+            description: |
+              Уникальный идентификатор сущности на вашей стороне.
+
+              При указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.
+            type: string
+            example: '10036274'
       - $ref: '#/definitions/DestinationStatus'
   DestinationGrantRequest:
     description: Запрос на право управления выводами на приёмник средств
@@ -1211,6 +1230,13 @@ definitions:
         type: string
         example: |
           No such identity challenge type: fms.
+  ExternalID:
+    description: |
+      Уникальный идентификатор сущности на вашей стороне.
+
+      При указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.
+    type: string
+    example: '10036274'
   GrantToken:
     type: string
     minLength: 1
@@ -1273,6 +1299,13 @@ definitions:
         type: object
         example:
           lkDisplayName: Сергей Иванович
+      externalID:
+        description: |
+          Уникальный идентификатор сущности на вашей стороне.
+
+          При указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.
+        type: string
+        example: '10036274'
   IdentityChallenge:
     description: Процедура идентификации личности
     allOf:
@@ -1500,6 +1533,13 @@ definitions:
         description: 'Пояснение, почему данные считаются недопустимыми'
         type: string
         example: Required parameter was not sent
+  ConflictRequest:
+    type: object
+    properties:
+      id:
+        description: Идентификатор конфликтующей сущности
+        type: string
+        example: '12345151362762'
   BankCardPaymentSystem:
     description: Платежная система
     type: string
@@ -1730,6 +1770,13 @@ definitions:
         type: object
         example:
           client_locale: RU_ru
+      externalID:
+        description: |
+          Уникальный идентификатор сущности на вашей стороне.
+
+          При указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.
+        type: string
+        example: '10036274'
   WalletAccount:
     description: Состояние счёта кошелька
     type: object
@@ -1906,6 +1953,13 @@ definitions:
             type: object
             example:
               notify_email: iliketrains@example.com
+          externalID:
+            description: |
+              Уникальный идентификатор сущности на вашей стороне.
+
+              При указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.
+            type: string
+            example: '10036274'
       - $ref: '#/definitions/WithdrawalStatus'
   WithdrawalEvent:
     description: |
