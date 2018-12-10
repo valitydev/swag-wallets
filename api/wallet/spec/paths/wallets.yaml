@@ -61,6 +61,8 @@ post:
         $ref: '#/definitions/Wallet'
     '400':
       $ref: '#/responses/BadRequest'
+    '409':
+      $ref: '#/responses/ConflictRequest'
     '422':
       description: Неверные данные кошелька
       schema:

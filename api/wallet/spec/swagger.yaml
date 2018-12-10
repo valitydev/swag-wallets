@@ -85,6 +85,11 @@ responses:
     schema:
       $ref: '#/definitions/BadRequest'
 
+  ConflictRequest:
+    description: Конфликт входных данных операции
+    schema:
+      $ref: '#/definitions/ConflictRequest'
+
   NotFound:
     description: Искомая сущность не найдена
 

@@ -55,6 +55,8 @@ post:
         $ref: '#/definitions/Destination'
     '400':
       $ref: '#/responses/BadRequest'
+    '409':
+      $ref: '#/responses/ConflictRequest'
     '422':
       description: Неверные данные приёмника средств
       schema:

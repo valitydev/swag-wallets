@@ -97,6 +97,8 @@ post:
         $ref: '#/definitions/Withdrawal'
     '400':
       $ref: '#/responses/BadRequest'
+    '409':
+      $ref: '#/responses/ConflictRequest'
     '422':
       description: Неверные данные для осуществления вывода
       schema:

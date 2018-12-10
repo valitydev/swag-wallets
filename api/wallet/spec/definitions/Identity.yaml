@@ -48,3 +48,6 @@ properties:
     type: object
     example:
       lkDisplayName: Сергей Иванович
+  externalID:
+    x-rebillyMerge:
+      - $ref: '#/definitions/ExternalID'

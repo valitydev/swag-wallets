@@ -36,4 +36,7 @@ allOf:
         type: object
         example:
           notify_email: iliketrains@example.com
+      externalID:
+        x-rebillyMerge:
+          - $ref: '#/definitions/ExternalID'
   - $ref: '#/definitions/WithdrawalStatus'

@@ -1,0 +1,6 @@
+type: object
+properties:
+  id:
+    description: Идентификатор конфликтующей сущности
+    type: string
+    example: '12345151362762'

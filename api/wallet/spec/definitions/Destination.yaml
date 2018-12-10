@@ -41,4 +41,7 @@ allOf:
         type: object
         example:
           color_hint: olive-green
+      externalID:
+        x-rebillyMerge:
+          - $ref: '#/definitions/ExternalID'
   - $ref: '#/definitions/DestinationStatus'

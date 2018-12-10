@@ -35,3 +35,6 @@ properties:
     type: object
     example:
       client_locale: RU_ru
+  externalID:
+    x-rebillyMerge:
+      - $ref: '#/definitions/ExternalID'
