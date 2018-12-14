@@ -13,9 +13,6 @@ allOf:
       - birthDate
       - birthPlace
     properties:
-      type:
-        description: Национальный паспорт гражданина РФ
-        type: string
       series:
         description: Серия паспорта
         type: string

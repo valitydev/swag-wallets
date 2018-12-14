@@ -3,10 +3,6 @@ allOf:
   - $ref: '#/definitions/SecuredPrivateDocument'
   - type: object
     properties:
-      type:
-        description: Национальный паспорт гражданина РФ
-        type: string
-        readOnly: true
       seriesMasked:
         description: Маскированная серия паспорта
         type: string

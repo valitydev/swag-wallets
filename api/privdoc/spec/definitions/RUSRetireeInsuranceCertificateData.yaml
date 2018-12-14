@@ -7,10 +7,6 @@ allOf:
     required:
       - number
     properties:
-      type:
-        description: |
-          Страховое свидетельство обязательного пенсионного страхования
-        type: string
       number:
         description: |
           [СНИЛС](https://ru.wikipedia.org/wiki/Страховой_номер_индивидуального_лицевого_счёта)

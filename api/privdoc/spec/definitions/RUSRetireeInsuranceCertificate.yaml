@@ -5,11 +5,6 @@ allOf:
   - $ref: '#/definitions/SecuredPrivateDocument'
   - type: object
     properties:
-      type:
-        description: |
-          Страховое свидетельство обязательного пенсионного страхования
-        type: string
-        readOnly: true
       numberMasked:
         description: |
           Маскированный [СНИЛС](https://ru.wikipedia.org/wiki/Страховой_номер_индивидуального_лицевого_счёта)
