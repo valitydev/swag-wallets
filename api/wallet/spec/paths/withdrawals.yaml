@@ -19,6 +19,13 @@ get:
       maxLength: 40
       minLength: 1
       required: false
+    - name: withdrawalID
+      in: query
+      description: Идентификатор вывода денежных средств
+      type: string
+      required: false
+      maxLength: 40
+      minLength: 1
     - name: destinationID
       in: query
       description: Идентификатор приёмника средств
