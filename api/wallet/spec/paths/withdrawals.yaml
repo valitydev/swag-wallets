@@ -5,6 +5,7 @@ get:
     - Withdrawals
   parameters:
     - $ref: '#/parameters/requestID'
+    - $ref: '#/parameters/deadline'
     - name: walletID
       in: query
       description: Идентификатор кошелька
@@ -78,6 +79,8 @@ get:
               $ref: '#/definitions/Withdrawal'
     '400':
       $ref: '#/responses/BadRequest'
+    '401':
+      $ref: '#/responses/Unauthorized'
 
 post:
   operationId: createWithdrawal
@@ -86,6 +89,7 @@ post:
     - Withdrawals
   parameters:
     - $ref: '#/parameters/requestID'
+    - $ref: '#/parameters/deadline'
     - name: withdrawal
       description: Данные вывода
       in: body
@@ -104,6 +108,8 @@ post:
         $ref: '#/definitions/Withdrawal'
     '400':
       $ref: '#/responses/BadRequest'
+    '401':
+      $ref: '#/responses/Unauthorized'
     '409':
       $ref: '#/responses/ConflictRequest'
     '422':

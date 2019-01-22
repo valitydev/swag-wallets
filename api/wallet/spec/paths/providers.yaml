@@ -5,6 +5,7 @@ get:
     - Providers
   parameters:
     - $ref: '#/parameters/requestID'
+    - $ref: '#/parameters/deadline'
     - $ref: '#/parameters/residence'
   responses:
     '200':
@@ -15,3 +16,5 @@ get:
           $ref: '#/definitions/Provider'
     '400':
       $ref: '#/responses/BadRequest'
+    '401':
+      $ref: '#/responses/Unauthorized'

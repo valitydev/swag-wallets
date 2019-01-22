@@ -5,6 +5,7 @@ get:
     - Withdrawals
   parameters:
     - $ref: '#/parameters/requestID'
+    - $ref: '#/parameters/deadline'
     - name: identity
       description: Фильтр по личности владельца
       in: query
@@ -29,6 +30,8 @@ get:
           $ref: '#/definitions/Destination'
     '400':
       $ref: '#/responses/BadRequest'
+    '401':
+      $ref: '#/responses/Unauthorized'
 
 post:
   operationId: createDestination
@@ -37,6 +40,7 @@ post:
     - Withdrawals
   parameters:
     - $ref: '#/parameters/requestID'
+    - $ref: '#/parameters/deadline'
     - name: destination
       description: Данные приёмника средств
       in: body
@@ -55,6 +59,8 @@ post:
         $ref: '#/definitions/Destination'
     '400':
       $ref: '#/responses/BadRequest'
+    '401':
+      $ref: '#/responses/Unauthorized'
     '409':
       $ref: '#/responses/ConflictRequest'
     '422':

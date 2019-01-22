@@ -5,6 +5,7 @@ get:
     - Identities
   parameters:
     - $ref: '#/parameters/requestID'
+    - $ref: '#/parameters/deadline'
     - $ref: '#/parameters/identityID'
   responses:
     '200':
@@ -15,3 +16,5 @@ get:
       $ref: '#/responses/NotFound'
     '400':
       $ref: '#/responses/BadRequest'
+    '401':
+      $ref: '#/responses/Unauthorized'

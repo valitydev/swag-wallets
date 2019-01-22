@@ -5,6 +5,7 @@ get:
     - Residences
   parameters:
     - $ref: '#/parameters/requestID'
+    - $ref: '#/parameters/deadline'
     - name: residence
       in: path
       description: |
@@ -22,3 +23,5 @@ get:
       $ref: '#/responses/NotFound'
     '400':
       $ref: '#/responses/BadRequest'
+    '401':
+      $ref: '#/responses/Unauthorized'

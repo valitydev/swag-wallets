@@ -5,6 +5,7 @@ get:
     - Wallets
   parameters:
     - $ref: '#/parameters/requestID'
+    - $ref: '#/parameters/deadline'
     - name: identityID
       description: Идентификатор личности владельца
       in: query
@@ -35,6 +36,8 @@ get:
               $ref: '#/definitions/Wallet'
     '400':
       $ref: '#/responses/BadRequest'
+    '401':
+      $ref: '#/responses/Unauthorized'
 
 post:
   operationId: createWallet
@@ -43,6 +46,7 @@ post:
     - Wallets
   parameters:
     - $ref: '#/parameters/requestID'
+    - $ref: '#/parameters/deadline'
     - name: wallet
       description: Данные создаваемого кошелька
       in: body
@@ -61,6 +65,8 @@ post:
         $ref: '#/definitions/Wallet'
     '400':
       $ref: '#/responses/BadRequest'
+    '401':
+      $ref: '#/responses/Unauthorized'
     '409':
       $ref: '#/responses/ConflictRequest'
     '422':

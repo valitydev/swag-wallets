@@ -1,18 +1,18 @@
 get:
-  operationId: getIdentityChallenge
-  summary: Получить данные процедуры идентификации
+  description: Получить отчет по данному идентификатору
   tags:
-    - Identities
+    - Reports
+  operationId: getReport
   parameters:
     - $ref: '#/parameters/requestID'
     - $ref: '#/parameters/deadline'
     - $ref: '#/parameters/identityID'
-    - $ref: '#/parameters/challengeID'
+    - $ref: '#/parameters/reportID'
   responses:
     '200':
-      description: Процедура идентификации найдена
+      description: Найденный отчет
       schema:
-        $ref: '#/definitions/IdentityChallenge'
+        $ref: '#/definitions/Report'
     '404':
       $ref: '#/responses/NotFound'
     '400':
