@@ -3,7 +3,7 @@
   "info": {
     "version": "0.0.1",
     "title": "RBKmoney Wallet API",
-    "description": "\nRBKmoney Wallet API является базовой и единственной точкой взаимодействия с платформой кошельков. Все изменения состояний платформы осуществляются с помощью вызовов соответствующих методов API. Любые сторонние приложения, включая наши веб-сайты и другие UI-интерфейсы являются внешними приложениями-клиентами.\nRBKmoney API работает поверх HTTP-протокола. Мы используем REST архитектуру, схема описывается в соответствии со [Swagger](http://swagger.io/). Коды возврата описываются соответствующими HTTP-статусами. Платформа принимает и возвращает значения JSON в теле запросов и ответов.\n## Формат содержимого\nЛюбой запрос к API должен выполняться в кодировке UTF-8 и с указанием содержимого в формате JSON.\n```\n  Content-Type: application/json; charset=utf-8\n```\n## Формат дат\nПлатформа принимает значения date-time в стандарте RFC 3339 с обязательным указанием UTC-оффсета, например:\n```\n  2017-01-01T00:00:00Z\n  2017-01-01T00:00:01+00:00\n```\n## Ошибки обработки запросов\nВ процессе обработки запросов силами нашей платформы могут происходить различные непредвиденные ситуации. Об их появлении платформа сигнализирует по протоколу HTTP соответствующими [статусами][5xx], обозначающими ошибки сервера.\n\n |  Код    |  Описание  |\n | ------- | ---------- |\n | **500** | В процессе обработки платформой запроса возникла непредвиденная ситуация. При получении подобного кода ответа мы рекомендуем обратиться в техническую поддержку. |\n | **503** | Платформа временно недоступна и не готова обслуживать данный запрос. Запрос гарантированно не выполнен, при получении подобного кода ответа попробуйте выполнить его позднее, когда доступность платформы будет восстановлена. |\n | **504** | Платформа превысила допустимое время обработки запроса, результат запроса не определён. Попробуйте отправить запрос повторно или выяснить результат выполнения исходного запроса, если повторное исполнение запроса нежелательно. |\n\n[5xx]: https://tools.ietf.org/html/rfc7231#section-6.6\n",
+    "description": "\nRBKmoney Wallet API является базовой и единственной точкой взаимодействия с платформой кошельков. Все изменения состояний платформы осуществляются с помощью вызовов соответствующих методов API. Любые сторонние приложения, включая наши веб-сайты и другие UI-интерфейсы являются внешними приложениями-клиентами.\nRBKmoney API работает поверх HTTP-протокола. Мы используем REST архитектуру, схема описывается в соответствии со [Swagger](http://swagger.io/). Коды возврата описываются соответствующими HTTP-статусами. Платформа принимает и возвращает значения JSON в теле запросов и ответов.\n## Формат содержимого\nЛюбой запрос к API должен выполняться в кодировке UTF-8 и с указанием содержимого в формате JSON.\n```\n  Content-Type: application/json; charset=utf-8\n```\n## Формат дат\nПлатформа принимает значения date-time в стандарте RFC 3339 с обязательным указанием UTC-оффсета, например:\n```\n  2017-01-01T00:00:00Z\n  2017-01-01T00:00:01+00:00\n```\n## Максимальное время обработки запроса\nК любому вызову методов API можно добавить параметр отсечки по времени, определяющий максимальное время ожидания завершения операции по запросу. Данная отсечка передается в соответствующем заголовке HTTP-запроса:\n```\n X-Request-Deadline: 10s\n```\nЗначение отсечки может быть задано в формате ISO 8601 (см. [Формат дат](#section/Format-dat)), либо в относительных величинах, например:\n`150000ms`, `540s`, `3.5m` При этом возможные единицы измерения `ms`, `s`, `m`. В обоих случаях  не рекомендуется, чтобы задаваемое значение было меньше **3 секунд** и превышало **1 минуту**.\n## Ошибки обработки запросов\nВ процессе обработки запросов силами нашей платформы могут происходить различные непредвиденные ситуации. Об их появлении платформа сигнализирует по протоколу HTTP соответствующими [статусами][5xx], обозначающими ошибки сервера.\n\n |  Код    |  Описание  |\n | ------- | ---------- |\n | **500** | В процессе обработки платформой запроса возникла непредвиденная ситуация. При получении подобного кода ответа мы рекомендуем обратиться в техническую поддержку. |\n | **503** | Платформа временно недоступна и не готова обслуживать данный запрос. Запрос гарантированно не выполнен, при получении подобного кода ответа попробуйте выполнить его позднее, когда доступность платформы будет восстановлена. |\n | **504** | Платформа превысила допустимое время обработки запроса, результат запроса не определён. Попробуйте отправить запрос повторно или выяснить результат выполнения исходного запроса, если повторное исполнение запроса нежелательно. |\n\n[5xx]: https://tools.ietf.org/html/rfc7231#section-6.6\n",
     "termsOfService": "http://rbk.money/",
     "contact": {
       "name": "RBKmoney support team",
@@ -50,6 +50,9 @@
     },
     "NotFound": {
       "description": "Искомая сущность не найдена"
+    },
+    "Unauthorized": {
+      "description": "Ошибка авторизации"
     }
   },
   "parameters": {
@@ -172,6 +175,48 @@
       "required": true,
       "type": "integer",
       "format": "int32"
+    },
+    "reportID": {
+      "name": "reportID",
+      "in": "path",
+      "description": "Идентификатор отчета",
+      "required": true,
+      "type": "integer",
+      "format": "int64"
+    },
+    "fileID": {
+      "name": "fileID",
+      "in": "path",
+      "description": "Идентификатор файла",
+      "required": true,
+      "type": "string",
+      "maxLength": 40,
+      "minLength": 1
+    },
+    "fromTime": {
+      "name": "fromTime",
+      "in": "query",
+      "description": "Начало временного отрезка",
+      "required": true,
+      "type": "string",
+      "format": "date-time"
+    },
+    "toTime": {
+      "name": "toTime",
+      "in": "query",
+      "description": "Конец временного отрезка",
+      "required": true,
+      "type": "string",
+      "format": "date-time"
+    },
+    "deadline": {
+      "name": "X-Request-Deadline",
+      "in": "header",
+      "description": "Максимальное время обработки запроса",
+      "required": false,
+      "type": "string",
+      "maxLength": 40,
+      "minLength": 1
     }
   },
   "tags": [
@@ -204,6 +249,16 @@
       "name": "Currencies",
       "x-displayName": "Валюты",
       "description": ""
+    },
+    {
+      "name": "Reports",
+      "x-displayName": "Отчеты",
+      "description": ""
+    },
+    {
+      "name": "Downloads",
+      "x-displayName": "Загрузка файлов",
+      "description": ""
     }
   ],
   "paths": {
@@ -217,6 +272,9 @@
         "parameters": [
           {
             "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
           },
           {
             "name": "currencyID",
@@ -237,6 +295,9 @@
           "400": {
             "$ref": "#/responses/BadRequest"
           },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
           "404": {
             "$ref": "#/responses/NotFound"
           }
@@ -253,6 +314,9 @@
         "parameters": [
           {
             "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
           },
           {
             "name": "identity",
@@ -284,6 +348,9 @@
           },
           "400": {
             "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
           }
         }
       },
@@ -296,6 +363,9 @@
         "parameters": [
           {
             "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
           },
           {
             "name": "destination",
@@ -324,6 +394,9 @@
           "400": {
             "$ref": "#/responses/BadRequest"
           },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
           "409": {
             "$ref": "#/responses/ConflictRequest"
           },
@@ -348,6 +421,9 @@
             "$ref": "#/parameters/requestID"
           },
           {
+            "$ref": "#/parameters/deadline"
+          },
+          {
             "$ref": "#/parameters/destinationID"
           }
         ],
@@ -360,6 +436,9 @@
           },
           "400": {
             "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
           },
           "404": {
             "$ref": "#/responses/NotFound"
@@ -377,6 +456,9 @@
         "parameters": [
           {
             "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
           },
           {
             "$ref": "#/parameters/destinationID"
@@ -401,6 +483,9 @@
           "400": {
             "$ref": "#/responses/BadRequest"
           },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
           "404": {
             "$ref": "#/responses/NotFound"
           },
@@ -409,6 +494,51 @@
             "schema": {
               "$ref": "#/definitions/InvalidOperationParameters"
             }
+          }
+        }
+      }
+    },
+    "/files/{fileID}/download": {
+      "post": {
+        "description": "Скачать файл",
+        "tags": [
+          "Downloads"
+        ],
+        "operationId": "downloadFile",
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/fileID"
+          },
+          {
+            "name": "expiresAt",
+            "in": "query",
+            "description": "Время до которого ссылка будет считаться действительной",
+            "required": true,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Данные для получения файла",
+            "schema": {
+              "$ref": "#/definitions/FileDownload"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
           }
         }
       }
@@ -423,6 +553,9 @@
         "parameters": [
           {
             "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
           },
           {
             "name": "provider",
@@ -464,6 +597,9 @@
           },
           "400": {
             "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
           }
         }
       },
@@ -476,6 +612,9 @@
         "parameters": [
           {
             "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
           },
           {
             "name": "identity",
@@ -504,6 +643,9 @@
           "400": {
             "$ref": "#/responses/BadRequest"
           },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
           "409": {
             "$ref": "#/responses/ConflictRequest"
           },
@@ -528,6 +670,9 @@
             "$ref": "#/parameters/requestID"
           },
           {
+            "$ref": "#/parameters/deadline"
+          },
+          {
             "$ref": "#/parameters/identityID"
           }
         ],
@@ -540,6 +685,9 @@
           },
           "400": {
             "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
           },
           "404": {
             "$ref": "#/responses/NotFound"
@@ -557,6 +705,9 @@
         "parameters": [
           {
             "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
           },
           {
             "$ref": "#/parameters/identityID"
@@ -588,6 +739,9 @@
           "400": {
             "$ref": "#/responses/BadRequest"
           },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
           "404": {
             "$ref": "#/responses/NotFound"
           }
@@ -602,6 +756,9 @@
         "parameters": [
           {
             "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
           },
           {
             "$ref": "#/parameters/identityID"
@@ -633,6 +790,9 @@
           "400": {
             "$ref": "#/responses/BadRequest"
           },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
           "404": {
             "$ref": "#/responses/NotFound"
           },
@@ -660,6 +820,9 @@
             "$ref": "#/parameters/requestID"
           },
           {
+            "$ref": "#/parameters/deadline"
+          },
+          {
             "$ref": "#/parameters/identityID"
           },
           {
@@ -675,6 +838,9 @@
           },
           "400": {
             "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
           },
           "404": {
             "$ref": "#/responses/NotFound"
@@ -692,6 +858,9 @@
         "parameters": [
           {
             "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
           },
           {
             "$ref": "#/parameters/identityID"
@@ -719,6 +888,9 @@
           "400": {
             "$ref": "#/responses/BadRequest"
           },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
           "404": {
             "$ref": "#/responses/NotFound"
           }
@@ -735,6 +907,9 @@
         "parameters": [
           {
             "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
           },
           {
             "$ref": "#/parameters/identityID"
@@ -756,6 +931,143 @@
           "400": {
             "$ref": "#/responses/BadRequest"
           },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/identities/{identityID}/reports": {
+      "post": {
+        "description": "Сгенерировать отчет с указанным типом по личности владельца за указанный промежуток времени",
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "createReport",
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/identityID"
+          },
+          {
+            "name": "ReportParams",
+            "in": "body",
+            "description": "Параметры генерации отчета",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ReportParams"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Отчет создан",
+            "schema": {
+              "$ref": "#/definitions/Report"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          }
+        }
+      },
+      "get": {
+        "description": "Получить список отчетов по личности владельца за период",
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "getReports",
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/identityID"
+          },
+          {
+            "$ref": "#/parameters/fromTime"
+          },
+          {
+            "$ref": "#/parameters/toTime"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Тип получаемых отчетов",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "withdrawalRegistry"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Найденные отчеты",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Report"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/identities/{identityID}/reports/{reportID}": {
+      "get": {
+        "description": "Получить отчет по данному идентификатору",
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "getReport",
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/identityID"
+          },
+          {
+            "$ref": "#/parameters/reportID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Найденный отчет",
+            "schema": {
+              "$ref": "#/definitions/Report"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
           "404": {
             "$ref": "#/responses/NotFound"
           }
@@ -774,6 +1086,9 @@
             "$ref": "#/parameters/requestID"
           },
           {
+            "$ref": "#/parameters/deadline"
+          },
+          {
             "$ref": "#/parameters/residence"
           }
         ],
@@ -789,6 +1104,9 @@
           },
           "400": {
             "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
           }
         }
       }
@@ -805,6 +1123,9 @@
             "$ref": "#/parameters/requestID"
           },
           {
+            "$ref": "#/parameters/deadline"
+          },
+          {
             "$ref": "#/parameters/providerID"
           }
         ],
@@ -817,6 +1138,9 @@
           },
           "400": {
             "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
           },
           "404": {
             "$ref": "#/responses/NotFound"
@@ -836,6 +1160,9 @@
             "$ref": "#/parameters/requestID"
           },
           {
+            "$ref": "#/parameters/deadline"
+          },
+          {
             "$ref": "#/parameters/providerID"
           }
         ],
@@ -851,6 +1178,9 @@
           },
           "400": {
             "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
           },
           "404": {
             "$ref": "#/responses/NotFound"
@@ -868,6 +1198,9 @@
         "parameters": [
           {
             "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
           },
           {
             "$ref": "#/parameters/providerID"
@@ -890,6 +1223,9 @@
           "400": {
             "$ref": "#/responses/BadRequest"
           },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
           "404": {
             "$ref": "#/responses/NotFound"
           }
@@ -906,6 +1242,9 @@
         "parameters": [
           {
             "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
           },
           {
             "$ref": "#/parameters/providerID"
@@ -931,6 +1270,9 @@
           "400": {
             "$ref": "#/responses/BadRequest"
           },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
           "404": {
             "$ref": "#/responses/NotFound"
           }
@@ -947,6 +1289,9 @@
         "parameters": [
           {
             "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
           },
           {
             "$ref": "#/parameters/providerID"
@@ -976,6 +1321,9 @@
           "400": {
             "$ref": "#/responses/BadRequest"
           },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
           "404": {
             "$ref": "#/responses/NotFound"
           }
@@ -992,6 +1340,9 @@
         "parameters": [
           {
             "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
           },
           {
             "name": "residence",
@@ -1012,6 +1363,9 @@
           "400": {
             "$ref": "#/responses/BadRequest"
           },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
           "404": {
             "$ref": "#/responses/NotFound"
           }
@@ -1028,6 +1382,9 @@
         "parameters": [
           {
             "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
           },
           {
             "name": "identityID",
@@ -1074,6 +1431,9 @@
           },
           "400": {
             "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
           }
         }
       },
@@ -1086,6 +1446,9 @@
         "parameters": [
           {
             "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
           },
           {
             "name": "wallet",
@@ -1114,6 +1477,9 @@
           "400": {
             "$ref": "#/responses/BadRequest"
           },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
           "409": {
             "$ref": "#/responses/ConflictRequest"
           },
@@ -1138,6 +1504,9 @@
             "$ref": "#/parameters/requestID"
           },
           {
+            "$ref": "#/parameters/deadline"
+          },
+          {
             "$ref": "#/parameters/walletID"
           }
         ],
@@ -1150,6 +1519,9 @@
           },
           "400": {
             "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
           },
           "404": {
             "$ref": "#/responses/NotFound"
@@ -1169,6 +1541,9 @@
             "$ref": "#/parameters/requestID"
           },
           {
+            "$ref": "#/parameters/deadline"
+          },
+          {
             "$ref": "#/parameters/walletID"
           }
         ],
@@ -1181,6 +1556,9 @@
           },
           "400": {
             "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
           },
           "404": {
             "$ref": "#/responses/NotFound"
@@ -1198,6 +1576,9 @@
         "parameters": [
           {
             "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
           },
           {
             "$ref": "#/parameters/walletID"
@@ -1222,6 +1603,9 @@
           "400": {
             "$ref": "#/responses/BadRequest"
           },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
           "404": {
             "$ref": "#/responses/NotFound"
           },
@@ -1244,6 +1628,9 @@
         "parameters": [
           {
             "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
           },
           {
             "name": "walletID",
@@ -1350,6 +1737,9 @@
           },
           "400": {
             "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
           }
         }
       },
@@ -1362,6 +1752,9 @@
         "parameters": [
           {
             "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
           },
           {
             "name": "withdrawal",
@@ -1390,6 +1783,9 @@
           "400": {
             "$ref": "#/responses/BadRequest"
           },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
           "409": {
             "$ref": "#/responses/ConflictRequest"
           },
@@ -1414,6 +1810,9 @@
             "$ref": "#/parameters/requestID"
           },
           {
+            "$ref": "#/parameters/deadline"
+          },
+          {
             "$ref": "#/parameters/withdrawalID"
           }
         ],
@@ -1426,6 +1825,9 @@
           },
           "400": {
             "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
           },
           "404": {
             "$ref": "#/responses/NotFound"
@@ -1443,6 +1845,9 @@
         "parameters": [
           {
             "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
           },
           {
             "$ref": "#/parameters/withdrawalID"
@@ -1467,6 +1872,9 @@
           "400": {
             "$ref": "#/responses/BadRequest"
           },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
           "404": {
             "$ref": "#/responses/NotFound"
           }
@@ -1485,6 +1893,9 @@
             "$ref": "#/parameters/requestID"
           },
           {
+            "$ref": "#/parameters/deadline"
+          },
+          {
             "$ref": "#/parameters/withdrawalID"
           },
           {
@@ -1500,6 +1911,9 @@
           },
           "400": {
             "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
           },
           "404": {
             "$ref": "#/responses/NotFound"
@@ -1739,6 +2153,24 @@
       "description": "Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n",
       "type": "string",
       "example": "10036274"
+    },
+    "FileDownload": {
+      "type": "object",
+      "required": [
+        "url",
+        "expiresAt"
+      ],
+      "properties": {
+        "url": {
+          "description": "URL файла",
+          "type": "string"
+        },
+        "expiresAt": {
+          "description": "Время до которого ссылка будет считаться действительной",
+          "type": "string",
+          "format": "date-time"
+        }
+      }
     },
     "GrantToken": {
       "type": "string",
@@ -2267,6 +2699,100 @@
       "description": "Идентификатор провайдера услуг",
       "type": "string",
       "example": "ncoeps"
+    },
+    "Report": {
+      "type": "object",
+      "required": [
+        "id",
+        "createdAt",
+        "fromTime",
+        "toTime",
+        "status",
+        "type",
+        "files"
+      ],
+      "properties": {
+        "id": {
+          "description": "Идентификатор отчета",
+          "type": "integer",
+          "format": "int64"
+        },
+        "createdAt": {
+          "description": "Дата и время создания",
+          "type": "string",
+          "format": "date-time"
+        },
+        "fromTime": {
+          "description": "Дата и время начала периода",
+          "type": "string",
+          "format": "date-time"
+        },
+        "toTime": {
+          "description": "Дата и время конца периода",
+          "type": "string",
+          "format": "date-time"
+        },
+        "status": {
+          "description": "Статус формирования отчета",
+          "type": "string",
+          "enum": [
+            "pending",
+            "created",
+            "canceled"
+          ]
+        },
+        "type": {
+          "description": "Тип отчета",
+          "type": "string",
+          "enum": [
+            "withdrawalRegistry"
+          ]
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "description": "Идентификатор файла",
+                "type": "string",
+                "maxLength": 40,
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "ReportParams": {
+      "type": "object",
+      "required": [
+        "reportType",
+        "fromTime",
+        "toTime"
+      ],
+      "properties": {
+        "reportType": {
+          "description": "Тип отчета",
+          "type": "string",
+          "enum": [
+            "withdrawalRegistry"
+          ]
+        },
+        "fromTime": {
+          "description": "Начало временного отрезка",
+          "type": "string",
+          "format": "date-time"
+        },
+        "toTime": {
+          "description": "Конец временного отрезка",
+          "type": "string",
+          "format": "date-time"
+        }
+      }
     },
     "Residence": {
       "description": "Описание региона резиденции",
