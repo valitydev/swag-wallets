@@ -236,6 +236,11 @@
       "description": ""
     },
     {
+      "name": "Deposits",
+      "x-displayName": "Пополнения",
+      "description": ""
+    },
+    {
       "name": "Withdrawals",
       "x-displayName": "Выводы",
       "description": ""
@@ -300,6 +305,132 @@
           },
           "404": {
             "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/deposits": {
+      "get": {
+        "operationId": "listDeposits",
+        "summary": "Поиск пополнений",
+        "tags": [
+          "Deposits"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "name": "walletID",
+            "in": "query",
+            "description": "Идентификатор кошелька",
+            "type": "string",
+            "maxLength": 40,
+            "minLength": 1,
+            "required": false
+          },
+          {
+            "name": "identityID",
+            "in": "query",
+            "description": "Идентификатор личности владельца",
+            "type": "string",
+            "maxLength": 40,
+            "minLength": 1,
+            "required": false
+          },
+          {
+            "name": "depositID",
+            "in": "query",
+            "description": "Идентификатор ввода денежных средств",
+            "type": "string",
+            "required": false,
+            "maxLength": 40,
+            "minLength": 1
+          },
+          {
+            "name": "sourceID",
+            "in": "query",
+            "description": "Идентификатор источника средств",
+            "type": "string",
+            "maxLength": 40,
+            "minLength": 1,
+            "required": false
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string",
+            "enum": [
+              "Pending",
+              "Succeeded",
+              "Failed"
+            ],
+            "required": false
+          },
+          {
+            "name": "createdAtFrom",
+            "in": "query",
+            "description": "Дата создания с",
+            "type": "string",
+            "format": "date-time",
+            "required": false
+          },
+          {
+            "name": "createdAtTo",
+            "in": "query",
+            "description": "Дата создания до",
+            "type": "string",
+            "format": "date-time",
+            "required": false
+          },
+          {
+            "$ref": "#/parameters/amountFrom"
+          },
+          {
+            "$ref": "#/parameters/amountTo"
+          },
+          {
+            "$ref": "#/parameters/currencyID"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "name": "continuationToken",
+            "in": "query",
+            "required": false,
+            "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Результат поиска",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "continuationToken": {
+                  "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
+                  "type": "string"
+                },
+                "result": {
+                  "description": "Найденные пополнения",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Deposit"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
           }
         }
       }
@@ -2006,6 +2137,141 @@
       "pattern": "^[A-Z]{3}$",
       "example": "RUB"
     },
+    "Deposit": {
+      "description": "Данные поступления денежных средств",
+      "allOf": [
+        {
+          "type": "object",
+          "required": [
+            "wallet",
+            "source",
+            "body"
+          ],
+          "properties": {
+            "id": {
+              "description": "Идентификатор поступления денежных средств",
+              "type": "string",
+              "example": "tZ0jUmlsV0",
+              "readOnly": true
+            },
+            "createdAt": {
+              "description": "Дата и время запуска пополнения",
+              "type": "string",
+              "format": "date-time",
+              "readOnly": true
+            },
+            "wallet": {
+              "description": "Идентификатор кошелька",
+              "type": "string",
+              "example": "10068321"
+            },
+            "source": {
+              "description": "Идентификатор источника денежных средств",
+              "type": "string",
+              "example": "107498"
+            },
+            "body": {
+              "description": "Объём поступивших средств",
+              "type": "object",
+              "required": [
+                "amount",
+                "currency"
+              ],
+              "properties": {
+                "amount": {
+                  "description": "Сумма денежных средств в минорных единицах, например, в копейках\n",
+                  "type": "integer",
+                  "format": "int64",
+                  "example": 1430000
+                },
+                "currency": {
+                  "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+                  "type": "string",
+                  "pattern": "^[A-Z]{3}$",
+                  "example": "RUB"
+                }
+              }
+            },
+            "fee": {
+              "description": "Сумма коммисии",
+              "type": "object",
+              "required": [
+                "amount",
+                "currency"
+              ],
+              "properties": {
+                "amount": {
+                  "description": "Сумма денежных средств в минорных единицах, например, в копейках\n",
+                  "type": "integer",
+                  "format": "int64",
+                  "example": 1430000
+                },
+                "currency": {
+                  "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+                  "type": "string",
+                  "pattern": "^[A-Z]{3}$",
+                  "example": "RUB"
+                }
+              }
+            },
+            "externalID": {
+              "description": "Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n",
+              "type": "string",
+              "example": "10036274"
+            }
+          }
+        },
+        {
+          "$ref": "#/definitions/DepositStatus"
+        }
+      ]
+    },
+    "DepositFailure": {
+      "type": "object",
+      "required": [
+        "code"
+      ],
+      "properties": {
+        "code": {
+          "description": "Код ошибки поступления",
+          "type": "string"
+        }
+      }
+    },
+    "DepositID": {
+      "description": "Идентификатор поступления денежных средств",
+      "type": "string",
+      "example": "tZ0jUmlsV0"
+    },
+    "DepositStatus": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "description": "Статус поступления денежных средств.\n\n| Значение    | Пояснение                                        |\n| ----------- | ------------------------------------------------ |\n| `Pending`   | Поступление в процессе выполнения                |\n| `Succeeded` | Поступление средств произведён успешно           |\n| `Failed`    | Поступление средств завершился неудачей          |\n",
+          "type": "string",
+          "enum": [
+            "Pending",
+            "Succeeded",
+            "Failed"
+          ],
+          "readOnly": true
+        },
+        "failure": {
+          "description": "> Если `status` == `Failed`\n\nПояснение причины неудачи\n",
+          "readOnly": true,
+          "type": "object",
+          "required": [
+            "code"
+          ],
+          "properties": {
+            "code": {
+              "description": "Код ошибки поступления",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
     "Destination": {
       "description": "Данные приёмника денежных средств",
       "allOf": [
@@ -2825,6 +3091,11 @@
       "type": "string",
       "pattern": "^[A-Z]{3}$",
       "example": "RUS"
+    },
+    "SourceID": {
+      "description": "Идентификатор источника денежных средств",
+      "type": "string",
+      "example": "107498"
     },
     "Wallet": {
       "description": "Данные кошелька",
