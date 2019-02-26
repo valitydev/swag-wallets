@@ -1,5 +1,5 @@
 post:
-  description: Скачать файл
+  description: Получить ссылку для скачивания файла
   tags:
     - Downloads
   operationId: downloadFile
@@ -7,12 +7,6 @@ post:
     - $ref: '#/parameters/requestID'
     - $ref: '#/parameters/deadline'
     - $ref: '#/parameters/fileID'
-    - name: expiresAt
-      in: query
-      description: Время до которого ссылка будет считаться действительной
-      required: true
-      type: string
-      format: date-time
   responses:
     '201':
       description: Данные для получения файла
