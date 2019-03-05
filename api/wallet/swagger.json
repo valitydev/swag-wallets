@@ -347,7 +347,7 @@
             "description": "Идентификатор ввода денежных средств",
             "type": "string",
             "required": false,
-            "maxLength": 40,
+            "maxLength": 50,
             "minLength": 1
           },
           {
