@@ -1,0 +1,14 @@
+description: Данные криптовалютного кошелька
+type: object
+required:
+  - id
+properties:
+  id:
+    description: Идентификатор (он же адрес) криптовалютного кошелька
+    type: string
+    minLength: 16
+    maxLength: 256
+    example: zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQ
+  currency:
+    x-rebillyMerge:
+      - $ref: '#/definitions/CryptoCurrency'

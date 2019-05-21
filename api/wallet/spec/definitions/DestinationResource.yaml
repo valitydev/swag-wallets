@@ -12,3 +12,4 @@ properties:
     type: string
     enum:
       - BankCardDestinationResource
+      - CryptoWalletDestinationResource
