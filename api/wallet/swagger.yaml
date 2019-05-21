@@ -1392,6 +1392,43 @@ definitions:
       Для получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.
       Если токена нет, получена последняя часть данных.
     type: string
+  CryptoCurrency:
+    description: Криптовалюта
+    type: string
+    enum:
+      - Bitcoin
+      - Litecoin
+      - BitcoinCash
+      - Ripple
+      - Ethereum
+      - Zcash
+  CryptoWallet:
+    description: Данные криптовалютного кошелька
+    type: object
+    required:
+      - id
+    properties:
+      id:
+        description: Идентификатор (он же адрес) криптовалютного кошелька
+        type: string
+        minLength: 16
+        maxLength: 256
+        example: zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQ
+      currency:
+        description: Криптовалюта
+        type: string
+        enum:
+          - Bitcoin
+          - Litecoin
+          - BitcoinCash
+          - Ripple
+          - Ethereum
+          - Zcash
+  CryptoWalletDestinationResource:
+    description: Криптовалютные денежные средства
+    allOf:
+      - $ref: '#/definitions/DestinationResource'
+      - $ref: '#/definitions/CryptoWallet'
   Currency:
     description: Описание валюты
     type: object
@@ -1654,6 +1691,7 @@ definitions:
         type: string
         enum:
           - BankCardDestinationResource
+          - CryptoWalletDestinationResource
   DestinationStatus:
     type: object
     properties:
