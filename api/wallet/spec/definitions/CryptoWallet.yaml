@@ -2,6 +2,7 @@ description: Данные криптовалютного кошелька
 type: object
 required:
   - id
+  - currency
 properties:
   id:
     description: Идентификатор (он же адрес) криптовалютного кошелька
