@@ -2099,7 +2099,8 @@
       "description": "Данные криптовалютного кошелька",
       "type": "object",
       "required": [
-        "id"
+        "id",
+        "currency"
       ],
       "properties": {
         "id": {
