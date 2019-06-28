@@ -1,0 +1,37 @@
+description: Данные курса обмена валют для вывода
+type: object
+required:
+  - cashFrom
+  - cashTo
+  - createdAt
+  - expiresOn
+  - exchangeToken
+properties:
+  cashFrom:
+    x-rebillyMerge:
+      - $ref: '#/definitions/Asset'
+      - description: Объём средств в исходной валюте
+      - readOnly: true
+  cashTo:
+    x-rebillyMerge:
+      - $ref: '#/definitions/Asset'
+      - description: Объём средств в конечной валюте
+      - readOnly: true
+  createdAt:
+    description: Дата и время получения курса
+    type: string
+    format: date-time
+    readOnly: true
+  expiresOn:
+    description: Дата и время окончания действия полученного курса
+    type: string
+    format: date-time
+    readOnly: true
+  exchangeToken:
+    x-rebillyMerge:
+      - $ref: '#/definitions/GrantToken'
+      - description: >
+          Курс обмена валют, по которому следует проводить вывод средств.
+
+          Необходимо предоставить при создании вывода с конвертацией
+          по полученному курсу
