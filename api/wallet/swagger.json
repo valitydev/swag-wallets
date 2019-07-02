@@ -1741,10 +1741,10 @@
         }
       }
     },
-    "/withdrawalExchanges": {
+    "/withdrawal-quotes": {
       "post": {
-        "operationId": "createExchangePromise",
-        "summary": "Подготовка курса обмена валют",
+        "operationId": "createQuote",
+        "summary": "Подготовка котировки",
         "description": "Фиксация курса обмена валют для проведения выплаты с конвертацией",
         "tags": [
           "Withdrawals"
@@ -1757,20 +1757,20 @@
             "$ref": "#/parameters/deadline"
           },
           {
-            "name": "withdrawalExchangeParams",
-            "description": "Данные конвертации вывода",
+            "name": "withdrawalQuoteParams",
+            "description": "Данные котировки для вывода",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/WithdrawalExchangeParams"
+              "$ref": "#/definitions/WithdrawalQuoteParams"
             }
           }
         ],
         "responses": {
           "202": {
-            "description": "Полученный курс валют",
+            "description": "Полученная котировка",
             "schema": {
-              "$ref": "#/definitions/WithdrawalExchange"
+              "$ref": "#/definitions/WithdrawalQuote"
             }
           },
           "400": {
@@ -3497,15 +3497,66 @@
         }
       }
     },
-    "WithdrawalExchange": {
-      "description": "Данные курса обмена валют для вывода",
+    "WithdrawalFailure": {
+      "type": "object",
+      "required": [
+        "code"
+      ],
+      "properties": {
+        "code": {
+          "description": "Код ошибки вывода",
+          "type": "string"
+        }
+      }
+    },
+    "WithdrawalID": {
+      "description": "Идентификатор вывода денежных средств",
+      "type": "string",
+      "example": "tZ0jUmlsV0"
+    },
+    "WithdrawalParameters": {
+      "description": "Параметры создаваемого вывода",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Withdrawal"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "walletGrant": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4000,
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n",
+              "description": "Токен, дающий право на списание с кошелька для оплаты вывода.\n\nНеобходимо предоставить в том случае, если оплата производится засчёт средств _чужого_\nкошелька. Владелец указанного кошелька может\n[выдать на это право](#operation/issueWalletGrant).\n"
+            },
+            "destinationGrant": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4000,
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n",
+              "description": "Токен, дающий право вывода.\n\nНеобходимо предоставить в том случае, если вывод производится посредством _чужого_ приёмника\nсредств. Владелец указанного приёмника может\n[выдать на это право](#operation/issueDestinationGrant).\n"
+            },
+            "quoteToken": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4000,
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n",
+              "description": "Котировка, по которой следует проводить вывод средств.\n\nДолжна быть [получена](#operation/createQuote)\nзаранее для каждой отдельной операции вывода с конвертацией.\n"
+            }
+          }
+        }
+      ]
+    },
+    "WithdrawalQuote": {
+      "description": "Данные котировки для вывода",
       "type": "object",
       "required": [
         "cashFrom",
         "cashTo",
         "createdAt",
         "expiresOn",
-        "exchangeToken"
+        "quoteToken"
       ],
       "properties": {
         "cashFrom": {
@@ -3555,28 +3606,28 @@
           "readOnly": true
         },
         "createdAt": {
-          "description": "Дата и время получения курса",
+          "description": "Дата и время получения котировки",
           "type": "string",
           "format": "date-time",
           "readOnly": true
         },
         "expiresOn": {
-          "description": "Дата и время окончания действия полученного курса",
+          "description": "Дата и время окончания действия котировки",
           "type": "string",
           "format": "date-time",
           "readOnly": true
         },
-        "exchangeToken": {
+        "quoteToken": {
           "type": "string",
           "minLength": 1,
           "maxLength": 4000,
           "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n",
-          "description": "Курс обмена валют, по которому следует проводить вывод средств.\nНеобходимо предоставить при создании вывода с конвертацией по полученному курсу\n"
+          "description": "Котировка, по которой следует проводить вывод средств.\nНеобходимо предоставить при создании вывода с конвертацией\n"
         }
       }
     },
-    "WithdrawalExchangeParams": {
-      "description": "Параметры подготовки курса обмена валют для вывода",
+    "WithdrawalQuoteParams": {
+      "description": "Параметры котировки для вывода",
       "type": "object",
       "required": [
         "walletID",
@@ -3613,7 +3664,7 @@
           "example": "RUB"
         },
         "cash": {
-          "description": "Объём средств для получения курса в одной из валют обмена",
+          "description": "Объём средств для получения котировки в одной из валют обмена",
           "type": "object",
           "required": [
             "amount",
@@ -3649,57 +3700,6 @@
           "description": "Токен, дающий право вывода.\nНеобходимо предоставить в том случае, если вывод производится посредством _чужого_ приёмника средств. Владелец указанного приёмника может [выдать на это право](#operation/issueDestinationGrant)\n"
         }
       }
-    },
-    "WithdrawalFailure": {
-      "type": "object",
-      "required": [
-        "code"
-      ],
-      "properties": {
-        "code": {
-          "description": "Код ошибки вывода",
-          "type": "string"
-        }
-      }
-    },
-    "WithdrawalID": {
-      "description": "Идентификатор вывода денежных средств",
-      "type": "string",
-      "example": "tZ0jUmlsV0"
-    },
-    "WithdrawalParameters": {
-      "description": "Параметры создаваемого вывода",
-      "allOf": [
-        {
-          "$ref": "#/definitions/Withdrawal"
-        },
-        {
-          "type": "object",
-          "properties": {
-            "walletGrant": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 4000,
-              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n",
-              "description": "Токен, дающий право на списание с кошелька для оплаты вывода.\n\nНеобходимо предоставить в том случае, если оплата производится засчёт средств _чужого_\nкошелька. Владелец указанного кошелька может\n[выдать на это право](#operation/issueWalletGrant).\n"
-            },
-            "destinationGrant": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 4000,
-              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n",
-              "description": "Токен, дающий право вывода.\n\nНеобходимо предоставить в том случае, если вывод производится посредством _чужого_ приёмника\nсредств. Владелец указанного приёмника может\n[выдать на это право](#operation/issueDestinationGrant).\n"
-            },
-            "exchangeToken": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 4000,
-              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n",
-              "description": "Курс обмена валют, по которому следует проводить вывод средств.\n\nДолжен быть [получен](#operation/createExchangePromise)\nзаранее для каждой отдельной операции вывода с конвертацией.\n"
-            }
-          }
-        }
-      ]
     },
     "WithdrawalStatus": {
       "type": "object",
