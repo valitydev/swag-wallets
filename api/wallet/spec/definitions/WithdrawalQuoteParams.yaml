@@ -1,4 +1,4 @@
-description: Параметры подготовки курса обмена валют для вывода
+description: Параметры котировки для вывода
 type: object
 required:
   - walletID
@@ -26,7 +26,7 @@ properties:
   cash:
     x-rebillyMerge:
       - $ref: '#/definitions/Asset'
-      - description: Объём средств для получения курса в одной из валют обмена
+      - description: Объём средств для получения котировки в одной из валют обмена
   walletGrant:
     x-rebillyMerge:
       - $ref: '#/definitions/GrantToken'

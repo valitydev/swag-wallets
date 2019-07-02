@@ -1,23 +1,23 @@
 post:
-  operationId: createExchangePromise
-  summary: Подготовка курса обмена валют
+  operationId: createQuote
+  summary: Подготовка котировки
   description: Фиксация курса обмена валют для проведения выплаты с конвертацией
   tags:
     - Withdrawals
   parameters:
     - $ref: '#/parameters/requestID'
     - $ref: '#/parameters/deadline'
-    - name: withdrawalExchangeParams
-      description: Данные конвертации вывода
+    - name: withdrawalQuoteParams
+      description: Данные котировки для вывода
       in: body
       required: true
       schema:
-        $ref: '#/definitions/WithdrawalExchangeParams'
+        $ref: '#/definitions/WithdrawalQuoteParams'
   responses:
     '202':
-      description: Полученный курс валют
+      description: Полученная котировка
       schema:
-        $ref: '#/definitions/WithdrawalExchange'
+        $ref: '#/definitions/WithdrawalQuote'
     '400':
       $ref: '#/responses/BadRequest'
     '401':

@@ -1,11 +1,11 @@
-description: Данные курса обмена валют для вывода
+description: Данные котировки для вывода
 type: object
 required:
   - cashFrom
   - cashTo
   - createdAt
   - expiresOn
-  - exchangeToken
+  - quoteToken
 properties:
   cashFrom:
     x-rebillyMerge:
@@ -18,20 +18,19 @@ properties:
       - description: Объём средств в конечной валюте
       - readOnly: true
   createdAt:
-    description: Дата и время получения курса
+    description: Дата и время получения котировки
     type: string
     format: date-time
     readOnly: true
   expiresOn:
-    description: Дата и время окончания действия полученного курса
+    description: Дата и время окончания действия котировки
     type: string
     format: date-time
     readOnly: true
-  exchangeToken:
+  quoteToken:
     x-rebillyMerge:
       - $ref: '#/definitions/GrantToken'
       - description: >
-          Курс обмена валют, по которому следует проводить вывод средств.
+          Котировка, по которой следует проводить вывод средств.
 
           Необходимо предоставить при создании вывода с конвертацией
-          по полученному курсу
