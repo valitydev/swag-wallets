@@ -13,3 +13,9 @@ properties:
   currency:
     x-rebillyMerge:
       - $ref: '#/definitions/CryptoCurrency'
+  tag:
+    description: Уникальный идентификатор учетной записи Ripple (XRP)
+    type: string
+    minLength: 1
+    maxLength: 32
+    example: zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQ
