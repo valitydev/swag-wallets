@@ -188,7 +188,6 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 100,
-          "pattern": "^[A-Z0-9 .,'/\\-]+$",
           "example": "LEXA SVOTIN"
         },
         "cvv": {
