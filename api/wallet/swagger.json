@@ -217,6 +217,24 @@
       "type": "string",
       "maxLength": 40,
       "minLength": 1
+    },
+    "webhookID": {
+      "name": "webhookID",
+      "in": "path",
+      "description": "Идентификатор webhook'а",
+      "required": true,
+      "type": "string",
+      "maxLength": 40,
+      "minLength": 1
+    },
+    "queryIdentityID": {
+      "name": "identityID",
+      "in": "query",
+      "description": "Идентификатор личности владельца",
+      "required": true,
+      "type": "string",
+      "maxLength": 40,
+      "minLength": 1
     }
   },
   "tags": [
@@ -264,6 +282,11 @@
       "name": "Downloads",
       "x-displayName": "Загрузка файлов",
       "description": ""
+    },
+    {
+      "name": "Webhooks",
+      "x-displayName": "Webhooks",
+      "description": "## RBKmoney Webhooks Management API\nВ данном разделе описаны методы, позволяющие управлять Webhook'ами, или инструментами для получения асинхронных оповещений посредством HTTP-запросов при наступлении одного или группы интересующих вас событий, например, о том, что выплата в рамках созданного кошелька была успешно проведена.\n## RBKmoney Webhooks Events API\nВнимание! Только Webhooks Management API является частью платформы RBKmoney, а следовательно и данной спецификации. Для реализации обработчика присылаемых уведомлений вам необходимо будет ознакомиться со Swagger-спецификацей [RBKmoney Wallet Webhooks Events API](https://rbkmoney.github.io/wallet-webhook-events-api/).\n"
     }
   ],
   "paths": {
@@ -1741,6 +1764,156 @@
         }
       }
     },
+    "/webhooks": {
+      "post": {
+        "description": "Установить новый webhook.",
+        "tags": [
+          "Webhooks"
+        ],
+        "operationId": "createWebhook",
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "name": "webhookParams",
+            "description": "Параметры устанавливаемого webhook'а",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Webhook"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Webhook установлен",
+            "schema": {
+              "$ref": "#/definitions/Webhook"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          }
+        }
+      },
+      "get": {
+        "description": "Получить набор установленных webhook'ов.",
+        "tags": [
+          "Webhooks"
+        ],
+        "operationId": "getWebhooks",
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/queryIdentityID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Набор webhook'ов",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Webhook"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/webhooks/{webhookID}": {
+      "get": {
+        "description": "Получить webhook по его идентификатору.",
+        "tags": [
+          "Webhooks"
+        ],
+        "operationId": "getWebhookByID",
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/webhookID"
+          },
+          {
+            "$ref": "#/parameters/queryIdentityID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Данные webhook'а",
+            "schema": {
+              "$ref": "#/definitions/Webhook"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      },
+      "delete": {
+        "description": "Снять указанный webhook.",
+        "tags": [
+          "Webhooks"
+        ],
+        "operationId": "deleteWebhookByID",
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/webhookID"
+          },
+          {
+            "$ref": "#/parameters/queryIdentityID"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Webhook успешно снят"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
     "/withdrawal-quotes": {
       "post": {
         "operationId": "createQuote",
@@ -2506,6 +2679,34 @@
           "readOnly": true
         }
       }
+    },
+    "DestinationsTopic": {
+      "description": "Область охвата, включающая события по приёмникам денежных средств\nв рамках определённого кошелька\n",
+      "allOf": [
+        {
+          "$ref": "#/definitions/WebhookScope"
+        },
+        {
+          "type": "object",
+          "required": [
+            "eventTypes"
+          ],
+          "properties": {
+            "eventTypes": {
+              "description": "Набор типов событий приёмника денежных средств, о которых следует оповещать",
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "DestinationCreated",
+                  "DestinationUnauthorized",
+                  "DestinationAuthorized"
+                ]
+              }
+            }
+          }
+        }
+      ]
     },
     "InvalidOperationParameters": {
       "description": "Неверные входные данные для операции",
@@ -3369,6 +3570,65 @@
       "type": "string",
       "example": "Worldwide PHP Awareness Initiative"
     },
+    "Webhook": {
+      "type": "object",
+      "required": [
+        "identityID",
+        "scope",
+        "url"
+      ],
+      "properties": {
+        "id": {
+          "description": "Идентификатор webhook'а\n",
+          "type": "string",
+          "readOnly": true
+        },
+        "identityID": {
+          "description": "Идентификатор личности владельца кошелька",
+          "type": "string",
+          "example": "10036274"
+        },
+        "active": {
+          "description": "Включена ли в данный момент доставка оповещений?\n",
+          "type": "boolean",
+          "readOnly": true
+        },
+        "scope": {
+          "$ref": "#/definitions/WebhookScope"
+        },
+        "url": {
+          "description": "URL, на который будут поступать оповещения о произошедших событиях\n",
+          "type": "string",
+          "format": "uri",
+          "maxLength": 1000
+        },
+        "publicKey": {
+          "description": "Содержимое публичного ключа, служащего для проверки авторитативности\nприходящих на `url` оповещений\n",
+          "type": "string",
+          "format": "hexadecimal",
+          "readOnly": true,
+          "example": "MIGJAoGBAM1fmNUvezts3yglTdhXuqG7OhHxQtDFA+Ss//YuUGjw5ossDbEMoS+SIFuYZ/UL9Xg0rEHNRSbmf48OK+mz0FobEtbji8MADayzGfFopXsfRFa7MVy3Uhu5jBDpLsN3DyJapAkK0TAYINlZXxVjDwxRNheTvC+xub5WNdiwc28fAgMBAAE="
+        }
+      }
+    },
+    "WebhookScope": {
+      "description": "Область охвата webhook'а, ограничивающая набор типов событий, по которым\nследует отправлять оповещения\n",
+      "type": "object",
+      "discriminator": "topic",
+      "required": [
+        "topic"
+      ],
+      "properties": {
+        "topic": {
+          "description": "Предмет оповещений",
+          "type": "string",
+          "enum": [
+            "WithdrawalsTopic",
+            "DestinationsTopic"
+          ]
+        }
+      }
+    },
     "Withdrawal": {
       "description": "Данные вывода денежных средств",
       "allOf": [
@@ -3751,6 +4011,39 @@
         },
         {
           "$ref": "#/definitions/WithdrawalStatus"
+        }
+      ]
+    },
+    "WithdrawalsTopic": {
+      "description": "Область охвата, включающая события по выплатам в рамках определённого кошелька\n",
+      "allOf": [
+        {
+          "$ref": "#/definitions/WebhookScope"
+        },
+        {
+          "type": "object",
+          "required": [
+            "eventTypes"
+          ],
+          "properties": {
+            "walletID": {
+              "description": "Идентификатор кошелька",
+              "type": "string",
+              "example": "10068321"
+            },
+            "eventTypes": {
+              "description": "Набор типов событий выплаты, о которых следует оповещать",
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "WithdrawalStarted",
+                  "WithdrawalSucceeded",
+                  "WithdrawalFailed"
+                ]
+              }
+            }
+          }
         }
       ]
     }
