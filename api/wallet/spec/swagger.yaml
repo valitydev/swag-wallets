@@ -287,6 +287,24 @@ parameters:
     maxLength: 40
     minLength: 1
 
+  webhookID:
+    name: webhookID
+    in: path
+    description: Идентификатор webhook'а
+    required: true
+    type: string
+    maxLength: 40
+    minLength: 1
+
+  queryIdentityID:
+    name: identityID
+    in: query
+    description: Идентификатор личности владельца
+    required: true
+    type: string
+    maxLength: 40
+    minLength: 1
+
 tags:
 
   - name: Providers
@@ -324,3 +342,22 @@ tags:
   - name: Downloads
     x-displayName: Загрузка файлов
     description: ""
+
+  - name: Webhooks
+    x-displayName: Webhooks
+    description: >
+      ## RBKmoney Webhooks Management API
+
+      В данном разделе описаны методы, позволяющие управлять Webhook'ами, или
+      инструментами для получения асинхронных оповещений посредством
+      HTTP-запросов при наступлении одного или группы интересующих вас событий,
+      например, о том, что выплата в рамках созданного кошелька была успешно
+      проведена.
+
+      ## RBKmoney Webhooks Events API
+
+      Внимание! Только Webhooks Management API является частью платформы
+      RBKmoney, а следовательно и данной спецификации. Для реализации
+      обработчика присылаемых уведомлений вам необходимо будет ознакомиться со
+      Swagger-спецификацей [RBKmoney Wallet Webhooks Events
+      API](https://rbkmoney.github.io/wallet-webhook-events-api/).

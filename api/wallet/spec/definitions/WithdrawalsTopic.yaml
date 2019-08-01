@@ -1,0 +1,20 @@
+description: |
+  Область охвата, включающая события по выплатам в рамках определённого кошелька
+allOf:
+  - $ref: '#/definitions/WebhookScope'
+  - type: object
+    required:
+      - eventTypes
+    properties:
+      walletID:
+        x-rebillyMerge:
+        - $ref: '#/definitions/WalletID'
+      eventTypes:
+        description: Набор типов событий выплаты, о которых следует оповещать
+        type: array
+        items:
+          type: string
+          enum:
+            - WithdrawalStarted
+            - WithdrawalSucceeded
+            - WithdrawalFailed
