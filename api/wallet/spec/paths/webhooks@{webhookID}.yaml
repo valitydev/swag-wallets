@@ -19,6 +19,10 @@ get:
       $ref: '#/responses/Unauthorized'
     '404':
       $ref: '#/responses/NotFound'
+    '422':
+      description: Неверные данные для получения webhook'а
+      schema:
+        $ref: '#/definitions/InvalidOperationParameters'
 
 delete:
   description: Снять указанный webhook.
@@ -39,3 +43,7 @@ delete:
       $ref: '#/responses/Unauthorized'
     '404':
       $ref: '#/responses/NotFound'
+    '422':
+      description: Неверные данные для снятия webhook'а
+      schema:
+        $ref: '#/definitions/InvalidOperationParameters'

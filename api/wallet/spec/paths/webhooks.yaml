@@ -21,6 +21,10 @@ post:
       $ref: '#/responses/BadRequest'
     '401':
       $ref: '#/responses/Unauthorized'
+    '422':
+      description: Неверные данные для создания webhook'а
+      schema:
+        $ref: '#/definitions/InvalidOperationParameters'
 
 get:
   description: Получить набор установленных webhook'ов.
@@ -42,3 +46,7 @@ get:
       $ref: '#/responses/BadRequest'
     '401':
       $ref: '#/responses/Unauthorized'
+    '422':
+      description: Неверные данные для получения webhook'ов
+      schema:
+        $ref: '#/definitions/InvalidOperationParameters'
