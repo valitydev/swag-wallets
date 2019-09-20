@@ -1800,6 +1800,12 @@
           },
           "401": {
             "$ref": "#/responses/Unauthorized"
+          },
+          "422": {
+            "description": "Неверные данные для создания webhook'а",
+            "schema": {
+              "$ref": "#/definitions/InvalidOperationParameters"
+            }
           }
         }
       },
@@ -1835,6 +1841,12 @@
           },
           "401": {
             "$ref": "#/responses/Unauthorized"
+          },
+          "422": {
+            "description": "Неверные данные для получения webhook'ов",
+            "schema": {
+              "$ref": "#/definitions/InvalidOperationParameters"
+            }
           }
         }
       }
@@ -1875,6 +1887,12 @@
           },
           "404": {
             "$ref": "#/responses/NotFound"
+          },
+          "422": {
+            "description": "Неверные данные для получения webhook'а",
+            "schema": {
+              "$ref": "#/definitions/InvalidOperationParameters"
+            }
           }
         }
       },
@@ -1910,6 +1928,12 @@
           },
           "404": {
             "$ref": "#/responses/NotFound"
+          },
+          "422": {
+            "description": "Неверные данные для снятия webhook'а",
+            "schema": {
+              "$ref": "#/definitions/InvalidOperationParameters"
+            }
           }
         }
       }
