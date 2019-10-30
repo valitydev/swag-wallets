@@ -2,7 +2,6 @@ description: Данные банковской карты
 type: object
 required:
   - cardNumber
-  - expDate
 properties:
   type:
     description: Банковская карта
