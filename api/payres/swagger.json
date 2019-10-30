@@ -160,8 +160,7 @@
       "description": "Данные банковской карты",
       "type": "object",
       "required": [
-        "cardNumber",
-        "expDate"
+        "cardNumber"
       ],
       "properties": {
         "type": {
