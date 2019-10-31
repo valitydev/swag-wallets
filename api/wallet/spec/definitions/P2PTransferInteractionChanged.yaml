@@ -1,0 +1,15 @@
+type: object
+allOf:
+  - $ref: '#/definitions/P2PTransferChange'
+  - type: object
+    description: |
+      Изменения определённого взаимодействия с пользователем
+    required:
+      - userInteractionID
+      - userInteractionChange
+    properties:
+      userInteractionID:
+        description: Идентификатор взаимодействия с пользователем
+        type: string
+      userInteractionChange:
+        $ref: '#/definitions/UserInteractionChange'

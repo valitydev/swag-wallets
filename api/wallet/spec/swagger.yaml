@@ -305,6 +305,15 @@ parameters:
     maxLength: 40
     minLength: 1
 
+  p2pTransferID:
+    name: p2pTransferID
+    in: path
+    description: Идентификатор перевода
+    required: true
+    type: string
+    maxLength: 40
+    minLength: 1
+
 tags:
 
   - name: Providers
@@ -343,6 +352,10 @@ tags:
     x-displayName: Загрузка файлов
     description: ""
 
+  - name: P2P
+    x-displayName: Переводы
+    description: "Переводы средств между людьми"
+
   - name: Webhooks
     x-displayName: Webhooks
     description: >
@@ -361,3 +374,19 @@ tags:
       обработчика присылаемых уведомлений вам необходимо будет ознакомиться со
       Swagger-спецификацей [RBKmoney Wallet Webhooks Events
       API](https://rbkmoney.github.io/wallet-webhook-events-api/).
+
+  - name: Error Codes
+    x-displayName: Коды ошибок
+    description: >
+
+      ## Ошибки перевода
+
+        | Код                    | Описание                                                                                                                                       |
+        | ---                    | --------                                                                                                                                       |
+        | InvalidSenderResource  | Неверный источник перевода (введен номер несуществующей карты, отсутствующего аккаунта и т.п.)                                                 |
+        | InvalidReceiverResource| Неверный получатель перевода (введен номер несуществующей карты и т.п.)                                                                        |
+        | InsufficientFunds      | Недостаточно средств на счете банковской карты                                                                                                 |
+        | PreauthorizationFailed | Предварительная авторизация отклонена (введен неверный код 3D-Secure, на форме 3D-Secure нажата ссылка отмены)                                 |
+        | RejectedByIssuer       | Перевод отклонён эмитентом (установлены запреты по стране списания, запрет на покупки в интернете, платеж отклонен антифродом эмитента и т.п.) |
+        | P2PTransferRejected    | Перевод отклонён по иным причинам                                                                                                              |
+

@@ -1,0 +1,17 @@
+description: Комиссия и токен предназначеный для создания перевода
+type: object
+required:
+  - customerFee
+  - token
+  - expiresOn
+properties:
+  customerFee:
+    x-rebillyMerge:
+      - $ref: '#/definitions/Asset'
+      - description: Комиссия "сверху" - взимается с клиента в дополнение к сумме операции
+  token:
+    $ref: '#/definitions/P2PTransferQuoteToken'
+  expiresOn:
+    description: Дата и время прекращения действия токена
+    type: string
+    format: date-time

@@ -1,0 +1,34 @@
+description: Данные перевода
+type: object
+required:
+  - id
+  - createdAt
+  - body
+  - sender
+  - receiver
+  - status
+  - externalID
+properties:
+  id:
+    x-rebillyMerge:
+      - $ref: '#/definitions/P2PTransferID'
+  createdAt:
+    description: Дата и время создания
+    type: string
+    format: date-time
+  body:
+    x-rebillyMerge:
+      - $ref: '#/definitions/Asset'
+      - description: Сумма операции
+  sender:
+    $ref: '#/definitions/SenderResource'
+  receiver:
+    $ref: '#/definitions/ReceiverResource'
+  status:
+    $ref: '#/definitions/P2PTransferStatus'
+  externalID:
+    x-rebillyMerge:
+      - $ref: '#/definitions/ExternalID'
+  metadata:
+    description: Связанные с переводом метаданные
+    type: object

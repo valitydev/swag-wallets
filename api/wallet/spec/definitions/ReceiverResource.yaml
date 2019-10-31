@@ -1,0 +1,14 @@
+description: Ресурс получателя денежных средств, используемый для осуществления переводов
+type: object
+discriminator: type
+required:
+  - type
+properties:
+  type:
+    description: |
+      Тип ресурса получателя средств.
+
+      См. [RBKmoney Payment Resource API](?api/payres/swagger.yaml).
+    type: string
+    enum:
+      - BankCardReceiverResource

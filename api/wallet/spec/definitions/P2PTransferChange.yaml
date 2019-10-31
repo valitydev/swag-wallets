@@ -1,0 +1,10 @@
+type: object
+discriminator: changeType
+required:
+  - changeType
+properties:
+  changeType:
+    type: string
+    enum:
+      - P2PTransferStatusChanged
+      - P2PTransferInteractionChanged
