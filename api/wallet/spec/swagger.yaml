@@ -104,7 +104,7 @@ responses:
       $ref: '#/definitions/BadRequest'
 
   ConflictRequest:
-    description: Конфликт входных данных операции
+    description: Переданное значение `externalID` уже использовалось вами ранее с другими параметрами запроса
     schema:
       $ref: '#/definitions/ConflictRequest'
 
