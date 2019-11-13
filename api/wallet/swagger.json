@@ -43,7 +43,7 @@
       }
     },
     "ConflictRequest": {
-      "description": "Конфликт входных данных операции",
+      "description": "Переданное значение `externalID` уже использовалось вами ранее с другими параметрами запроса",
       "schema": {
         "$ref": "#/definitions/ConflictRequest"
       }
@@ -3401,10 +3401,18 @@
     "ConflictRequest": {
       "type": "object",
       "properties": {
-        "id": {
-          "description": "Идентификатор конфликтующей сущности",
+        "externalID": {
+          "description": "Переданное значение `externalID`, для которого обнаружен конфликт параметров запроса",
           "type": "string",
-          "example": "12345151362762"
+          "example": "10036274"
+        },
+        "id": {
+          "description": "Идентификатор сущности, созданной предыдущим запросом с указанным `externalID`",
+          "type": "string"
+        },
+        "message": {
+          "description": "Человекочитаемое описание ошибки",
+          "type": "string"
         }
       }
     },
