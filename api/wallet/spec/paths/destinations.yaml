@@ -21,6 +21,11 @@ get:
       required: false
       type: string
       pattern: '^[A-Z]{3}$'
+    - name: externalID
+      description: Внешний идентификатор сущности
+      in: query
+      required: false
+      type: string
   responses:
     '200':
       description: Приёмники средств найдены

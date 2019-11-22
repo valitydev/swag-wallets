@@ -13,6 +13,11 @@ get:
       maxLength: 40
       minLength: 1
       required: false
+    - name: externalID
+      description: Внешний идентификатор сущности
+      in: query
+      required: false
+      type: string
     - name: identityID
       in: query
       description: Идентификатор личности владельца
