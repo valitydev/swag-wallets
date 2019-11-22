@@ -507,6 +507,13 @@
             "required": false,
             "type": "string",
             "pattern": "^[A-Z]{3}$"
+          },
+          {
+            "name": "externalID",
+            "description": "Внешний идентификатор сущности",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "responses": {
@@ -2227,6 +2234,13 @@
             "maxLength": 40,
             "minLength": 1,
             "required": false
+          },
+          {
+            "name": "externalID",
+            "description": "Внешний идентификатор сущности",
+            "in": "query",
+            "required": false,
+            "type": "string"
           },
           {
             "name": "identityID",
