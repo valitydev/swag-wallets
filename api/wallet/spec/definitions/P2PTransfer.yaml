@@ -7,7 +7,6 @@ required:
   - sender
   - receiver
   - status
-  - externalID
 properties:
   id:
     x-rebillyMerge:
