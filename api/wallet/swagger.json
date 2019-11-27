@@ -3584,8 +3584,7 @@
         "body",
         "sender",
         "receiver",
-        "status",
-        "externalID"
+        "status"
       ],
       "properties": {
         "id": {

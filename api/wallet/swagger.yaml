@@ -2575,7 +2575,6 @@ definitions:
       - sender
       - receiver
       - status
-      - externalID
     properties:
       id:
         description: Идентификатор перевода
