@@ -694,7 +694,7 @@
           },
           {
             "name": "externalID",
-            "description": "Внешний идентификатор платежа",
+            "description": "Внешний идентификатор кошелька",
             "in": "query",
             "required": true,
             "type": "string",
