@@ -546,6 +546,33 @@ paths:
           description: Неверные данные для выдачи
           schema:
             $ref: '#/definitions/InvalidOperationParameters'
+  /external/wallets:
+    get:
+      summary: Получить кошелёк по указанному внешнему идентификатору
+      operationId: getWalletByExternalID
+      tags:
+        - Wallets
+      parameters:
+        - $ref: '#/parameters/requestID'
+        - $ref: '#/parameters/deadline'
+        - name: externalID
+          description: Внешний идентификатор платежа
+          in: query
+          required: true
+          type: string
+          maxLength: 40
+          minLength: 1
+      responses:
+        '200':
+          description: Данные кошелька
+          schema:
+            $ref: '#/definitions/Wallet'
+        '400':
+          $ref: '#/responses/BadRequest'
+        '401':
+          $ref: '#/responses/Unauthorized'
+        '404':
+          $ref: '#/responses/NotFound'
   '/files/{fileID}/download':
     post:
       description: Получить ссылку для скачивания файла
