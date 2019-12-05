@@ -1,0 +1,26 @@
+get:
+  summary: Получить кошелёк по указанному внешнему идентификатору
+  operationId: getWalletByExternalID
+  tags:
+    - Wallets
+  parameters:
+    - $ref: '#/parameters/requestID'
+    - $ref: '#/parameters/deadline'
+    - name: externalID
+      description: Внешний идентификатор платежа
+      in: query
+      required: true
+      type: string
+      maxLength: 40
+      minLength: 1
+  responses:
+    '200':
+      description: Данные кошелька
+      schema:
+        $ref: '#/definitions/Wallet'
+    '404':
+      $ref: '#/responses/NotFound'
+    '400':
+      $ref: '#/responses/BadRequest'
+    '401':
+      $ref: '#/responses/Unauthorized'
