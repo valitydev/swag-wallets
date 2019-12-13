@@ -129,6 +129,12 @@ parameters:
     type: string
     maxLength: 40
     minLength: 1
+  externalID:
+    name: externalID
+    in: path
+    description: Внешний идентификатор
+    required: true
+    type: string
   residence:
     name: residence
     in: query
@@ -444,11 +450,6 @@ paths:
           required: false
           type: string
           pattern: '^[A-Z]{3}$'
-        - name: externalID
-          description: Внешний идентификатор сущности
-          in: query
-          required: false
-          type: string
       responses:
         '200':
           description: Приёмники средств найдены
@@ -546,6 +547,48 @@ paths:
           description: Неверные данные для выдачи
           schema:
             $ref: '#/definitions/InvalidOperationParameters'
+  '/external-ids/destinations/{externalID}':
+    get:
+      operationId: getDestinationByExternalID
+      summary: Получить приёмник средств по внешнему идентификатору
+      tags:
+        - Withdrawals
+      parameters:
+        - $ref: '#/parameters/requestID'
+        - $ref: '#/parameters/deadline'
+        - $ref: '#/parameters/externalID'
+      responses:
+        '200':
+          description: Приёмник средств найден
+          schema:
+            $ref: '#/definitions/Destination'
+        '400':
+          $ref: '#/responses/BadRequest'
+        '401':
+          $ref: '#/responses/Unauthorized'
+        '404':
+          $ref: '#/responses/NotFound'
+  '/external-ids/withdrawals/{externalID}':
+    get:
+      operationId: getWithdrawalByExternalID
+      summary: Получить состояние вывода средств по внешнему идентификатору
+      tags:
+        - Withdrawals
+      parameters:
+        - $ref: '#/parameters/requestID'
+        - $ref: '#/parameters/deadline'
+        - $ref: '#/parameters/externalID'
+      responses:
+        '200':
+          description: Вывод найден
+          schema:
+            $ref: '#/definitions/Withdrawal'
+        '400':
+          $ref: '#/responses/BadRequest'
+        '401':
+          $ref: '#/responses/Unauthorized'
+        '404':
+          $ref: '#/responses/NotFound'
   /external/wallets:
     get:
       summary: Получить кошелёк по указанному внешнему идентификатору
@@ -1522,11 +1565,6 @@ paths:
           maxLength: 40
           minLength: 1
           required: false
-        - name: externalID
-          description: Внешний идентификатор сущности
-          in: query
-          required: false
-          type: string
         - name: identityID
           in: query
           description: Идентификатор личности владельца
