@@ -179,6 +179,13 @@ parameters:
     maxLength: 40
     minLength: 1
 
+  externalID:
+    name: externalID
+    in: path
+    description: Внешний идентификатор
+    required: true
+    type: string
+
   residence:
     name: residence
     in: query
