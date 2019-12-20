@@ -1,0 +1,38 @@
+description: Cхема содержимого [токена для создания перевода](#/definitions/P2PTransferQuoteToken.yaml) версии 1
+type: object
+required:
+  - version
+  - amount
+  - partyRevision
+  - domainRevision
+  - createdAt
+  - expiresOn
+  - partyID
+  - identityID
+  - sender
+  - receiver
+properties:
+  version:
+    type: integer
+    minimum: 1
+    maximum: 1
+  amount:
+    $ref: '../spec/definitions/Asset.yaml'
+  partyRevision:
+    type: integer
+  domainRevision:
+    type: integer
+  createdAt:
+    type: string
+    format: date-time
+  expiresOn:
+    type: string
+    format: date-time
+  partyID:
+    type: string
+  identityID:
+    $ref: '../spec/definitions/IdentityID.yaml'
+  sender:
+    $ref: 'CompactResource.yaml'
+  receiver:
+    $ref: 'CompactResource.yaml'
