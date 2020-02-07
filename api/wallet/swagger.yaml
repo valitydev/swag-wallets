@@ -1778,6 +1778,12 @@ definitions:
     allOf:
       - $ref: '#/definitions/SenderResource'
       - $ref: '#/definitions/SecuredBankCard'
+  Bitcoin:
+    allOf:
+      - $ref: '#/definitions/CryptoWallet'
+  BitcoinCash:
+    allOf:
+      - $ref: '#/definitions/CryptoWallet'
   BrowserGetRequest:
     type: object
     allOf:
@@ -1839,6 +1845,7 @@ definitions:
   CryptoWallet:
     description: Данные криптовалютного кошелька
     type: object
+    discriminator: currency
     required:
       - id
       - currency
@@ -1859,12 +1866,6 @@ definitions:
           - Ripple
           - Ethereum
           - Zcash
-      tag:
-        description: Уникальный идентификатор учетной записи Ripple (XRP)
-        type: string
-        minLength: 1
-        maxLength: 32
-        example: zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQ
   CryptoWalletDestinationResource:
     description: Криптовалютные денежные средства
     allOf:
@@ -2185,6 +2186,9 @@ definitions:
         type: string
         example: |
           No such identity challenge type: fms.
+  Ethereum:
+    allOf:
+      - $ref: '#/definitions/CryptoWallet'
   ExternalID:
     description: |
       Уникальный идентификатор сущности на вашей стороне.
@@ -2631,6 +2635,9 @@ definitions:
     enum:
       - RUSDomesticPassport
       - RUSRetireeInsuranceCertificate
+  Litecoin:
+    allOf:
+      - $ref: '#/definitions/CryptoWallet'
   P2PTransfer:
     description: Данные перевода
     type: object
@@ -3066,6 +3073,16 @@ definitions:
     type: string
     pattern: '^[A-Z]{3}$'
     example: RUS
+  Ripple:
+    allOf:
+      - $ref: '#/definitions/CryptoWallet'
+      - type: object
+        properties:
+          tag:
+            description: Уникальный идентификатор учетной записи Ripple (XRP)
+            type: string
+            pattern: '^[0-9]{9}$'
+            example: '191919191'
   SenderResource:
     description: 'Ресурс отправителя денежных средств, используемый для осуществления переводов'
     type: object
@@ -3735,3 +3752,6 @@ definitions:
                 - WithdrawalStarted
                 - WithdrawalSucceeded
                 - WithdrawalFailed
+  Zcash:
+    allOf:
+      - $ref: '#/definitions/CryptoWallet'

@@ -2689,6 +2689,20 @@
         }
       ]
     },
+    "Bitcoin": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CryptoWallet"
+        }
+      ]
+    },
+    "BitcoinCash": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CryptoWallet"
+        }
+      ]
+    },
     "BrowserGetRequest": {
       "type": "object",
       "allOf": [
@@ -2765,6 +2779,7 @@
     "CryptoWallet": {
       "description": "Данные криптовалютного кошелька",
       "type": "object",
+      "discriminator": "currency",
       "required": [
         "id",
         "currency"
@@ -2788,13 +2803,6 @@
             "Ethereum",
             "Zcash"
           ]
-        },
-        "tag": {
-          "description": "Уникальный идентификатор учетной записи Ripple (XRP)",
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 32,
-          "example": "zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQ"
         }
       }
     },
@@ -3161,6 +3169,13 @@
           "example": "No such identity challenge type: fms.\n"
         }
       }
+    },
+    "Ethereum": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CryptoWallet"
+        }
+      ]
     },
     "ExternalID": {
       "description": "Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n",
@@ -3684,6 +3699,13 @@
       "enum": [
         "RUSDomesticPassport",
         "RUSRetireeInsuranceCertificate"
+      ]
+    },
+    "Litecoin": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CryptoWallet"
+        }
       ]
     },
     "P2PTransfer": {
@@ -4225,6 +4247,24 @@
       "type": "string",
       "pattern": "^[A-Z]{3}$",
       "example": "RUS"
+    },
+    "Ripple": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CryptoWallet"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "tag": {
+              "description": "Уникальный идентификатор учетной записи Ripple (XRP)",
+              "type": "string",
+              "pattern": "^[0-9]{9}$",
+              "example": "191919191"
+            }
+          }
+        }
+      ]
     },
     "SenderResource": {
       "description": "Ресурс отправителя денежных средств, используемый для осуществления переводов",
@@ -4986,6 +5026,13 @@
               }
             }
           }
+        }
+      ]
+    },
+    "Zcash": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CryptoWallet"
         }
       ]
     }
