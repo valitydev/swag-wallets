@@ -1,0 +1,33 @@
+post:
+  description: Создать перевод
+  tags:
+    - W2W
+  operationId: createW2WTransfer
+  parameters:
+    - $ref: '#/parameters/requestID'
+    - $ref: '#/parameters/deadline'
+    - name: transferParams
+      in: body
+      description: 'Параметры создания перевода'
+      schema:
+        $ref: '#/definitions/W2WTransferParameters'
+  responses:
+    '202':
+      description: Перевод запущен
+      headers:
+        Location:
+          description: URI запущенного перевода
+          type: string
+          format: uri
+      schema:
+        $ref: '#/definitions/W2WTransfer'
+    '400':
+      $ref: '#/responses/BadRequest'
+    '401':
+      $ref: '#/responses/Unauthorized'
+    '409':
+      $ref: '#/responses/ConflictRequest'
+    '422':
+      description: Неверные входные данные для перевода
+      schema:
+        $ref: '#/definitions/InvalidOperationParameters'
