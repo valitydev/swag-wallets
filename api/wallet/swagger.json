@@ -251,6 +251,15 @@
       "type": "string",
       "maxLength": 40,
       "minLength": 1
+    },
+    "w2wTransferID": {
+      "name": "w2wTransferID",
+      "in": "path",
+      "description": "Идентификатор перевода",
+      "required": true,
+      "type": "string",
+      "maxLength": 40,
+      "minLength": 1
     }
   },
   "tags": [
@@ -301,8 +310,13 @@
     },
     {
       "name": "P2P",
-      "x-displayName": "Переводы",
-      "description": "Переводы средств между людьми"
+      "x-displayName": "Переводы вне платформы",
+      "description": "Переводы средств между людьми с использованием инструментов вне платформы"
+    },
+    {
+      "name": "W2W",
+      "x-displayName": "Переводы внутри платформы",
+      "description": "Переводы средств между кошельками внутри платформы"
     },
     {
       "name": "Webhooks",
@@ -1845,6 +1859,98 @@
             "description": "Регион резиденции найден",
             "schema": {
               "$ref": "#/definitions/Residence"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/w2w/transfers": {
+      "post": {
+        "description": "Создать перевод",
+        "tags": [
+          "W2W"
+        ],
+        "operationId": "createW2WTransfer",
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "name": "transferParams",
+            "in": "body",
+            "description": "Параметры создания перевода",
+            "schema": {
+              "$ref": "#/definitions/W2WTransferParameters"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Перевод запущен",
+            "headers": {
+              "Location": {
+                "description": "URI запущенного перевода",
+                "type": "string",
+                "format": "uri"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/W2WTransfer"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "409": {
+            "$ref": "#/responses/ConflictRequest"
+          },
+          "422": {
+            "description": "Неверные входные данные для перевода",
+            "schema": {
+              "$ref": "#/definitions/InvalidOperationParameters"
+            }
+          }
+        }
+      }
+    },
+    "/w2w/transfers/{w2wTransferID}": {
+      "get": {
+        "description": "Получить состояние перевода.",
+        "tags": [
+          "W2W"
+        ],
+        "operationId": "getW2WTransfer",
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/w2wTransferID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Найденный перевод",
+            "schema": {
+              "$ref": "#/definitions/W2WTransfer"
             }
           },
           "400": {
@@ -4378,6 +4484,168 @@
           "template": {
             "description": "Шаблон значения элемента формы\nШаблон представлен согласно стандарту\n[RFC6570](https://tools.ietf.org/html/rfc6570).\n",
             "type": "string"
+          }
+        }
+      }
+    },
+    "W2WTransfer": {
+      "description": "Данные перевода",
+      "type": "object",
+      "required": [
+        "id",
+        "createdAt",
+        "body",
+        "sender",
+        "receiver",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "description": "Идентификатор перевода",
+          "type": "string",
+          "example": "10a0b68D3E21",
+          "maxLength": 40,
+          "minLength": 1
+        },
+        "createdAt": {
+          "description": "Дата и время создания",
+          "type": "string",
+          "format": "date-time"
+        },
+        "body": {
+          "description": "Сумма операции",
+          "type": "object",
+          "required": [
+            "amount",
+            "currency"
+          ],
+          "properties": {
+            "amount": {
+              "description": "Сумма денежных средств в минорных единицах, например, в копейках\n",
+              "type": "integer",
+              "format": "int64",
+              "example": 1430000
+            },
+            "currency": {
+              "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+              "type": "string",
+              "pattern": "^[A-Z]{3}$",
+              "example": "RUB"
+            }
+          }
+        },
+        "sender": {
+          "$ref": "#/definitions/WalletID"
+        },
+        "receiver": {
+          "$ref": "#/definitions/WalletID"
+        },
+        "status": {
+          "$ref": "#/definitions/W2WTransferStatus"
+        },
+        "externalID": {
+          "description": "Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n",
+          "type": "string",
+          "example": "10036274"
+        }
+      }
+    },
+    "W2WTransferFailure": {
+      "description": "[Ошибка, возникшая в процессе проведения перевода](#tag/Error-Codes)\n",
+      "type": "object",
+      "required": [
+        "code"
+      ],
+      "properties": {
+        "code": {
+          "description": "Основной код ошибки",
+          "type": "string"
+        },
+        "subError": {
+          "$ref": "#/definitions/SubFailure"
+        }
+      }
+    },
+    "W2WTransferID": {
+      "description": "Идентификатор перевода",
+      "type": "string",
+      "example": "10a0b68D3E21",
+      "maxLength": 40,
+      "minLength": 1
+    },
+    "W2WTransferParameters": {
+      "description": "Параметры создания перевода",
+      "type": "object",
+      "required": [
+        "sender",
+        "receiver",
+        "body"
+      ],
+      "properties": {
+        "sender": {
+          "$ref": "#/definitions/WalletID"
+        },
+        "receiver": {
+          "$ref": "#/definitions/WalletID"
+        },
+        "body": {
+          "description": "Сумма перевода",
+          "type": "object",
+          "required": [
+            "amount",
+            "currency"
+          ],
+          "properties": {
+            "amount": {
+              "description": "Сумма денежных средств в минорных единицах, например, в копейках\n",
+              "type": "integer",
+              "format": "int64",
+              "example": 1430000
+            },
+            "currency": {
+              "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+              "type": "string",
+              "pattern": "^[A-Z]{3}$",
+              "example": "RUB"
+            }
+          }
+        },
+        "externalID": {
+          "description": "Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n",
+          "type": "string",
+          "example": "10036274"
+        }
+      }
+    },
+    "W2WTransferStatus": {
+      "type": "object",
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "description": "Статус перевода денежных средств.\n\n| Значение    | Пояснение                                  |\n| ----------- | ------------------------------------------ |\n| `Pending`   | Перевод в процессе выполнения                |\n| `Succeeded` | Перевод средств произведён успешно           |\n| `Failed`    | Перевод средств завершился неудачей          |\n",
+          "type": "string",
+          "enum": [
+            "Pending",
+            "Succeeded",
+            "Failed"
+          ]
+        },
+        "failure": {
+          "description": "[Ошибка, возникшая в процессе проведения перевода](#tag/Error-Codes)\n",
+          "type": "object",
+          "required": [
+            "code"
+          ],
+          "properties": {
+            "code": {
+              "description": "Основной код ошибки",
+              "type": "string"
+            },
+            "subError": {
+              "$ref": "#/definitions/SubFailure"
+            }
           }
         }
       }
