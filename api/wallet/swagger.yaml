@@ -1908,6 +1908,7 @@ definitions:
       - Ripple
       - Ethereum
       - Zcash
+      - USDT
   CryptoWallet:
     description: Данные криптовалютного кошелька
     type: object
@@ -1932,6 +1933,7 @@ definitions:
           - Ripple
           - Ethereum
           - Zcash
+          - USDT
   CryptoWalletDestinationResource:
     description: Криптовалютные денежные средства
     allOf:
@@ -3180,6 +3182,9 @@ definitions:
         type: string
       subError:
         $ref: '#/definitions/SubFailure'
+  USDT:
+    allOf:
+      - $ref: '#/definitions/CryptoWallet'
   UserInteraction:
     type: object
     discriminator: interactionType

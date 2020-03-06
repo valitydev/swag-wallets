@@ -2879,7 +2879,8 @@
         "BitcoinCash",
         "Ripple",
         "Ethereum",
-        "Zcash"
+        "Zcash",
+        "USDT"
       ]
     },
     "CryptoWallet": {
@@ -2907,7 +2908,8 @@
             "BitcoinCash",
             "Ripple",
             "Ethereum",
-            "Zcash"
+            "Zcash",
+            "USDT"
           ]
         }
       }
@@ -4409,6 +4411,13 @@
           "$ref": "#/definitions/SubFailure"
         }
       }
+    },
+    "USDT": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CryptoWallet"
+        }
+      ]
     },
     "UserInteraction": {
       "type": "object",
