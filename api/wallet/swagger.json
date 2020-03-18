@@ -2784,6 +2784,17 @@
         }
       ]
     },
+    "BankCardReceiverResourceParams": {
+      "description": "Банковская карта",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ReceiverResourceParams"
+        },
+        {
+          "$ref": "#/definitions/SecuredBankCard"
+        }
+      ]
+    },
     "BankCardSenderResource": {
       "description": "Банковская карта",
       "allOf": [
@@ -2792,6 +2803,30 @@
         },
         {
           "$ref": "#/definitions/SecuredBankCard"
+        }
+      ]
+    },
+    "BankCardSenderResourceParams": {
+      "description": "Банковская карта",
+      "allOf": [
+        {
+          "$ref": "#/definitions/SenderResourceParams"
+        },
+        {
+          "$ref": "#/definitions/SecuredBankCard"
+        },
+        {
+          "type": "object",
+          "required": [
+            "authData"
+          ],
+          "properties": {
+            "authData": {
+              "description": "Данные авторизации, полученные при сохранении карты",
+              "type": "string",
+              "maxLength": 1000
+            }
+          }
         }
       ]
     },
@@ -3973,10 +4008,10 @@
       ],
       "properties": {
         "sender": {
-          "$ref": "#/definitions/SenderResource"
+          "$ref": "#/definitions/SenderResourceParams"
         },
         "receiver": {
-          "$ref": "#/definitions/ReceiverResource"
+          "$ref": "#/definitions/ReceiverResourceParams"
         },
         "identityID": {
           "description": "Идентификатор личности владельца кошелька",
@@ -4211,6 +4246,23 @@
         }
       }
     },
+    "ReceiverResourceParams": {
+      "description": "Параметры ресурса получателя денежных средств",
+      "type": "object",
+      "discriminator": "type",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "description": "Тип ресурса получателя средств.\n\nСм. [RBKmoney Payment Resource API](?api/payres/swagger.yaml).\n",
+          "type": "string",
+          "enum": [
+            "BankCardReceiverResourceParams"
+          ]
+        }
+      }
+    },
     "Redirect": {
       "type": "object",
       "allOf": [
@@ -4387,6 +4439,23 @@
           "type": "string",
           "enum": [
             "BankCardSenderResource"
+          ]
+        }
+      }
+    },
+    "SenderResourceParams": {
+      "description": "Параметры ресурса отправителя денежных средств",
+      "type": "object",
+      "discriminator": "type",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "description": "Тип ресурса отправителя средств.\n\nСм. [RBKmoney Payment Resource API](?api/payres/swagger.yaml).\n",
+          "type": "string",
+          "enum": [
+            "BankCardSenderResourceParams"
           ]
         }
       }

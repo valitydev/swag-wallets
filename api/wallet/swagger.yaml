@@ -1839,11 +1839,29 @@ definitions:
     allOf:
       - $ref: '#/definitions/ReceiverResource'
       - $ref: '#/definitions/SecuredBankCard'
+  BankCardReceiverResourceParams:
+    description: Банковская карта
+    allOf:
+      - $ref: '#/definitions/ReceiverResourceParams'
+      - $ref: '#/definitions/SecuredBankCard'
   BankCardSenderResource:
     description: Банковская карта
     allOf:
       - $ref: '#/definitions/SenderResource'
       - $ref: '#/definitions/SecuredBankCard'
+  BankCardSenderResourceParams:
+    description: Банковская карта
+    allOf:
+      - $ref: '#/definitions/SenderResourceParams'
+      - $ref: '#/definitions/SecuredBankCard'
+      - type: object
+        required:
+          - authData
+        properties:
+          authData:
+            description: 'Данные авторизации, полученные при сохранении карты'
+            type: string
+            maxLength: 1000
   Bitcoin:
     allOf:
       - $ref: '#/definitions/CryptoWallet'
@@ -2829,9 +2847,9 @@ definitions:
       - body
     properties:
       sender:
-        $ref: '#/definitions/SenderResource'
+        $ref: '#/definitions/SenderResourceParams'
       receiver:
-        $ref: '#/definitions/ReceiverResource'
+        $ref: '#/definitions/ReceiverResourceParams'
       identityID:
         description: Идентификатор личности владельца кошелька
         type: string
@@ -3031,6 +3049,21 @@ definitions:
         type: string
         enum:
           - BankCardReceiverResource
+  ReceiverResourceParams:
+    description: Параметры ресурса получателя денежных средств
+    type: object
+    discriminator: type
+    required:
+      - type
+    properties:
+      type:
+        description: |
+          Тип ресурса получателя средств.
+
+          См. [RBKmoney Payment Resource API](?api/payres/swagger.yaml).
+        type: string
+        enum:
+          - BankCardReceiverResourceParams
   Redirect:
     type: object
     allOf:
@@ -3166,6 +3199,21 @@ definitions:
         type: string
         enum:
           - BankCardSenderResource
+  SenderResourceParams:
+    description: Параметры ресурса отправителя денежных средств
+    type: object
+    discriminator: type
+    required:
+      - type
+    properties:
+      type:
+        description: |
+          Тип ресурса отправителя средств.
+
+          См. [RBKmoney Payment Resource API](?api/payres/swagger.yaml).
+        type: string
+        enum:
+          - BankCardSenderResourceParams
   SourceID:
     description: Идентификатор источника денежных средств
     type: string
