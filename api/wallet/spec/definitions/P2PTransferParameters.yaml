@@ -7,9 +7,9 @@ required:
   - body
 properties:
   sender:
-    $ref: '#/definitions/SenderResource'
+    $ref: '#/definitions/SenderResourceParams'
   receiver:
-    $ref: '#/definitions/ReceiverResource'
+    $ref: '#/definitions/ReceiverResourceParams'
   identityID:
     x-rebillyMerge:
       - $ref: '#/definitions/IdentityID'

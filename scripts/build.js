@@ -15,6 +15,7 @@ if (process.argv[3]) {
     APIS = [process.argv[3]]
 }
 
+mkdir('-p', TARGET_DIR);
 cp('-R', 'web/*', TARGET_DIR + '/');
 
 APIS.forEach(function (api) {
