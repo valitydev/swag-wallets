@@ -271,23 +271,6 @@
           "maxLength": 1000,
           "example": "zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQg9xMkh"
         },
-        "paymentSystem": {
-          "description": "Платежная система",
-          "type": "string",
-          "enum": [
-            "visa",
-            "mastercard",
-            "visaelectron",
-            "maestro",
-            "amex",
-            "dinersclub",
-            "discover",
-            "unionpay",
-            "jcb",
-            "nspkmir"
-          ],
-          "readOnly": true
-        },
         "bin": {
           "description": "[Идентификационный номер][1] банка-эмитента карты\n\n[1]: https://en.wikipedia.org/wiki/Payment_card_number#Issuer_identification_number_(IIN)\n",
           "type": "string",
