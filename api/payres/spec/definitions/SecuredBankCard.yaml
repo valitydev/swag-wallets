@@ -9,10 +9,6 @@ properties:
     minLength: 1
     maxLength: 1000
     example: zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQg9xMkh
-  paymentSystem:
-    x-rebillyMerge:
-      - $ref: '#/definitions/BankCardPaymentSystem'
-      - readOnly: true
   bin:
     description: |
       [Идентификационный номер][1] банка-эмитента карты
