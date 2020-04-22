@@ -1839,6 +1839,23 @@ definitions:
     allOf:
       - $ref: '#/definitions/ReceiverResource'
       - $ref: '#/definitions/SecuredBankCard'
+      - type: object
+        properties:
+          paymentSystem:
+            description: Платежная система
+            type: string
+            enum:
+              - visa
+              - mastercard
+              - visaelectron
+              - maestro
+              - amex
+              - dinersclub
+              - discover
+              - unionpay
+              - jcb
+              - nspkmir
+            readOnly: true
   BankCardReceiverResourceParams:
     description: Банковская карта
     allOf:
@@ -1849,6 +1866,23 @@ definitions:
     allOf:
       - $ref: '#/definitions/SenderResource'
       - $ref: '#/definitions/SecuredBankCard'
+      - type: object
+        properties:
+          paymentSystem:
+            description: Платежная система
+            type: string
+            enum:
+              - visa
+              - mastercard
+              - visaelectron
+              - maestro
+              - amex
+              - dinersclub
+              - discover
+              - unionpay
+              - jcb
+              - nspkmir
+            readOnly: true
   BankCardSenderResourceParams:
     description: Банковская карта
     allOf:

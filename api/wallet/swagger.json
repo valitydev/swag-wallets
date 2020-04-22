@@ -2781,6 +2781,28 @@
         },
         {
           "$ref": "#/definitions/SecuredBankCard"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "paymentSystem": {
+              "description": "Платежная система",
+              "type": "string",
+              "enum": [
+                "visa",
+                "mastercard",
+                "visaelectron",
+                "maestro",
+                "amex",
+                "dinersclub",
+                "discover",
+                "unionpay",
+                "jcb",
+                "nspkmir"
+              ],
+              "readOnly": true
+            }
+          }
         }
       ]
     },
@@ -2803,6 +2825,28 @@
         },
         {
           "$ref": "#/definitions/SecuredBankCard"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "paymentSystem": {
+              "description": "Платежная система",
+              "type": "string",
+              "enum": [
+                "visa",
+                "mastercard",
+                "visaelectron",
+                "maestro",
+                "amex",
+                "dinersclub",
+                "discover",
+                "unionpay",
+                "jcb",
+                "nspkmir"
+              ],
+              "readOnly": true
+            }
+          }
         }
       ]
     },
