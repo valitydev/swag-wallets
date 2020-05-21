@@ -241,7 +241,8 @@
             "WrongLength",
             "WrongArray",
             "NoMatch",
-            "InvalidResourceToken"
+            "InvalidResourceToken",
+            "InvalidToken"
           ],
           "example": "NotFound"
         },
