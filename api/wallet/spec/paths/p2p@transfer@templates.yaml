@@ -1,0 +1,28 @@
+post:
+  description: Создать шаблон перевода
+  tags:
+    - P2PTemplates
+  operationId: createP2PTransferTemplate
+  parameters:
+    - $ref: '#/parameters/requestID'
+    - $ref: '#/parameters/deadline'
+    - name: transferTemplateParams
+      in: body
+      description: 'Параметры создания шаблона перевода'
+      schema:
+        $ref: '#/definitions/P2PTransferTemplateParameters'
+  responses:
+    '201':
+      description: Шаблон перевода создан
+      schema:
+        $ref: '#/definitions/P2PTransferTemplate'
+    '400':
+      $ref: '#/responses/BadRequest'
+    '401':
+      $ref: '#/responses/Unauthorized'
+    '409':
+      $ref: '#/responses/ConflictRequest'
+    '422':
+      description: Неверные входные данные для создания шаблона перевода
+      schema:
+        $ref: '#/definitions/InvalidOperationParameters'

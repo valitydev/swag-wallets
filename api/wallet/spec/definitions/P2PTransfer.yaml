@@ -2,6 +2,7 @@ description: Данные перевода
 type: object
 required:
   - id
+  - identityID
   - createdAt
   - body
   - sender
@@ -11,6 +12,10 @@ properties:
   id:
     x-rebillyMerge:
       - $ref: '#/definitions/P2PTransferID'
+  identityID:
+    x-rebillyMerge:
+      - $ref: '#/definitions/IdentityID'
+      - description: Идентификатор личности владельца перевода
   createdAt:
     description: Дата и время создания
     type: string

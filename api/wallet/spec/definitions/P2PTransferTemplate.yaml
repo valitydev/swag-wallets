@@ -1,0 +1,29 @@
+type: object
+required:
+  - id
+  - identityID
+  - createdAt
+  - details
+properties:
+  id:
+    x-rebillyMerge:
+      - $ref: '#/definitions/P2PTransferTemplateID'
+      - readOnly: true
+  identityID:
+    x-rebillyMerge:
+      - $ref: '#/definitions/IdentityID'
+      - description: Идентификатор личности владельца шаблона
+  createdAt:
+    description: Дата и время создания
+    type: string
+    format: date-time
+  isBlocked:
+    description: Заблокирован ли шаблон?
+    type: boolean
+    readOnly: true
+    example: false
+  details:
+    $ref: '#/definitions/P2PTransferTemplateDetails'
+  externalID:
+    x-rebillyMerge:
+      - $ref: '#/definitions/ExternalID'

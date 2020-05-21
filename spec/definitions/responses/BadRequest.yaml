@@ -15,6 +15,7 @@ properties:
       - WrongArray
       - NoMatch
       - InvalidResourceToken
+      - InvalidToken
     example: NotFound
   name:
     description: Имя или идентификатор элемента сообщения, содержащего недопустимые данные

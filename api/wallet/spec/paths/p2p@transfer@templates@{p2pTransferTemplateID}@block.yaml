@@ -1,0 +1,20 @@
+post:
+  description: Заблокировать использование шаблона.
+  tags:
+    - P2PTemplates
+  operationId: blockP2PTransferTemplate
+  parameters:
+    - $ref: '#/parameters/requestID'
+    - $ref: '#/parameters/deadline'
+    - $ref: '#/parameters/p2pTransferTemplateID'
+  responses:
+    '204':
+      description: Шаблон заблокирован
+    '400':
+      $ref: '#/responses/BadRequest'
+    '401':
+      $ref: '#/responses/Unauthorized'
+    '422':
+      description: Неверные данные для блокировки шаблона
+      schema:
+        $ref: '#/definitions/InvalidOperationParameters'

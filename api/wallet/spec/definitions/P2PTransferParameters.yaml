@@ -13,6 +13,7 @@ properties:
   identityID:
     x-rebillyMerge:
       - $ref: '#/definitions/IdentityID'
+      - description: Идентификатор личности владельца перевода
   body:
     x-rebillyMerge:
       - $ref: '#/definitions/Asset'
