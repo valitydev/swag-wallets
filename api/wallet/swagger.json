@@ -1596,6 +1596,9 @@
           "401": {
             "$ref": "#/responses/Unauthorized"
           },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
           "422": {
             "description": "Неверные данные для блокировки шаблона",
             "schema": {
@@ -1687,6 +1690,9 @@
           },
           "401": {
             "$ref": "#/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
           },
           "409": {
             "$ref": "#/responses/ConflictRequest"
