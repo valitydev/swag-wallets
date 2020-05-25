@@ -14,8 +14,13 @@ post:
       schema:
           $ref: '#/definitions/P2PTransferWithTemplateParameters'
   responses:
-    '201':
-      description: Перевод создан
+    '202':
+      description: Перевод запущен
+      headers:
+        Location:
+          description: URI запущенного перевода
+          type: string
+          format: uri
       schema:
         $ref: '#/definitions/P2PTransfer'
     '400':
