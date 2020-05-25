@@ -4611,10 +4611,10 @@
       ],
       "properties": {
         "sender": {
-          "$ref": "#/definitions/SenderResource"
+          "$ref": "#/definitions/SenderResourceParams"
         },
         "receiver": {
-          "$ref": "#/definitions/ReceiverResource"
+          "$ref": "#/definitions/ReceiverResourceParams"
         },
         "body": {
           "description": "Сумма перевода",
