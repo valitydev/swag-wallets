@@ -1541,13 +1541,22 @@
           },
           {
             "$ref": "#/parameters/p2pTransferTemplateID"
+          },
+          {
+            "name": "request",
+            "description": "Запрос на получение токена доступа",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/P2PTransferTemplateTokenRequest"
+            }
           }
         ],
         "responses": {
           "201": {
             "description": "Токен получен",
             "schema": {
-              "$ref": "#/definitions/GrantToken"
+              "$ref": "#/definitions/P2PTransferTemplateTokenRequest"
             }
           },
           "400": {
@@ -1624,13 +1633,22 @@
           },
           {
             "$ref": "#/parameters/p2pTransferTemplateID"
+          },
+          {
+            "name": "request",
+            "description": "Запрос на получение талона",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/P2PTransferTemplateTokenRequest"
+            }
           }
         ],
         "responses": {
           "201": {
             "description": "Талон получен",
             "schema": {
-              "$ref": "#/definitions/GrantToken"
+              "$ref": "#/definitions/P2PTransferTemplateTokenRequest"
             }
           },
           "400": {
@@ -4599,6 +4617,26 @@
           "description": "Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n",
           "type": "string",
           "example": "10036274"
+        }
+      }
+    },
+    "P2PTransferTemplateTokenRequest": {
+      "type": "object",
+      "required": [
+        "validUntil"
+      ],
+      "properties": {
+        "token": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000,
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n",
+          "readOnly": true
+        },
+        "validUntil": {
+          "description": "Дата и время, до наступления которого выданный токен действителен\n",
+          "type": "string",
+          "format": "date-time"
         }
       }
     },

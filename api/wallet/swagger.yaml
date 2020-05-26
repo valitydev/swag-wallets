@@ -1095,11 +1095,17 @@ paths:
         - $ref: '#/parameters/requestID'
         - $ref: '#/parameters/deadline'
         - $ref: '#/parameters/p2pTransferTemplateID'
+        - name: request
+          description: Запрос на получение токена доступа
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/P2PTransferTemplateTokenRequest'
       responses:
         '201':
           description: Токен получен
           schema:
-            $ref: '#/definitions/GrantToken'
+            $ref: '#/definitions/P2PTransferTemplateTokenRequest'
         '400':
           $ref: '#/responses/BadRequest'
         '401':
@@ -1143,11 +1149,17 @@ paths:
         - $ref: '#/parameters/requestID'
         - $ref: '#/parameters/deadline'
         - $ref: '#/parameters/p2pTransferTemplateID'
+        - name: request
+          description: Запрос на получение талона
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/P2PTransferTemplateTokenRequest'
       responses:
         '201':
           description: Талон получен
           schema:
-            $ref: '#/definitions/GrantToken'
+            $ref: '#/definitions/P2PTransferTemplateTokenRequest'
         '400':
           $ref: '#/responses/BadRequest'
         '401':
@@ -3297,6 +3309,24 @@ definitions:
           При указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.
         type: string
         example: '10036274'
+  P2PTransferTemplateTokenRequest:
+    type: object
+    required:
+      - validUntil
+    properties:
+      token:
+        type: string
+        minLength: 1
+        maxLength: 4000
+        example: |
+          eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M
+          DIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o
+        readOnly: true
+      validUntil:
+        description: |
+          Дата и время, до наступления которого выданный токен действителен
+        type: string
+        format: date-time
   P2PTransferWithTemplateParameters:
     type: object
     required:
