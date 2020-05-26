@@ -1,0 +1,13 @@
+type: object
+required:
+  - validUntil
+properties:
+  token:
+    x-rebillyMerge:
+      - $ref: '#/definitions/GrantToken'
+      - readOnly: true
+  validUntil:
+    description: |
+      Дата и время, до наступления которого выданный токен действителен
+    type: string
+    format: date-time

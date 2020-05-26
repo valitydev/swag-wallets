@@ -9,11 +9,17 @@ post:
     - $ref: '#/parameters/requestID'
     - $ref: '#/parameters/deadline'
     - $ref: '#/parameters/p2pTransferTemplateID'
+    - name: request
+      description: Запрос на получение токена доступа
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/P2PTransferTemplateTokenRequest'
   responses:
     '201':
       description: Токен получен
       schema:
-        $ref: '#/definitions/GrantToken'
+        $ref: '#/definitions/P2PTransferTemplateTokenRequest'
     '404':
       $ref: '#/responses/NotFound'
     '400':
