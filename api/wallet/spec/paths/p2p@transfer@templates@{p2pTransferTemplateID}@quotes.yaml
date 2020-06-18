@@ -1,19 +1,20 @@
 post:
   description: >
     Расчитать комиссии и зафиксировать их в виде токена,
-    который можно использовать при создании перевода
-  operationId: quoteP2PTransfer
+    который можно использовать при создании перевода по шаблону
+  operationId: quoteP2PTransferWithTemplate
   tags:
-    - P2P
+    - P2PTemplates
   parameters:
     - $ref: '#/parameters/requestID'
     - $ref: '#/parameters/deadline'
+    - $ref: '#/parameters/p2pTransferTemplateID'
     - name: quoteParams
       description: Параметры для вычисления комиссий
       in: body
       required: true
       schema:
-        $ref: '#/definitions/QuoteParameters'
+        $ref: '#/definitions/P2PTransferTemplateQuoteParameters'
   responses:
     '201':
       description: Результат вычисления комиссий

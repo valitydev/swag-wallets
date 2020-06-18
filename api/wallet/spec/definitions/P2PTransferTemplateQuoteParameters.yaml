@@ -1,0 +1,15 @@
+description: Параметры запроса комиссий
+type: object
+required:
+  - sender
+  - receiver
+  - body
+properties:
+  sender:
+    $ref: '#/definitions/SenderResource'
+  receiver:
+    $ref: '#/definitions/ReceiverResource'
+  body:
+    x-rebillyMerge:
+      - $ref: '#/definitions/Asset'
+      - description: Сумма операции
