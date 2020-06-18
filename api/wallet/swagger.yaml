@@ -1027,8 +1027,6 @@ paths:
           $ref: '#/responses/BadRequest'
         '401':
           $ref: '#/responses/Unauthorized'
-        '409':
-          $ref: '#/responses/ConflictRequest'
         '422':
           description: Неверные данные для расчета комиссий
           schema:
@@ -1137,6 +1135,36 @@ paths:
           $ref: '#/responses/NotFound'
         '422':
           description: Неверные данные для блокировки шаблона
+          schema:
+            $ref: '#/definitions/InvalidOperationParameters'
+  '/p2p/transfer/templates/{p2pTransferTemplateID}/quotes':
+    post:
+      description: |
+        Расчитать комиссии и зафиксировать их в виде токена, который можно использовать при создании перевода по шаблону
+      operationId: quoteP2PTransferWithTemplate
+      tags:
+        - P2PTemplates
+      parameters:
+        - $ref: '#/parameters/requestID'
+        - $ref: '#/parameters/deadline'
+        - $ref: '#/parameters/p2pTransferTemplateID'
+        - name: quoteParams
+          description: Параметры для вычисления комиссий
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/P2PTransferTemplateQuoteParameters'
+      responses:
+        '201':
+          description: Результат вычисления комиссий
+          schema:
+            $ref: '#/definitions/P2PTransferQuote'
+        '400':
+          $ref: '#/responses/BadRequest'
+        '401':
+          $ref: '#/responses/Unauthorized'
+        '422':
+          description: Неверные данные для расчета комиссий
           schema:
             $ref: '#/definitions/InvalidOperationParameters'
   '/p2p/transfer/templates/{p2pTransferTemplateID}/tickets':
@@ -3309,6 +3337,38 @@ definitions:
           При указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.
         type: string
         example: '10036274'
+  P2PTransferTemplateQuoteParameters:
+    description: Параметры запроса комиссий
+    type: object
+    required:
+      - sender
+      - receiver
+      - body
+    properties:
+      sender:
+        $ref: '#/definitions/SenderResource'
+      receiver:
+        $ref: '#/definitions/ReceiverResource'
+      body:
+        description: Сумма операции
+        type: object
+        required:
+          - amount
+          - currency
+        properties:
+          amount:
+            description: |
+              Сумма денежных средств в минорных единицах, например, в копейках
+            type: integer
+            format: int64
+            example: 1430000
+          currency:
+            description: |
+              Валюта, символьный код согласно [ISO
+              4217](http://www.iso.org/iso/home/standards/currency_codes.htm).
+            type: string
+            pattern: '^[A-Z]{3}$'
+            example: RUB
   P2PTransferTemplateTokenRequest:
     type: object
     required:
