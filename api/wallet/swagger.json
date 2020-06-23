@@ -3296,6 +3296,23 @@
         }
       }
     },
+    "ContactInfo": {
+      "description": "Контактные данные",
+      "type": "object",
+      "properties": {
+        "email": {
+          "description": "Адрес электронной почты",
+          "type": "string",
+          "format": "email",
+          "maxLength": 100
+        },
+        "phoneNumber": {
+          "description": "Номер мобильного телефона с международным префиксом согласно\n[E.164](https://en.wikipedia.org/wiki/E.164).\n",
+          "type": "string",
+          "format": "^\\+\\d{4,15}$"
+        }
+      }
+    },
     "ContinuationToken": {
       "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
       "type": "string"
@@ -4240,7 +4257,8 @@
         "body",
         "sender",
         "receiver",
-        "status"
+        "status",
+        "contactInfo"
       ],
       "properties": {
         "id": {
@@ -4290,6 +4308,23 @@
         },
         "status": {
           "$ref": "#/definitions/P2PTransferStatus"
+        },
+        "contactInfo": {
+          "description": "Контактные данные отправителя",
+          "type": "object",
+          "properties": {
+            "email": {
+              "description": "Адрес электронной почты",
+              "type": "string",
+              "format": "email",
+              "maxLength": 100
+            },
+            "phoneNumber": {
+              "description": "Номер мобильного телефона с международным префиксом согласно\n[E.164](https://en.wikipedia.org/wiki/E.164).\n",
+              "type": "string",
+              "format": "^\\+\\d{4,15}$"
+            }
+          }
         },
         "externalID": {
           "description": "Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n",
@@ -4389,7 +4424,8 @@
         "sender",
         "receiver",
         "identityID",
-        "body"
+        "body",
+        "contactInfo"
       ],
       "properties": {
         "sender": {
@@ -4422,6 +4458,23 @@
               "type": "string",
               "pattern": "^[A-Z]{3}$",
               "example": "RUB"
+            }
+          }
+        },
+        "contactInfo": {
+          "description": "Контактные данные отправителя",
+          "type": "object",
+          "properties": {
+            "email": {
+              "description": "Адрес электронной почты",
+              "type": "string",
+              "format": "email",
+              "maxLength": 100
+            },
+            "phoneNumber": {
+              "description": "Номер мобильного телефона с международным префиксом согласно\n[E.164](https://en.wikipedia.org/wiki/E.164).\n",
+              "type": "string",
+              "format": "^\\+\\d{4,15}$"
             }
           }
         },
@@ -4730,7 +4783,8 @@
       "required": [
         "sender",
         "receiver",
-        "body"
+        "body",
+        "contactInfo"
       ],
       "properties": {
         "sender": {
@@ -4758,6 +4812,23 @@
               "type": "string",
               "pattern": "^[A-Z]{3}$",
               "example": "RUB"
+            }
+          }
+        },
+        "contactInfo": {
+          "description": "Контактные данные отправителя",
+          "type": "object",
+          "properties": {
+            "email": {
+              "description": "Адрес электронной почты",
+              "type": "string",
+              "format": "email",
+              "maxLength": 100
+            },
+            "phoneNumber": {
+              "description": "Номер мобильного телефона с международным префиксом согласно\n[E.164](https://en.wikipedia.org/wiki/E.164).\n",
+              "type": "string",
+              "format": "^\\+\\d{4,15}$"
             }
           }
         },

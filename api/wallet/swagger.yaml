@@ -2180,6 +2180,21 @@ definitions:
       requestType:
         description: Тип браузерной операции
         type: string
+  ContactInfo:
+    description: Контактные данные
+    type: object
+    properties:
+      email:
+        description: Адрес электронной почты
+        type: string
+        format: email
+        maxLength: 100
+      phoneNumber:
+        description: |
+          Номер мобильного телефона с международным префиксом согласно
+          [E.164](https://en.wikipedia.org/wiki/E.164).
+        type: string
+        format: '^\+\d{4,15}$'
   ContinuationToken:
     description: |
       Токен, сигнализирующий о том, что в ответе передана только часть данных.
@@ -2991,6 +3006,7 @@ definitions:
       - sender
       - receiver
       - status
+      - contactInfo
     properties:
       id:
         description: Идентификатор перевода
@@ -3032,6 +3048,21 @@ definitions:
         $ref: '#/definitions/ReceiverResource'
       status:
         $ref: '#/definitions/P2PTransferStatus'
+      contactInfo:
+        description: Контактные данные отправителя
+        type: object
+        properties:
+          email:
+            description: Адрес электронной почты
+            type: string
+            format: email
+            maxLength: 100
+          phoneNumber:
+            description: |
+              Номер мобильного телефона с международным префиксом согласно
+              [E.164](https://en.wikipedia.org/wiki/E.164).
+            type: string
+            format: '^\+\d{4,15}$'
       externalID:
         description: |
           Уникальный идентификатор сущности на вашей стороне.
@@ -3106,6 +3137,7 @@ definitions:
       - receiver
       - identityID
       - body
+      - contactInfo
     properties:
       sender:
         $ref: '#/definitions/SenderResourceParams'
@@ -3135,6 +3167,21 @@ definitions:
             type: string
             pattern: '^[A-Z]{3}$'
             example: RUB
+      contactInfo:
+        description: Контактные данные отправителя
+        type: object
+        properties:
+          email:
+            description: Адрес электронной почты
+            type: string
+            format: email
+            maxLength: 100
+          phoneNumber:
+            description: |
+              Номер мобильного телефона с международным префиксом согласно
+              [E.164](https://en.wikipedia.org/wiki/E.164).
+            type: string
+            format: '^\+\d{4,15}$'
       quoteToken:
         type: string
         minLength: 1
@@ -3393,6 +3440,7 @@ definitions:
       - sender
       - receiver
       - body
+      - contactInfo
     properties:
       sender:
         $ref: '#/definitions/SenderResourceParams'
@@ -3418,6 +3466,21 @@ definitions:
             type: string
             pattern: '^[A-Z]{3}$'
             example: RUB
+      contactInfo:
+        description: Контактные данные отправителя
+        type: object
+        properties:
+          email:
+            description: Адрес электронной почты
+            type: string
+            format: email
+            maxLength: 100
+          phoneNumber:
+            description: |
+              Номер мобильного телефона с международным префиксом согласно
+              [E.164](https://en.wikipedia.org/wiki/E.164).
+            type: string
+            format: '^\+\d{4,15}$'
       quoteToken:
         type: string
         minLength: 1
