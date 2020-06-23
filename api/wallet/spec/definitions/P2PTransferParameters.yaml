@@ -5,6 +5,7 @@ required:
   - receiver
   - identityID
   - body
+  - contactInfo
 properties:
   sender:
     $ref: '#/definitions/SenderResourceParams'
@@ -18,6 +19,10 @@ properties:
     x-rebillyMerge:
       - $ref: '#/definitions/Asset'
       - description: Сумма перевода
+  contactInfo:
+    x-rebillyMerge:
+      - $ref: '#/definitions/ContactInfo'
+      - description: Контактные данные отправителя
   quoteToken:
     x-rebillyMerge:
       - $ref: '#/definitions/P2PTransferQuoteToken'

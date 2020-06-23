@@ -8,6 +8,7 @@ required:
   - sender
   - receiver
   - status
+  - contactInfo
 properties:
   id:
     x-rebillyMerge:
@@ -30,6 +31,10 @@ properties:
     $ref: '#/definitions/ReceiverResource'
   status:
     $ref: '#/definitions/P2PTransferStatus'
+  contactInfo:
+    x-rebillyMerge:
+      - $ref: '#/definitions/ContactInfo'
+      - description: Контактные данные отправителя
   externalID:
     x-rebillyMerge:
       - $ref: '#/definitions/ExternalID'
