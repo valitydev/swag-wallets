@@ -1182,7 +1182,7 @@ paths:
           in: body
           required: true
           schema:
-            $ref: '#/definitions/P2PTransferTemplateTokenRequest'
+            $ref: '#/definitions/P2PTransferTemplateTicketRequest'
       responses:
         '201':
           description: Талон получен
@@ -3416,6 +3416,25 @@ definitions:
             type: string
             pattern: '^[A-Z]{3}$'
             example: RUB
+  P2PTransferTemplateTicketRequest:
+    type: object
+    required:
+      - validUntil
+    properties:
+      token:
+        type: string
+        minLength: 1
+        maxLength: 4000
+        example: |
+          eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M
+          DIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o
+        readOnly: true
+      validUntil:
+        description: |
+          Желаемые дата и время, до наступления которых будет действителен выданный токен.
+          Итоговое значение может быть ограничено сроком действия AccessToken, его можно узнать из ответа.
+        type: string
+        format: date-time
   P2PTransferTemplateTokenRequest:
     type: object
     required:
