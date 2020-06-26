@@ -12,7 +12,7 @@ post:
       in: body
       required: true
       schema:
-        $ref: '#/definitions/P2PTransferTemplateTokenRequest'
+        $ref: '#/definitions/P2PTransferTemplateTicketRequest'
   responses:
     '201':
       description: Талон получен
