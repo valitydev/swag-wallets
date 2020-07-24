@@ -2372,6 +2372,8 @@ definitions:
       code:
         description: Код ошибки поступления
         type: string
+      subError:
+        $ref: '#/definitions/SubFailure'
   DepositID:
     description: Идентификатор поступления денежных средств
     type: string
@@ -2407,6 +2409,8 @@ definitions:
           code:
             description: Код ошибки поступления
             type: string
+          subError:
+            $ref: '#/definitions/SubFailure'
   Destination:
     description: Данные приёмника денежных средств
     allOf:
@@ -4307,6 +4311,8 @@ definitions:
       code:
         description: Код ошибки вывода
         type: string
+      subError:
+        $ref: '#/definitions/SubFailure'
   WithdrawalID:
     description: Идентификатор вывода денежных средств
     type: string
@@ -4532,6 +4538,8 @@ definitions:
           code:
             description: Код ошибки вывода
             type: string
+          subError:
+            $ref: '#/definitions/SubFailure'
   WithdrawalStatusChanged:
     description: Изменение статуса вывода средств
     allOf:

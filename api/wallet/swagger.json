@@ -3516,6 +3516,9 @@
         "code": {
           "description": "Код ошибки поступления",
           "type": "string"
+        },
+        "subError": {
+          "$ref": "#/definitions/SubFailure"
         }
       }
     },
@@ -3548,6 +3551,9 @@
             "code": {
               "description": "Код ошибки поступления",
               "type": "string"
+            },
+            "subError": {
+              "$ref": "#/definitions/SubFailure"
             }
           }
         }
@@ -5823,6 +5829,9 @@
         "code": {
           "description": "Код ошибки вывода",
           "type": "string"
+        },
+        "subError": {
+          "$ref": "#/definitions/SubFailure"
         }
       }
     },
@@ -6042,6 +6051,9 @@
             "code": {
               "description": "Код ошибки вывода",
               "type": "string"
+            },
+            "subError": {
+              "$ref": "#/definitions/SubFailure"
             }
           }
         }
