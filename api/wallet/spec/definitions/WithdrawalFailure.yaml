@@ -5,3 +5,5 @@ properties:
   code:
     description: Код ошибки вывода
     type: string
+  subError:
+    $ref: '#/definitions/SubFailure'
