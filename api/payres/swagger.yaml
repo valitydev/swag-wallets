@@ -157,6 +157,7 @@ definitions:
       - unionpay
       - jcb
       - nspkmir
+      - elo
   InvalidBankCard:
     type: object
     properties:

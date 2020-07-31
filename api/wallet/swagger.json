@@ -3149,7 +3149,8 @@
                 "discover",
                 "unionpay",
                 "jcb",
-                "nspkmir"
+                "nspkmir",
+                "elo"
               ],
               "readOnly": true
             }
@@ -3193,7 +3194,8 @@
                 "discover",
                 "unionpay",
                 "jcb",
-                "nspkmir"
+                "nspkmir",
+                "elo"
               ],
               "readOnly": true
             }
@@ -4131,7 +4133,8 @@
         "discover",
         "unionpay",
         "jcb",
-        "nspkmir"
+        "nspkmir",
+        "elo"
       ]
     },
     "SecuredBankCard": {

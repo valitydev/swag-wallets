@@ -2091,6 +2091,7 @@ definitions:
               - unionpay
               - jcb
               - nspkmir
+              - elo
             readOnly: true
   BankCardReceiverResourceParams:
     description: Банковская карта
@@ -2118,6 +2119,7 @@ definitions:
               - unionpay
               - jcb
               - nspkmir
+              - elo
             readOnly: true
   BankCardSenderResourceParams:
     description: Банковская карта
@@ -2909,6 +2911,7 @@ definitions:
       - unionpay
       - jcb
       - nspkmir
+      - elo
   SecuredBankCard:
     description: Безопасные данные банковской карты
     type: object
