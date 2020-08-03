@@ -158,6 +158,7 @@ definitions:
       - jcb
       - nspkmir
       - elo
+      - rupay
   InvalidBankCard:
     type: object
     properties:

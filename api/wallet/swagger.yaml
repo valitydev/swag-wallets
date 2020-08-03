@@ -2092,6 +2092,7 @@ definitions:
               - jcb
               - nspkmir
               - elo
+              - rupay
             readOnly: true
   BankCardReceiverResourceParams:
     description: Банковская карта
@@ -2120,6 +2121,7 @@ definitions:
               - jcb
               - nspkmir
               - elo
+              - rupay
             readOnly: true
   BankCardSenderResourceParams:
     description: Банковская карта
@@ -2912,6 +2914,7 @@ definitions:
       - jcb
       - nspkmir
       - elo
+      - rupay
   SecuredBankCard:
     description: Безопасные данные банковской карты
     type: object

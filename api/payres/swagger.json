@@ -212,7 +212,8 @@
         "unionpay",
         "jcb",
         "nspkmir",
-        "elo"
+        "elo",
+        "rupay"
       ]
     },
     "InvalidBankCard": {
