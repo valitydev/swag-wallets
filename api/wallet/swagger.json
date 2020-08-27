@@ -527,8 +527,8 @@
             "$ref": "#/parameters/deadline"
           },
           {
-            "name": "identity",
-            "description": "Фильтр по личности владельца",
+            "name": "identityID",
+            "description": "Идентификатор личности владельца",
             "in": "query",
             "required": false,
             "type": "string",
@@ -536,21 +536,36 @@
             "minLength": 1
           },
           {
-            "name": "currency",
-            "description": "Фильтр по валюте приёмника средств,\nсимвольный код согласно [ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+            "$ref": "#/parameters/currencyID"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "name": "continuationToken",
             "in": "query",
             "required": false,
-            "type": "string",
-            "pattern": "^[A-Z]{3}$"
+            "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Приёмники средств найдены",
+            "description": "Результат поиска",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Destination"
+              "type": "object",
+              "properties": {
+                "continuationToken": {
+                  "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
+                  "type": "string"
+                },
+                "result": {
+                  "description": "Найденные приёмники средств",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Destination"
+                  }
+                }
               }
             }
           },
@@ -875,8 +890,8 @@
             "$ref": "#/parameters/deadline"
           },
           {
-            "name": "provider",
-            "description": "Фильтр по провайдеру услуг",
+            "name": "providerID",
+            "description": "Идентификатор провайдера услуг",
             "in": "query",
             "required": false,
             "type": "string",
@@ -885,7 +900,7 @@
           },
           {
             "name": "class",
-            "description": "Фильтр по классу личности",
+            "description": "Класс личности",
             "in": "query",
             "required": false,
             "type": "string",
@@ -894,21 +909,41 @@
           },
           {
             "name": "level",
-            "description": "Фильтр по уровню идентификации",
+            "description": "Уровень идентификации",
             "in": "query",
             "required": false,
             "type": "string",
             "maxLength": 40,
             "minLength": 1
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "name": "continuationToken",
+            "in": "query",
+            "required": false,
+            "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
+            "type": "string"
           }
         ],
         "responses": {
-          "201": {
-            "description": "Личности владельцев найдены",
+          "200": {
+            "description": "Результат поиска",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Identity"
+              "type": "object",
+              "properties": {
+                "continuationToken": {
+                  "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
+                  "type": "string"
+                },
+                "result": {
+                  "description": "Найденные личности",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Identity"
+                  }
+                }
               }
             }
           },
