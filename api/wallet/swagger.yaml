@@ -2690,6 +2690,11 @@ definitions:
           При указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.
         type: string
         example: '10036274'
+      partyID:
+        description: Уникальный в рамках платформы идентификатор участника.
+        type: string
+        minLength: 1
+        maxLength: 40
   IdentityChallenge:
     description: Процедура идентификации личности
     allOf:
@@ -2910,6 +2915,7 @@ definitions:
           - NoMatch
           - InvalidResourceToken
           - InvalidToken
+          - AmbiguousPartyID
         example: NotFound
       name:
         description: 'Имя или идентификатор элемента сообщения, содержащего недопустимые данные'
@@ -3555,6 +3561,11 @@ definitions:
           Метаданные, которые необходимо связать с переводом.
           Добавляются к указанным при создании шаблона.
           При совпадении ключей предпочтение отдается значениям из шаблона.
+  PartyID:
+    description: Уникальный в рамках платформы идентификатор участника.
+    type: string
+    minLength: 1
+    maxLength: 40
   Provider:
     description: Данные провайдера услуг
     type: object
