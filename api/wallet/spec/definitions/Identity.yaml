@@ -51,3 +51,6 @@ properties:
   externalID:
     x-rebillyMerge:
       - $ref: '#/definitions/ExternalID'
+  partyID:
+    x-rebillyMerge:
+      - $ref: '#/definitions/PartyID'

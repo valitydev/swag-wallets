@@ -16,6 +16,7 @@ properties:
       - NoMatch
       - InvalidResourceToken
       - InvalidToken
+      - AmbiguousPartyID
     example: NotFound
   name:
     description: Имя или идентификатор элемента сообщения, содержащего недопустимые данные
