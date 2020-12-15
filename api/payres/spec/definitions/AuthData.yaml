@@ -1,7 +1,7 @@
 type: object
 properties:
   authData:
-    description: Данные для авторизации платежа по карте
+    description: Данные для авторизации операции по карте
     type: string
     minLength: 1
     maxLength: 1000

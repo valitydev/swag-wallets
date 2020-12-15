@@ -10,6 +10,6 @@ properties:
       - readOnly: true
   validUntil:
     description: |
-      Дата и время, до наступления которого выданное право действительно
+      Дата и время, до наступления которых выданное право действительно
     type: string
     format: date-time

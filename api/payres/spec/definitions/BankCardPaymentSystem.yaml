@@ -1,4 +1,4 @@
-description: Платежная система
+description: Платёжная система
 type: string
 enum:
   - visa

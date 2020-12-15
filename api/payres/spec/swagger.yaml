@@ -4,8 +4,10 @@ info:
   title: RBKmoney Payment Resource API
   description: >
 
-    RBKmoney Payment Resource API служит для токенизации чувствительных данных
-    платёжных ресурсов пользователей.
+    Платформа предоставляет возможность токенизации исходных данных пользовательских платёжных ресурсов.
+    Используя RBKmoney Payment Resource API вы можете для своего платёжного ресурса получить уникальный токен,
+    который может быть использован для переводов.
+
 
   termsOfService: http://rbk.money/
   contact:
