@@ -4,7 +4,7 @@ info:
   title: RBKmoney Payment Resource API
   description: |
 
-    RBKmoney Payment Resource API служит для токенизации чувствительных данных платёжных ресурсов пользователей.
+    Платформа предоставляет возможность токенизации исходных данных пользовательских платёжных ресурсов. Используя RBKmoney Payment Resource API вы можете для своего платёжного ресурса получить уникальный токен, который может быть использован для переводов.
   termsOfService: 'http://rbk.money/'
   contact:
     name: RBKmoney support team
@@ -105,7 +105,7 @@ definitions:
     type: object
     properties:
       authData:
-        description: Данные для авторизации платежа по карте
+        description: Данные для авторизации операции по карте
         type: string
         minLength: 1
         maxLength: 1000
@@ -144,7 +144,7 @@ definitions:
         pattern: '^\d{3,4}$'
         example: '321'
   BankCardPaymentSystem:
-    description: Платежная система
+    description: Платёжная система
     type: string
     enum:
       - visa
@@ -227,3 +227,12 @@ definitions:
     allOf:
       - $ref: '#/definitions/SecuredBankCard'
       - $ref: '#/definitions/AuthData'
+      - $ref: '#/definitions/ValidUntil'
+  ValidUntil:
+    type: object
+    properties:
+      validUntil:
+        description: 'Дата и время, до наступления которых токен платёжного ресурса остается действительным'
+        type: string
+        format: date-time
+        readOnly: true

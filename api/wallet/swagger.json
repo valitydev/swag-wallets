@@ -273,6 +273,11 @@
   },
   "tags": [
     {
+      "name": "Payment Resources",
+      "x-displayName": "Платёжные ресурсы",
+      "description": "Платформа предоставляет возможность токенизации исходных данных пользовательских платёжных ресурсов. См. [RBKmoney Payment Resource API](?api/payres/swagger.yaml).\n"
+    },
+    {
       "name": "Providers",
       "x-displayName": "Провайдеры услуг",
       "description": ""
@@ -340,7 +345,7 @@
     {
       "name": "Error Codes",
       "x-displayName": "Коды ошибок",
-      "description": "\n## Ошибки перевода\n\n  | Код                    | Описание                                                                                                                                       |\n  | ---                    | --------                                                                                                                                       |\n  | InvalidSenderResource  | Неверный источник перевода (введен номер несуществующей карты, отсутствующего аккаунта и т.п.)                                                 |\n  | InvalidReceiverResource| Неверный получатель перевода (введен номер несуществующей карты и т.п.)                                                                        |\n  | InsufficientFunds      | Недостаточно средств на счете банковской карты                                                                                                 |\n  | PreauthorizationFailed | Предварительная авторизация отклонена (введен неверный код 3D-Secure, на форме 3D-Secure нажата ссылка отмены)                                 |\n  | RejectedByIssuer       | Перевод отклонён эмитентом (установлены запреты по стране списания, запрет на покупки в интернете, платеж отклонен антифродом эмитента и т.п.) |\n  | P2PTransferRejected    | Перевод отклонён по иным причинам                                                                                                              |\n"
+      "description": "\n## Ошибки перевода\n\n  | Код                    | Описание                                                                                                                                       |\n  | ---                    | --------                                                                                                                                       |\n  | InvalidSenderResource  | Неверный источник перевода (введен номер несуществующей карты, отсутствующего аккаунта и т.п.)                                                 |\n  | InvalidReceiverResource| Неверный получатель перевода (введен номер несуществующей карты и т.п.)                                                                        |\n  | InsufficientFunds      | Недостаточно средств на счете банковской карты                                                                                                 |\n  | PreauthorizationFailed | Предварительная авторизация отклонена (введен неверный код 3D-Secure, на форме 3D-Secure нажата ссылка отмены)                                 |\n  | RejectedByIssuer       | Перевод отклонён эмитентом (установлены запреты по стране списания, запрет на покупки в интернете, платёж отклонен антифродом эмитента и т.п.) |\n  | P2PTransferRejected    | Перевод отклонён по иным причинам                                                                                                              |\n"
     }
   ],
   "paths": {
@@ -3175,7 +3180,7 @@
           "type": "object",
           "properties": {
             "paymentSystem": {
-              "description": "Платежная система",
+              "description": "Платёжная система",
               "type": "string",
               "enum": [
                 "visa",
@@ -3221,7 +3226,7 @@
           "type": "object",
           "properties": {
             "paymentSystem": {
-              "description": "Платежная система",
+              "description": "Платёжная система",
               "type": "string",
               "enum": [
                 "visa",
@@ -3685,7 +3690,7 @@
           "readOnly": true
         },
         "validUntil": {
-          "description": "Дата и время, до наступления которого выданное право действительно\n",
+          "description": "Дата и время, до наступления которых выданное право действительно\n",
           "type": "string",
           "format": "date-time"
         }
@@ -3728,7 +3733,7 @@
           "example": "Authorized"
         },
         "validUntil": {
-          "description": "> Если `status` == `Authorized`\n\nДата и время, до наступления которого авторизация действительна\n",
+          "description": "> Если `status` == `Authorized`\n\nДата и время, до наступления которых авторизация действительна\n",
           "type": "string",
           "format": "date-time",
           "readOnly": true
@@ -3990,7 +3995,7 @@
           "readOnly": true
         },
         "validUntil": {
-          "description": "> Если `status` == `Completed`\n\nДата и время, до наступления которого результат процедуры действителен\n",
+          "description": "> Если `status` == `Completed`\n\nДата и время, до наступления которых результат процедуры действителен\n",
           "type": "string",
           "format": "date-time",
           "readOnly": true
@@ -4168,7 +4173,7 @@
       }
     },
     "BankCardPaymentSystem": {
-      "description": "Платежная система",
+      "description": "Платёжная система",
       "type": "string",
       "enum": [
         "visa",
@@ -4849,7 +4854,7 @@
           "readOnly": true
         },
         "validUntil": {
-          "description": "Дата и время, до наступления которого выданный токен действителен\n",
+          "description": "Дата и время, до наступления которых выданный токен действителен\n",
           "type": "string",
           "format": "date-time"
         }
@@ -5661,7 +5666,7 @@
           }
         },
         "validUntil": {
-          "description": "Дата и время, до наступления которого выданное право действительно\n",
+          "description": "Дата и время, до наступления которых выданное право действительно\n",
           "type": "string",
           "format": "date-time"
         }

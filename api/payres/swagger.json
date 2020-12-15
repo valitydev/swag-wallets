@@ -3,7 +3,7 @@
   "info": {
     "version": "0.0.1",
     "title": "RBKmoney Payment Resource API",
-    "description": "\nRBKmoney Payment Resource API служит для токенизации чувствительных данных платёжных ресурсов пользователей.\n",
+    "description": "\nПлатформа предоставляет возможность токенизации исходных данных пользовательских платёжных ресурсов. Используя RBKmoney Payment Resource API вы можете для своего платёжного ресурса получить уникальный токен, который может быть использован для переводов.\n",
     "termsOfService": "http://rbk.money/",
     "contact": {
       "name": "RBKmoney support team",
@@ -148,7 +148,7 @@
       "type": "object",
       "properties": {
         "authData": {
-          "description": "Данные для авторизации платежа по карте",
+          "description": "Данные для авторизации операции по карте",
           "type": "string",
           "minLength": 1,
           "maxLength": 1000,
@@ -199,7 +199,7 @@
       }
     },
     "BankCardPaymentSystem": {
-      "description": "Платежная система",
+      "description": "Платёжная система",
       "type": "string",
       "enum": [
         "visa",
@@ -299,8 +299,22 @@
         },
         {
           "$ref": "#/definitions/AuthData"
+        },
+        {
+          "$ref": "#/definitions/ValidUntil"
         }
       ]
+    },
+    "ValidUntil": {
+      "type": "object",
+      "properties": {
+        "validUntil": {
+          "description": "Дата и время, до наступления которых токен платёжного ресурса остается действительным",
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        }
+      }
     }
   }
 }
