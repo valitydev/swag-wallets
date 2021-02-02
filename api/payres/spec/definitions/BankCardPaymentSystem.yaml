@@ -13,3 +13,5 @@ enum:
   - nspkmir
   - elo
   - rupay
+  - dummy
+  - uzcard
