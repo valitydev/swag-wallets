@@ -159,6 +159,8 @@ definitions:
       - nspkmir
       - elo
       - rupay
+      - dummy
+      - uzcard
   InvalidBankCard:
     type: object
     properties:

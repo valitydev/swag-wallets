@@ -3194,7 +3194,9 @@
                 "jcb",
                 "nspkmir",
                 "elo",
-                "rupay"
+                "rupay",
+                "dummy",
+                "uzcard"
               ],
               "readOnly": true
             }
@@ -3240,7 +3242,9 @@
                 "jcb",
                 "nspkmir",
                 "elo",
-                "rupay"
+                "rupay",
+                "dummy",
+                "uzcard"
               ],
               "readOnly": true
             }
@@ -4187,7 +4191,9 @@
         "jcb",
         "nspkmir",
         "elo",
-        "rupay"
+        "rupay",
+        "dummy",
+        "uzcard"
       ]
     },
     "SecuredBankCard": {

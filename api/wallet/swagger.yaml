@@ -2130,6 +2130,8 @@ definitions:
               - nspkmir
               - elo
               - rupay
+              - dummy
+              - uzcard
             readOnly: true
   BankCardReceiverResourceParams:
     description: Банковская карта
@@ -2159,6 +2161,8 @@ definitions:
               - nspkmir
               - elo
               - rupay
+              - dummy
+              - uzcard
             readOnly: true
   BankCardSenderResourceParams:
     description: Банковская карта
@@ -2958,6 +2962,8 @@ definitions:
       - nspkmir
       - elo
       - rupay
+      - dummy
+      - uzcard
   SecuredBankCard:
     description: Безопасные данные банковской карты
     type: object

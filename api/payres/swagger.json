@@ -213,7 +213,9 @@
         "jcb",
         "nspkmir",
         "elo",
-        "rupay"
+        "rupay",
+        "dummy",
+        "uzcard"
       ]
     },
     "InvalidBankCard": {
