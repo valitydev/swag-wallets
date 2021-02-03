@@ -2122,6 +2122,8 @@ definitions:
               - mastercard
               - visaelectron
               - maestro
+              - forbrugsforeningen
+              - dankort
               - amex
               - dinersclub
               - discover
@@ -2153,6 +2155,8 @@ definitions:
               - mastercard
               - visaelectron
               - maestro
+              - forbrugsforeningen
+              - dankort
               - amex
               - dinersclub
               - discover
@@ -2954,6 +2958,8 @@ definitions:
       - mastercard
       - visaelectron
       - maestro
+      - forbrugsforeningen
+      - dankort
       - amex
       - dinersclub
       - discover
