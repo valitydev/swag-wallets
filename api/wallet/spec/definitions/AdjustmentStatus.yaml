@@ -1,0 +1,26 @@
+type: object
+properties:
+  status:
+    description: |
+      Статус корректировки поступления денежных средств.
+
+      | Значение    | Пояснение                                               |
+      | ----------- | ------------------------------------------------------- |
+      | `Pending`   | Корректировка в процессе выполнения                     |
+      | `Succeeded` | Корректировка произведёна успешно                       |
+      | `Failed`    | Корректировка завершилась неудачей                      |
+
+    type: string
+    enum:
+      - Pending
+      - Succeeded
+      - Failed
+    readOnly: true
+  failure:
+    x-rebillyMerge:
+      - description: |
+          > Если `status` == `Failed`
+
+          Пояснение причины неудачи
+        readOnly: true
+      - $ref: '#/definitions/AdjustmentFailure'
