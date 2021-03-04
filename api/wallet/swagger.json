@@ -349,6 +349,132 @@
     }
   ],
   "paths": {
+    "/adjustments": {
+      "get": {
+        "operationId": "listAdjustments",
+        "summary": "Поиск корректировок",
+        "tags": [
+          "Adjustments"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "name": "walletID",
+            "in": "query",
+            "description": "Идентификатор кошелька",
+            "type": "string",
+            "maxLength": 40,
+            "minLength": 1,
+            "required": false
+          },
+          {
+            "name": "identityID",
+            "in": "query",
+            "description": "Идентификатор личности владельца",
+            "type": "string",
+            "maxLength": 40,
+            "minLength": 1,
+            "required": false
+          },
+          {
+            "name": "depositID",
+            "in": "query",
+            "description": "Идентификатор ввода денежных средств",
+            "type": "string",
+            "required": false,
+            "maxLength": 50,
+            "minLength": 1
+          },
+          {
+            "name": "sourceID",
+            "in": "query",
+            "description": "Идентификатор источника средств",
+            "type": "string",
+            "maxLength": 40,
+            "minLength": 1,
+            "required": false
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string",
+            "enum": [
+              "Pending",
+              "Succeeded",
+              "Failed"
+            ],
+            "required": false
+          },
+          {
+            "name": "createdAtFrom",
+            "in": "query",
+            "description": "Дата создания с",
+            "type": "string",
+            "format": "date-time",
+            "required": false
+          },
+          {
+            "name": "createdAtTo",
+            "in": "query",
+            "description": "Дата создания до",
+            "type": "string",
+            "format": "date-time",
+            "required": false
+          },
+          {
+            "$ref": "#/parameters/amountFrom"
+          },
+          {
+            "$ref": "#/parameters/amountTo"
+          },
+          {
+            "$ref": "#/parameters/currencyID"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "name": "continuationToken",
+            "in": "query",
+            "required": false,
+            "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Результат поиска",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "continuationToken": {
+                  "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
+                  "type": "string"
+                },
+                "result": {
+                  "description": "Найденные корректировки",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Adjustment"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          }
+        }
+      }
+    },
     "/currencies/{currencyID}": {
       "get": {
         "operationId": "getCurrency",
@@ -2267,6 +2393,132 @@
         }
       }
     },
+    "/reverts": {
+      "get": {
+        "operationId": "listReverts",
+        "summary": "Поиск отмен",
+        "tags": [
+          "Reverts"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "name": "walletID",
+            "in": "query",
+            "description": "Идентификатор кошелька",
+            "type": "string",
+            "maxLength": 40,
+            "minLength": 1,
+            "required": false
+          },
+          {
+            "name": "identityID",
+            "in": "query",
+            "description": "Идентификатор личности владельца",
+            "type": "string",
+            "maxLength": 40,
+            "minLength": 1,
+            "required": false
+          },
+          {
+            "name": "depositID",
+            "in": "query",
+            "description": "Идентификатор ввода денежных средств",
+            "type": "string",
+            "required": false,
+            "maxLength": 50,
+            "minLength": 1
+          },
+          {
+            "name": "sourceID",
+            "in": "query",
+            "description": "Идентификатор источника средств",
+            "type": "string",
+            "maxLength": 40,
+            "minLength": 1,
+            "required": false
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string",
+            "enum": [
+              "Pending",
+              "Succeeded",
+              "Failed"
+            ],
+            "required": false
+          },
+          {
+            "name": "createdAtFrom",
+            "in": "query",
+            "description": "Дата создания с",
+            "type": "string",
+            "format": "date-time",
+            "required": false
+          },
+          {
+            "name": "createdAtTo",
+            "in": "query",
+            "description": "Дата создания до",
+            "type": "string",
+            "format": "date-time",
+            "required": false
+          },
+          {
+            "$ref": "#/parameters/amountFrom"
+          },
+          {
+            "$ref": "#/parameters/amountTo"
+          },
+          {
+            "$ref": "#/parameters/currencyID"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "name": "continuationToken",
+            "in": "query",
+            "required": false,
+            "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Результат поиска",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "continuationToken": {
+                  "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
+                  "type": "string"
+                },
+                "result": {
+                  "description": "Найденные отмены",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Revert"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          }
+        }
+      }
+    },
     "/w2w/transfers": {
       "post": {
         "description": "Создать перевод",
@@ -3134,6 +3386,102 @@
     }
   },
   "definitions": {
+    "Adjustment": {
+      "description": "Данные корректировки поступления денежных средств",
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "description": "Идентификатор корректировки поступления денежных средств",
+              "type": "string",
+              "example": "tZ0jUmlsV0",
+              "readOnly": true
+            },
+            "createdAt": {
+              "description": "Дата и время запуска корректировки",
+              "type": "string",
+              "format": "date-time",
+              "readOnly": true
+            },
+            "operation_timestamp": {
+              "description": "Дата и время запуска корректировки",
+              "type": "string",
+              "format": "date-time",
+              "readOnly": true
+            },
+            "domainRevision": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "partyRevision": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "externalID": {
+              "description": "Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n",
+              "type": "string",
+              "example": "10036274"
+            }
+          }
+        },
+        {
+          "$ref": "#/definitions/AdjustmentStatus"
+        }
+      ]
+    },
+    "AdjustmentFailure": {
+      "type": "object",
+      "required": [
+        "code"
+      ],
+      "properties": {
+        "code": {
+          "description": "Код ошибки отмены",
+          "type": "string"
+        },
+        "subError": {
+          "$ref": "#/definitions/SubFailure"
+        }
+      }
+    },
+    "AdjustmentID": {
+      "description": "Идентификатор корректировки поступления денежных средств",
+      "type": "string",
+      "example": "tZ0jUmlsV0"
+    },
+    "AdjustmentStatus": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "description": "Статус корректировки поступления денежных средств.\n\n| Значение    | Пояснение                                               |\n| ----------- | ------------------------------------------------------- |\n| `Pending`   | Корректировка в процессе выполнения                     |\n| `Succeeded` | Корректировка произведёна успешно                       |\n| `Failed`    | Корректировка завершилась неудачей                      |\n",
+          "type": "string",
+          "enum": [
+            "Pending",
+            "Succeeded",
+            "Failed"
+          ],
+          "readOnly": true
+        },
+        "failure": {
+          "description": "> Если `status` == `Failed`\n\nПояснение причины неудачи\n",
+          "readOnly": true,
+          "type": "object",
+          "required": [
+            "code"
+          ],
+          "properties": {
+            "code": {
+              "description": "Код ошибки отмены",
+              "type": "string"
+            },
+            "subError": {
+              "$ref": "#/definitions/SubFailure"
+            }
+          }
+        }
+      }
+    },
     "Asset": {
       "description": "Объём денежных средств\n",
       "type": "object",
@@ -5203,6 +5551,136 @@
       "type": "string",
       "pattern": "^[A-Z]{3}$",
       "example": "RUS"
+    },
+    "Revert": {
+      "description": "Данные отмены поступления денежных средств",
+      "allOf": [
+        {
+          "type": "object",
+          "required": [
+            "wallet",
+            "source",
+            "body"
+          ],
+          "properties": {
+            "id": {
+              "description": "Идентификатор отмены поступления денежных средств ",
+              "type": "string",
+              "example": "10068321",
+              "readOnly": true
+            },
+            "createdAt": {
+              "description": "Дата и время запуска отмены",
+              "type": "string",
+              "format": "date-time",
+              "readOnly": true
+            },
+            "wallet": {
+              "description": "Идентификатор кошелька",
+              "type": "string",
+              "example": "10068321"
+            },
+            "source": {
+              "description": "Идентификатор источника денежных средств",
+              "type": "string",
+              "example": "107498"
+            },
+            "body": {
+              "description": "Объём поступивших средств",
+              "type": "object",
+              "required": [
+                "amount",
+                "currency"
+              ],
+              "properties": {
+                "amount": {
+                  "description": "Сумма денежных средств в минорных единицах, например, в копейках\n",
+                  "type": "integer",
+                  "format": "int64",
+                  "example": 1430000
+                },
+                "currency": {
+                  "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+                  "type": "string",
+                  "pattern": "^[A-Z]{3}$",
+                  "example": "RUB"
+                }
+              }
+            },
+            "reason": {
+              "type": "string"
+            },
+            "domainRevision": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "partyRevision": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "externalID": {
+              "description": "Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n",
+              "type": "string",
+              "example": "10036274"
+            }
+          }
+        },
+        {
+          "$ref": "#/definitions/RevertStatus"
+        }
+      ]
+    },
+    "RevertFailure": {
+      "type": "object",
+      "required": [
+        "code"
+      ],
+      "properties": {
+        "code": {
+          "description": "Код ошибки отмены",
+          "type": "string"
+        },
+        "subError": {
+          "$ref": "#/definitions/SubFailure"
+        }
+      }
+    },
+    "RevertID": {
+      "description": "Идентификатор отмены поступления денежных средств ",
+      "type": "string",
+      "example": "10068321"
+    },
+    "RevertStatus": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "description": "Статус отмены поступления денежных средств.\n\n| Значение    | Пояснение                                               |\n| ----------- | ------------------------------------------------------- |\n| `Pending`   | Отмена в процессе выполнения                            |\n| `Succeeded` | Отмена поступления средств произведёна успешно          |\n| `Failed`    | Отмена поступления средств завершилась неудачей         |\n",
+          "type": "string",
+          "enum": [
+            "Pending",
+            "Succeeded",
+            "Failed"
+          ],
+          "readOnly": true
+        },
+        "failure": {
+          "description": "> Если `status` == `Failed`\n\nПояснение причины неудачи\n",
+          "readOnly": true,
+          "type": "object",
+          "required": [
+            "code"
+          ],
+          "properties": {
+            "code": {
+              "description": "Код ошибки отмены",
+              "type": "string"
+            },
+            "subError": {
+              "$ref": "#/definitions/SubFailure"
+            }
+          }
+        }
+      }
     },
     "Ripple": {
       "allOf": [
