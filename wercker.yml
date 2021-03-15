@@ -1,7 +1,4 @@
-box:
-  id: node:7
-  username: ${DOCKER_ID}
-  password: ${DOCKER_PWD}
+box: node:7
 
 build:
   steps:
