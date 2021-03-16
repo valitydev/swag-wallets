@@ -2346,6 +2346,7 @@ definitions:
           - wallet
           - source
           - body
+          - id
         properties:
           id:
             description: Идентификатор поступления денежных средств

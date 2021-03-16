@@ -3481,7 +3481,8 @@
           "required": [
             "wallet",
             "source",
-            "body"
+            "body",
+            "id"
           ],
           "properties": {
             "id": {
