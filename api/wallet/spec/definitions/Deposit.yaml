@@ -5,6 +5,7 @@ allOf:
       - wallet
       - source
       - body
+      - id
     properties:
       id:
         x-rebillyMerge:
