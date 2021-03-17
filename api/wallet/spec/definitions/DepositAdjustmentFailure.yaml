@@ -1,0 +1,9 @@
+type: object
+required:
+  - code
+properties:
+  code:
+    description: Код ошибки коррекции
+    type: string
+  subError:
+    $ref: '#/definitions/SubFailure'
