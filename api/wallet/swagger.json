@@ -393,7 +393,7 @@
     },
     "/deposit-adjustments": {
       "get": {
-        "operationId": "listAdjustments",
+        "operationId": "listDepositAdjustments",
         "summary": "Поиск корректировок",
         "tags": [
           "Deposits"
@@ -519,7 +519,7 @@
     },
     "/deposit-reverts": {
       "get": {
-        "operationId": "listReverts",
+        "operationId": "listDepositReverts",
         "summary": "Поиск отмен",
         "tags": [
           "Deposits"

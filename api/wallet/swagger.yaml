@@ -386,7 +386,7 @@ paths:
           $ref: '#/responses/NotFound'
   /deposit-adjustments:
     get:
-      operationId: listAdjustments
+      operationId: listDepositAdjustments
       summary: Поиск корректировок
       tags:
         - Deposits
@@ -476,7 +476,7 @@ paths:
           $ref: '#/responses/Unauthorized'
   /deposit-reverts:
     get:
-      operationId: listReverts
+      operationId: listDepositReverts
       summary: Поиск отмен
       tags:
         - Deposits
