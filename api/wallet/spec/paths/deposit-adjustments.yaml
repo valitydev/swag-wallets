@@ -1,5 +1,5 @@
 get:
-  operationId: listAdjustments
+  operationId: listDepositAdjustments
   summary: Поиск корректировок
   tags:
     - Deposits
