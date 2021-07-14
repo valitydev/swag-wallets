@@ -4179,7 +4179,8 @@
           "type": "string",
           "enum": [
             "BankCardDestinationResource",
-            "CryptoWalletDestinationResource"
+            "CryptoWalletDestinationResource",
+            "DigitalWalletDestinationResource"
           ]
         }
       }
@@ -4231,6 +4232,48 @@
             }
           }
         }
+      ]
+    },
+    "DigitalWallet": {
+      "description": "Данные цифрового кошелька",
+      "type": "object",
+      "required": [
+        "id",
+        "provider"
+      ],
+      "properties": {
+        "id": {
+          "description": "Идентификатор цифрового кошелька",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "example": "zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQ"
+        },
+        "provider": {
+          "description": "Провайдер электронных денежных средств",
+          "type": "string",
+          "enum": [
+            "Webmoney"
+          ]
+        }
+      }
+    },
+    "DigitalWalletDestinationResource": {
+      "description": "Цифровой кошелек",
+      "allOf": [
+        {
+          "$ref": "#/definitions/DestinationResource"
+        },
+        {
+          "$ref": "#/definitions/DigitalWallet"
+        }
+      ]
+    },
+    "DigitalWalletProvider": {
+      "description": "Провайдер электронных денежных средств",
+      "type": "string",
+      "enum": [
+        "Webmoney"
       ]
     },
     "InvalidOperationParameters": {
