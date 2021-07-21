@@ -38,4 +38,3 @@ node_modules
 
 # Generated
 web_deploy/
-package-lock.json

@@ -11,10 +11,6 @@ build: install
 start: install
 	npm start
 
-.PHONY: dev
-dev:
-	wercker dev --publish 3000 --direct-mount
-
 node_modules: package.json
 	npm install
 	touch $@

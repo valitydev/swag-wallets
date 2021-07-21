@@ -1,0 +1,110 @@
+name: Build
+
+on:
+    pull_request:
+        branches: [ v0 ]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        container: node:16
+
+        steps:
+            - name: Checkout branch
+              uses: actions/checkout@v2
+            - name: Cache Node Modules and NPM Cache
+              id: cache
+              uses: actions/cache@v2
+              with:
+                  path: |
+                      node_modules
+                      ~/.npm
+                  key: ${{ runner.os }}-${{ hashFiles('package-lock.json') }}-node
+            - name: Install deps
+              if: steps.cache.outputs.cache-hit != 'true'
+              run: npm install
+            - name: Run Tests
+              run: npm test
+            - name: Build docsite
+              run: npm run build
+            - name: Send Mattermost notification
+              if: ${{ ! cancelled() }}
+              run: |
+                  if [ ${{ job.status }} = 'success' ]; then
+                    STATUS=passed
+                    COLOR=#02C100
+                  else
+                    STATUS=failed
+                    COLOR=#E40304
+                  fi
+
+                  if [ -n "$MATTERMOST_CHANNEL" ]; then
+                    CHANNEL_STR="\"channel\": \"$MATTERMOST_CHANNEL\", "
+                  fi
+
+                  BRANCH="${{ github.head_ref }}"
+                  REPO="${{ github.repository }}"
+                  RUN_ID="${{ github.run_id }}"
+                  RUN_NUM="${{ github.run_number }}"
+
+                  AUTHOR_LOGIN="${{ github.event.sender.login }}"
+                  AUTHOR_NAME="$AUTHOR_LOGIN"
+                  AUTHOR_FULL_NAME="$AUTHOR_NAME"
+
+                  AUTHOR_REAL_NAME="$(curl -H "Accept: application/vnd.github.v3+json"  -H "Authorization: token ${{ github.token }}" https://api.github.com/users/$AUTHOR_LOGIN | grep '"name":' | cut -d\" -f4)"
+
+                  if [ -n "$AUTHOR_REAL_NAME" ]; then
+                    AUTHOR_NAME="$AUTHOR_REAL_NAME"
+                    AUTHOR_FULL_NAME="$AUTHOR_REAL_NAME ($AUTHOR_LOGIN)"
+                  fi
+
+                  AUTHOR_LINK="${{ github.event.sender.html_url }}"
+
+                  PR_NUMBER="${{ github.event.pull_request.number }}"
+                  PR_TITLE="${{ github.event.pull_request.title }}"
+
+                  FALLBACK="Build $RUN_NUM for $REPO by $AUTHOR_NAME has $STATUS on branch $BRANCH"
+
+                  TEXT="[Build $RUN_NUM](https://github.com/$REPO/actions/runs/$RUN_ID) for [\`$REPO\`](https://github.com/$REPO) by [**$AUTHOR_NAME**]($AUTHOR_LINK) has **$STATUS** on branch [$BRANCH](https://github.com/$REPO/tree/$BRANCH)"
+
+                  cat <<EOF >mattermost.json
+                  {
+                   $CHANNEL_STR
+                   "username": "GitHub Actions",
+                   "icon_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+
+                   "attachments": [
+                     {
+                     "author_name": "$AUTHOR_FULL_NAME",
+                     "author_link": "$AUTHOR_LINK",
+                     "author_icon": "${{ github.event.sender.avatar_url }}",
+
+                     "title": "$REPO#$PR_NUMBER: $PR_TITLE",
+                     "title_link": "https://github.com/$REPO/pull/$PR_NUMBER",
+
+                     "fallback": "$FALLBACK",
+                     "text": "$TEXT",
+                     "color": "$COLOR"
+                     }
+                     ]
+                   }
+                  EOF
+
+                  CODE="$(curl                                \
+                    --include                                 \
+                    --location                                \
+                    --request POST                            \
+                    --header 'Content-Type: application/json' \
+                    --silent                                  \
+                    --output curl_error                       \
+                    --write-out "%{http_code}"                \
+                    --data @mattermost.json                   \
+                    "${MATTERMOST_WEBHOOK_URL:?webhook url must be set}")"
+
+                  if [ "$CODE" -ge 400 ]; then cat curl_error && exit 1; fi
+              env:
+                  MATTERMOST_WEBHOOK_URL: ${{ secrets.MATTERMOST_WEBHOOK_URL }}
+                  MATTERMOST_CHANNEL: builds
+            - name: TEMP Display Mattermost message
+              if: always()
+              run: cat mattermost.json
