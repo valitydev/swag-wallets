@@ -153,7 +153,7 @@ jobs:
                     --data @mattermost.json                   \
                     "${MATTERMOST_WEBHOOK_URL:?webhook url must be set}")"
 
-                  [ "$CODE" -ge 400 ] && cat curl_error && exit 1
+                  if [ "$CODE" -ge 400 ]; then cat curl_error && exit 1; fi
               env:
                   MATTERMOST_WEBHOOK_URL: ${{ secrets.MATTERMOST_WEBHOOK_URL }}
                   MATTERMOST_CHANNEL: deployments
