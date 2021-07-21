@@ -26,7 +26,9 @@ jobs:
             - name: Build docsite
               run: npm run build -- ../public
             - name: Install rsync (dep for github-pages-deploy-action)
-              run: apt-get update && apt-get install -y rsync
+              run: |
+                  apt-get update && apt-get install -y rsync
+                  ssh-keyscan -H github.com > ~/.ssh/known_hosts # Necessary for github-pages deploy via ssh-key below
             - name: Deploy to release branch
               uses: JamesIves/github-pages-deploy-action@4.1.4
               with:
