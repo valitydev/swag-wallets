@@ -67,7 +67,10 @@ jobs:
                   fi
 
                   COMMIT="${{ github.sha }}"
-                  # COMMIT_MSG="${{ github.event.commits[0]['message'] }}"
+                  COMMIT_MSG="$(cat <<EOF | head -n1
+                  ${{ github.event.commits[0]['message'] }}
+                  EOF
+                  )"
 
                   REPO="${{ github.repository }}"
                   RUN_ID="${{ github.run_id }}"
@@ -126,6 +129,11 @@ jobs:
                             "short": true,
                             "title": "Author",
                             "value": "$AUTHOR_NAME"
+                          },
+                          {
+                            "short": false,
+                            "title": "Message",
+                            "value": "$COMMIT_MSG"
                           }
                         ],
                         "color": "$COLOR"
