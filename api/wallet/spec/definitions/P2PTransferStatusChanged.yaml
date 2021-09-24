@@ -1,4 +1,0 @@
-type: object
-allOf:
-  - $ref: '#/definitions/P2PTransferChange'
-  - $ref: '#/definitions/P2PTransferStatus'
