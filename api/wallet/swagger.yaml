@@ -576,6 +576,14 @@ paths:
           type: string
           format: date-time
           required: false
+        - name: revertStatus
+          in: query
+          type: string
+          enum:
+            - None
+            - Partial
+            - Full
+          required: false
         - $ref: '#/parameters/amountFrom'
         - $ref: '#/parameters/amountTo'
         - $ref: '#/parameters/currencyID'

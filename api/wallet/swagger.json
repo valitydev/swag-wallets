@@ -693,6 +693,17 @@
             "required": false
           },
           {
+            "name": "revertStatus",
+            "in": "query",
+            "type": "string",
+            "enum": [
+              "None",
+              "Partial",
+              "Full"
+            ],
+            "required": false
+          },
+          {
             "$ref": "#/parameters/amountFrom"
           },
           {
