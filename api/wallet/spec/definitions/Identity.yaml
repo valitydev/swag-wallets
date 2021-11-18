@@ -3,7 +3,6 @@ type: object
 required:
   - name
   - provider
-  - class
 properties:
   id:
     x-rebillyMerge:
@@ -22,20 +21,6 @@ properties:
   provider:
     x-rebillyMerge:
       - $ref: '#/definitions/ProviderID'
-  class:
-    x-rebillyMerge:
-      - $ref: '#/definitions/IdentityClassID'
-  level:
-    x-rebillyMerge:
-      - $ref: '#/definitions/IdentityLevelID'
-      - readOnly: true
-  effectiveChallenge:
-    x-rebillyMerge:
-      - $ref: '#/definitions/IdentityChallengeID'
-      - description: |
-          Идентификатор успешно пройденной процедура идентификации, результат которой действителен на
-          текущий момент
-        readOnly: true
   isBlocked:
     description: Заблокирована ли личность владельца?
     type: boolean

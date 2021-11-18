@@ -13,21 +13,6 @@ get:
       type: string
       maxLength: 40
       minLength: 1
-    - name: class
-      description: Класс личности
-      in: query
-      required: false
-      type: string
-      maxLength: 40
-      minLength: 1
-    - name: level
-      description: Уровень идентификации
-      in: query
-      required: false
-      type: string
-      maxLength: 40
-      minLength: 1
-    - $ref: '#/parameters/limit'
     - x-rebillyMerge:
       - name: continuationToken
         in: query

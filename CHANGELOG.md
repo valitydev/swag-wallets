@@ -1,5 +1,24 @@
 # Swag-wallets changelog
 
+## Version 0.0.3 to 0.0.4 - 16.11.2021
+---
+### What's Deprecated(not supported yet)
+---
+Удалена процедура идентификации владельца кошелька.
+
+`GET`  /identities/{identityID}/challenges
+`POST` /identities/{identityID}/challenges
+`GET`  /identities/{identityID}/challenges/{challengeID}
+`GET`  /identities/{identityID}/challenges/{challengeID}/events
+`GET`  /identities/{identityID}/challenges/{challengeID}/events/{eventID}
+
+Удалена информация о классе владельца и уровне идентификации
+
+`GET` /providers/{providerID}/identity-classes
+`GET` /providers/{providerID}/identity-classes/{identityClassID}
+`GET` /providers/{providerID}/identity-classes/{identityClassID}/levels
+`GET` /providers/{providerID}/identity-classes/{identityClassID}/levels/{identityLevelID}
+
 ## Version 0.0.2 to 0.0.3 - 22.09.2021
 ---
 ### What's Deprecated(not supported yet)

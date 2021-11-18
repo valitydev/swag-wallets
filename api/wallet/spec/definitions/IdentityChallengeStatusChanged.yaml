@@ -1,4 +1,0 @@
-description: Изменение статуса процедуры идентификации
-allOf:
-  - $ref: '#/definitions/IdentityChallengeEventChange'
-  - $ref: '#/definitions/IdentityChallengeStatus'
