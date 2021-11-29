@@ -1,0 +1,41 @@
+description: Данные личности владельца кошельков
+type: object
+required:
+  - name
+  - provider
+properties:
+  id:
+    x-rebillyMerge:
+      - $ref: '#/definitions/IdentityID'
+      - readOnly: true
+  name:
+    description: |
+      Человекочитаемое имя личности владельца, по которому его легко опознать
+    type: string
+    example: Keyn Fawkes
+  createdAt:
+    description: Дата и время создания личности владельца
+    type: string
+    format: date-time
+    readOnly: true
+  provider:
+    x-rebillyMerge:
+      - $ref: '#/definitions/ProviderID'
+  isBlocked:
+    description: Заблокирована ли личность владельца?
+    type: boolean
+    readOnly: true
+    example: false
+  metadata:
+    description: |
+      Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с
+      данной личностью владельца
+    type: object
+    example:
+      lkDisplayName: Сергей Иванович
+  externalID:
+    x-rebillyMerge:
+      - $ref: '#/definitions/ExternalID'
+  partyID:
+    x-rebillyMerge:
+      - $ref: '#/definitions/PartyID'

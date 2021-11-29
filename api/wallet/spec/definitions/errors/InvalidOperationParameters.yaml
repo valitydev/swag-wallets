@@ -1,0 +1,7 @@
+description: Неверные входные данные для операции
+type: object
+properties:
+  message:
+    type: string
+    example: |
+      No such identity challenge type: fms.

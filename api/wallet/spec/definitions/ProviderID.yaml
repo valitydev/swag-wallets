@@ -1,0 +1,3 @@
+description: Идентификатор провайдера услуг
+type: string
+example: ncoeps

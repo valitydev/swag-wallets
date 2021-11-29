@@ -1,0 +1,12 @@
+description: Банковская карта
+allOf:
+  - $ref: '#/definitions/SenderResourceParams'
+  - $ref: '#/definitions/SecuredBankCard'
+  - type: object
+    required:
+      - authData
+    properties:
+      authData:
+        description: Данные авторизации, полученные при сохранении карты
+        type: string
+        maxLength: 1000
