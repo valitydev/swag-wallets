@@ -347,7 +347,7 @@ tags:
 
       ## Empayre Webhooks Events API
 
-      Внимание! Только Webhooks Management API является частью системы Empayre, а следовательно и данной спецификации. Для реализации обработчика присылаемых уведомлений вам необходимо будет ознакомиться с OpenAPI-спецификацией [Empayre Wallet Webhooks Events API](https://empayre.github.io/swag-wallet-webhook-events/).
+      Внимание! Только Webhooks Management API является частью системы Empayre, а следовательно и данной спецификации. Для реализации обработчика присылаемых уведомлений вам необходимо будет ознакомиться с OpenAPI-спецификацией [Empayre Wallets Webhook Events API](https://empayre.github.io/swag-wallets-webhook-events/).
 
   - name: Error Codes
     x-displayName: Коды ошибок
