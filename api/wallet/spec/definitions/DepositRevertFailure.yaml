@@ -1,0 +1,9 @@
+type: object
+required:
+  - code
+properties:
+  code:
+    description: Код ошибки отмены
+    type: string
+  subError:
+    $ref: '#/definitions/SubFailure'

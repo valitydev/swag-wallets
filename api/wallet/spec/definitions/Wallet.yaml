@@ -1,0 +1,40 @@
+description: Данные кошелька
+type: object
+required:
+  - name
+  - identity
+  - currency
+properties:
+  id:
+    x-rebillyMerge:
+      - $ref: '#/definitions/WalletID'
+      - readOnly: true
+  name:
+    x-rebillyMerge:
+      - $ref: '#/definitions/WalletName'
+  createdAt:
+    description: Дата и время создания кошелька
+    type: string
+    format: date-time
+    readOnly: true
+  isBlocked:
+    description: Заблокирован ли кошелёк?
+    type: boolean
+    readOnly: true
+    example: false
+  identity:
+    x-rebillyMerge:
+      - $ref: '#/definitions/IdentityID'
+  currency:
+    x-rebillyMerge:
+      - $ref: '#/definitions/CurrencyID'
+  metadata:
+    description: |
+      Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с
+      данным кошельком
+    type: object
+    example:
+      client_locale: RU_ru
+  externalID:
+    x-rebillyMerge:
+      - $ref: '#/definitions/ExternalID'

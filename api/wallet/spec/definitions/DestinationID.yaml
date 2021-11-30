@@ -1,0 +1,3 @@
+description: Идентификатор приёмника денежных средств
+type: string
+example: "107498"

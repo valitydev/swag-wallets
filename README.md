@@ -1,1 +1,1 @@
-# Wallet API Specification
+# Empayre Wallet API Specification

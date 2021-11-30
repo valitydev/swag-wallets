@@ -1,0 +1,26 @@
+description: Безопасные данные банковской карты
+type: object
+required:
+  - token
+properties:
+  token:
+    description: Токен, идентифицирующий исходные данные карты
+    type: string
+    minLength: 1
+    maxLength: 1000
+    example: zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQg9xMkh
+  bin:
+    description: |
+      [Идентификационный номер][1] банка-эмитента карты
+
+      [1]: https://en.wikipedia.org/wiki/Payment_card_number#Issuer_identification_number_(IIN)
+    type: string
+    pattern: '^\d{6,8}$'
+    example: "424242"
+    readOnly: true
+  lastDigits:
+    description: Последние цифры номера карты
+    type: string
+    pattern: '^\d{2,4}$'
+    example: "4242"
+    readOnly: true

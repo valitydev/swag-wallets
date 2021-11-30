@@ -1,0 +1,30 @@
+post:
+  operationId: issueDestinationGrant
+  summary: Выдать право управления приёмником средств
+  tags:
+    - Withdrawals
+  parameters:
+    - $ref: '#/parameters/requestID'
+    - $ref: '#/parameters/deadline'
+    - $ref: '#/parameters/destinationID'
+    - name: request
+      description: Запрос на право управления приёмником средств
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/DestinationGrantRequest'
+  responses:
+    '201':
+      description: Право выдано
+      schema:
+        $ref: '#/definitions/DestinationGrantRequest'
+    '404':
+      $ref: '#/responses/NotFound'
+    '400':
+      $ref: '#/responses/BadRequest'
+    '401':
+      $ref: '#/responses/Unauthorized'
+    '422':
+      description: Неверные данные для выдачи
+      schema:
+        $ref: '#/definitions/InvalidOperationParameters'

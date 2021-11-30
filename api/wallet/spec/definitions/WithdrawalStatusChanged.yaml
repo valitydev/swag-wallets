@@ -1,0 +1,4 @@
+description: Изменение статуса вывода средств
+allOf:
+  - $ref: '#/definitions/WithdrawalEventChange'
+  - $ref: '#/definitions/WithdrawalStatus'

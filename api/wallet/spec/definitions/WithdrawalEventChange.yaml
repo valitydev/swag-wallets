@@ -1,0 +1,12 @@
+description: |
+  Изменение, возникшее в процессе вывода средств
+type: object
+discriminator: type
+required:
+  - type
+properties:
+  type:
+    description: Тип произошедшего изменения
+    type: string
+    enum:
+      - WithdrawalStatusChanged

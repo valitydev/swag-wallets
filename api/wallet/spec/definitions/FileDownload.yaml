@@ -1,0 +1,12 @@
+type: object
+required:
+  - url
+  - expiresAt
+properties:
+  url:
+    description: URL файла
+    type: string
+  expiresAt:
+    description: Время до которого ссылка будет считаться действительной
+    type: string
+    format: date-time
