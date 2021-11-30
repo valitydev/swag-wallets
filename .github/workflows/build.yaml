@@ -1,0 +1,23 @@
+name: build
+on:
+  - pull_request
+
+env:
+  NODEJS_VERSION: '16'
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODEJS_VERSION }}
+          cache: npm
+      - run: npm install
+      - name: Bundle specification
+        run: npm run build
+      - name: Validate specification
+        run: npm run test
