@@ -12,7 +12,7 @@ properties:
     description: |
       Человекочитаемое наименование провайдера услуг
     type: string
-    example: НКО «ЭПС»
+    example: ООО «СЕРВИС ПРОВАЙДЕР»
   residences:
     type: array
     description: |
