@@ -1,19 +1,11 @@
-description: Платёжная система
+description: Платежная система
 type: string
-enum:
-  - visa
-  - mastercard
-  - visaelectron
-  - maestro
-  - forbrugsforeningen
-  - dankort
-  - amex
-  - dinersclub
-  - discover
-  - unionpay
-  - jcb
-  - nspkmir
-  - elo
-  - rupay
-  - dummy
-  - uzcard
+# enum:
+#   - visa
+#   - mastercard
+#   - amex
+#   - dinersclub
+#   - discover
+#   - unionpay
+#   - jcb
+#   - nspkmir
