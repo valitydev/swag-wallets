@@ -1,12 +1,12 @@
 swagger: '2.0'
 info:
   version: '0.1.0'
-  title: Valitydev Wallet API
+  title: Vality Wallet API
   description: >
 
-    Valitydev Wallet API является базовой и единственной точкой взаимодействия с системой кошельков. Все изменения состояний системы осуществляются с помощью вызовов соответствующих методов API. Любые сторонние приложения, включая наши веб-сайты и другие UI-интерфейсы, являются внешними приложениями-клиентами.
+    Vality Wallet API является базовой и единственной точкой взаимодействия с системой кошельков. Все изменения состояний системы осуществляются с помощью вызовов соответствующих методов API. Любые сторонние приложения, включая наши веб-сайты и другие UI-интерфейсы, являются внешними приложениями-клиентами.
 
-    Valitydev API работает поверх HTTP-протокола. Мы используем REST архитектуру, схема описывается в соответствии с [OpenAPI 2.0](https://spec.openapis.org/oas/v2.0). Коды возврата описываются соответствующими HTTP-статусами. Система принимает и возвращает значения JSON в теле запросов и ответов.
+    Vality API работает поверх HTTP-протокола. Мы используем REST архитектуру, схема описывается в соответствии с [OpenAPI 2.0](https://spec.openapis.org/oas/v2.0). Коды возврата описываются соответствующими HTTP-статусами. Система принимает и возвращает значения JSON в теле запросов и ответов.
 
     ## Формат содержимого
 
@@ -52,12 +52,12 @@ info:
 
     [5xx]: https://tools.ietf.org/html/rfc7231#section-6.6
 
-  termsOfService: 'https://valitydev.com/'
+  termsOfService: 'https://vality.dev/'
   contact:
     name: Команда техподдержки
-    email: support@valitydev.com
-    url: 'https://api.valitydev.com'
-host: api.valitydev.com
+    email: support@vality.dev
+    url: 'https://api.vality.dev'
+host: api.vality.dev
 basePath: /wallet/v0
 schemes:
   - https
@@ -341,13 +341,13 @@ tags:
   - name: Webhooks
     x-displayName: Webhooks
     description: >
-      ## Valitydev Webhooks Management API
+      ## Vality Webhooks Management API
 
       В данном разделе описаны методы, позволяющие управлять Webhook'ами, или инструментами для получения асинхронных оповещений посредством HTTP-запросов при наступлении одного или группы интересующих вас событий, например, о том, что выплата в рамках созданного кошелька была успешно проведена.
 
-      ## Valitydev Webhooks Events API
+      ## Vality Webhooks Events API
 
-      Внимание! Только Webhooks Management API является частью системы Valitydev, а следовательно и данной спецификации. Для реализации обработчика присылаемых уведомлений вам необходимо будет ознакомиться с OpenAPI-спецификацией [Valitydev Wallets Webhook Events API](https://valitydev.github.io/swag-wallets-webhook-events/).
+      Внимание! Только Webhooks Management API является частью системы Vality, а следовательно и данной спецификации. Для реализации обработчика присылаемых уведомлений вам необходимо будет ознакомиться с OpenAPI-спецификацией [Vality Wallets Webhook Events API](https://vality.github.io/swag-wallets-webhook-events/).
 
   - name: Error Codes
     x-displayName: Коды ошибок
@@ -362,4 +362,3 @@ tags:
         | InsufficientFunds      | Недостаточно средств на счете банковской карты                                                                                                 |
         | PreauthorizationFailed | Предварительная авторизация отклонена (введен неверный код 3D-Secure, на форме 3D-Secure нажата ссылка отмены)                                 |
         | RejectedByIssuer       | Перевод отклонён эмитентом (установлены запреты по стране списания, запрет на покупки в интернете, платеж отклонен антифродом эмитента и т.п.) |
-        | P2PTransferRejected    | Перевод отклонён по иным причинам                                                                                                              |

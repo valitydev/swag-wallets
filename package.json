@@ -1,5 +1,5 @@
 {
-  "name": "valitydev-wallet-openapi-spec",
+  "name": "vality-wallet-openapi-spec",
   "version": "0.1.0",
   "dependencies": {
     "bower": "^1.7.7",

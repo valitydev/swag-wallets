@@ -1,17 +1,17 @@
 swagger: '2.0'
 info:
   version: '0.1.0'
-  title: Valitydev Payment Resource API
+  title: Vality Payment Resource API
   description: >
 
-    Valitydev Payment Resource API служит для токенизации чувствительных данных платёжных ресурсов пользователей.
+    Vality Payment Resource API служит для токенизации чувствительных данных платёжных ресурсов пользователей.
 
-  termsOfService: https://valitydev.com/
+  termsOfService: https://vality.dev/
   contact:
     name: Команда техподдержки
-    email: support@valitydev.com
-    url: https://valitydev.com/
-host: api.valitydev.com
+    email: support@vality.dev
+    url: https://vality.dev/
+host: api.vality.dev
 basePath: /payres/v0
 schemes:
   - https
