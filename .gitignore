@@ -1,6 +1,6 @@
 # Dir for API portal deploy
-dist
-out
+dist/
+out/
 
 # Logs
 logs
@@ -35,6 +35,3 @@ node_modules
 
 # CI
 .wercker
-
-# Generated
-web_deploy/

@@ -1,5 +1,0 @@
-description: Тип документа
-type: string
-enum:
-  - RUSDomesticPassport
-  - RUSRetireeInsuranceCertificate
