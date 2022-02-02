@@ -1,7 +1,7 @@
 name: gh-pages
 on:
   push:
-    branches: [master]
+    branches: [release/v0]
 
 env:
   NODEJS_VERSION: '16'
