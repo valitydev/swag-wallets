@@ -47,35 +47,35 @@ jobs:
 #
 
       - name: Deploy erlang-client-wallet artifact to release branch
+        if: ${{ github.event_name == 'push' }}
         uses: JamesIves/github-pages-deploy-action@v4.2.2
         with:
           branch: release/erlang/wallet-client/v0
           folder: out/erlang-client-wallet
           commit-message: Release ${{ github.repository }}@${{ github.sha }}
-          dry-run: ${{ github.event_name != 'push' }}
 
       - name: Deploy erlang-server-wallet artifact to release branch
+        if: ${{ github.event_name == 'push' }}
         uses: JamesIves/github-pages-deploy-action@v4.2.2
         with:
           branch: release/erlang/wallet-server/v0
           folder: out/erlang-server-wallet
           commit-message: Release ${{ github.repository }}@${{ github.sha }}
-          dry-run: ${{ github.event_name != 'push' }}
 
 #
 
       - name: Deploy erlang-client-payres artifact to release branch
+        if: ${{ github.event_name == 'push' }}
         uses: JamesIves/github-pages-deploy-action@v4.2.2
         with:
           branch: release/erlang/payres-client/v0
           folder: out/erlang-client-payres
           commit-message: Release ${{ github.repository }}@${{ github.sha }}
-          dry-run: ${{ github.event_name != 'push' }}
 
       - name: Deploy erlang-server-payres artifact to release branch
+        if: ${{ github.event_name == 'push' }}
         uses: JamesIves/github-pages-deploy-action@v4.2.2
         with:
           branch: release/erlang/payres-server/v0
           folder: out/erlang-server-payres
           commit-message: Release ${{ github.repository }}@${{ github.sha }}
-          dry-run: ${{ github.event_name != 'push' }}
