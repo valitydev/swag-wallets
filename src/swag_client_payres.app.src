@@ -1,0 +1,17 @@
+{application, swag_client_payres, [
+    {description, " Vality Payment Resource API служит для токенизации чувствительных данных платёжных ресурсов пользователей. "},
+    {vsn, "1.0.0"},
+    {registered, []},
+    {applications, [
+        kernel,
+        stdlib,
+        hackney,
+        jsx,
+        jesse
+    ]},
+    {env, [
+    ]},
+    {modules, []},
+    {licenses, []},
+    {links, ["https://vality.dev/"]}
+]}.
