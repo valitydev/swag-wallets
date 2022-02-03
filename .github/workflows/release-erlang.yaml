@@ -1,0 +1,102 @@
+name: Release Erlang Libraries
+on:
+  push:
+    branches: [v0]
+  pull_request:
+    branches: ['**']
+
+env:
+  NODEJS_VERSION: '16'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup swagger-codegen
+        uses: valitydev/action-setup-swagger-codegen@v0.0.1
+        with:
+          codegen-version: "2.4.25"
+          generator-version: "1.0.1"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODEJS_VERSION }}
+          cache: npm
+
+      - name: Install deps
+        run: npm install
+
+      - name: Bundle spec and build docsite
+        run: npm run build -- ../public
+
+      - name: Generate stubs
+        run: |
+          mkdir -p out
+          echo "Generate wallet stubs"
+          swagger-codegen generate -l vality-erlang-client -i public/api/wallet/swagger.json -o out/erlang-client-wallet --additional-properties packageName=swag_client_wallet
+          swagger-codegen generate -l vality-erlang-server -i public/api/wallet/swagger.json -o out/erlang-server-wallet --additional-properties packageName=swag_server_wallet
+          echo "Generate privdoc stubs"
+          swagger-codegen generate -l vality-erlang-client -i public/api/privdoc/swagger.json -o out/erlang-client-privdoc --additional-properties packageName=swag_client_privdoc
+          swagger-codegen generate -l vality-erlang-server -i public/api/privdoc/swagger.json -o out/erlang-server-privdoc --additional-properties packageName=swag_server_privdoc
+          echo "Generate payres stubs"
+          swagger-codegen generate -l vality-erlang-client -i public/api/payres/swagger.json -o out/erlang-client-payres --additional-properties packageName=swag_client_payres
+          swagger-codegen generate -l vality-erlang-server -i public/api/payres/swagger.json -o out/erlang-server-payres --additional-properties packageName=swag_server_payres
+
+#
+
+      - name: Deploy erlang-client-wallet artifact to release branch
+        uses: JamesIves/github-pages-deploy-action@v4.2.2
+        with:
+          branch: release/erlang-wallet/client/v0
+          folder: out/erlang-client-wallet
+          commit-message: Release ${{ github.repository }}@${{ github.sha }}
+          dry-run: ${{ github.event_name != 'push' }}
+
+      - name: Deploy erlang-server-wallet artifact to release branch
+        uses: JamesIves/github-pages-deploy-action@v4.2.2
+        with:
+          branch: release/erlang-wallet/server/v0
+          folder: out/erlang-server-wallet
+          commit-message: Release ${{ github.repository }}@${{ github.sha }}
+          dry-run: ${{ github.event_name != 'push' }}
+
+#
+
+      - name: Deploy erlang-client-privdoc artifact to release branch
+        uses: JamesIves/github-pages-deploy-action@v4.2.2
+        with:
+          branch: release/erlang-privdoc/client/v0
+          folder: out/erlang-client-privdoc
+          commit-message: Release ${{ github.repository }}@${{ github.sha }}
+          dry-run: ${{ github.event_name != 'push' }}
+
+      - name: Deploy erlang-server-privdoc artifact to release branch
+        uses: JamesIves/github-pages-deploy-action@v4.2.2
+        with:
+          branch: release/erlang-privdoc/server/v0
+          folder: out/erlang-server-privdoc
+          commit-message: Release ${{ github.repository }}@${{ github.sha }}
+          dry-run: ${{ github.event_name != 'push' }}
+
+#
+
+      - name: Deploy erlang-client-payres artifact to release branch
+        uses: JamesIves/github-pages-deploy-action@v4.2.2
+        with:
+          branch: release/erlang-payres/client/v0
+          folder: out/erlang-client-payres
+          commit-message: Release ${{ github.repository }}@${{ github.sha }}
+          dry-run: ${{ github.event_name != 'push' }}
+
+      - name: Deploy erlang-server-payres artifact to release branch
+        uses: JamesIves/github-pages-deploy-action@v4.2.2
+        with:
+          branch: release/erlang-payres/server/v0
+          folder: out/erlang-server-payres
+          commit-message: Release ${{ github.repository }}@${{ github.sha }}
+          dry-run: ${{ github.event_name != 'push' }}
