@@ -1,45 +1,46 @@
 swagger: '2.0'
 info:
-  version: 0.0.1
-  title: RBKmoney Wallet API
+  version: 0.1.0
+  title: Vality Wallet API
   description: |
 
-    RBKmoney Wallet API является базовой и единственной точкой взаимодействия с платформой кошельков. Все изменения состояний платформы осуществляются с помощью вызовов соответствующих методов API. Любые сторонние приложения, включая наши веб-сайты и другие UI-интерфейсы являются внешними приложениями-клиентами.
-    RBKmoney API работает поверх HTTP-протокола. Мы используем REST архитектуру, схема описывается в соответствии со [Swagger](http://swagger.io/). Коды возврата описываются соответствующими HTTP-статусами. Платформа принимает и возвращает значения JSON в теле запросов и ответов.
+    Vality Wallet API является базовой и единственной точкой взаимодействия с системой кошельков. Все изменения состояний системы осуществляются с помощью вызовов соответствующих методов API. Любые сторонние приложения, включая наши веб-сайты и другие UI-интерфейсы, являются внешними приложениями-клиентами.
+    Vality API работает поверх HTTP-протокола. Мы используем REST архитектуру, схема описывается в соответствии с [OpenAPI 2.0](https://spec.openapis.org/oas/v2.0). Коды возврата описываются соответствующими HTTP-статусами. Система принимает и возвращает значения JSON в теле запросов и ответов.
     ## Формат содержимого
     Любой запрос к API должен выполняться в кодировке UTF-8 и с указанием содержимого в формате JSON.
     ```
       Content-Type: application/json; charset=utf-8
     ```
     ## Формат дат
-    Платформа принимает значения date-time в формате, описанном в RFC 3339, например:
+    Система принимает и возвращает значения отметок времени в формате `date-time`, описанном в [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339):
     ```
       2017-01-01T00:00:00Z
       2017-01-01T00:00:01+00:00
     ```
     ## Максимальное время обработки запроса
-    К любому вызову методов API можно добавить параметр отсечки по времени, определяющий максимальное время ожидания завершения операции по запросу. Данная отсечка передается в соответствующем заголовке HTTP-запроса:
+    При любом обращении к API в заголовке `X-Request-Deadline` соответствующего запроса можно передать параметр отсечки по времени, определяющий максимальное время ожидания завершения операции по запросу:
     ```
      X-Request-Deadline: 10s
     ```
-    Значение отсечки может быть задано в формате, описанном в RFC 3339 (см. [Формат дат](#section/Format-dat)), либо в относительных величинах, например:
-    `150000ms`, `540s`, `3.5m` При этом возможные единицы измерения `ms`, `s`, `m`. В обоих случаях  не рекомендуется, чтобы задаваемое значение было меньше **3 секунд** и превышало **1 минуту**.
+    По истечении указанного времени система прекращает обработку запроса. Рекомендуется указывать значение не более одной минуты, но не менее трёх секунд.
+    `X-Request-Deadline` может:
+    * задаваться в формате `date-time` согласно [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339); * задаваться в относительных величинах: в миллисекундах (`150000ms`), секундах (`540s`) или минутах (`3.5m`).
     ## Ошибки обработки запросов
-    В процессе обработки запросов силами нашей платформы могут происходить различные непредвиденные ситуации. Об их появлении платформа сигнализирует по протоколу HTTP соответствующими [статусами][5xx], обозначающими ошибки сервера.
+    В процессе обработки запросов силами нашей системы могут происходить различные непредвиденные ситуации. Об их появлении система сигнализирует по протоколу HTTP соответствующими [статусами][5xx], обозначающими ошибки сервера.
 
      |  Код    |  Описание  |
      | ------- | ---------- |
-     | **500** | В процессе обработки платформой запроса возникла непредвиденная ситуация. При получении подобного кода ответа мы рекомендуем обратиться в техническую поддержку. |
-     | **503** | Платформа временно недоступна и не готова обслуживать данный запрос. Запрос гарантированно не выполнен, при получении подобного кода ответа попробуйте выполнить его позднее, когда доступность платформы будет восстановлена. |
-     | **504** | Платформа превысила допустимое время обработки запроса, результат запроса не определён. Попробуйте отправить запрос повторно или выяснить результат выполнения исходного запроса, если повторное исполнение запроса нежелательно. |
+     | **500** | В процессе обработки системой запроса возникла непредвиденная ситуация. При получении подобного кода ответа мы рекомендуем обратиться в техническую поддержку. |
+     | **503** | Система временно недоступна и не готова обслуживать данный запрос. Запрос гарантированно не выполнен, при получении подобного кода ответа попробуйте выполнить его позднее, когда доступность системы будет восстановлена. |
+     | **504** | Система превысила допустимое время обработки запроса, результат запроса не определён. Попробуйте отправить запрос повторно или выяснить результат выполнения исходного запроса, если повторное исполнение запроса нежелательно. |
 
     [5xx]: https://tools.ietf.org/html/rfc7231#section-6.6
-  termsOfService: 'http://rbk.money/'
+  termsOfService: 'https://vality.dev/'
   contact:
-    name: RBKmoney support team
-    email: support@rbk.money
-    url: 'https://rbk.money'
-host: api.rbk.money
+    name: Команда техподдержки
+    email: support@vality.dev
+    url: 'https://api.vality.dev'
+host: api.vality.dev
 basePath: /wallet/v0
 schemes:
   - https
@@ -53,9 +54,9 @@ securityDefinitions:
     name: Authorization
     in: header
     description: |
-      Для аутентификации вызовов мы используем [JWT](https://jwt.io). Cоответствующий ключ передается в заголовке.
+      Для аутентификации вызовов мы используем [JWT](https://jwt.io). Соответствующий ключ передается в заголовке.
       ```shell
-       Authorization: Bearer {TOKENIZATION|PRIVATE_JWT}
+       Authorization: Bearer {YOUR_API_KEY_JWT}
       ```
 security:
   - bearer: []
@@ -93,14 +94,6 @@ parameters:
     name: identityID
     in: path
     description: Идентификатор личности владельца
-    required: true
-    type: string
-    maxLength: 40
-    minLength: 1
-  challengeID:
-    name: challengeID
-    in: path
-    description: Идентификатор процедуры идентификации личности
     required: true
     type: string
     maxLength: 40
@@ -256,10 +249,6 @@ parameters:
     maxLength: 40
     minLength: 1
 tags:
-  - name: Payment Resources
-    x-displayName: Платёжные ресурсы
-    description: |
-      Платформа предоставляет возможность токенизации исходных данных пользовательских платёжных ресурсов. См. [RBKmoney Payment Resource API](?api/payres/swagger.yaml).
   - name: Providers
     x-displayName: Провайдеры услуг
     description: ''
@@ -288,15 +277,15 @@ tags:
     x-displayName: Загрузка файлов
     description: ''
   - name: W2W
-    x-displayName: Переводы внутри платформы
-    description: Переводы средств между кошельками внутри платформы
+    x-displayName: Переводы внутри системы
+    description: Переводы средств между кошельками внутри системы
   - name: Webhooks
     x-displayName: Webhooks
     description: |
-      ## RBKmoney Webhooks Management API
+      ## Vality Webhooks Management API
       В данном разделе описаны методы, позволяющие управлять Webhook'ами, или инструментами для получения асинхронных оповещений посредством HTTP-запросов при наступлении одного или группы интересующих вас событий, например, о том, что выплата в рамках созданного кошелька была успешно проведена.
-      ## RBKmoney Webhooks Events API
-      Внимание! Только Webhooks Management API является частью платформы RBKmoney, а следовательно и данной спецификации. Для реализации обработчика присылаемых уведомлений вам необходимо будет ознакомиться со Swagger-спецификацей [RBKmoney Wallet Webhooks Events API](https://rbkmoney.github.io/wallet-webhook-events-api/).
+      ## Vality Webhooks Events API
+      Внимание! Только Webhooks Management API является частью системы Vality, а следовательно и данной спецификации. Для реализации обработчика присылаемых уведомлений вам необходимо будет ознакомиться с OpenAPI-спецификацией [Vality Wallets Webhook Events API](https://vality.github.io/swag-wallets-webhook-events/).
   - name: Error Codes
     x-displayName: Коды ошибок
     description: |
@@ -309,7 +298,7 @@ tags:
         | InvalidReceiverResource| Неверный получатель перевода (введен номер несуществующей карты и т.п.)                                                                        |
         | InsufficientFunds      | Недостаточно средств на счете банковской карты                                                                                                 |
         | PreauthorizationFailed | Предварительная авторизация отклонена (введен неверный код 3D-Secure, на форме 3D-Secure нажата ссылка отмены)                                 |
-        | RejectedByIssuer       | Перевод отклонён эмитентом (установлены запреты по стране списания, запрет на покупки в интернете, платёж отклонен антифродом эмитента и т.п.) |
+        | RejectedByIssuer       | Перевод отклонён эмитентом (установлены запреты по стране списания, запрет на покупки в интернете, платеж отклонен антифродом эмитента и т.п.) |
 paths:
   '/currencies/{currencyID}':
     get:
@@ -1654,25 +1643,8 @@ definitions:
       - type: object
         properties:
           paymentSystem:
-            description: Платёжная система
+            description: Платежная система
             type: string
-            enum:
-              - visa
-              - mastercard
-              - visaelectron
-              - maestro
-              - forbrugsforeningen
-              - dankort
-              - amex
-              - dinersclub
-              - discover
-              - unionpay
-              - jcb
-              - nspkmir
-              - elo
-              - rupay
-              - dummy
-              - uzcard
             readOnly: true
   BankCardReceiverResourceParams:
     description: Банковская карта
@@ -1687,25 +1659,8 @@ definitions:
       - type: object
         properties:
           paymentSystem:
-            description: Платёжная система
+            description: Платежная система
             type: string
-            enum:
-              - visa
-              - mastercard
-              - visaelectron
-              - maestro
-              - forbrugsforeningen
-              - dankort
-              - amex
-              - dinersclub
-              - discover
-              - unionpay
-              - jcb
-              - nspkmir
-              - elo
-              - rupay
-              - dummy
-              - uzcard
             readOnly: true
   BankCardSenderResourceParams:
     description: Банковская карта
@@ -2267,7 +2222,7 @@ definitions:
         description: |
           Тип ресурса приёмника средств.
 
-          См. [RBKmoney Payment Resource API](?api/payres/swagger.yaml).
+          См. [Vality Payment Resource API](?api/payres/swagger.yaml).
         type: string
         enum:
           - BankCardDestinationResource
@@ -2408,7 +2363,7 @@ definitions:
       provider:
         description: Идентификатор провайдера услуг
         type: string
-        example: ncoeps
+        example: serviceprovider
       isBlocked:
         description: Заблокирована ли личность владельца?
         type: boolean
@@ -2429,7 +2384,7 @@ definitions:
         type: string
         example: '10036274'
       partyID:
-        description: Уникальный в рамках платформы идентификатор участника.
+        description: Уникальный в рамках системы идентификатор участника.
         type: string
         minLength: 1
         maxLength: 40
@@ -2456,7 +2411,6 @@ definitions:
           - NoMatch
           - InvalidResourceToken
           - InvalidToken
-          - AmbiguousPartyID
         example: NotFound
       name:
         description: 'Имя или идентификатор элемента сообщения, содержащего недопустимые данные'
@@ -2480,25 +2434,8 @@ definitions:
         description: Человекочитаемое описание ошибки
         type: string
   BankCardPaymentSystem:
-    description: Платёжная система
+    description: Платежная система
     type: string
-    enum:
-      - visa
-      - mastercard
-      - visaelectron
-      - maestro
-      - forbrugsforeningen
-      - dankort
-      - amex
-      - dinersclub
-      - discover
-      - unionpay
-      - jcb
-      - nspkmir
-      - elo
-      - rupay
-      - dummy
-      - uzcard
   SecuredBankCard:
     description: Безопасные данные банковской карты
     type: object
@@ -2526,71 +2463,11 @@ definitions:
         pattern: '^\d{2,4}$'
         example: '4242'
         readOnly: true
-  RUSDomesticPassport:
-    description: Открытые данные национального паспорта гражданина РФ
-    allOf:
-      - $ref: '#/definitions/SecuredPrivateDocument'
-      - type: object
-        properties:
-          seriesMasked:
-            description: Маскированная серия паспорта
-            type: string
-            example: 45**
-            readOnly: true
-          numberMasked:
-            description: Маскированный номер паспорта
-            type: string
-            example: '*****6'
-            readOnly: true
-          fullnameMasked:
-            description: Маскированное полное имя гражданина
-            type: string
-            example: И***** И.И.
-            readOnly: true
-  RUSRetireeInsuranceCertificate:
-    description: |
-      Открытые данные страхового свидетельства обязательного пенсионного страхования
-      гражданина РФ
-    allOf:
-      - $ref: '#/definitions/SecuredPrivateDocument'
-      - type: object
-        properties:
-          numberMasked:
-            description: |
-              Маскированный [СНИЛС](https://ru.wikipedia.org/wiki/Страховой_номер_индивидуального_лицевого_счёта)
-            type: string
-            example: 12*-***-*** *4
-            readOnly: true
-  SecuredPrivateDocument:
-    description: |
-      Персональный документ, токенизированный с целью сокрытия чувствительных данных
-    type: object
-    discriminator: type
-    required:
-      - token
-    properties:
-      type:
-        description: Тип документа
-        type: string
-        enum:
-          - RUSDomesticPassport
-          - RUSRetireeInsuranceCertificate
-        readOnly: true
-      token:
-        description: 'Токен, уникально идентифицирующий исходные данные'
-        type: string
-        example: 7kodCm5gr68ji4O11KpVn0
-  SecuredPrivateDocumentType:
-    description: Тип документа
-    type: string
-    enum:
-      - RUSDomesticPassport
-      - RUSRetireeInsuranceCertificate
   Litecoin:
     allOf:
       - $ref: '#/definitions/CryptoWallet'
   PartyID:
-    description: Уникальный в рамках платформы идентификатор участника.
+    description: Уникальный в рамках системы идентификатор участника.
     type: string
     minLength: 1
     maxLength: 40
@@ -2605,12 +2482,12 @@ definitions:
       id:
         description: Идентификатор провайдера услуг
         type: string
-        example: ncoeps
+        example: serviceprovider
       name:
         description: |
           Человекочитаемое наименование провайдера услуг
         type: string
-        example: НКО «ЭПС»
+        example: ООО «СЕРВИС ПРОВАЙДЕР»
       residences:
         type: array
         description: |
@@ -2624,7 +2501,7 @@ definitions:
   ProviderID:
     description: Идентификатор провайдера услуг
     type: string
-    example: ncoeps
+    example: serviceprovider
   QuoteParameters:
     description: Параметры запроса комиссий
     type: object
@@ -2673,7 +2550,7 @@ definitions:
         description: |
           Тип ресурса получателя средств.
 
-          См. [RBKmoney Payment Resource API](?api/payres/swagger.yaml).
+          См. [Vality Payment Resource API](?api/payres/swagger.yaml).
         type: string
         enum:
           - BankCardReceiverResource
@@ -2688,7 +2565,7 @@ definitions:
         description: |
           Тип ресурса получателя средств.
 
-          См. [RBKmoney Payment Resource API](?api/payres/swagger.yaml).
+          См. [Vality Payment Resource API](?api/payres/swagger.yaml).
         type: string
         enum:
           - BankCardReceiverResourceParams
@@ -2823,7 +2700,7 @@ definitions:
         description: |
           Тип ресурса отправителя средств.
 
-          См. [RBKmoney Payment Resource API](?api/payres/swagger.yaml).
+          См. [Vality Payment Resource API](?api/payres/swagger.yaml).
         type: string
         enum:
           - BankCardSenderResource
@@ -2838,7 +2715,7 @@ definitions:
         description: |
           Тип ресурса отправителя средств.
 
-          См. [RBKmoney Payment Resource API](?api/payres/swagger.yaml).
+          См. [Vality Payment Resource API](?api/payres/swagger.yaml).
         type: string
         enum:
           - BankCardSenderResourceParams
