@@ -32,20 +32,17 @@ jobs:
         run: npm install
 
       - name: Bundle spec and build docsite
-        run: npm run build -- ../public
+        run: npm run build -- build_public
 
       - name: Generate stubs
         run: |
           mkdir -p out
           echo "Generate wallet stubs"
-          swagger-codegen generate -l vality-erlang-client -i public/api/wallet/swagger.json -o out/erlang-client-wallet --additional-properties packageName=swag_client_wallet
-          swagger-codegen generate -l vality-erlang-server -i public/api/wallet/swagger.json -o out/erlang-server-wallet --additional-properties packageName=swag_server_wallet
-          echo "Generate privdoc stubs"
-          swagger-codegen generate -l vality-erlang-client -i public/api/privdoc/swagger.json -o out/erlang-client-privdoc --additional-properties packageName=swag_client_privdoc
-          swagger-codegen generate -l vality-erlang-server -i public/api/privdoc/swagger.json -o out/erlang-server-privdoc --additional-properties packageName=swag_server_privdoc
+          swagger-codegen generate -l vality-erlang-client -i build_public/api/wallet/swagger.json -o out/erlang-client-wallet --additional-properties packageName=swag_client_wallet
+          swagger-codegen generate -l vality-erlang-server -i build_public/api/wallet/swagger.json -o out/erlang-server-wallet --additional-properties packageName=swag_server_wallet
           echo "Generate payres stubs"
-          swagger-codegen generate -l vality-erlang-client -i public/api/payres/swagger.json -o out/erlang-client-payres --additional-properties packageName=swag_client_payres
-          swagger-codegen generate -l vality-erlang-server -i public/api/payres/swagger.json -o out/erlang-server-payres --additional-properties packageName=swag_server_payres
+          swagger-codegen generate -l vality-erlang-client -i build_public/api/payres/swagger.json -o out/erlang-client-payres --additional-properties packageName=swag_client_payres
+          swagger-codegen generate -l vality-erlang-server -i build_public/api/payres/swagger.json -o out/erlang-server-payres --additional-properties packageName=swag_server_payres
 
 #
 
@@ -62,24 +59,6 @@ jobs:
         with:
           branch: release/erlang-wallet/server/v0
           folder: out/erlang-server-wallet
-          commit-message: Release ${{ github.repository }}@${{ github.sha }}
-          dry-run: ${{ github.event_name != 'push' }}
-
-#
-
-      - name: Deploy erlang-client-privdoc artifact to release branch
-        uses: JamesIves/github-pages-deploy-action@v4.2.2
-        with:
-          branch: release/erlang-privdoc/client/v0
-          folder: out/erlang-client-privdoc
-          commit-message: Release ${{ github.repository }}@${{ github.sha }}
-          dry-run: ${{ github.event_name != 'push' }}
-
-      - name: Deploy erlang-server-privdoc artifact to release branch
-        uses: JamesIves/github-pages-deploy-action@v4.2.2
-        with:
-          branch: release/erlang-privdoc/server/v0
-          folder: out/erlang-server-privdoc
           commit-message: Release ${{ github.repository }}@${{ github.sha }}
           dry-run: ${{ github.event_name != 'push' }}
 
