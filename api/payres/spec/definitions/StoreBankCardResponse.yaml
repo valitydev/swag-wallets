@@ -1,4 +1,0 @@
-type: object
-allOf:
-  - $ref: '#/definitions/SecuredBankCard'
-  - $ref: '#/definitions/AuthData'

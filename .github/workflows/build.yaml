@@ -11,13 +11,15 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          submodules: recursive
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
           node-version: ${{ env.NODEJS_VERSION }}
           cache: npm
       - run: npm install
-      - name: Bundle specification
-        run: npm run build
+      - name: Patch specification
+        run: npm run patch
       - name: Validate specification
-        run: npm run test
+        run: npm run validate

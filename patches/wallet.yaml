@@ -1,0 +1,277 @@
+# Набор патчей согласно [RFC 6902](https://datatracker.ietf.org/doc/html/rfc6902).
+#
+# Представлены в формате YAML для лучшей читаемости (и в особенности возможности
+# оставлять комментарии).
+# Данные патчи применяются к спецификации Wallet API в valitydev/swag-wallets.
+
+- op: add
+  path: /info/title
+  value: Empayre Payment Resource API
+  
+- op: add
+  path: /info/description
+  value: >
+    Empayre Wallet API является базовой и единственной точкой взаимодействия с
+    системой кошельков. Все изменения состояний системы осуществляются с помощью
+    вызовов соответствующих методов API. Любые сторонние приложения, включая
+    наши веб-сайты и другие UI-интерфейсы, являются внешними
+    приложениями-клиентами.
+
+    Empayre API работает поверх HTTP-протокола. Мы используем REST архитектуру,
+    схема описывается в соответствии с [OpenAPI 2.0](https://spec.openapis.org/oas/v2.0).
+    Коды возврата описываются соответствующими HTTP-статусами. Система принимает
+    и возвращает значения JSON в теле запросов и ответов.
+
+    ## Формат содержимого
+
+    Любой запрос к API должен выполняться в кодировке UTF-8 и с указанием содержимого
+    в формате JSON.
+
+    ```
+      Content-Type: application/json; charset=utf-8
+    ```
+
+    ## Формат дат
+
+    Система принимает и возвращает значения отметок времени в формате `date-time`,
+    описанном в [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339):
+
+    ```
+      2017-01-01T00:00:00Z
+      2017-01-01T00:00:01+00:00
+    ```
+
+    ## Максимальное время обработки запроса
+
+    При любом обращении к API в заголовке `X-Request-Deadline` соответствующего
+    запроса можно передать параметр отсечки по времени, определяющий максимальное
+    время ожидания завершения операции по запросу:
+
+    ```
+     X-Request-Deadline: 10s
+    ```
+
+    По истечении указанного времени система прекращает обработку запроса.
+    Рекомендуется указывать значение не более одной минуты, но не менее трёх секунд.
+
+    `X-Request-Deadline` может:
+
+    * задаваться в формате `date-time` согласно [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339);
+    * задаваться в относительных величинах: в миллисекундах (`150000ms`),
+      секундах (`540s`) или минутах (`3.5m`).
+
+    ## Ошибки обработки запросов
+
+    В процессе обработки запросов силами нашей системы могут происходить различные
+    непредвиденные ситуации. Об их появлении система сигнализирует по протоколу
+    HTTP соответствующими [статусами][5xx], обозначающими ошибки сервера.
+
+     |  Код    |  Описание  |
+     | ------- | ---------- |
+     | **500** | В процессе обработки системой запроса возникла непредвиденная ситуация. При получении подобного кода ответа мы рекомендуем обратиться в техническую поддержку. |
+     | **503** | Система временно недоступна и не готова обслуживать данный запрос. Запрос гарантированно не выполнен, при получении подобного кода ответа попробуйте выполнить его позднее, когда доступность системы будет восстановлена. |
+     | **504** | Система превысила допустимое время обработки запроса, результат запроса не определён. Попробуйте отправить запрос повторно или выяснить результат выполнения исходного запроса, если повторное исполнение запроса нежелательно. |
+
+    [5xx]: https://tools.ietf.org/html/rfc7231#section-6.6
+
+- op: add
+  path: /info/termsOfService
+  value: https://vality.dev/
+
+- op: add
+  path: /info/contact
+  value:
+    name: Команда техподдержки
+    email: support@empayre.com
+    url: https://empayre.com/
+
+- op: add
+  path: /host
+  value: api.empayre.com
+
+- op: replace
+  path: /tags/10/description
+  value: >
+      ## Empayre Webhooks Management API
+
+      В данном разделе описаны методы, позволяющие управлять Webhook'ами, или
+      инструментами для получения асинхронных оповещений посредством HTTP-запросов
+      при наступлении одного или группы интересующих вас событий, например, о
+      том, что выплата в рамках созданного кошелька была успешно проведена.
+
+      ## Empayre Webhooks Events API
+
+      Внимание! Только Webhooks Management API является частью системы Empayre,
+      а следовательно и данной спецификации. Для реализации обработчика присылаемых
+      уведомлений вам необходимо будет ознакомиться с OpenAPI-спецификацией
+      [Empayre Wallets Webhook Events API](https://empayre.github.io/swag-wallets-webhook-events/).
+
+- op: replace
+  path: /definitions/DestinationResource/properties/type/description
+  value: |
+    Тип ресурса приёмника средств.
+
+    См. [Empayre Payment Resource API](?api/payres/swagger.yaml).
+
+- op: replace
+  path: /definitions/ReceiverResource/properties/type/description
+  value: |
+    Тип ресурса получателя средств.
+
+    См. [Empayre Payment Resource API](?api/payres/swagger.yaml).
+
+- op: replace
+  path: /definitions/ReceiverResourceParams/properties/type/description
+  value: |
+    Тип ресурса получателя средств.
+
+    См. [Empayre Payment Resource API](?api/payres/swagger.yaml).
+
+- op: replace
+  path: /definitions/SenderResource/properties/type/description
+  value: |
+    Тип ресурса отправителя средств.
+
+    См. [Empayre Payment Resource API](?api/payres/swagger.yaml).
+
+- op: replace
+  path: /definitions/SenderResourceParams/properties/type/description
+  value: |
+    Тип ресурса отправителя средств.
+
+    См. [Empayre Payment Resource API](?api/payres/swagger.yaml).
+
+- op: add
+  path: /definitions/DestinationResource/properties/type/enum/-
+  value: BankTransferJPY
+
+- op: add
+  path: /definitions/DestinationResource/properties/type/enum/-
+  value: BankTransferIND
+
+- op: add
+  path: /definitions/BankTransferJPY
+  value:
+    description: Банковский перевод в банковской системе Японии
+    x-vality-genericMethod:
+      schema:
+        id: https://api.empayre.com/payment-methods/BankAccountJPY@v1
+        allOf:
+          - $ref: '#/definitions/BankAccountJPY'
+    allOf:
+      - $ref: '#/definitions/DestinationResource'
+      # Указание этой схемы ещё и здесь обеспечивает валидацию клиентских данных.
+      - $ref: '#/definitions/BankAccountJPY'
+
+- op: add
+  path: /definitions/BankTransferIND
+  value:
+    description: Банковский перевод в банковской системе Индии
+    x-vality-genericMethod:
+      schema:
+        id: https://api.empayre.com/payment-methods/BankAccountIND@v1
+        allOf:
+          - $ref: '#/definitions/BankAccountIND'
+    allOf:
+      - $ref: '#/definitions/DestinationResource'
+      - $ref: '#/definitions/BankAccountIND'
+
+- op: add
+  path: /definitions/BankAccountJPY
+  value:
+    description: Данные банковского счёта в Японии
+    type: object
+    required:
+      - accountName
+      - accountNumber
+      - bank
+    properties:
+      accountName:
+        description: Имя владельца лицевого счета, на который будет производиться выплата денежных средств
+        type: string
+        minLength: 1
+        maxLength: 1000
+      accountNumber:
+        description: Номер лицевого счета, на который будет производиться выплата денежных средств
+        type: string
+        pattern: '^\d{7,8}$'
+        example: "0071717"
+      accountType:
+        description: Тип лицевого счета, на который будет производиться выплата денежных средств
+        type: string
+        enum:
+          - 'current'
+          - 'regular'
+      bank:
+        $ref: '#/definitions/BankJPY'
+
+- op: add
+  path: /definitions/BankJPY
+  value:
+    description: Данные отделения банка в Японии
+    type: object
+    required:
+      - name
+      - branchName
+    properties:
+      name:
+        description: Название банка
+        type: string
+        minLength: 1
+        maxLength: 100
+      code:
+        description: Код банка, уникально определяющий его в Японии.
+        type: string
+        pattern: '^\d{4}$'
+        example: "1234"
+      branchName:
+        description: Название конкретного отделения банка
+        type: string
+        minLength: 1
+        maxLength: 100
+      branchCode:
+        description: Код конкретного отделения банка
+        type: string
+        pattern: '^\d{3}$'
+        example: "123"
+
+- op: add
+  path: /definitions/BankAccountIND
+  value:
+    description: Данные о банковском счёте в Индии
+    type: object
+    required:
+      - accountName
+      - accountNumber
+      - bankBranchCode
+    properties:
+      accountName:
+        description: Имя владельца лицевого счета, на который будет производиться выплата денежных средств.
+        type: string
+        minLength: 1
+        maxLength: 1000
+      accountNumber:
+        description: Номер лицевого счета, на который будет производиться выплата денежных средств
+        type: string
+        minLength: 1
+        maxLength: 35
+      transferType:
+        description: |
+          Тип системы перевода денежных средств в Индии.
+
+          | Значение  | Пояснение                                           |
+          | ----------| ----------------------------------------------------|
+          |     NEFT  | Национальный перевод электронных денежных средств   |
+          |     RTGS  | Система валовых расчетов в режиме реального времени |
+          |     IMPS  | Система немедленных мобильных переводов             |
+
+        type: string
+        enum:
+          - 'NEFT'
+          - 'RTGS'
+          - 'IMPS'
+      bankBranchCode:
+        description: Код, однозначно идентифицирующий отделение банка в Индии
+        type: string
+        pattern: '^\d{4}0\d{6}$'
+        example: "12340123456"

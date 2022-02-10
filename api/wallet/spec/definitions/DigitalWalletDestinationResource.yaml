@@ -1,4 +1,0 @@
-description: Цифровой кошелек
-allOf:
-  - $ref: '#/definitions/DestinationResource'
-  - $ref: '#/definitions/DigitalWallet'

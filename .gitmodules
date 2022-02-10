@@ -1,0 +1,4 @@
+[submodule "spec"]
+	path = spec
+	url = https://github.com/valitydev/swag-wallets
+	branch = release/v0

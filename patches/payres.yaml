@@ -1,0 +1,31 @@
+# Набор патчей согласно [RFC 6902](https://datatracker.ietf.org/doc/html/rfc6902).
+#
+# Представлены в формате YAML для лучшей читаемости (и в особенности возможности
+# оставлять комментарии).
+# Данные патчи применяются к спецификации Payment Resource API
+# в valitydev/swag-wallets.
+
+- op: add
+  path: /info/title
+  value: Empayre Payment Resource API
+  
+- op: add
+  path: /info/description
+  value: >
+    Empayre Payment Resource API служит для токенизации чувствительных данных
+    платёжных ресурсов пользователей.
+
+- op: add
+  path: /info/termsOfService
+  value: https://vality.dev/
+
+- op: add
+  path: /info/contact
+  value:
+    name: Команда техподдержки
+    email: support@empayre.com
+    url: https://empayre.com/
+
+- op: add
+  path: /host
+  value: api.empayre.com
