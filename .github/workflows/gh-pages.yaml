@@ -23,7 +23,7 @@ jobs:
       - name: Patch specification
         run: npm run patch
       - name: Include web stuff
-        run: cp -v web/* dist/*
+        run: cp -v web/* dist/
       - name: Publish ReDoc on Github Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
