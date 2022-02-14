@@ -3287,8 +3287,8 @@ get_raw() ->
         },
         <<"provider">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Провайдер электронных денежных средств">>,
-          <<"enum">> => [ <<"Webmoney">> ]
+          <<"example">> => <<"Paypal">>,
+          <<"description">> => <<"Провайдер электронных денежных средств">>
         }
       },
       <<"description">> => <<"Данные цифрового кошелька">>
@@ -3304,7 +3304,7 @@ get_raw() ->
     <<"DigitalWalletProvider">> => #{
       <<"type">> => <<"string">>,
       <<"description">> => <<"Провайдер электронных денежных средств">>,
-      <<"enum">> => [ <<"Webmoney">> ]
+      <<"example">> => <<"Paypal">>
     },
     <<"InvalidOperationParameters">> => #{
       <<"type">> => <<"object">>,
