@@ -3199,9 +3199,7 @@
         "provider": {
           "description": "Провайдер электронных денежных средств",
           "type": "string",
-          "enum": [
-            "Webmoney"
-          ]
+          "example": "Paypal"
         }
       }
     },
@@ -3219,9 +3217,7 @@
     "DigitalWalletProvider": {
       "description": "Провайдер электронных денежных средств",
       "type": "string",
-      "enum": [
-        "Webmoney"
-      ]
+      "example": "Paypal"
     },
     "InvalidOperationParameters": {
       "description": "Неверные входные данные для операции",

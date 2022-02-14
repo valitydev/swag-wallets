@@ -2288,8 +2288,7 @@ definitions:
       provider:
         description: Провайдер электронных денежных средств
         type: string
-        enum:
-          - Webmoney
+        example: Paypal
   DigitalWalletDestinationResource:
     description: Цифровой кошелек
     allOf:
@@ -2298,8 +2297,7 @@ definitions:
   DigitalWalletProvider:
     description: Провайдер электронных денежных средств
     type: string
-    enum:
-      - Webmoney
+    example: Paypal
   InvalidOperationParameters:
     description: Неверные входные данные для операции
     type: object
