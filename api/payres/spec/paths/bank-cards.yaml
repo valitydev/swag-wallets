@@ -18,6 +18,8 @@ post:
         $ref: '#/definitions/StoreBankCardResponse'
     '400':
       $ref: '#/responses/BadRequest'
+    '401':
+      $ref: '#/responses/Unauthorized'
     '422':
       description: Непригодные данные банковской карты
       schema:

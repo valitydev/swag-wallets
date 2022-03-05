@@ -19,5 +19,7 @@ get:
         $ref: '#/definitions/SecuredBankCard'
     '400':
       $ref: '#/responses/BadRequest'
+    '401':
+      $ref: '#/responses/Unauthorized'
     '404':
       $ref: '#/responses/NotFound'

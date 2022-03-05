@@ -45,6 +45,9 @@ responses:
     schema:
       $ref: '#/definitions/BadRequest'
 
+  Unauthorized:
+    description: Ошибка авторизации
+
 parameters:
 
   requestID:
