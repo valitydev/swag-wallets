@@ -37,6 +37,8 @@ responses:
     description: Недопустимые для операции входные данные
     schema:
       $ref: '#/definitions/BadRequest'
+  Unauthorized:
+    description: Ошибка авторизации
 parameters:
   requestID:
     name: X-Request-ID
@@ -72,6 +74,8 @@ paths:
             $ref: '#/definitions/StoreBankCardResponse'
         '400':
           $ref: '#/responses/BadRequest'
+        '401':
+          $ref: '#/responses/Unauthorized'
         '422':
           description: Непригодные данные банковской карты
           schema:
@@ -98,6 +102,8 @@ paths:
             $ref: '#/definitions/SecuredBankCard'
         '400':
           $ref: '#/responses/BadRequest'
+        '401':
+          $ref: '#/responses/Unauthorized'
         '404':
           $ref: '#/responses/NotFound'
 definitions:

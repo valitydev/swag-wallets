@@ -44,6 +44,9 @@
       "schema": {
         "$ref": "#/definitions/BadRequest"
       }
+    },
+    "Unauthorized": {
+      "description": "Ошибка авторизации"
     }
   },
   "parameters": {
@@ -96,6 +99,9 @@
           "400": {
             "$ref": "#/responses/BadRequest"
           },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
           "422": {
             "description": "Непригодные данные банковской карты",
             "schema": {
@@ -135,6 +141,9 @@
           },
           "400": {
             "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
           },
           "404": {
             "$ref": "#/responses/NotFound"
