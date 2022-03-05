@@ -103,6 +103,9 @@ get_response_spec('get_bank_card', 200) ->
 get_response_spec('get_bank_card', 400) ->
     {'BadRequest', 'BadRequest'};
 
+get_response_spec('get_bank_card', 401) ->
+    undefined;
+
 get_response_spec('get_bank_card', 404) ->
     undefined;
 
@@ -111,6 +114,9 @@ get_response_spec('store_bank_card', 201) ->
 
 get_response_spec('store_bank_card', 400) ->
     {'BadRequest', 'BadRequest'};
+
+get_response_spec('store_bank_card', 401) ->
+    undefined;
 
 get_response_spec('store_bank_card', 422) ->
     {'InvalidBankCard', 'InvalidBankCard'};
