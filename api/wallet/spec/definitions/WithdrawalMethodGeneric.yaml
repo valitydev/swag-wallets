@@ -6,8 +6,8 @@ allOf:
       - providers
     properties:
       providers:
-        description: Список обобщенных провайдеров
+        description: Список провайдеров сервисов выплат
         type: array
         items:
           x-rebillyMerge:
-            - $ref: '#/definitions/GeneticProvider'
+            - $ref: '#/definitions/GenericProvider'

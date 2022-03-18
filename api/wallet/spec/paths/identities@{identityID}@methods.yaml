@@ -9,11 +9,14 @@ get:
     - $ref: '#/parameters/identityID'
   responses:
     '200':
-      description: Найденные методы
       schema:
-        type: array
-        items:
-          $ref: '#/definitions/WithdrawalMethod'
+        type: object
+        properties:
+          result:
+            description: Найденные методы
+            type: array
+            items:
+              $ref: '#/definitions/WithdrawalMethod'
     '400':
       $ref: '#/responses/BadRequest'
     '401':
