@@ -2,7 +2,7 @@ get:
   summary: Получить выплатные методы доступные по личности владельца
   tags:
     - Identities
-  operationId: getMethods
+  operationId: getWithdrawalMethods
   parameters:
     - $ref: '#/parameters/requestID'
     - $ref: '#/parameters/deadline'
