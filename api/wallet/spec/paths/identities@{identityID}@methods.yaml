@@ -13,7 +13,7 @@ get:
       schema:
         type: object
         properties:
-          result:
+          methods:
             type: array
             items:
               $ref: '#/definitions/WithdrawalMethod'
