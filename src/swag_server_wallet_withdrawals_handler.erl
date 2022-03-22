@@ -1174,7 +1174,7 @@ get_response_spec('ListDestinations', 401) ->
     undefined;
 
 get_response_spec('ListWithdrawals', 200) ->
-    {'inline_response_200_6', 'inline_response_200_6'};
+    {'inline_response_200_7', 'inline_response_200_7'};
 
 get_response_spec('ListWithdrawals', 400) ->
     {'BadRequest', 'BadRequest'};

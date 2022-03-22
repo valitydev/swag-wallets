@@ -125,6 +125,11 @@ get_operations() ->
             method => <<"GET">>,
             handler => 'swag_server_wallet_identities_handler'
         },
+        'GetWithdrawalMethods' => #{
+            path => "/wallet/v0/identities/:identityID/withdrawal-methods",
+            method => <<"GET">>,
+            handler => 'swag_server_wallet_identities_handler'
+        },
         'ListIdentities' => #{
             path => "/wallet/v0/identities",
             method => <<"GET">>,

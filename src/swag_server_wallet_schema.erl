@@ -1412,6 +1412,55 @@ get_raw() ->
         }
       }
     },
+    <<"/identities/{identityID}/withdrawal-methods">> => #{
+      <<"get">> => #{
+        <<"tags">> => [ <<"Identities">> ],
+        <<"summary">> => <<"Получить выплатные методы доступные по личности владельца">>,
+        <<"operationId">> => <<"getWithdrawalMethods">>,
+        <<"parameters">> => [ #{
+          <<"name">> => <<"X-Request-ID">>,
+          <<"in">> => <<"header">>,
+          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"required">> => true,
+          <<"type">> => <<"string">>,
+          <<"maxLength">> => 32,
+          <<"minLength">> => 1
+        }, #{
+          <<"name">> => <<"X-Request-Deadline">>,
+          <<"in">> => <<"header">>,
+          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"required">> => false,
+          <<"type">> => <<"string">>,
+          <<"maxLength">> => 40,
+          <<"minLength">> => 1
+        }, #{
+          <<"name">> => <<"identityID">>,
+          <<"in">> => <<"path">>,
+          <<"description">> => <<"Идентификатор личности владельца">>,
+          <<"required">> => true,
+          <<"type">> => <<"string">>,
+          <<"maxLength">> => 40,
+          <<"minLength">> => 1
+        } ],
+        <<"responses">> => #{
+          <<"200">> => #{
+            <<"description">> => <<"Найденные методы">>,
+            <<"schema">> => #{
+              <<"$ref">> => <<"#/definitions/inline_response_200_5">>
+            }
+          },
+          <<"400">> => #{
+            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"schema">> => #{
+              <<"$ref">> => <<"#/definitions/BadRequest">>
+            }
+          },
+          <<"401">> => #{
+            <<"description">> => <<"Ошибка авторизации">>
+          }
+        }
+      }
+    },
     <<"/providers">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Providers">> ],
@@ -1742,7 +1791,7 @@ get_raw() ->
           <<"200">> => #{
             <<"description">> => <<"Результат поиска">>,
             <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/inline_response_200_5">>
+              <<"$ref">> => <<"#/definitions/inline_response_200_6">>
             }
           },
           <<"400">> => #{
@@ -2407,7 +2456,7 @@ get_raw() ->
           <<"200">> => #{
             <<"description">> => <<"Результат поиска">>,
             <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/inline_response_200_6">>
+              <<"$ref">> => <<"#/definitions/inline_response_200_7">>
             }
           },
           <<"400">> => #{
@@ -2717,7 +2766,7 @@ get_raw() ->
         <<"properties">> => #{
           <<"paymentSystem">> => #{
             <<"type">> => <<"string">>,
-            <<"description">> => <<"Платежная система">>,
+            <<"description">> => <<"Платежная система.\n\nНабор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getMethods).\n">>,
             <<"readOnly">> => true
           }
         }
@@ -2742,7 +2791,7 @@ get_raw() ->
         <<"properties">> => #{
           <<"paymentSystem">> => #{
             <<"type">> => <<"string">>,
-            <<"description">> => <<"Платежная система">>,
+            <<"description">> => <<"Платежная система.\n\nНабор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getMethods).\n">>,
             <<"readOnly">> => true
           }
         }
@@ -3288,7 +3337,7 @@ get_raw() ->
         <<"provider">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"Paypal">>,
-          <<"description">> => <<"Провайдер электронных денежных средств">>
+          <<"description">> => <<"Провайдер электронных денежных средств.\n\nНабор провайдеров, доступных для проведения выплат, можно узнать, вызвав\nсоответствующую [операцию](#operation/getMethods).\n">>
         }
       },
       <<"description">> => <<"Данные цифрового кошелька">>
@@ -3303,7 +3352,7 @@ get_raw() ->
     },
     <<"DigitalWalletProvider">> => #{
       <<"type">> => <<"string">>,
-      <<"description">> => <<"Провайдер электронных денежных средств">>,
+      <<"description">> => <<"Провайдер электронных денежных средств.\n\nНабор провайдеров, доступных для проведения выплат, можно узнать, вызвав\nсоответствующую [операцию](#operation/getMethods).\n">>,
       <<"example">> => <<"Paypal">>
     },
     <<"InvalidOperationParameters">> => #{
@@ -3344,6 +3393,11 @@ get_raw() ->
         <<"url">> => <<"url">>,
         <<"expiresAt">> => <<"2000-01-23T04:56:07.000+00:00">>
       }
+    },
+    <<"GenericProvider">> => #{
+      <<"type">> => <<"string">>,
+      <<"description">> => <<"Провайдер сервисов выплат.\n\nНабор провайдеров, доступных для проведения выплат, можно узнать, вызвав\nсоответствующую [операцию](#operation/getMethods).\n">>,
+      <<"example">> => <<"YourBankName">>
     },
     <<"GrantToken">> => #{
       <<"type">> => <<"string">>,
@@ -3464,7 +3518,7 @@ get_raw() ->
     },
     <<"BankCardPaymentSystem">> => #{
       <<"type">> => <<"string">>,
-      <<"description">> => <<"Платежная система">>
+      <<"description">> => <<"Платежная система.\n\nНабор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getMethods).\n">>
     },
     <<"SecuredBankCard">> => #{
       <<"type">> => <<"object">>,
@@ -4279,6 +4333,78 @@ get_raw() ->
       <<"description">> => <<"Идентификатор вывода денежных средств">>,
       <<"example">> => <<"tZ0jUmlsV0">>
     },
+    <<"WithdrawalMethod">> => #{
+      <<"type">> => <<"object">>,
+      <<"required">> => [ <<"method">> ],
+      <<"discriminator">> => <<"method">>,
+      <<"properties">> => #{
+        <<"method">> => #{
+          <<"type">> => <<"string">>,
+          <<"description">> => <<"Метод для проведения выплаты">>,
+          <<"enum">> => [ <<"WithdrawalMethodBankCard">>, <<"WithdrawalMethodDigitalWallet">>, <<"WithdrawalMethodGeneric">> ]
+        }
+      },
+      <<"example">> => #{
+        <<"method">> => <<"WithdrawalMethodBankCard">>
+      },
+      <<"x-discriminator-is-enum">> => true
+    },
+    <<"WithdrawalMethodBankCard">> => #{
+      <<"allOf">> => [ #{
+        <<"$ref">> => <<"#/definitions/WithdrawalMethod">>
+      }, #{
+        <<"type">> => <<"object">>,
+        <<"required">> => [ <<"paymentSystems">> ],
+        <<"properties">> => #{
+          <<"paymentSystems">> => #{
+            <<"type">> => <<"array">>,
+            <<"description">> => <<"Список платежных систем">>,
+            <<"items">> => #{
+              <<"type">> => <<"string">>,
+              <<"description">> => <<"Платежная система.\n\nНабор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getMethods).\n">>
+            }
+          }
+        }
+      } ]
+    },
+    <<"WithdrawalMethodDigitalWallet">> => #{
+      <<"allOf">> => [ #{
+        <<"$ref">> => <<"#/definitions/WithdrawalMethod">>
+      }, #{
+        <<"type">> => <<"object">>,
+        <<"required">> => [ <<"providers">> ],
+        <<"properties">> => #{
+          <<"providers">> => #{
+            <<"type">> => <<"array">>,
+            <<"description">> => <<"Список провайдеров электронных денежных средств">>,
+            <<"items">> => #{
+              <<"type">> => <<"string">>,
+              <<"example">> => <<"Paypal">>,
+              <<"description">> => <<"Провайдер электронных денежных средств.\n\nНабор провайдеров, доступных для проведения выплат, можно узнать, вызвав\nсоответствующую [операцию](#operation/getMethods).\n">>
+            }
+          }
+        }
+      } ]
+    },
+    <<"WithdrawalMethodGeneric">> => #{
+      <<"allOf">> => [ #{
+        <<"$ref">> => <<"#/definitions/WithdrawalMethod">>
+      }, #{
+        <<"type">> => <<"object">>,
+        <<"required">> => [ <<"providers">> ],
+        <<"properties">> => #{
+          <<"providers">> => #{
+            <<"type">> => <<"array">>,
+            <<"description">> => <<"Список провайдеров сервисов выплат">>,
+            <<"items">> => #{
+              <<"type">> => <<"string">>,
+              <<"example">> => <<"YourBankName">>,
+              <<"description">> => <<"Провайдер сервисов выплат.\n\nНабор провайдеров, доступных для проведения выплат, можно узнать, вызвав\nсоответствующую [операцию](#operation/getMethods).\n">>
+            }
+          }
+        }
+      } ]
+    },
     <<"WithdrawalParameters">> => #{
       <<"allOf">> => [ #{
         <<"$ref">> => <<"#/definitions/Withdrawal">>
@@ -4595,6 +4721,24 @@ get_raw() ->
     <<"inline_response_200_5">> => #{
       <<"type">> => <<"object">>,
       <<"properties">> => #{
+        <<"methods">> => #{
+          <<"type">> => <<"array">>,
+          <<"items">> => #{
+            <<"$ref">> => <<"#/definitions/WithdrawalMethod">>
+          }
+        }
+      },
+      <<"example">> => #{
+        <<"methods">> => [ #{
+          <<"method">> => <<"WithdrawalMethodBankCard">>
+        }, #{
+          <<"method">> => <<"WithdrawalMethodBankCard">>
+        } ]
+      }
+    },
+    <<"inline_response_200_6">> => #{
+      <<"type">> => <<"object">>,
+      <<"properties">> => #{
         <<"continuationToken">> => #{
           <<"type">> => <<"string">>,
           <<"description">> => <<"Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n">>
@@ -4634,7 +4778,7 @@ get_raw() ->
         <<"continuationToken">> => <<"continuationToken">>
       }
     },
-    <<"inline_response_200_6">> => #{
+    <<"inline_response_200_7">> => #{
       <<"type">> => <<"object">>,
       <<"properties">> => #{
         <<"continuationToken">> => #{

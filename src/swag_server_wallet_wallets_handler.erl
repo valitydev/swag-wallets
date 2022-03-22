@@ -665,7 +665,7 @@ get_response_spec('IssueWalletGrant', 422) ->
     {'InvalidOperationParameters', 'InvalidOperationParameters'};
 
 get_response_spec('ListWallets', 200) ->
-    {'inline_response_200_5', 'inline_response_200_5'};
+    {'inline_response_200_6', 'inline_response_200_6'};
 
 get_response_spec('ListWallets', 400) ->
     {'BadRequest', 'BadRequest'};

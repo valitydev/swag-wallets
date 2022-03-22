@@ -72,6 +72,14 @@ allowed_methods(
 allowed_methods(
     Req,
     State = #state{
+        operation_id = 'GetWithdrawalMethods'
+    }
+) ->
+    {[<<"GET">>], Req, State};
+
+allowed_methods(
+    Req,
+    State = #state{
         operation_id = 'ListIdentities'
     }
 ) ->
@@ -118,6 +126,33 @@ is_authorized(
     Req0,
     State = #state{
         operation_id  = 'GetIdentity' = OperationID,
+        logic_handler = LogicHandler,
+        context       = Context
+    }
+) ->
+    From = header,
+    Result = swag_server_wallet_handler_api:authorize_api_key(
+        LogicHandler,
+        OperationID,
+        From,
+        'Authorization',
+        Req0,
+        Context
+    ),
+    case Result of
+        {true, AuthContext, Req} ->
+            NewContext = Context#{
+                auth_context => AuthContext
+            },
+            {true, Req, State#state{context = NewContext}};
+        {false, AuthHeader, Req} ->
+            {{false, AuthHeader}, Req, State}
+    end;
+
+is_authorized(
+    Req0,
+    State = #state{
+        operation_id  = 'GetWithdrawalMethods' = OperationID,
         logic_handler = LogicHandler,
         context       = Context
     }
@@ -200,6 +235,16 @@ valid_content_headers(
     Req0,
     State = #state{
         operation_id = 'GetIdentity'
+    }
+) ->
+    Headers = ["X-Request-ID","X-Request-Deadline"],
+    {Result, Req} = validate_headers(Headers, Req0),
+    {Result, Req, State};
+
+valid_content_headers(
+    Req0,
+    State = #state{
+        operation_id = 'GetWithdrawalMethods'
     }
 ) ->
     Headers = ["X-Request-ID","X-Request-Deadline"],
@@ -367,6 +412,24 @@ get_request_spec('GetIdentity') ->
 , {required, false}]
         }}
     ];
+get_request_spec('GetWithdrawalMethods') ->
+    [
+        {'X-Request-ID', #{
+            source => header,
+            rules  => [{type, 'binary'}, {max_length, 32}, {min_length, 1}, true
+, {required, true}]
+        }},
+        {'identityID', #{
+            source => binding,
+            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
+, {required, true}]
+        }},
+        {'X-Request-Deadline', #{
+            source => header,
+            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
+, {required, false}]
+        }}
+    ];
 get_request_spec('ListIdentities') ->
     [
         {'X-Request-ID', #{
@@ -420,6 +483,15 @@ get_response_spec('GetIdentity', 401) ->
     undefined;
 
 get_response_spec('GetIdentity', 404) ->
+    undefined;
+
+get_response_spec('GetWithdrawalMethods', 200) ->
+    {'inline_response_200_5', 'inline_response_200_5'};
+
+get_response_spec('GetWithdrawalMethods', 400) ->
+    {'BadRequest', 'BadRequest'};
+
+get_response_spec('GetWithdrawalMethods', 401) ->
     undefined;
 
 get_response_spec('ListIdentities', 200) ->
