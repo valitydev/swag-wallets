@@ -349,7 +349,7 @@ get_response_spec('issue_wallet_grant', 422) ->
     {'InvalidOperationParameters', 'InvalidOperationParameters'};
 
 get_response_spec('list_wallets', 200) ->
-    {'inline_response_200_5', 'inline_response_200_5'};
+    {'inline_response_200_6', 'inline_response_200_6'};
 
 get_response_spec('list_wallets', 400) ->
     {'BadRequest', 'BadRequest'};

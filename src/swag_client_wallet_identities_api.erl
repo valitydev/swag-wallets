@@ -9,6 +9,9 @@
 -export([get_identity/2]).
 -export([get_identity/3]).
 
+-export([get_withdrawal_methods/2]).
+-export([get_withdrawal_methods/3]).
+
 -export([list_identities/2]).
 -export([list_identities/3]).
 
@@ -48,6 +51,24 @@ get_identity(Endpoint, Params, Opts) ->
         get_request_spec(get_identity),
         Opts
     ), get_identity).
+
+-spec get_withdrawal_methods(Endpoint :: swag_client_wallet:endpoint(), Params :: map()) ->
+    {ok, Code :: integer(), RespHeaders :: list(), Response :: map()} |
+    {error, _Reason}.
+get_withdrawal_methods(Endpoint, Params) ->
+    get_withdrawal_methods(Endpoint, Params, []).
+
+-spec get_withdrawal_methods(Endpoint :: swag_client_wallet:endpoint(), Params :: map(), Opts :: swag_client_wallet:transport_opts()) ->
+    {ok, Code :: integer(), RespHeaders :: list(), Response :: map()} |
+    {error, _Reason}.
+get_withdrawal_methods(Endpoint, Params, Opts) ->
+    process_response(swag_client_wallet_procession:process_request(
+        get,
+        swag_client_wallet_utils:get_url(Endpoint, "/wallet/v0/identities/:identityID/withdrawal-methods"),
+        Params,
+        get_request_spec(get_withdrawal_methods),
+        Opts
+    ), get_withdrawal_methods).
 
 -spec list_identities(Endpoint :: swag_client_wallet:endpoint(), Params :: map()) ->
     {ok, Code :: integer(), RespHeaders :: list(), Response :: map()} |
@@ -123,6 +144,24 @@ get_request_spec('get_identity') ->
 , {required, false}]
         }}
     ];
+get_request_spec('get_withdrawal_methods') ->
+    [
+        {'X-Request-ID', #{
+            source => header,
+            rules  => [{type, 'binary'}, {max_length, 32}, {min_length, 1}, true
+, {required, true}]
+        }},
+        {'identityID', #{
+            source => binding,
+            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
+, {required, true}]
+        }},
+        {'X-Request-Deadline', #{
+            source => header,
+            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
+, {required, false}]
+        }}
+    ];
 get_request_spec('list_identities') ->
     [
         {'X-Request-ID', #{
@@ -176,6 +215,15 @@ get_response_spec('get_identity', 401) ->
     undefined;
 
 get_response_spec('get_identity', 404) ->
+    undefined;
+
+get_response_spec('get_withdrawal_methods', 200) ->
+    {'inline_response_200_5', 'inline_response_200_5'};
+
+get_response_spec('get_withdrawal_methods', 400) ->
+    {'BadRequest', 'BadRequest'};
+
+get_response_spec('get_withdrawal_methods', 401) ->
     undefined;
 
 get_response_spec('list_identities', 200) ->
