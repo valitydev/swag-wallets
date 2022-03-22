@@ -1,0 +1,23 @@
+get:
+  summary: Получить выплатные методы доступные по личности владельца
+  tags:
+    - Identities
+  operationId: getWithdrawalMethods
+  parameters:
+    - $ref: '#/parameters/requestID'
+    - $ref: '#/parameters/deadline'
+    - $ref: '#/parameters/identityID'
+  responses:
+    '200':
+      description: Найденные методы
+      schema:
+        type: object
+        properties:
+          methods:
+            type: array
+            items:
+              $ref: '#/definitions/WithdrawalMethod'
+    '400':
+      $ref: '#/responses/BadRequest'
+    '401':
+      $ref: '#/responses/Unauthorized'

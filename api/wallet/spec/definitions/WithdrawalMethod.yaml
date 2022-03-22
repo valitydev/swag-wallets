@@ -1,0 +1,12 @@
+type: object
+discriminator: method
+required:
+  - method
+properties:
+  method:
+    description: Метод для проведения выплаты
+    type: string
+    enum:
+      - WithdrawalMethodBankCard
+      - WithdrawalMethodDigitalWallet
+      - WithdrawalMethodGeneric
