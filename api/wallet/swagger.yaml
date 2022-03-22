@@ -1005,6 +1005,30 @@ paths:
           $ref: '#/responses/Unauthorized'
         '404':
           $ref: '#/responses/NotFound'
+  '/identities/{identityID}/withdrawal-methods':
+    get:
+      summary: Получить выплатные методы доступные по личности владельца
+      tags:
+        - Identities
+      operationId: getWithdrawalMethods
+      parameters:
+        - $ref: '#/parameters/requestID'
+        - $ref: '#/parameters/deadline'
+        - $ref: '#/parameters/identityID'
+      responses:
+        '200':
+          description: Найденные методы
+          schema:
+            type: object
+            properties:
+              methods:
+                type: array
+                items:
+                  $ref: '#/definitions/WithdrawalMethod'
+        '400':
+          $ref: '#/responses/BadRequest'
+        '401':
+          $ref: '#/responses/Unauthorized'
   /providers:
     get:
       operationId: listProviders
@@ -1643,7 +1667,10 @@ definitions:
       - type: object
         properties:
           paymentSystem:
-            description: Платежная система
+            description: |
+              Платежная система.
+
+              Набор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getMethods).
             type: string
             readOnly: true
   BankCardReceiverResourceParams:
@@ -1659,7 +1686,10 @@ definitions:
       - type: object
         properties:
           paymentSystem:
-            description: Платежная система
+            description: |
+              Платежная система.
+
+              Набор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getMethods).
             type: string
             readOnly: true
   BankCardSenderResourceParams:
@@ -2286,7 +2316,11 @@ definitions:
         maxLength: 100
         example: zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQ
       provider:
-        description: Провайдер электронных денежных средств
+        description: |
+          Провайдер электронных денежных средств.
+
+          Набор провайдеров, доступных для проведения выплат, можно узнать, вызвав
+          соответствующую [операцию](#operation/getMethods).
         type: string
         example: Paypal
   DigitalWalletDestinationResource:
@@ -2295,7 +2329,11 @@ definitions:
       - $ref: '#/definitions/DestinationResource'
       - $ref: '#/definitions/DigitalWallet'
   DigitalWalletProvider:
-    description: Провайдер электронных денежных средств
+    description: |
+      Провайдер электронных денежных средств.
+
+      Набор провайдеров, доступных для проведения выплат, можно узнать, вызвав
+      соответствующую [операцию](#operation/getMethods).
     type: string
     example: Paypal
   InvalidOperationParameters:
@@ -2329,6 +2367,14 @@ definitions:
         description: Время до которого ссылка будет считаться действительной
         type: string
         format: date-time
+  GenericProvider:
+    description: |
+      Провайдер сервисов выплат.
+
+      Набор провайдеров, доступных для проведения выплат, можно узнать, вызвав
+      соответствующую [операцию](#operation/getMethods).
+    type: string
+    example: YourBankName
   GrantToken:
     type: string
     minLength: 1
@@ -2432,7 +2478,10 @@ definitions:
         description: Человекочитаемое описание ошибки
         type: string
   BankCardPaymentSystem:
-    description: Платежная система
+    description: |
+      Платежная система.
+
+      Набор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getMethods).
     type: string
   SecuredBankCard:
     description: Безопасные данные банковской карты
@@ -3270,6 +3319,74 @@ definitions:
     description: Идентификатор вывода денежных средств
     type: string
     example: tZ0jUmlsV0
+  WithdrawalMethod:
+    type: object
+    discriminator: method
+    required:
+      - method
+    properties:
+      method:
+        description: Метод для проведения выплаты
+        type: string
+        enum:
+          - WithdrawalMethodBankCard
+          - WithdrawalMethodDigitalWallet
+          - WithdrawalMethodGeneric
+  WithdrawalMethodBankCard:
+    type: object
+    allOf:
+      - $ref: '#/definitions/WithdrawalMethod'
+      - type: object
+        required:
+          - paymentSystems
+        properties:
+          paymentSystems:
+            description: Список платежных систем
+            type: array
+            items:
+              description: |
+                Платежная система.
+
+                Набор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getMethods).
+              type: string
+  WithdrawalMethodDigitalWallet:
+    type: object
+    allOf:
+      - $ref: '#/definitions/WithdrawalMethod'
+      - type: object
+        required:
+          - providers
+        properties:
+          providers:
+            description: Список провайдеров электронных денежных средств
+            type: array
+            items:
+              description: |
+                Провайдер электронных денежных средств.
+
+                Набор провайдеров, доступных для проведения выплат, можно узнать, вызвав
+                соответствующую [операцию](#operation/getMethods).
+              type: string
+              example: Paypal
+  WithdrawalMethodGeneric:
+    type: object
+    allOf:
+      - $ref: '#/definitions/WithdrawalMethod'
+      - type: object
+        required:
+          - providers
+        properties:
+          providers:
+            description: Список провайдеров сервисов выплат
+            type: array
+            items:
+              description: |
+                Провайдер сервисов выплат.
+
+                Набор провайдеров, доступных для проведения выплат, можно узнать, вызвав
+                соответствующую [операцию](#operation/getMethods).
+              type: string
+              example: YourBankName
   WithdrawalParameters:
     description: Параметры создаваемого вывода
     allOf:

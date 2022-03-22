@@ -1386,6 +1386,48 @@
         }
       }
     },
+    "/identities/{identityID}/withdrawal-methods": {
+      "get": {
+        "summary": "Получить выплатные методы доступные по личности владельца",
+        "tags": [
+          "Identities"
+        ],
+        "operationId": "getWithdrawalMethods",
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/identityID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Найденные методы",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "methods": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/WithdrawalMethod"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          }
+        }
+      }
+    },
     "/providers": {
       "get": {
         "operationId": "listProviders",
@@ -2415,7 +2457,7 @@
           "type": "object",
           "properties": {
             "paymentSystem": {
-              "description": "Платежная система",
+              "description": "Платежная система.\n\nНабор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getMethods).\n",
               "type": "string",
               "readOnly": true
             }
@@ -2447,7 +2489,7 @@
           "type": "object",
           "properties": {
             "paymentSystem": {
-              "description": "Платежная система",
+              "description": "Платежная система.\n\nНабор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getMethods).\n",
               "type": "string",
               "readOnly": true
             }
@@ -3197,7 +3239,7 @@
           "example": "zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQ"
         },
         "provider": {
-          "description": "Провайдер электронных денежных средств",
+          "description": "Провайдер электронных денежных средств.\n\nНабор провайдеров, доступных для проведения выплат, можно узнать, вызвав\nсоответствующую [операцию](#operation/getMethods).\n",
           "type": "string",
           "example": "Paypal"
         }
@@ -3215,7 +3257,7 @@
       ]
     },
     "DigitalWalletProvider": {
-      "description": "Провайдер электронных денежных средств",
+      "description": "Провайдер электронных денежных средств.\n\nНабор провайдеров, доступных для проведения выплат, можно узнать, вызвав\nсоответствующую [операцию](#operation/getMethods).\n",
       "type": "string",
       "example": "Paypal"
     },
@@ -3258,6 +3300,11 @@
           "format": "date-time"
         }
       }
+    },
+    "GenericProvider": {
+      "description": "Провайдер сервисов выплат.\n\nНабор провайдеров, доступных для проведения выплат, можно узнать, вызвав\nсоответствующую [операцию](#operation/getMethods).\n",
+      "type": "string",
+      "example": "YourBankName"
     },
     "GrantToken": {
       "type": "string",
@@ -3380,7 +3427,7 @@
       }
     },
     "BankCardPaymentSystem": {
-      "description": "Платежная система",
+      "description": "Платежная система.\n\nНабор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getMethods).\n",
       "type": "string"
     },
     "SecuredBankCard": {
@@ -4395,6 +4442,98 @@
       "description": "Идентификатор вывода денежных средств",
       "type": "string",
       "example": "tZ0jUmlsV0"
+    },
+    "WithdrawalMethod": {
+      "type": "object",
+      "discriminator": "method",
+      "required": [
+        "method"
+      ],
+      "properties": {
+        "method": {
+          "description": "Метод для проведения выплаты",
+          "type": "string",
+          "enum": [
+            "WithdrawalMethodBankCard",
+            "WithdrawalMethodDigitalWallet",
+            "WithdrawalMethodGeneric"
+          ]
+        }
+      }
+    },
+    "WithdrawalMethodBankCard": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/WithdrawalMethod"
+        },
+        {
+          "type": "object",
+          "required": [
+            "paymentSystems"
+          ],
+          "properties": {
+            "paymentSystems": {
+              "description": "Список платежных систем",
+              "type": "array",
+              "items": {
+                "description": "Платежная система.\n\nНабор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getMethods).\n",
+                "type": "string"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "WithdrawalMethodDigitalWallet": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/WithdrawalMethod"
+        },
+        {
+          "type": "object",
+          "required": [
+            "providers"
+          ],
+          "properties": {
+            "providers": {
+              "description": "Список провайдеров электронных денежных средств",
+              "type": "array",
+              "items": {
+                "description": "Провайдер электронных денежных средств.\n\nНабор провайдеров, доступных для проведения выплат, можно узнать, вызвав\nсоответствующую [операцию](#operation/getMethods).\n",
+                "type": "string",
+                "example": "Paypal"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "WithdrawalMethodGeneric": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/WithdrawalMethod"
+        },
+        {
+          "type": "object",
+          "required": [
+            "providers"
+          ],
+          "properties": {
+            "providers": {
+              "description": "Список провайдеров сервисов выплат",
+              "type": "array",
+              "items": {
+                "description": "Провайдер сервисов выплат.\n\nНабор провайдеров, доступных для проведения выплат, можно узнать, вызвав\nсоответствующую [операцию](#operation/getMethods).\n",
+                "type": "string",
+                "example": "YourBankName"
+              }
+            }
+          }
+        }
+      ]
     },
     "WithdrawalParameters": {
       "description": "Параметры создаваемого вывода",
