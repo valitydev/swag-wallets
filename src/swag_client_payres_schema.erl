@@ -265,7 +265,7 @@ get_raw() ->
     },
     <<"BankCardPaymentSystem">> => #{
       <<"type">> => <<"string">>,
-      <<"description">> => <<"Платежная система">>
+      <<"description">> => <<"Платежная система.\n\nНабор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getMethods).\n">>
     },
     <<"InvalidBankCard">> => #{
       <<"type">> => <<"object">>,
