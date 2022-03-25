@@ -14,3 +14,12 @@ properties:
     description: Провайдер электронных денежных средств
     x-rebillyMerge:
       - $ref: '#/definitions/DigitalWalletProvider'
+  token:
+    description: Строка, содержащая данные для авторизации операций над этим кошельком
+    type: string
+    minLength: 1
+    maxLength: 4000
+    example: "
+      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF\
+      0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\
+    "
