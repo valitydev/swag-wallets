@@ -3338,6 +3338,13 @@ get_raw() ->
           <<"type">> => <<"string">>,
           <<"example">> => <<"Paypal">>,
           <<"description">> => <<"Провайдер электронных денежных средств.\n\nНабор провайдеров, доступных для проведения выплат, можно узнать, вызвав\nсоответствующую [операцию](#operation/getMethods).\n">>
+        },
+        <<"token">> => #{
+          <<"type">> => <<"string">>,
+          <<"example">> => <<" eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c">>,
+          <<"description">> => <<"Строка, содержащая данные для авторизации операций над этим кошельком">>,
+          <<"minLength">> => 1,
+          <<"maxLength">> => 4000
         }
       },
       <<"description">> => <<"Данные цифрового кошелька">>
