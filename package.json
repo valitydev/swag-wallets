@@ -5,7 +5,7 @@
     "bower": "1.8.14",
     "connect": "3.7.0",
     "cors": "2.8.5",
-    "gulp-connect": "4.2.0",
+    "gulp-connect": "5.7.0",
     "gulp-util": "3.0.8",
     "json-merge-patch": "0.2.3",
     "npm": "8.6.0",
