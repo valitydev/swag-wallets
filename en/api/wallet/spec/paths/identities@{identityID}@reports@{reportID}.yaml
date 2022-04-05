@@ -1,0 +1,26 @@
+---
+get:
+  description: Получить отчет по данному идентификатору
+  tags:
+    - Reports
+  operationId: getReport
+  parameters:
+    - 
+      $ref: '#/parameters/requestID'
+    - 
+      $ref: '#/parameters/deadline'
+    - 
+      $ref: '#/parameters/identityID'
+    - 
+      $ref: '#/parameters/reportID'
+  responses:
+    '200':
+      description: Найденный отчет
+      schema:
+        $ref: '#/definitions/Report'
+    '404':
+      $ref: '#/responses/NotFound'
+    '400':
+      $ref: '#/responses/BadRequest'
+    '401':
+      $ref: '#/responses/Unauthorized'
