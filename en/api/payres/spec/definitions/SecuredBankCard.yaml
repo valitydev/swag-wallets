@@ -20,7 +20,7 @@ properties:
     example: "424242"
     readOnly: true
   lastDigits:
-    description: Последние цифры номера карты
+    description: Card last digits
     type: string
     pattern: '^\d{2,4}$'
     example: "4242"
