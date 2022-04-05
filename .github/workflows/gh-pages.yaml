@@ -1,6 +1,5 @@
 name: gh-pages
 on:
-  pull_request:
   push:
     branches: [v0]
 
