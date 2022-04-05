@@ -23,7 +23,7 @@ jobs:
           generator-version: "1.0.1"
 
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODEJS_VERSION }}
           cache: npm
