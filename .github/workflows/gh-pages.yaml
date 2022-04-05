@@ -5,7 +5,7 @@ on:
     branches: [v0]
 
 env:
-  NODEJS_VERSION: '16'
+  NODEJS_VERSION: "16"
 
 jobs:
   publish:
@@ -26,4 +26,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          exclude_assets: 'swagger-ui'
+          exclude_assets: "swagger-ui"
