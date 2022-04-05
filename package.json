@@ -10,7 +10,7 @@
     "json-merge-patch": "0.2.3",
     "npm": "8.1.4",
     "portfinder": "1.0.28",
-    "shelljs": "0.7.8",
+    "shelljs": "0.8.5",
     "swagger-repo": "1.5.1",
     "swagger-ui": "2.2.10"
   },
