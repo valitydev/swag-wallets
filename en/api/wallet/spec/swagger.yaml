@@ -1,0 +1,293 @@
+---
+swagger: '2.0'
+info:
+  version: '0.1.0'
+  title: Vality Wallet API
+  description: >
+
+    Vality Wallet API является базовой и единственной точкой взаимодействия с системой кошельков. Все изменения состояний системы осуществляются с помощью вызовов соответствующих методов API. Любые сторонние приложения, включая наши веб-сайты и другие UI-интерфейсы, являются внешними приложениями-клиентами.
+    Vality API работает поверх HTTP-протокола. Мы используем REST архитектуру, схема описывается в соответствии с [OpenAPI 2.0](https://spec.openapis.org/oas/v2.0). Коды возврата описываются соответствующими HTTP-статусами. Система принимает и возвращает значения JSON в теле запросов и ответов.
+    ## Формат содержимого
+    Любой запрос к API должен выполняться в кодировке UTF-8 и с указанием содержимого в формате JSON.
+    ``` Content-Type: application/json; charset=utf-8 ```
+    ## Формат дат
+    Система принимает и возвращает значения отметок времени в формате `date-time`, описанном в [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339):
+    ``` 2017-01-01T00:00:00Z 2017-01-01T00:00:01+00:00 ```
+    ## Максимальное время обработки запроса
+    При любом обращении к API в заголовке `X-Request-Deadline` соответствующего запроса можно передать параметр отсечки по времени, определяющий максимальное время ожидания завершения операции по запросу:
+    ``` X-Request-Deadline: 10s ```
+    По истечении указанного времени система прекращает обработку запроса. Рекомендуется указывать значение не более одной минуты, но не менее трёх секунд.
+    `X-Request-Deadline` может:
+    * задаваться в формате `date-time` согласно [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339); * задаваться в относительных величинах: в миллисекундах (`150000ms`), секундах (`540s`) или минутах (`3.5m`).
+    ## Ошибки обработки запросов
+    В процессе обработки запросов силами нашей системы могут происходить различные непредвиденные ситуации. Об их появлении система сигнализирует по протоколу HTTP соответствующими [статусами][5xx], обозначающими ошибки сервера.
+    |  Код    |  Описание  | | ------- | ---------- | | **500** | В процессе обработки системой запроса возникла непредвиденная ситуация. При получении подобного кода ответа мы рекомендуем обратиться в техническую поддержку. | | **503** | Система временно недоступна и не готова обслуживать данный запрос. Запрос гарантированно не выполнен, при получении подобного кода ответа попробуйте выполнить его позднее, когда доступность системы будет восстановлена. | | **504** | Система превысила допустимое время обработки запроса, результат запроса не определён. Попробуйте отправить запрос повторно или выяснить результат выполнения исходного запроса, если повторное исполнение запроса нежелательно. |
+    [5xx]: https://tools.ietf.org/html/rfc7231#section-6.6
+  termsOfService: 'https://vality.dev/'
+  contact:
+    name: Команда техподдержки
+    email: support@vality.dev
+    url: 'https://api.vality.dev'
+host: api.vality.dev
+basePath: /wallet/v0
+schemes:
+  - https
+consumes:
+  - application/json; charset=utf-8
+produces:
+  - application/json; charset=utf-8
+securityDefinitions:
+  bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: >
+      Для аутентификации вызовов мы используем [JWT](https://jwt.io). Соответствующий ключ передается в заголовке.
+      ```shell Authorization: Bearer {YOUR_API_KEY_JWT} ```
+security:
+  - 
+    bearer: [ ]
+responses:
+  BadRequest:
+    description: Недопустимые для операции входные данные
+    schema:
+      $ref: '#/definitions/BadRequest'
+  ConflictRequest:
+    description: Переданное значение `externalID` уже использовалось вами ранее с другими параметрами запроса
+    schema:
+      $ref: '#/definitions/ConflictRequest'
+  NotFound:
+    description: Искомая сущность не найдена
+  Unauthorized:
+    description: Ошибка авторизации
+parameters:
+  requestID:
+    name: X-Request-ID
+    in: header
+    description: Уникальный идентификатор запроса к системе
+    required: true
+    type: string
+    maxLength: 32
+    minLength: 1
+  providerID:
+    name: providerID
+    in: path
+    description: Идентификатор провайдера
+    required: true
+    type: string
+    maxLength: 40
+    minLength: 1
+  identityID:
+    name: identityID
+    in: path
+    description: Идентификатор личности владельца
+    required: true
+    type: string
+    maxLength: 40
+    minLength: 1
+  walletID:
+    name: walletID
+    in: path
+    description: Идентификатор кошелька
+    required: true
+    type: string
+    maxLength: 40
+    minLength: 1
+  destinationID:
+    name: destinationID
+    in: path
+    description: Идентификатор приёмника средств
+    required: true
+    type: string
+    maxLength: 40
+    minLength: 1
+  withdrawalID:
+    name: withdrawalID
+    in: path
+    description: Идентификатор вывода денежных средств
+    required: true
+    type: string
+    maxLength: 40
+    minLength: 1
+  externalID:
+    name: externalID
+    in: path
+    description: Внешний идентификатор
+    required: true
+    type: string
+  residence:
+    name: residence
+    in: query
+    description: |
+      Резиденция, в рамках которой производится оказание услуг,
+      код страны или региона по стандарту [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)
+    type: string
+    pattern: '^[A-Za-z]{3}$'
+    required: false
+  amountFrom:
+    name: amountFrom
+    in: query
+    description: Сумма денежных средств в минорных единицах
+    type: integer
+    format: int64
+    required: false
+  amountTo:
+    name: amountTo
+    in: query
+    description: Сумма денежных средств в минорных единицах
+    type: integer
+    format: int64
+    required: false
+  currencyID:
+    name: currencyID
+    in: query
+    description: |
+      Валюта, символьный код согласно [ISO
+      4217](http://www.iso.org/iso/home/standards/currency_codes.htm).
+    type: string
+    pattern: '^[A-Z]{3}$'
+  limit:
+    name: limit
+    in: query
+    description: Лимит выборки
+    required: true
+    type: integer
+    format: int32
+    minimum: 1
+    maximum: 1000
+  eventCursor:
+    name: eventCursor
+    in: query
+    description: |
+      Идентификатор последнего известного события.
+
+      Все события, произошедшие _после_ указанного, попадут в выборку.
+      Если этот параметр не указан, в выборку попадут события, начиная с самого первого.
+    required: false
+    type: integer
+    format: int32
+  eventID:
+    name: eventID
+    in: path
+    description: |
+      Идентификатор события процедуры идентификации.
+    required: true
+    type: integer
+    format: int32
+  reportID:
+    name: reportID
+    in: path
+    description: Идентификатор отчета
+    required: true
+    type: integer
+    format: int64
+  fileID:
+    name: fileID
+    in: path
+    description: Идентификатор файла
+    required: true
+    type: string
+    maxLength: 40
+    minLength: 1
+  fromTime:
+    name: fromTime
+    in: query
+    description: Начало временного отрезка
+    required: true
+    type: string
+    format: date-time
+  toTime:
+    name: toTime
+    in: query
+    description: Конец временного отрезка
+    required: true
+    type: string
+    format: date-time
+  deadline:
+    name: X-Request-Deadline
+    in: header
+    description: Максимальное время обработки запроса
+    required: false
+    type: string
+    maxLength: 40
+    minLength: 1
+  webhookID:
+    name: webhookID
+    in: path
+    description: Идентификатор webhook'а
+    required: true
+    type: string
+    maxLength: 40
+    minLength: 1
+  queryIdentityID:
+    name: identityID
+    in: query
+    description: Идентификатор личности владельца
+    required: true
+    type: string
+    maxLength: 40
+    minLength: 1
+  w2wTransferID:
+    name: w2wTransferID
+    in: path
+    description: Идентификатор перевода
+    required: true
+    type: string
+    maxLength: 40
+    minLength: 1
+tags:
+  - 
+    name: Providers
+    x-displayName: Провайдеры услуг
+    description: ""
+  - 
+    name: Identities
+    x-displayName: Владельцы
+    description: ""
+  - 
+    name: Wallets
+    x-displayName: Кошельки
+    description: ""
+  - 
+    name: Deposits
+    x-displayName: Пополнения
+    description: ""
+  - 
+    name: Withdrawals
+    x-displayName: Выводы
+    description: ""
+  - 
+    name: Residences
+    x-displayName: Резиденции
+    description: ""
+  - 
+    name: Currencies
+    x-displayName: Валюты
+    description: ""
+  - 
+    name: Reports
+    x-displayName: Отчеты
+    description: ""
+  - 
+    name: Downloads
+    x-displayName: Загрузка файлов
+    description: ""
+  - 
+    name: W2W
+    x-displayName: Переводы внутри системы
+    description: "Переводы средств между кошельками внутри системы"
+  - 
+    name: Webhooks
+    x-displayName: Webhooks
+    description: >
+      ## Vality Webhooks Management API
+      В данном разделе описаны методы, позволяющие управлять Webhook'ами, или инструментами для получения асинхронных оповещений посредством HTTP-запросов при наступлении одного или группы интересующих вас событий, например, о том, что выплата в рамках созданного кошелька была успешно проведена.
+      ## Vality Webhooks Events API
+      Внимание! Только Webhooks Management API является частью системы Vality, а следовательно и данной спецификации. Для реализации обработчика присылаемых уведомлений вам необходимо будет ознакомиться с OpenAPI-спецификацией [Vality Wallets Webhook Events API](https://vality.github.io/swag-wallets-webhook-events/).
+  - 
+    name: Error Codes
+    x-displayName: Коды ошибок
+    description: >
+
+      ## Ошибки перевода
+      | Код                    | Описание                                                                                                                                       | | ---                    | --------                                                                                                                                       | | InvalidSenderResource  | Неверный источник перевода (введен номер несуществующей карты, отсутствующего аккаунта и т.п.)                                                 | | InvalidReceiverResource| Неверный получатель перевода (введен номер несуществующей карты и т.п.)                                                                        | | InsufficientFunds      | Недостаточно средств на счете банковской карты                                                                                                 | | PreauthorizationFailed | Предварительная авторизация отклонена (введен неверный код 3D-Secure, на форме 3D-Secure нажата ссылка отмены)                                 | | RejectedByIssuer       | Перевод отклонён эмитентом (установлены запреты по стране списания, запрет на покупки в интернете, платеж отклонен антифродом эмитента и т.п.) |
