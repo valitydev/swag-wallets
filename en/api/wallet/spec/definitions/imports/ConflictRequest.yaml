@@ -1,0 +1,15 @@
+---
+type: object
+properties:
+  externalID:
+    x-rebillyMerge:
+      - 
+        $ref: '#/definitions/ExternalID'
+      - 
+        description: Переданное значение `externalID`, для которого обнаружен конфликт параметров запроса
+  id:
+    description: Идентификатор сущности, созданной предыдущим запросом с указанным `externalID`
+    type: string
+  message:
+    description: Человекочитаемое описание ошибки
+    type: string
