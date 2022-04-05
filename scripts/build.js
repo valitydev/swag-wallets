@@ -29,4 +29,4 @@ APIS.forEach(function (api) {
 var SWAGGER_UI_DIST = Path.dirname(require.resolve('swagger-ui'));
 rm('-rf', TARGET_DIR + '/swagger-ui/')
 cp('-R', SWAGGER_UI_DIST, TARGET_DIR + '/swagger-ui/')
-sed('-i', 'http://petstore.swagger.io/v2/swagger.json', '../swagger.json', TARGET_DIR + '/swagger-ui/index.html')
+// sed('-i', 'http://petstore.swagger.io/v2/swagger.json', '../swagger.json', TARGET_DIR + '/swagger-ui/index.html')
