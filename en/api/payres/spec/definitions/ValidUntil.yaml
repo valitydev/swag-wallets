@@ -1,0 +1,8 @@
+---
+type: object
+properties:
+  validUntil:
+    description: Дата и время, до наступления которых токен платёжного ресурса остается действительным
+    type: string
+    format: date-time
+    readOnly: true
