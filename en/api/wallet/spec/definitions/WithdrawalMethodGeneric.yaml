@@ -1,0 +1,17 @@
+---
+type: object
+allOf:
+  - 
+    $ref: '#/definitions/WithdrawalMethod'
+  - 
+    type: object
+    required:
+      - providers
+    properties:
+      providers:
+        description: Список провайдеров сервисов выплат
+        type: array
+        items:
+          x-rebillyMerge:
+            - 
+              $ref: '#/definitions/GenericProvider'
