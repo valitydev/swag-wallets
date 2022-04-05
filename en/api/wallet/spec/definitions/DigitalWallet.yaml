@@ -1,0 +1,24 @@
+---
+description: Данные цифрового кошелька
+type: object
+required:
+  - id
+  - provider
+properties:
+  id:
+    description: Идентификатор цифрового кошелька
+    type: string
+    minLength: 1
+    maxLength: 100
+    example: zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQ
+  provider:
+    description: Провайдер электронных денежных средств
+    x-rebillyMerge:
+      - 
+        $ref: '#/definitions/DigitalWalletProvider'
+  token:
+    description: Строка, содержащая данные для авторизации операций над этим кошельком
+    type: string
+    minLength: 1
+    maxLength: 4000
+    example: " eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF\\ 0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\\ "
