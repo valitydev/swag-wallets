@@ -1,0 +1,25 @@
+---
+type: object
+properties:
+  status:
+    description: |
+      Статус приёмника денежных средств.
+
+      | Значение       | Пояснение                                  |
+      | -------------- | ------------------------------------------ |
+      | `Unauthorized` | Не авторизован владельцем на вывод средств |
+      | `Authorized`   | Авторизован владельцем на вывод средств    |
+    type: string
+    enum:
+      - Unauthorized
+      - Authorized
+    readOnly: true
+    example: Authorized
+  validUntil:
+    description: |
+      > Если `status` == `Authorized`
+
+      Дата и время, до наступления которых авторизация действительна
+    type: string
+    format: date-time
+    readOnly: true
