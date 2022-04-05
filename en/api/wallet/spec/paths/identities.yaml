@@ -1,0 +1,83 @@
+---
+get:
+  operationId: listIdentities
+  summary: Перечислить личности владельцев
+  tags:
+    - Identities
+  parameters:
+    - 
+      $ref: '#/parameters/requestID'
+    - 
+      $ref: '#/parameters/deadline'
+    - 
+      name: providerID
+      description: Идентификатор провайдера услуг
+      in: query
+      required: false
+      type: string
+      maxLength: 40
+      minLength: 1
+    - 
+      x-rebillyMerge:
+        - 
+          name: continuationToken
+          in: query
+          required: false
+        - 
+          $ref: '#/definitions/ContinuationToken'
+  responses:
+    '200':
+      description: Результат поиска
+      schema:
+        type: object
+        properties:
+          continuationToken:
+            x-rebillyMerge:
+              - 
+                $ref: '#/definitions/ContinuationToken'
+          result:
+            description: Найденные личности
+            type: array
+            items:
+              $ref: '#/definitions/Identity'
+    '400':
+      $ref: '#/responses/BadRequest'
+    '401':
+      $ref: '#/responses/Unauthorized'
+post:
+  operationId: createIdentity
+  summary: Создать личность владельца
+  tags:
+    - Identities
+  parameters:
+    - 
+      $ref: '#/parameters/requestID'
+    - 
+      $ref: '#/parameters/deadline'
+    - 
+      name: identity
+      description: Данные создаваемой личности
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/Identity'
+  responses:
+    '201':
+      description: Личность владельца создана
+      headers:
+        Location:
+          description: URI созданной личности
+          type: string
+          format: uri
+      schema:
+        $ref: '#/definitions/Identity'
+    '400':
+      $ref: '#/responses/BadRequest'
+    '401':
+      $ref: '#/responses/Unauthorized'
+    '409':
+      $ref: '#/responses/ConflictRequest'
+    '422':
+      description: Неверные данные личности владельца
+      schema:
+        $ref: '#/definitions/InvalidOperationParameters'
