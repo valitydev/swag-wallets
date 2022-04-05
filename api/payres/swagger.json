@@ -1,0 +1,311 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.1.0",
+    "title": "Vality Payment Resource API",
+    "description": "\nVality Payment Resource API служит для токенизации чувствительных данных платёжных ресурсов пользователей.\n",
+    "termsOfService": "https://vality.dev/",
+    "contact": {
+      "name": "Команда техподдержки",
+      "email": "support@vality.dev",
+      "url": "https://vality.dev/"
+    }
+  },
+  "host": "api.vality.dev",
+  "basePath": "/payres/v0",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json; charset=utf-8"
+  ],
+  "produces": [
+    "application/json; charset=utf-8"
+  ],
+  "securityDefinitions": {
+    "bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Для аутентификации вызовов мы используем [JWT](https://jwt.io). Cоответствующий ключ передается в заголовке.\n```shell\n Authorization: Bearer {TOKENIZATION|PRIVATE_JWT}\n```\n"
+    }
+  },
+  "security": [
+    {
+      "bearer": []
+    }
+  ],
+  "responses": {
+    "NotFound": {
+      "description": "Искомая сущность не найдена"
+    },
+    "BadRequest": {
+      "description": "Недопустимые для операции входные данные",
+      "schema": {
+        "$ref": "#/definitions/BadRequest"
+      }
+    },
+    "Unauthorized": {
+      "description": "Ошибка авторизации"
+    }
+  },
+  "parameters": {
+    "requestID": {
+      "name": "X-Request-ID",
+      "in": "header",
+      "description": "Уникальный идентификатор запроса к системе",
+      "required": true,
+      "type": "string",
+      "maxLength": 32,
+      "minLength": 1
+    }
+  },
+  "tags": [
+    {
+      "name": "Payment Resources",
+      "x-displayName": "Платёжные ресурсы",
+      "description": ""
+    }
+  ],
+  "paths": {
+    "/bank-cards": {
+      "post": {
+        "operationId": "storeBankCard",
+        "summary": "Сохранить банковскую карту",
+        "tags": [
+          "Payment Resources"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "name": "bankCard",
+            "description": "Данные банковской карты",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BankCard"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Карта сохранена",
+            "schema": {
+              "$ref": "#/definitions/StoreBankCardResponse"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "422": {
+            "description": "Непригодные данные банковской карты",
+            "schema": {
+              "$ref": "#/definitions/InvalidBankCard"
+            }
+          }
+        }
+      }
+    },
+    "/bank-cards/{token}": {
+      "get": {
+        "operationId": "getBankCard",
+        "summary": "Получить данные банковской карты",
+        "tags": [
+          "Payment Resources"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "name": "token",
+            "description": "Данные банковской карты",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Данные карты найдены",
+            "schema": {
+              "$ref": "#/definitions/SecuredBankCard"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "AuthData": {
+      "type": "object",
+      "properties": {
+        "authData": {
+          "description": "Данные для авторизации платежа по карте",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000,
+          "example": "GVpEyibo60jJwyoJqriv1nAjiwfvzC9KVqFFjhhUA"
+        }
+      }
+    },
+    "BankCard": {
+      "description": "Данные банковской карты",
+      "type": "object",
+      "required": [
+        "cardNumber"
+      ],
+      "properties": {
+        "type": {
+          "description": "Банковская карта",
+          "type": "string",
+          "enum": [
+            "BankCard"
+          ]
+        },
+        "cardNumber": {
+          "description": "Номер банковской карты",
+          "type": "string",
+          "pattern": "^\\d{12,19}$",
+          "example": "4242424242424242"
+        },
+        "expDate": {
+          "description": "Срок действия банковской карты",
+          "type": "string",
+          "pattern": "^\\d{2}\\/(\\d{2}|\\d{4})$",
+          "example": "12/21"
+        },
+        "cardHolder": {
+          "description": "Имя держателя карты",
+          "type": "string",
+          "pattern": "^[[:alpha:][:space:][:punct:]]+$",
+          "minLength": 1,
+          "maxLength": 100,
+          "example": "LEXA SVOTIN"
+        },
+        "cvv": {
+          "description": "Код верификации",
+          "type": "string",
+          "pattern": "^\\d{3,4}$",
+          "example": "321"
+        }
+      }
+    },
+    "BankCardPaymentSystem": {
+      "description": "Платежная система.\n\nНабор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getMethods).\n",
+      "type": "string"
+    },
+    "InvalidBankCard": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Card is expired.\n"
+        }
+      }
+    },
+    "BadRequest": {
+      "type": "object",
+      "required": [
+        "errorType"
+      ],
+      "properties": {
+        "errorType": {
+          "description": "Тип ошибки в данных",
+          "type": "string",
+          "enum": [
+            "SchemaViolated",
+            "NotFound",
+            "WrongType",
+            "NotInRange",
+            "WrongSize",
+            "WrongLength",
+            "WrongArray",
+            "NoMatch",
+            "InvalidResourceToken",
+            "InvalidToken"
+          ],
+          "example": "NotFound"
+        },
+        "name": {
+          "description": "Имя или идентификатор элемента сообщения, содержащего недопустимые данные",
+          "type": "string",
+          "example": "X-Request-ID"
+        },
+        "description": {
+          "description": "Пояснение, почему данные считаются недопустимыми",
+          "type": "string",
+          "example": "Required parameter was not sent"
+        }
+      }
+    },
+    "SecuredBankCard": {
+      "description": "Безопасные данные банковской карты",
+      "type": "object",
+      "required": [
+        "token"
+      ],
+      "properties": {
+        "token": {
+          "description": "Токен, идентифицирующий исходные данные карты",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000,
+          "example": "zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQg9xMkh"
+        },
+        "bin": {
+          "description": "[Идентификационный номер][1] банка-эмитента карты\n\n[1]: https://en.wikipedia.org/wiki/Payment_card_number#Issuer_identification_number_(IIN)\n",
+          "type": "string",
+          "pattern": "^\\d{6,8}$",
+          "example": "424242",
+          "readOnly": true
+        },
+        "lastDigits": {
+          "description": "Последние цифры номера карты",
+          "type": "string",
+          "pattern": "^\\d{2,4}$",
+          "example": "4242",
+          "readOnly": true
+        }
+      }
+    },
+    "StoreBankCardResponse": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/SecuredBankCard"
+        },
+        {
+          "$ref": "#/definitions/AuthData"
+        }
+      ]
+    },
+    "ValidUntil": {
+      "type": "object",
+      "properties": {
+        "validUntil": {
+          "description": "Дата и время, до наступления которых токен платёжного ресурса остается действительным",
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        }
+      }
+    }
+  }
+}
