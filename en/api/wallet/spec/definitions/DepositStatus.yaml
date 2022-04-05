@@ -1,0 +1,28 @@
+---
+type: object
+properties:
+  status:
+    description: |
+      Статус поступления денежных средств.
+
+      | Значение    | Пояснение                                        |
+      | ----------- | ------------------------------------------------ |
+      | `Pending`   | Поступление в процессе выполнения                |
+      | `Succeeded` | Поступление средств произведён успешно           |
+      | `Failed`    | Поступление средств завершился неудачей          |
+    type: string
+    enum:
+      - Pending
+      - Succeeded
+      - Failed
+    readOnly: true
+  failure:
+    x-rebillyMerge:
+      - 
+        description: |
+          | > Если `status` == `Failed`
+
+          Пояснение причины неудачи
+        readOnly: true
+      - 
+        $ref: '#/definitions/DepositFailure'
