@@ -1,0 +1,40 @@
+---
+description: Параметры создаваемого вывода
+allOf:
+  - 
+    $ref: '#/definitions/Withdrawal'
+  - 
+    type: object
+    properties:
+      walletGrant:
+        x-rebillyMerge:
+          - 
+            $ref: '#/definitions/GrantToken'
+          - 
+            description: |
+              | Токен, дающий право на списание с кошелька для оплаты вывода.
+
+              Необходимо предоставить в том случае, если оплата производится засчёт средств _чужого_
+              кошелька. Владелец указанного кошелька может
+              [выдать на это право](#operation/issueWalletGrant).
+      destinationGrant:
+        x-rebillyMerge:
+          - 
+            $ref: '#/definitions/GrantToken'
+          - 
+            description: |
+              | Токен, дающий право вывода.
+
+              Необходимо предоставить в том случае, если вывод производится посредством _чужого_ приёмника
+              средств. Владелец указанного приёмника может
+              [выдать на это право](#operation/issueDestinationGrant).
+      quoteToken:
+        x-rebillyMerge:
+          - 
+            $ref: '#/definitions/GrantToken'
+          - 
+            description: |
+              | Котировка, по которой следует проводить вывод средств.
+
+              Должна быть [получена](#operation/createQuote)
+              заранее для каждой отдельной операции вывода с конвертацией.
