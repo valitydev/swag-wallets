@@ -20,8 +20,6 @@ jobs:
           node-version: ${{ env.NODEJS_VERSION }}
           cache: npm
       - run: npm install
-      - name: Patch specification
-        run: npm run patch
       - name: Include web stuff
         run: cp -v web/* dist/
       - name: Publish ReDoc on Github Pages
