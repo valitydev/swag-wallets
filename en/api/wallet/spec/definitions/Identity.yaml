@@ -36,7 +36,7 @@ properties:
       данной личностью владельца
     type: object
     example:
-      lkDisplayName: Сергей Иванович
+      lkDisplayName: Sergej Ivanovich
   externalID:
     x-rebillyMerge:
       - 
