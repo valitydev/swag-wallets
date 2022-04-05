@@ -1,0 +1,16 @@
+---
+description: Банковская карта
+allOf:
+  - 
+    $ref: '#/definitions/ReceiverResource'
+  - 
+    $ref: '#/definitions/SecuredBankCard'
+  - 
+    type: object
+    properties:
+      paymentSystem:
+        x-rebillyMerge:
+          - 
+            $ref: '#/definitions/BankCardPaymentSystem'
+          - 
+            readOnly: true
