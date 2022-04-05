@@ -1,5 +1,5 @@
 ---
-description: Банковская карта
+description: Card
 allOf:
   - 
     $ref: '#/definitions/DestinationResource'
