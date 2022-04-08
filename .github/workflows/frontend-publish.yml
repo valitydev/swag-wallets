@@ -2,7 +2,7 @@ name: 'Frontend: Publish'
 
 on:
   push:
-    branches: ['master', 'main']
+    branches: ['master', 'main', 'v0']
 
 jobs:
   configured:
