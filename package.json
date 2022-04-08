@@ -6,7 +6,7 @@
     "swagger": "swagger-repo",
     "test": "swagger-repo validate --basedir api/wallet/spec/ && swagger-repo validate --basedir api/payres/spec/",
     "start": "gulp serve",
-    "codegen": "vality-openapi generate ./api/wallet/swagger.json"
+    "codegen": "vality-openapi generate ./dist/api/wallet/swagger.json"
   },
   "devDependencies": {
     "@vality/openapi-generator-cli": "0.1.1-fbfe66e.0",
