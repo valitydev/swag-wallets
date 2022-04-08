@@ -1,0 +1,22 @@
+name: 'Frontend: PR'
+
+on:
+  pull_request:
+    branches: ['*']
+
+jobs:
+  configured:
+    uses: valitydev/action-frontend/.github/workflows/configured.yml@v0.1
+  check:
+    name: Check
+    runs-on: ubuntu-latest
+    needs: configured
+    if: needs.configured.outputs.exists == 'true'
+    steps:
+      - uses: actions/checkout@v3
+      - uses: valitydev/action-frontend/setup@v0.1
+      - run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Codegen
+        run: npm run codegen
