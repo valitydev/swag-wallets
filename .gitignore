@@ -35,3 +35,6 @@ node_modules
 
 # CI
 .wercker
+
+# Frontend
+/lib
