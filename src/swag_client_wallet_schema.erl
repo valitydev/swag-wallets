@@ -2816,16 +2816,6 @@ get_raw() ->
       } ],
       <<"description">> => <<"Банковская карта">>
     },
-    <<"Bitcoin">> => #{
-      <<"allOf">> => [ #{
-        <<"$ref">> => <<"#/definitions/CryptoWallet">>
-      }, #{ } ]
-    },
-    <<"BitcoinCash">> => #{
-      <<"allOf">> => [ #{
-        <<"$ref">> => <<"#/definitions/CryptoWallet">>
-      }, #{ } ]
-    },
     <<"BrowserGetRequest">> => #{
       <<"allOf">> => [ #{
         <<"$ref">> => <<"#/definitions/BrowserRequest">>
@@ -2897,7 +2887,6 @@ get_raw() ->
     <<"CryptoWallet">> => #{
       <<"type">> => <<"object">>,
       <<"required">> => [ <<"currency">>, <<"id">> ],
-      <<"discriminator">> => <<"currency">>,
       <<"properties">> => #{
         <<"id">> => #{
           <<"type">> => <<"string">>,
@@ -3371,11 +3360,6 @@ get_raw() ->
       },
       <<"description">> => <<"Неверные входные данные для операции">>
     },
-    <<"Ethereum">> => #{
-      <<"allOf">> => [ #{
-        <<"$ref">> => <<"#/definitions/CryptoWallet">>
-      }, #{ } ]
-    },
     <<"ExternalID">> => #{
       <<"type">> => <<"string">>,
       <<"description">> => <<"Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n">>,
@@ -3553,11 +3537,6 @@ get_raw() ->
         }
       },
       <<"description">> => <<"Безопасные данные банковской карты">>
-    },
-    <<"Litecoin">> => #{
-      <<"allOf">> => [ #{
-        <<"$ref">> => <<"#/definitions/CryptoWallet">>
-      }, #{ } ]
     },
     <<"PartyID">> => #{
       <<"type">> => <<"string">>,
@@ -3778,21 +3757,6 @@ get_raw() ->
       <<"pattern">> => <<"^[A-Z]{3}$">>,
       <<"description">> => <<"Резиденция, символьный код по стандарту [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)\n">>,
       <<"example">> => <<"RUS">>
-    },
-    <<"Ripple">> => #{
-      <<"allOf">> => [ #{
-        <<"$ref">> => <<"#/definitions/CryptoWallet">>
-      }, #{
-        <<"type">> => <<"object">>,
-        <<"properties">> => #{
-          <<"tag">> => #{
-            <<"type">> => <<"string">>,
-            <<"example">> => <<"191919191">>,
-            <<"description">> => <<"Уникальный идентификатор учетной записи Ripple (XRP)">>,
-            <<"pattern">> => <<"^[0-9]{9}$">>
-          }
-        }
-      } ]
     },
     <<"SenderResource">> => #{
       <<"type">> => <<"object">>,
