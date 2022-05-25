@@ -2,6 +2,6 @@ description: |
     Провайдер сервисов выплат.
 
     Набор провайдеров, доступных для проведения выплат, можно узнать, вызвав
-    соответствующую [операцию](#operation/getMethods).
+    соответствующую [операцию](#operation/getWithdrawalMethods).
 type: string
 example: YourBankName
