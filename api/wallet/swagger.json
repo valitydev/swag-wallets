@@ -2521,20 +2521,6 @@
         }
       ]
     },
-    "Bitcoin": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/CryptoWallet"
-        }
-      ]
-    },
-    "BitcoinCash": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/CryptoWallet"
-        }
-      ]
-    },
     "BrowserGetRequest": {
       "type": "object",
       "allOf": [
@@ -2621,7 +2607,6 @@
     "CryptoWallet": {
       "description": "Данные криптовалютного кошелька",
       "type": "object",
-      "discriminator": "currency",
       "required": [
         "id",
         "currency"
@@ -3262,13 +3247,6 @@
         }
       }
     },
-    "Ethereum": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/CryptoWallet"
-        }
-      ]
-    },
     "ExternalID": {
       "description": "Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n",
       "type": "string",
@@ -3450,13 +3428,6 @@
           "readOnly": true
         }
       }
-    },
-    "Litecoin": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/CryptoWallet"
-        }
-      ]
     },
     "PartyID": {
       "description": "Уникальный в рамках системы идентификатор участника.",
@@ -3723,24 +3694,6 @@
       "type": "string",
       "pattern": "^[A-Z]{3}$",
       "example": "RUS"
-    },
-    "Ripple": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/CryptoWallet"
-        },
-        {
-          "type": "object",
-          "properties": {
-            "tag": {
-              "description": "Уникальный идентификатор учетной записи Ripple (XRP)",
-              "type": "string",
-              "pattern": "^[0-9]{9}$",
-              "example": "191919191"
-            }
-          }
-        }
-      ]
     },
     "SenderResource": {
       "description": "Ресурс отправителя денежных средств, используемый для осуществления переводов",
