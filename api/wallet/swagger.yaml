@@ -1670,7 +1670,7 @@ definitions:
             description: |
               Платежная система.
 
-              Набор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getMethods).
+              Набор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getWithdrawalMethods).
             type: string
             readOnly: true
   BankCardReceiverResourceParams:
@@ -1689,7 +1689,7 @@ definitions:
             description: |
               Платежная система.
 
-              Набор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getMethods).
+              Набор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getWithdrawalMethods).
             type: string
             readOnly: true
   BankCardSenderResourceParams:
@@ -1775,16 +1775,12 @@ definitions:
       Если токена нет, получена последняя часть данных.
     type: string
   CryptoCurrency:
-    description: Криптовалюта
+    description: |
+      Криптовалюта.
+
+      Набор криптовалют, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getWithdrawalMethods).
     type: string
-    enum:
-      - Bitcoin
-      - Litecoin
-      - BitcoinCash
-      - Ripple
-      - Ethereum
-      - Zcash
-      - USDT
+    example: BTC
   CryptoWallet:
     description: Данные криптовалютного кошелька
     type: object
@@ -1800,16 +1796,12 @@ definitions:
         maxLength: 256
         example: zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQ
       currency:
-        description: Криптовалюта
+        description: |
+          Криптовалюта.
+
+          Набор криптовалют, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getWithdrawalMethods).
         type: string
-        enum:
-          - Bitcoin
-          - Litecoin
-          - BitcoinCash
-          - Ripple
-          - Ethereum
-          - Zcash
-          - USDT
+        example: BTC
   CryptoWalletDestinationResource:
     description: Криптовалютные денежные средства
     allOf:
@@ -2320,7 +2312,7 @@ definitions:
           Провайдер электронных денежных средств.
 
           Набор провайдеров, доступных для проведения выплат, можно узнать, вызвав
-          соответствующую [операцию](#operation/getMethods).
+          соответствующую [операцию](#operation/getWithdrawalMethods).
         type: string
         example: Paypal
       token:
@@ -2339,7 +2331,7 @@ definitions:
       Провайдер электронных денежных средств.
 
       Набор провайдеров, доступных для проведения выплат, можно узнать, вызвав
-      соответствующую [операцию](#operation/getMethods).
+      соответствующую [операцию](#operation/getWithdrawalMethods).
     type: string
     example: Paypal
   InvalidOperationParameters:
@@ -2378,7 +2370,7 @@ definitions:
       Провайдер сервисов выплат.
 
       Набор провайдеров, доступных для проведения выплат, можно узнать, вызвав
-      соответствующую [операцию](#operation/getMethods).
+      соответствующую [операцию](#operation/getWithdrawalMethods).
     type: string
     example: YourBankName
   GrantToken:
@@ -2487,7 +2479,7 @@ definitions:
     description: |
       Платежная система.
 
-      Набор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getMethods).
+      Набор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getWithdrawalMethods).
     type: string
   SecuredBankCard:
     description: Безопасные данные банковской карты
@@ -3353,7 +3345,7 @@ definitions:
               description: |
                 Платежная система.
 
-                Набор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getMethods).
+                Набор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getWithdrawalMethods).
               type: string
   WithdrawalMethodDigitalWallet:
     type: object
@@ -3371,7 +3363,7 @@ definitions:
                 Провайдер электронных денежных средств.
 
                 Набор провайдеров, доступных для проведения выплат, можно узнать, вызвав
-                соответствующую [операцию](#operation/getMethods).
+                соответствующую [операцию](#operation/getWithdrawalMethods).
               type: string
               example: Paypal
   WithdrawalMethodGeneric:
@@ -3390,7 +3382,7 @@ definitions:
                 Провайдер сервисов выплат.
 
                 Набор провайдеров, доступных для проведения выплат, можно узнать, вызвав
-                соответствующую [операцию](#operation/getMethods).
+                соответствующую [операцию](#operation/getWithdrawalMethods).
               type: string
               example: YourBankName
   WithdrawalParameters:

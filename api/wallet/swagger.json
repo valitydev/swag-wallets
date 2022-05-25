@@ -2457,7 +2457,7 @@
           "type": "object",
           "properties": {
             "paymentSystem": {
-              "description": "Платежная система.\n\nНабор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getMethods).\n",
+              "description": "Платежная система.\n\nНабор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getWithdrawalMethods).\n",
               "type": "string",
               "readOnly": true
             }
@@ -2489,7 +2489,7 @@
           "type": "object",
           "properties": {
             "paymentSystem": {
-              "description": "Платежная система.\n\nНабор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getMethods).\n",
+              "description": "Платежная система.\n\nНабор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getWithdrawalMethods).\n",
               "type": "string",
               "readOnly": true
             }
@@ -2614,17 +2614,9 @@
       "type": "string"
     },
     "CryptoCurrency": {
-      "description": "Криптовалюта",
+      "description": "Криптовалюта.\n\nНабор криптовалют, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getWithdrawalMethods).\n",
       "type": "string",
-      "enum": [
-        "Bitcoin",
-        "Litecoin",
-        "BitcoinCash",
-        "Ripple",
-        "Ethereum",
-        "Zcash",
-        "USDT"
-      ]
+      "example": "BTC"
     },
     "CryptoWallet": {
       "description": "Данные криптовалютного кошелька",
@@ -2643,17 +2635,9 @@
           "example": "zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQ"
         },
         "currency": {
-          "description": "Криптовалюта",
+          "description": "Криптовалюта.\n\nНабор криптовалют, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getWithdrawalMethods).\n",
           "type": "string",
-          "enum": [
-            "Bitcoin",
-            "Litecoin",
-            "BitcoinCash",
-            "Ripple",
-            "Ethereum",
-            "Zcash",
-            "USDT"
-          ]
+          "example": "BTC"
         }
       }
     },
@@ -3239,7 +3223,7 @@
           "example": "zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQ"
         },
         "provider": {
-          "description": "Провайдер электронных денежных средств.\n\nНабор провайдеров, доступных для проведения выплат, можно узнать, вызвав\nсоответствующую [операцию](#operation/getMethods).\n",
+          "description": "Провайдер электронных денежных средств.\n\nНабор провайдеров, доступных для проведения выплат, можно узнать, вызвав\nсоответствующую [операцию](#operation/getWithdrawalMethods).\n",
           "type": "string",
           "example": "Paypal"
         },
@@ -3264,7 +3248,7 @@
       ]
     },
     "DigitalWalletProvider": {
-      "description": "Провайдер электронных денежных средств.\n\nНабор провайдеров, доступных для проведения выплат, можно узнать, вызвав\nсоответствующую [операцию](#operation/getMethods).\n",
+      "description": "Провайдер электронных денежных средств.\n\nНабор провайдеров, доступных для проведения выплат, можно узнать, вызвав\nсоответствующую [операцию](#operation/getWithdrawalMethods).\n",
       "type": "string",
       "example": "Paypal"
     },
@@ -3309,7 +3293,7 @@
       }
     },
     "GenericProvider": {
-      "description": "Провайдер сервисов выплат.\n\nНабор провайдеров, доступных для проведения выплат, можно узнать, вызвав\nсоответствующую [операцию](#operation/getMethods).\n",
+      "description": "Провайдер сервисов выплат.\n\nНабор провайдеров, доступных для проведения выплат, можно узнать, вызвав\nсоответствующую [операцию](#operation/getWithdrawalMethods).\n",
       "type": "string",
       "example": "YourBankName"
     },
@@ -3434,7 +3418,7 @@
       }
     },
     "BankCardPaymentSystem": {
-      "description": "Платежная система.\n\nНабор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getMethods).\n",
+      "description": "Платежная система.\n\nНабор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getWithdrawalMethods).\n",
       "type": "string"
     },
     "SecuredBankCard": {
@@ -4484,7 +4468,7 @@
               "description": "Список платежных систем",
               "type": "array",
               "items": {
-                "description": "Платежная система.\n\nНабор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getMethods).\n",
+                "description": "Платежная система.\n\nНабор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getWithdrawalMethods).\n",
                 "type": "string"
               }
             }
@@ -4508,7 +4492,7 @@
               "description": "Список провайдеров электронных денежных средств",
               "type": "array",
               "items": {
-                "description": "Провайдер электронных денежных средств.\n\nНабор провайдеров, доступных для проведения выплат, можно узнать, вызвав\nсоответствующую [операцию](#operation/getMethods).\n",
+                "description": "Провайдер электронных денежных средств.\n\nНабор провайдеров, доступных для проведения выплат, можно узнать, вызвав\nсоответствующую [операцию](#operation/getWithdrawalMethods).\n",
                 "type": "string",
                 "example": "Paypal"
               }
@@ -4533,7 +4517,7 @@
               "description": "Список провайдеров сервисов выплат",
               "type": "array",
               "items": {
-                "description": "Провайдер сервисов выплат.\n\nНабор провайдеров, доступных для проведения выплат, можно узнать, вызвав\nсоответствующую [операцию](#operation/getMethods).\n",
+                "description": "Провайдер сервисов выплат.\n\nНабор провайдеров, доступных для проведения выплат, можно узнать, вызвав\nсоответствующую [операцию](#operation/getWithdrawalMethods).\n",
                 "type": "string",
                 "example": "YourBankName"
               }
