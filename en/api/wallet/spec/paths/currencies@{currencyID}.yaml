@@ -1,7 +1,7 @@
 ---
 get:
   operationId: getCurrency
-  summary: Получить описание валюты
+  summary: Obtain currency description
   tags:
     - Currencies
   parameters:
@@ -13,14 +13,14 @@ get:
       name: currencyID
       in: path
       description: |
-        Валюта, символьный код согласно [ISO
+        Currency, character code according to [ISO
         4217](http://www.iso.org/iso/home/standards/currency_codes.htm).
       type: string
       required: true
       pattern: '^[A-Za-z]{3}$'
   responses:
     '200':
-      description: Валюта найдена
+      description: Currency found
       schema:
         $ref: '#/definitions/Currency'
     '404':
