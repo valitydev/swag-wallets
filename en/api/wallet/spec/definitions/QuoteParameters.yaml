@@ -1,5 +1,5 @@
 ---
-description: Параметры запроса комиссий
+description: Commission Request Options
 type: object
 required:
   - sender
@@ -20,4 +20,4 @@ properties:
       - 
         $ref: '#/definitions/Asset'
       - 
-        description: Сумма операции
+        description: Transaction amount
