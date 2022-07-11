@@ -25,25 +25,25 @@ securityDefinitions:
     name: Authorization
     in: header
     description: >
-      Для аутентификации вызовов мы используем [JWT](https://jwt.io). Cоответствующий ключ передается в заголовке.
+      We use [JWT](https://jwt.io) for call authentication. The corresponding key is passed in the header.
       ```shell Authorization: Bearer {TOKENIZATION|PRIVATE_JWT} ```
 security:
   - 
     bearer: [ ]
 responses:
   NotFound:
-    description: Искомая сущность не найдена
+    description: The content you are looking for was not found
   BadRequest:
-    description: Недопустимые для операции входные данные
+    description: Invalid input data for operation
     schema:
       $ref: '#/definitions/BadRequest'
   Unauthorized:
-    description: Ошибка авторизации
+    description: Authorization Error
 parameters:
   requestID:
     name: X-Request-ID
     in: header
-    description: Уникальный идентификатор запроса к системе
+    description: Unique identifier of the request to the system
     required: true
     type: string
     maxLength: 32
@@ -51,5 +51,5 @@ parameters:
 tags:
   - 
     name: Payment Resources
-    x-displayName: Платёжные ресурсы
+    x-displayName: Payment resources
     description: ""
