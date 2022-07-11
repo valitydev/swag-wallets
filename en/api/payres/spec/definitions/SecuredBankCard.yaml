@@ -1,18 +1,18 @@
 ---
-description: Безопасные данные банковской карты
+description: Secure bank card details
 type: object
 required:
   - token
 properties:
   token:
-    description: Токен, идентифицирующий исходные данные карты
+    description: Token identifying the original card data
     type: string
     minLength: 1
     maxLength: 1000
     example: zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQg9xMkh
   bin:
     description: |
-      [Идентификационный номер][1] банка-эмитента карты
+      [Identification number][1] of the card issuing bank
 
       [1]: https://en.wikipedia.org/wiki/Payment_card_number#Issuer_identification_number_(IIN)
     type: string
