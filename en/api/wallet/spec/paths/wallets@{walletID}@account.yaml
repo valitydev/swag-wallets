@@ -1,7 +1,7 @@
 ---
 get:
   operationId: getWalletAccount
-  summary: Получить состояние счёта
+  summary: Get account status
   tags:
     - Wallets
   parameters:
@@ -13,7 +13,7 @@ get:
       $ref: '#/parameters/walletID'
   responses:
     '200':
-      description: Счёт кошелька получен
+      description: Wallet account received
       schema:
         $ref: '#/definitions/WalletAccount'
     '404':
