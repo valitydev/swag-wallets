@@ -1,7 +1,7 @@
 ---
 get:
   operationId: getProvider
-  summary: Получить данные провайдера
+  summary: Get provider details
   tags:
     - Providers
   parameters:
@@ -13,7 +13,7 @@ get:
       $ref: '#/parameters/providerID'
   responses:
     '200':
-      description: Провайдер найден
+      description: Provider found
       schema:
         $ref: '#/definitions/Provider'
     '404':
