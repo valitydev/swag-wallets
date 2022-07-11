@@ -19,7 +19,7 @@ post:
         $ref: '#/definitions/WithdrawalQuoteParams'
   responses:
     '202':
-      description: Полученная котировка
+      description: Received quote
       schema:
         $ref: '#/definitions/WithdrawalQuote'
     '400':
@@ -29,6 +29,6 @@ post:
     '409':
       $ref: '#/responses/ConflictRequest'
     '422':
-      description: Неверные данные для получения котировки
+      description: Invalid data for getting a quote
       schema:
         $ref: '#/definitions/InvalidOperationParameters'
