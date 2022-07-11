@@ -1,4 +1,4 @@
 ---
-description: Идентификатор источника денежных средств
+description: Cash source identifier
 type: string
 example: "107498"
