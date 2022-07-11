@@ -9,7 +9,7 @@ allOf:
       - providers
     properties:
       providers:
-        description: Список провайдеров сервисов выплат
+        description: List of payment service providers
         type: array
         items:
           x-rebillyMerge:
