@@ -3,13 +3,13 @@ type: object
 properties:
   status:
     description: |
-      Статус поступления денежных средств.
+      Status of receipt of funds.
 
-      | Значение    | Пояснение                                        |
+      | Meaning | Explanation |
       | ----------- | ------------------------------------------------ |
-      | `Pending`   | Поступление в процессе выполнения                |
-      | `Succeeded` | Поступление средств произведён успешно           |
-      | `Failed`    | Поступление средств завершился неудачей          |
+      | `Pending` | Receipt in progress |
+      | `Succeeded` | Receipt of funds made successfully |
+      | `Failed` | Receipt of funds ended in failure |
     type: string
     enum:
       - Pending
@@ -20,9 +20,9 @@ properties:
     x-rebillyMerge:
       - 
         description: |
-          | > Если `status` == `Failed`
+          | > If `status` == `Failed`
 
-          Пояснение причины неудачи
+          Explanation of the reason for failure
         readOnly: true
       - 
         $ref: '#/definitions/DepositFailure'
