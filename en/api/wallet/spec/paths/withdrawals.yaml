@@ -1,7 +1,7 @@
 ---
 get:
   operationId: listWithdrawals
-  summary: Поиск выводов
+  summary: Search of withdrawals
   tags:
     - Withdrawals
   parameters:
@@ -12,7 +12,7 @@ get:
     - 
       name: walletID
       in: query
-      description: Идентификатор кошелька
+      description: Identifier of the wallet
       type: string
       maxLength: 40
       minLength: 1
@@ -20,7 +20,7 @@ get:
     - 
       name: identityID
       in: query
-      description: Идентификатор личности владельца
+      description: Identifier of the owner's identity
       type: string
       maxLength: 40
       minLength: 1
@@ -28,7 +28,7 @@ get:
     - 
       name: withdrawalID
       in: query
-      description: Идентификатор вывода денежных средств
+      description: Identifier of the funds withdrawal
       type: string
       required: false
       maxLength: 40
@@ -36,7 +36,7 @@ get:
     - 
       name: destinationID
       in: query
-      description: Идентификатор приёмника средств
+      description: Identifier of the funds recipient
       type: string
       maxLength: 40
       minLength: 1
@@ -53,14 +53,14 @@ get:
     - 
       name: createdAtFrom
       in: query
-      description: Дата создания с
+      description: Creation date from
       type: string
       format: date-time
       required: false
     - 
       name: createdAtTo
       in: query
-      description: Дата создания до
+      description: Creation date to
       type: string
       format: date-time
       required: false
@@ -82,7 +82,7 @@ get:
           $ref: '#/definitions/ContinuationToken'
   responses:
     '200':
-      description: Результат поиска
+      description: Search result
       schema:
         type: object
         properties:
@@ -91,7 +91,7 @@ get:
               - 
                 $ref: '#/definitions/ContinuationToken'
           result:
-            description: Найденные выводы
+            description: Withdrawals found
             type: array
             items:
               $ref: '#/definitions/Withdrawal'
@@ -101,7 +101,7 @@ get:
       $ref: '#/responses/Unauthorized'
 post:
   operationId: createWithdrawal
-  summary: Запустить вывод средств
+  summary: Start funds withdrawal
   tags:
     - Withdrawals
   parameters:
@@ -111,17 +111,17 @@ post:
       $ref: '#/parameters/deadline'
     - 
       name: withdrawal
-      description: Данные вывода
+      description: Withdrawal data
       in: body
       required: true
       schema:
         $ref: '#/definitions/WithdrawalParameters'
   responses:
     '202':
-      description: Вывод запущен
+      description: Withdrawal started
       headers:
         Location:
-          description: URI запущенного вывода
+          description: URI of withdrawal started
           type: string
           format: uri
       schema:
@@ -133,6 +133,6 @@ post:
     '409':
       $ref: '#/responses/ConflictRequest'
     '422':
-      description: Неверные данные для осуществления вывода
+      description: Invalid data for withdrawal
       schema:
         $ref: '#/definitions/InvalidOperationParameters'
