@@ -1,5 +1,5 @@
 ---
-description: Данные отмены поступления денежных средств
+description: Cash flow cancellation data
 allOf:
   - 
     type: object
@@ -15,7 +15,7 @@ allOf:
           - 
             readOnly: true
       createdAt:
-        description: Дата и время запуска отмены
+        description: Date and time of cancellation start
         type: string
         format: date-time
         readOnly: true
@@ -32,7 +32,7 @@ allOf:
           - 
             $ref: '#/definitions/Asset'
           - 
-            description: Объем денежных средств
+            description: Amount of funds 
       reason:
         type: string
       externalID:
