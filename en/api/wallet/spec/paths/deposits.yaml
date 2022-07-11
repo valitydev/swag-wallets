@@ -1,7 +1,7 @@
 ---
 get:
   operationId: listDeposits
-  summary: Поиск пополнений
+  summary: Search for replenishments
   tags:
     - Deposits
   parameters:
@@ -12,7 +12,7 @@ get:
     - 
       name: walletID
       in: query
-      description: Идентификатор кошелька
+      description: Identifier of the wallet
       type: string
       maxLength: 40
       minLength: 1
@@ -20,7 +20,7 @@ get:
     - 
       name: identityID
       in: query
-      description: Идентификатор личности владельца
+      description: Identifier of the owner's identity
       type: string
       maxLength: 40
       minLength: 1
@@ -28,7 +28,7 @@ get:
     - 
       name: depositID
       in: query
-      description: Идентификатор ввода денежных средств
+      description: Identifier of the input of funds
       type: string
       required: false
       maxLength: 50
@@ -36,7 +36,7 @@ get:
     - 
       name: sourceID
       in: query
-      description: Идентификатор источника средств
+      description: Identifier of the funds source
       type: string
       maxLength: 40
       minLength: 1
@@ -53,14 +53,14 @@ get:
     - 
       name: createdAtFrom
       in: query
-      description: Дата создания с
+      description: Creation date from
       type: string
       format: date-time
       required: false
     - 
       name: createdAtTo
       in: query
-      description: Дата создания до
+      description: Creation date to
       type: string
       format: date-time
       required: false
@@ -91,7 +91,7 @@ get:
           $ref: '#/definitions/ContinuationToken'
   responses:
     '200':
-      description: Результат поиска
+      description: Search results
       schema:
         type: object
         properties:
@@ -100,7 +100,7 @@ get:
               - 
                 $ref: '#/definitions/ContinuationToken'
           result:
-            description: Найденные пополнения
+            description: Found replenishment
             type: array
             items:
               $ref: '#/definitions/Deposit'
