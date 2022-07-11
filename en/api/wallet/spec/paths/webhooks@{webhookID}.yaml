@@ -1,6 +1,6 @@
 ---
 get:
-  description: Получить webhook по его идентификатору.
+  description: Get a webhook by its identifier.
   tags:
     - Webhooks
   operationId: getWebhookByID
@@ -15,7 +15,7 @@ get:
       $ref: '#/parameters/queryIdentityID'
   responses:
     '200':
-      description: Данные webhook'а
+      description: Webhook's data
       schema:
         $ref: '#/definitions/Webhook'
     '400':
@@ -25,11 +25,11 @@ get:
     '404':
       $ref: '#/responses/NotFound'
     '422':
-      description: Неверные данные для получения webhook'а
+      description: Invalid data for obtaining a webhook
       schema:
         $ref: '#/definitions/InvalidOperationParameters'
 delete:
-  description: Снять указанный webhook.
+  description: Remove the specified webhook.
   tags:
     - Webhooks
   operationId: deleteWebhookByID
@@ -44,7 +44,7 @@ delete:
       $ref: '#/parameters/queryIdentityID'
   responses:
     '204':
-      description: Webhook успешно снят
+      description: Webhook successfully removed
     '400':
       $ref: '#/responses/BadRequest'
     '401':
@@ -52,6 +52,6 @@ delete:
     '404':
       $ref: '#/responses/NotFound'
     '422':
-      description: Неверные данные для снятия webhook'а
+      description: Invalid data for removing webhook
       schema:
         $ref: '#/definitions/InvalidOperationParameters'
