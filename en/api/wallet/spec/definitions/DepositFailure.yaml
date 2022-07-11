@@ -4,7 +4,7 @@ required:
   - code
 properties:
   code:
-    description: Код ошибки поступления
+    description: Receipt error code
     type: string
   subError:
     $ref: '#/definitions/SubFailure'
