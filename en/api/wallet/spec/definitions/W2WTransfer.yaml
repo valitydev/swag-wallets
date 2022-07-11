@@ -1,5 +1,5 @@
 ---
-description: Данные перевода
+description: Translation data
 type: object
 required:
   - id
@@ -14,7 +14,7 @@ properties:
       - 
         $ref: '#/definitions/W2WTransferID'
   createdAt:
-    description: Дата и время создания
+    description: Date and time of creation
     type: string
     format: date-time
   body:
@@ -22,7 +22,7 @@ properties:
       - 
         $ref: '#/definitions/Asset'
       - 
-        description: Сумма операции
+        description: Transaction amount
   sender:
     $ref: '#/definitions/WalletID'
   receiver:
