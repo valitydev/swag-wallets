@@ -1,0 +1,24 @@
+---
+description: |
+  Scope that includes payout events within a specific wallet
+allOf:
+  - 
+    $ref: '#/definitions/WebhookScope'
+  - 
+    type: object
+    required:
+      - eventTypes
+    properties:
+      walletID:
+        x-rebillyMerge:
+          - 
+            $ref: '#/definitions/WalletID'
+      eventTypes:
+        description: Set of payout event types to be notified about
+        type: array
+        items:
+          type: string
+          enum:
+            - WithdrawalStarted
+            - WithdrawalSucceeded
+            - WithdrawalFailed

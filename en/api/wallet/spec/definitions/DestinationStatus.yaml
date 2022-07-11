@@ -1,0 +1,25 @@
+---
+type: object
+properties:
+  status:
+    description: |
+      The status of the receiver of funds.
+
+      | Meaning | Explanation |
+      | ------------- | ------------------------------------ |
+      | `Unauthorized` | Not authorized by the owner to withdraw funds |
+      | `Authorized` | Authorized by the owner to withdraw funds |
+    type: string
+    enum:
+      - Unauthorized
+      - Authorized
+    readOnly: true
+    example: Authorized
+  validUntil:
+    description: |
+      > If `status` == `Authorized`
+
+      Date and time until which authorization is valid
+    type: string
+    format: date-time
+    readOnly: true

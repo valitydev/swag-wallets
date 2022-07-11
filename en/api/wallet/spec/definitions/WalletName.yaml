@@ -1,0 +1,4 @@
+---
+description: Human-readable name of the wallet, by which it is easy to recognize
+type: string
+example: Worldwide PHP Awareness Initiative

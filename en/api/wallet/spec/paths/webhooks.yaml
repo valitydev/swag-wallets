@@ -1,0 +1,58 @@
+---
+post:
+  description: Set up a new webhook.
+  tags:
+    - Webhooks
+  operationId: createWebhook
+  parameters:
+    - 
+      $ref: '#/parameters/requestID'
+    - 
+      $ref: '#/parameters/deadline'
+    - 
+      name: webhookParams
+      description: Parameters of the installed webhook
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/Webhook'
+  responses:
+    '201':
+      description: Webhook is set
+      schema:
+        $ref: '#/definitions/Webhook'
+    '400':
+      $ref: '#/responses/BadRequest'
+    '401':
+      $ref: '#/responses/Unauthorized'
+    '422':
+      description: Invalid data for webhook creation
+      schema:
+        $ref: '#/definitions/InvalidOperationParameters'
+get:
+  description: Get set of installed webhooks.
+  tags:
+    - Webhooks
+  operationId: getWebhooks
+  parameters:
+    - 
+      $ref: '#/parameters/requestID'
+    - 
+      $ref: '#/parameters/deadline'
+    - 
+      $ref: '#/parameters/queryIdentityID'
+  responses:
+    '200':
+      description: A set of webhooks
+      schema:
+        type: array
+        items:
+          $ref: '#/definitions/Webhook'
+    '400':
+      $ref: '#/responses/BadRequest'
+    '401':
+      $ref: '#/responses/Unauthorized'
+    '422':
+      description: Invalid data for obtaining webhooks
+      schema:
+        $ref: '#/definitions/InvalidOperationParameters'

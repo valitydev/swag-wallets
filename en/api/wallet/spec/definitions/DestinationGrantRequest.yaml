@@ -1,0 +1,19 @@
+---
+description: Request for the right to control the outputs to the receiver of the means
+type: object
+required:
+  - validUntil
+properties:
+  token:
+    x-rebillyMerge:
+      - 
+        description: Token granting the right to control the outputs
+      - 
+        $ref: '#/definitions/GrantToken'
+      - 
+        readOnly: true
+  validUntil:
+    description: |
+      Date and time until which the granted right is valid
+    type: string
+    format: date-time

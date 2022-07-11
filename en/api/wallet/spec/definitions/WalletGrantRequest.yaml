@@ -1,0 +1,26 @@
+---
+description: Request for a one-time right to manage funds on the wallet
+type: object
+required:
+  - asset
+  - validUntil
+properties:
+  token:
+    x-rebillyMerge:
+      - 
+        description: A token that gives the right to one-time management of funds on the wallet
+      - 
+        $ref: '#/definitions/GrantToken'
+      - 
+        readOnly: true
+  asset:
+    x-rebillyMerge:
+      - 
+        $ref: '#/definitions/Asset'
+      - 
+        description: Amount of funds allowed for use
+  validUntil:
+    description: |
+      Date and time until which the granted right is valid
+    type: string
+    format: date-time

@@ -1,0 +1,28 @@
+---
+type: object
+properties:
+  status:
+    description: |
+      Withdrawal status.
+
+      | Meaning | Explanation |
+      | ----------- | ------------------------------------ |
+      | `Pending` | Output in progress |
+      | `Succeeded` | Withdrawal completed successfully |
+      | `Failed` | Withdrawal failed |
+    type: string
+    enum:
+      - Pending
+      - Succeeded
+      - Failed
+    readOnly: true
+  failure:
+    x-rebillyMerge:
+      - 
+        description: |
+          | > If `status` == `Failed`
+
+          Explaining the reason for failure
+        readOnly: true
+      - 
+        $ref: '#/definitions/WithdrawalFailure'

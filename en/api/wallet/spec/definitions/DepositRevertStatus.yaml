@@ -1,0 +1,28 @@
+---
+type: object
+properties:
+  status:
+    description: |
+      Cash receipt cancellation status.
+
+      | Value | Explanation |
+      | ----------- | ------------------------------------------------------- |
+      | `Pending' | Cancellation in progress |
+      | `Succeeded` | Cancellation of receipt of funds was successful |
+      | `Failed` | Cancellation of incoming funds failed |
+    type: string
+    enum:
+      - Pending
+      - Succeeded
+      - Failed
+    readOnly: true
+  failure:
+    x-rebillyMerge:
+      - 
+        description: |
+          | > If `status` == `Failed`
+
+          Explanation of the reason for failure
+        readOnly: true
+      - 
+        $ref: '#/definitions/DepositRevertFailure'

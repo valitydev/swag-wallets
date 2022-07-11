@@ -1,0 +1,8 @@
+---
+description: Invalid input data for operation
+type: object
+properties:
+  message:
+    type: string
+    example: |
+      No such identity challenge type: fms.

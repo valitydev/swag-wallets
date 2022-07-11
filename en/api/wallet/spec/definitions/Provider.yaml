@@ -1,0 +1,25 @@
+---
+description: Service provider data
+type: object
+required:
+  - id
+  - name
+  - residences
+properties:
+  id:
+    x-rebillyMerge:
+      - 
+        $ref: '#/definitions/ProviderID'
+  name:
+    description: |
+      Human readable name of the service provider
+    type: string
+    example: SERVICE PROVIDER LLC
+  residences:
+    type: array
+    description: |
+      Residences in which the provider provides services
+    items:
+      x-rebillyMerge:
+        - 
+          $ref: '#/definitions/ResidenceID'

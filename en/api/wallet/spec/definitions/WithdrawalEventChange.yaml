@@ -1,0 +1,13 @@
+---
+description: |
+  Change, that occurred in the funds withdrawal process
+type: object
+discriminator: type
+required:
+  - type
+properties:
+  type:
+    description: The type of change that occurred
+    type: string
+    enum:
+      - WithdrawalStatusChanged

@@ -1,0 +1,40 @@
+---
+description: Options of generated withdrawal
+allOf:
+  - 
+    $ref: '#/definitions/Withdrawal'
+  - 
+    type: object
+    properties:
+      walletGrant:
+        x-rebillyMerge:
+          - 
+            $ref: '#/definitions/GrantToken'
+          - 
+            description: |
+              | A token that gives the right to withdraw from the wallet to pay for the withdrawal.
+
+              Must be provided if payment is made at the expense of _foreign_
+              wallet. The owner of said wallet can
+              [issue this right](#operation/issueWalletGrant).
+      destinationGrant:
+        x-rebillyMerge:
+          - 
+            $ref: '#/definitions/GrantToken'
+          - 
+            description: |
+              | A token that gives the right to withdraw.
+
+              Must be provided if the withdrawal is made through a _foreign_ recipient of
+              funds. The owner of the specified recipient can
+              [issue this right](#operation/issueDestinationGrant).
+      quoteToken:
+        x-rebillyMerge:
+          - 
+            $ref: '#/definitions/GrantToken'
+          - 
+            description: |
+              | Quote at which funds should be withdrawn.
+
+              Must be [obtained](#operation/createQuote)
+              in advance for each individual withdrawal operation with conversion.

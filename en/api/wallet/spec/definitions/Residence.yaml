@@ -1,0 +1,21 @@
+---
+description: Description of the region of residence
+type: object
+required:
+  - id
+  - name
+properties:
+  id:
+    x-rebillyMerge:
+      - 
+        $ref: '#/definitions/ResidenceID'
+  name:
+    description: |
+      Human-readable name of the region of residence
+    type: string
+    example: Russian Federation
+  flag:
+    description: |
+      Residence region flag
+    type: string
+    example: '🇷🇺'

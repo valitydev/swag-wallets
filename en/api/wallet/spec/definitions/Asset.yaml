@@ -1,0 +1,18 @@
+---
+description: |
+  The amount of money
+type: object
+required:
+  - amount
+  - currency
+properties:
+  amount:
+    description: |
+      The amount of money in minor units, for example, in kopecks
+    type: integer
+    format: int64
+    example: 1430000
+  currency:
+    x-rebillyMerge:
+      - 
+        $ref: '#/definitions/CurrencyID'

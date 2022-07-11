@@ -1,0 +1,20 @@
+---
+type: object
+required:
+  - reportType
+  - fromTime
+  - toTime
+properties:
+  reportType:
+    description: Type of report
+    type: string
+    enum:
+      - withdrawalRegistry
+  fromTime:
+    description: Start of the time period
+    type: string
+    format: date-time
+  toTime:
+    description: End of the time period
+    type: string
+    format: date-time

@@ -1,0 +1,12 @@
+---
+type: object
+discriminator: changeType
+required:
+  - changeType
+properties:
+  changeType:
+    description: Type of change in user interaction.
+    type: string
+    enum:
+      - UserInteractionCreated
+      - UserInteractionFinished

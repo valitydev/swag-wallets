@@ -1,0 +1,28 @@
+---
+type: object
+properties:
+  status:
+    description: |
+      Cash inflow adjustment status.
+
+      | Meaning | Explanation |
+      | ----------- | -------------------------------------------------- ----- |
+      | `Pending` | Correction in progress |
+      | `Succeeded` | Correction completed successfully |
+      | `Failed` | Adjustment failed |
+    type: string
+    enum:
+      - Pending
+      - Succeeded
+      - Failed
+    readOnly: true
+  failure:
+    x-rebillyMerge:
+      - 
+        description: |
+          | > If `status` == `Failed`
+
+          Explanation of the reason for failure
+        readOnly: true
+      - 
+        $ref: '#/definitions/DepositAdjustmentFailure'

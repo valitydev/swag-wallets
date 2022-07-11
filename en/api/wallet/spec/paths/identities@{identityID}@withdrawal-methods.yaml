@@ -1,0 +1,27 @@
+---
+get:
+  summary: Get payout methods available by owner identity
+  tags:
+    - Identities
+  operationId: getWithdrawalMethods
+  parameters:
+    - 
+      $ref: '#/parameters/requestID'
+    - 
+      $ref: '#/parameters/deadline'
+    - 
+      $ref: '#/parameters/identityID'
+  responses:
+    '200':
+      description: Methods found
+      schema:
+        type: object
+        properties:
+          methods:
+            type: array
+            items:
+              $ref: '#/definitions/WithdrawalMethod'
+    '400':
+      $ref: '#/responses/BadRequest'
+    '401':
+      $ref: '#/responses/Unauthorized'

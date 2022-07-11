@@ -1,0 +1,37 @@
+---
+type: object
+required:
+  - identityID
+  - scope
+  - url
+properties:
+  id:
+    description: |
+      Identifier of the webhook
+    type: string
+    readOnly: true
+  identityID:
+    x-rebillyMerge:
+      - 
+        $ref: '#/definitions/IdentityID'
+  active:
+    description: |
+      Is notification delivery currently enabled?
+    type: boolean
+    readOnly: true
+  scope:
+    $ref: '#/definitions/WebhookScope'
+  url:
+    description: |
+      The URL that will receive notifications of events that have occurred
+    type: string
+    format: uri
+    maxLength: 1000
+  publicKey:
+    description: |
+      The content of the public key used to check the authoritativeness of
+      notifications coming to `url`
+    type: string
+    format: hexadecimal
+    readOnly: true
+    example: "\\ MIGJAoGBAM1fmNUvezts3yglTdhXuqG7OhHxQtDFA+Ss//YuUGjw5ossDbEMoS+S\\ IFuYZ/UL9Xg0rEHNRSbmf48OK+mz0FobEtbji8MADayzGfFopXsfRFa7MVy3Uhu5\\ jBDpLsN3DyJapAkK0TAYINlZXxVjDwxRNheTvC+xub5WNdiwc28fAgMBAAE="

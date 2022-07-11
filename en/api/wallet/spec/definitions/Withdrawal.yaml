@@ -1,0 +1,54 @@
+---
+description: Funds withdrawal data
+allOf:
+  - 
+    type: object
+    required:
+      - wallet
+      - destination
+      - body
+    properties:
+      id:
+        x-rebillyMerge:
+          - 
+            $ref: '#/definitions/WithdrawalID'
+          - 
+            readOnly: true
+      createdAt:
+        description: Date and time the withdrawal started
+        type: string
+        format: date-time
+        readOnly: true
+      wallet:
+        x-rebillyMerge:
+          - 
+            $ref: '#/definitions/WalletID'
+      destination:
+        x-rebillyMerge:
+          - 
+            $ref: '#/definitions/DestinationID'
+      body:
+        x-rebillyMerge:
+          - 
+            $ref: '#/definitions/Asset'
+          - 
+            description: Amount of funds to be withdrawn
+      fee:
+        x-rebillyMerge:
+          - 
+            $ref: '#/definitions/Asset'
+          - 
+            description: Commission amount
+      metadata:
+        description: |
+          A random, client-specific API and a data set that is not transparent to the system, associated with
+          this withdrawal
+        type: object
+        example:
+          notify_email: iliketrains@example.com
+      externalID:
+        x-rebillyMerge:
+          - 
+            $ref: '#/definitions/ExternalID'
+  - 
+    $ref: '#/definitions/WithdrawalStatus'

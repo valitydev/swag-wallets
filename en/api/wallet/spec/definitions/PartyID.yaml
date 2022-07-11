@@ -1,0 +1,5 @@
+---
+description: The participant's unique identifier within the system.
+type: string
+minLength: 1
+maxLength: 40

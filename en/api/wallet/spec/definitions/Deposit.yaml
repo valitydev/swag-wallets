@@ -1,0 +1,48 @@
+---
+description: Data on cash receipts
+allOf:
+  - 
+    type: object
+    required:
+      - wallet
+      - source
+      - body
+      - id
+    properties:
+      id:
+        x-rebillyMerge:
+          - 
+            $ref: '#/definitions/DepositID'
+          - 
+            readOnly: true
+      createdAt:
+        description: Replenishment start date and time
+        type: string
+        format: date-time
+        readOnly: true
+      wallet:
+        x-rebillyMerge:
+          - 
+            $ref: '#/definitions/WalletID'
+      source:
+        x-rebillyMerge:
+          - 
+            $ref: '#/definitions/SourceID'
+      body:
+        x-rebillyMerge:
+          - 
+            $ref: '#/definitions/Asset'
+          - 
+            description: The amount of funds received
+      fee:
+        x-rebillyMerge:
+          - 
+            $ref: '#/definitions/Asset'
+          - 
+            description: Commission amount
+      externalID:
+        x-rebillyMerge:
+          - 
+            $ref: '#/definitions/ExternalID'
+  - 
+    $ref: '#/definitions/DepositStatus'

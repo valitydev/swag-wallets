@@ -1,0 +1,55 @@
+---
+description: Cash receptor data
+allOf:
+  - 
+    type: object
+    required:
+      - name
+      - identity
+      - currency
+      - resource
+    properties:
+      id:
+        x-rebillyMerge:
+          - 
+            $ref: '#/definitions/DestinationID'
+          - 
+            readOnly: true
+      name:
+        description: |
+          A human-readable name for the receiver by which it is easily recognizable
+        type: string
+        example: Squarey plastic thingy
+      createdAt:
+        description: Date and time of creation of the receiver of the funds
+        type: string
+        format: date-time
+        readOnly: true
+      isBlocked:
+        description: Is the fundraiser blocked?
+        type: boolean
+        readOnly: true
+        example: false
+      identity:
+        x-rebillyMerge:
+          - 
+            $ref: '#/definitions/IdentityID'
+      currency:
+        x-rebillyMerge:
+          - 
+            $ref: '#/definitions/CurrencyID'
+      resource:
+        $ref: '#/definitions/DestinationResource'
+      metadata:
+        description: |
+          An arbitrary, client-specific API and non-transparent set of data associated with
+          given receiver
+        type: object
+        example:
+          color_hint: olive-green
+      externalID:
+        x-rebillyMerge:
+          - 
+            $ref: '#/definitions/ExternalID'
+  - 
+    $ref: '#/definitions/DestinationStatus'

@@ -1,0 +1,12 @@
+---
+description: |
+  Detailed description of the error
+type: object
+required:
+  - code
+properties:
+  code:
+    description: Details of the error code
+    type: string
+  subError:
+    $ref: '#/definitions/SubFailure'

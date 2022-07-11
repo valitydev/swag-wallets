@@ -1,0 +1,36 @@
+---
+description: Currency description
+type: object
+required:
+  - id
+  - numericCode
+  - name
+  - exponent
+properties:
+  id:
+    x-rebillyMerge:
+      - 
+        $ref: '#/definitions/CurrencyID'
+  numericCode:
+    description: |
+      Digital currency code according to
+      [ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm)
+    type: string
+    pattern: '^[0-9]{3}$'
+    example: '643'
+  name:
+    description: |
+      Human readable currency name
+    type: string
+    example: Russian ruble
+  sign:
+    description: |
+      Currency unit sign
+    type: string
+    example: '₽'
+  exponent:
+    description: |
+      The number of acceptable decimal places in the amount of funds, in which the number of minor monetary units can be indicated
+    type: integer
+    minimum: 0
+    example: 2

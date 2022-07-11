@@ -1,0 +1,7 @@
+---
+description: Cryptocurrency funds
+allOf:
+  - 
+    $ref: '#/definitions/DestinationResource'
+  - 
+    $ref: '#/definitions/CryptoWallet'

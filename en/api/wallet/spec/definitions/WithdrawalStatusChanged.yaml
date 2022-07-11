@@ -1,0 +1,7 @@
+---
+description: Change of withdrawal status
+allOf:
+  - 
+    $ref: '#/definitions/WithdrawalEventChange'
+  - 
+    $ref: '#/definitions/WithdrawalStatus'

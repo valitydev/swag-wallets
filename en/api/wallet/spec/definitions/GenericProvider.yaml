@@ -1,0 +1,8 @@
+---
+description: |
+  Payment service provider.
+
+  The set of providers available for making payments can be found by calling
+  corresponding [operation](#operation/getWithdrawalMethods).
+type: string
+example: YourBankName

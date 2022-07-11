@@ -1,0 +1,55 @@
+---
+description: Quote parameters for withdrawal
+type: object
+required:
+  - walletID
+  - currencyFrom
+  - currencyTo
+  - cash
+properties:
+  externalID:
+    x-rebillyMerge:
+      - 
+        $ref: '#/definitions/ExternalID'
+  walletID:
+    x-rebillyMerge:
+      - 
+        $ref: '#/definitions/WalletID'
+  destinationID:
+    x-rebillyMerge:
+      - 
+        $ref: '#/definitions/DestinationID'
+  currencyFrom:
+    x-rebillyMerge:
+      - 
+        $ref: '#/definitions/CurrencyID'
+      - 
+        description: Source currency code
+  currencyTo:
+    x-rebillyMerge:
+      - 
+        $ref: '#/definitions/CurrencyID'
+      - 
+        description: Target currency code
+  cash:
+    x-rebillyMerge:
+      - 
+        $ref: '#/definitions/Asset'
+      - 
+        description: The amount of funds for receiving a quote in one of the exchange currencies
+  walletGrant:
+    x-rebillyMerge:
+      - 
+        $ref: '#/definitions/GrantToken'
+      - 
+        description: >
+          > A token that gives the right to withdraw from the wallet to pay for the withdrawal.
+          It is necessary to provide if the payment is made at the expense of the funds of a _foreign_ wallet. The owner of the specified wallet can [issue this right](#operation/issueWalletGrant)
+  destinationGrant:
+    x-rebillyMerge:
+      - 
+        $ref: '#/definitions/GrantToken'
+      - 
+        description: >
+          > A token that gives the right to withdraw.
+          Must be provided if the withdrawal is made through a _foreign_ fund recipient. The owner of the specified recipient can [grant this right](#operation/issueDestinationGrant)

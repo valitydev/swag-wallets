@@ -1,0 +1,4 @@
+---
+description: Asset receiver identifier
+type: string
+example: "107498"

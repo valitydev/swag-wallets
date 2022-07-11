@@ -1,0 +1,33 @@
+---
+description: Bank card details
+type: object
+required:
+  - cardNumber
+properties:
+  type:
+    description: Card
+    type: string
+    enum:
+      - BankCard
+  cardNumber:
+    description: Bankcard number
+    type: string
+    pattern: '^\d{12,19}$'
+    example: "4242424242424242"
+  expDate:
+    description: Bank card expiration date
+    type: string
+    pattern: '^\d{2}\/(\d{2}|\d{4})$'
+    example: "12/21"
+  cardHolder:
+    description: Cardholder name
+    type: string
+    pattern: '^[[:alpha:][:space:][:punct:]]+$'
+    minLength: 1
+    maxLength: 100
+    example: "LEXA SVOTIN"
+  cvv:
+    description: Verification code
+    type: string
+    pattern: '^\d{3,4}$'
+    example: "321"

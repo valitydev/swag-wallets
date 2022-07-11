@@ -1,0 +1,28 @@
+---
+type: object
+required:
+  - status
+properties:
+  status:
+    description: |
+      The status of the money transfer.
+
+      | Meaning | Explanation |
+      | ----------- | ------------------------------------ |
+      | `Pending` | Translation in progress |
+      | `Succeeded` | Fund transfer completed successfully |
+      | `Failed` | Fund transfer failed |
+    type: string
+    enum:
+      - Pending
+      - Succeeded
+      - Failed
+  failure:
+    x-rebillyMerge:
+      - 
+        description: |
+          | > If `status` == `Failed`
+
+          Explanation of the reason for failure
+      - 
+        $ref: '#/definitions/W2WTransferFailure'

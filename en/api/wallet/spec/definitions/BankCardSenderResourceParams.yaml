@@ -1,0 +1,16 @@
+---
+description: Card
+allOf:
+  - 
+    $ref: '#/definitions/SenderResourceParams'
+  - 
+    $ref: '#/definitions/SecuredBankCard'
+  - 
+    type: object
+    required:
+      - authData
+    properties:
+      authData:
+        description: Authorization data received when saving the card
+        type: string
+        maxLength: 1000

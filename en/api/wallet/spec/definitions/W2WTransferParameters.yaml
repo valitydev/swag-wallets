@@ -1,0 +1,22 @@
+---
+description: Translation creation options
+type: object
+required:
+  - sender
+  - receiver
+  - body
+properties:
+  sender:
+    $ref: '#/definitions/WalletID'
+  receiver:
+    $ref: '#/definitions/WalletID'
+  body:
+    x-rebillyMerge:
+      - 
+        $ref: '#/definitions/Asset'
+      - 
+        description: Transfer amount
+  externalID:
+    x-rebillyMerge:
+      - 
+        $ref: '#/definitions/ExternalID'

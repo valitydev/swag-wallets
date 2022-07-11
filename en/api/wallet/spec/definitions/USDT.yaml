@@ -1,0 +1,4 @@
+---
+allOf:
+  - 
+    $ref: '#/definitions/CryptoWallet'

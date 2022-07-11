@@ -1,0 +1,7 @@
+---
+description: Card
+allOf:
+  - 
+    $ref: '#/definitions/DestinationResource'
+  - 
+    $ref: '#/definitions/SecuredBankCard'

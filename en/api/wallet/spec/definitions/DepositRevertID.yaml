@@ -1,0 +1,4 @@
+---
+description: Cash receipt cancellation identifier
+type: string
+example: "10068321"

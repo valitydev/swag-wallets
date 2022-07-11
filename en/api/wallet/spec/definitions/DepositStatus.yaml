@@ -1,0 +1,28 @@
+---
+type: object
+properties:
+  status:
+    description: |
+      Status of receipt of funds.
+
+      | Meaning | Explanation |
+      | ----------- | ------------------------------------------------ |
+      | `Pending` | Receipt in progress |
+      | `Succeeded` | Receipt of funds made successfully |
+      | `Failed` | Receipt of funds ended in failure |
+    type: string
+    enum:
+      - Pending
+      - Succeeded
+      - Failed
+    readOnly: true
+  failure:
+    x-rebillyMerge:
+      - 
+        description: |
+          | > If `status` == `Failed`
+
+          Explanation of the reason for failure
+        readOnly: true
+      - 
+        $ref: '#/definitions/DepositFailure'

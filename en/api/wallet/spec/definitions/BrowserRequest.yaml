@@ -1,0 +1,9 @@
+---
+type: object
+discriminator: requestType
+required:
+  - requestType
+properties:
+  requestType:
+    description: Type of browser operation
+    type: string

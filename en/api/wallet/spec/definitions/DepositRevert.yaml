@@ -1,0 +1,43 @@
+---
+description: Cash flow cancellation data
+allOf:
+  - 
+    type: object
+    required:
+      - wallet
+      - source
+      - body
+    properties:
+      id:
+        x-rebillyMerge:
+          - 
+            $ref: '#/definitions/DepositRevertID'
+          - 
+            readOnly: true
+      createdAt:
+        description: Date and time of cancellation start
+        type: string
+        format: date-time
+        readOnly: true
+      wallet:
+        x-rebillyMerge:
+          - 
+            $ref: '#/definitions/WalletID'
+      source:
+        x-rebillyMerge:
+          - 
+            $ref: '#/definitions/SourceID'
+      body:
+        x-rebillyMerge:
+          - 
+            $ref: '#/definitions/Asset'
+          - 
+            description: Amount of funds 
+      reason:
+        type: string
+      externalID:
+        x-rebillyMerge:
+          - 
+            $ref: '#/definitions/ExternalID'
+  - 
+    $ref: '#/definitions/DepositRevertStatus'

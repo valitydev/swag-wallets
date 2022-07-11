@@ -1,0 +1,35 @@
+---
+post:
+  operationId: issueDestinationGrant
+  summary: Grant the right to manage the recipient of funds
+  tags:
+    - Withdrawals
+  parameters:
+    - 
+      $ref: '#/parameters/requestID'
+    - 
+      $ref: '#/parameters/deadline'
+    - 
+      $ref: '#/parameters/destinationID'
+    - 
+      name: request
+      description: Request for the right to manage the recipient of funds
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/DestinationGrantRequest'
+  responses:
+    '201':
+      description: The right is granted
+      schema:
+        $ref: '#/definitions/DestinationGrantRequest'
+    '404':
+      $ref: '#/responses/NotFound'
+    '400':
+      $ref: '#/responses/BadRequest'
+    '401':
+      $ref: '#/responses/Unauthorized'
+    '422':
+      description: Invalid data for issuance
+      schema:
+        $ref: '#/definitions/InvalidOperationParameters'
