@@ -1,12 +1,12 @@
 ---
-description: Данные криптовалютного кошелька
+description: Cryptocurrency wallet details
 type: object
 required:
   - id
   - currency
 properties:
   id:
-    description: Идентификатор (он же адрес) криптовалютного кошелька
+    description: Identifier (aka address) of a cryptocurrency wallet
     type: string
     minLength: 16
     maxLength: 256
