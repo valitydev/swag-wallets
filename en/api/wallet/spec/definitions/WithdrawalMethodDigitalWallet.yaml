@@ -9,7 +9,7 @@ allOf:
       - providers
     properties:
       providers:
-        description: Список провайдеров электронных денежных средств
+        description: List of electronic money providers
         type: array
         items:
           x-rebillyMerge:
