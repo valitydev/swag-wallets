@@ -1,7 +1,7 @@
 ---
 get:
   operationId: listWallets
-  summary: Перечислить кошельки
+  summary: List the wallets
   tags:
     - Wallets
   parameters:
@@ -11,7 +11,7 @@ get:
       $ref: '#/parameters/deadline'
     - 
       name: identityID
-      description: Идентификатор личности владельца
+      description: Identifier of owner's identity
       in: query
       required: false
       type: string
@@ -31,7 +31,7 @@ get:
           $ref: '#/definitions/ContinuationToken'
   responses:
     '200':
-      description: Результат поиска
+      description: Search result
       schema:
         type: object
         properties:
@@ -40,7 +40,7 @@ get:
               - 
                 $ref: '#/definitions/ContinuationToken'
           result:
-            description: Найденные кошельки
+            description: Wallets found
             type: array
             items:
               $ref: '#/definitions/Wallet'
@@ -50,7 +50,7 @@ get:
       $ref: '#/responses/Unauthorized'
 post:
   operationId: createWallet
-  summary: Завести новый кошелёк
+  summary: Get a new wallet
   tags:
     - Wallets
   parameters:
@@ -60,17 +60,17 @@ post:
       $ref: '#/parameters/deadline'
     - 
       name: wallet
-      description: Данные создаваемого кошелька
+      description: Data of the created wallet
       in: body
       required: true
       schema:
         $ref: '#/definitions/Wallet'
   responses:
     '201':
-      description: Кошелёк создан
+      description: Wallet created
       headers:
         Location:
-          description: URI созданного кошелька
+          description: URI of the wallet created
           type: string
           format: uri
       schema:
@@ -82,6 +82,6 @@ post:
     '409':
       $ref: '#/responses/ConflictRequest'
     '422':
-      description: Неверные данные кошелька
+      description: Invalid data of the wallet
       schema:
         $ref: '#/definitions/InvalidOperationParameters'
