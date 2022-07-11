@@ -1,5 +1,5 @@
 ---
-description: Данные приёмника денежных средств
+description: Cash receptor data
 allOf:
   - 
     type: object
@@ -17,16 +17,16 @@ allOf:
             readOnly: true
       name:
         description: |
-          Человекочитаемое название приёмника средств, по которому его легко узнать
+          A human-readable name for the receiver by which it is easily recognizable
         type: string
         example: Squarey plastic thingy
       createdAt:
-        description: Дата и время создания приёмника средств
+        description: Date and time of creation of the receiver of the funds
         type: string
         format: date-time
         readOnly: true
       isBlocked:
-        description: Заблокирован ли приёмник средств?
+        description: Is the fundraiser blocked?
         type: boolean
         readOnly: true
         example: false
@@ -42,8 +42,8 @@ allOf:
         $ref: '#/definitions/DestinationResource'
       metadata:
         description: |
-          Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с
-          данным приёмником
+          An arbitrary, client-specific API and non-transparent set of data associated with
+          given receiver
         type: object
         example:
           color_hint: olive-green
