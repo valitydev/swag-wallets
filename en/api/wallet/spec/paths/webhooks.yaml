@@ -1,6 +1,6 @@
 ---
 post:
-  description: Установить новый webhook.
+  description: Set up a new webhook.
   tags:
     - Webhooks
   operationId: createWebhook
@@ -11,14 +11,14 @@ post:
       $ref: '#/parameters/deadline'
     - 
       name: webhookParams
-      description: Параметры устанавливаемого webhook'а
+      description: Parameters of the installed webhook
       in: body
       required: true
       schema:
         $ref: '#/definitions/Webhook'
   responses:
     '201':
-      description: Webhook установлен
+      description: Webhook is set
       schema:
         $ref: '#/definitions/Webhook'
     '400':
@@ -26,11 +26,11 @@ post:
     '401':
       $ref: '#/responses/Unauthorized'
     '422':
-      description: Неверные данные для создания webhook'а
+      description: Invalid data for webhook creation
       schema:
         $ref: '#/definitions/InvalidOperationParameters'
 get:
-  description: Получить набор установленных webhook'ов.
+  description: Get set of installed webhooks.
   tags:
     - Webhooks
   operationId: getWebhooks
@@ -43,7 +43,7 @@ get:
       $ref: '#/parameters/queryIdentityID'
   responses:
     '200':
-      description: Набор webhook'ов
+      description: A set of webhooks
       schema:
         type: array
         items:
@@ -53,6 +53,6 @@ get:
     '401':
       $ref: '#/responses/Unauthorized'
     '422':
-      description: Неверные данные для получения webhook'ов
+      description: Invalid data for obtaining webhooks
       schema:
         $ref: '#/definitions/InvalidOperationParameters'
