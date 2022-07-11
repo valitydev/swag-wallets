@@ -1,6 +1,6 @@
 ---
 get:
-  description: Получить состояние перевода.
+  description: Get the transfer status.
   tags:
     - W2W
   operationId: getW2WTransfer
@@ -13,7 +13,7 @@ get:
       $ref: '#/parameters/w2wTransferID'
   responses:
     '200':
-      description: Найденный перевод
+      description: Transfer found
       schema:
         $ref: '#/definitions/W2WTransfer'
     '400':
