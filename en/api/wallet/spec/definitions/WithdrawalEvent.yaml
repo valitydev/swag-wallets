@@ -1,6 +1,6 @@
 ---
 description: |
-  Событие, возникшее в процессе вывода средств
+  An event that occurred during the funds withdrawal process
 type: object
 required:
   - eventID
@@ -8,12 +8,12 @@ required:
   - changes
 properties:
   eventID:
-    description: Идентификатор события вывода средств
+    description: Identifier of the funds withdrawal event
     type: integer
     format: int32
     example: 42
   occuredAt:
-    description: Дата и время возникновения события
+    description: Date and time the event occurrence
     type: string
     format: date-time
   changes:
