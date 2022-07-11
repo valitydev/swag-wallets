@@ -3,13 +3,13 @@ type: object
 properties:
   status:
     description: |
-      Статус корректировки поступления денежных средств.
+      Cash inflow adjustment status.
 
-      | Значение    | Пояснение                                               |
-      | ----------- | ------------------------------------------------------- |
-      | `Pending`   | Корректировка в процессе выполнения                     |
-      | `Succeeded` | Корректировка произведёна успешно                       |
-      | `Failed`    | Корректировка завершилась неудачей                      |
+      | Meaning | Explanation |
+      | ----------- | -------------------------------------------------- ----- |
+      | `Pending` | Correction in progress |
+      | `Succeeded` | Correction completed successfully |
+      | `Failed` | Adjustment failed |
     type: string
     enum:
       - Pending
@@ -20,9 +20,9 @@ properties:
     x-rebillyMerge:
       - 
         description: |
-          | > Если `status` == `Failed`
+          | > If `status` == `Failed`
 
-          Пояснение причины неудачи
+          Explanation of the reason for failure
         readOnly: true
       - 
         $ref: '#/definitions/DepositAdjustmentFailure'
