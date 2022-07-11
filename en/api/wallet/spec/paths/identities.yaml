@@ -1,7 +1,7 @@
 ---
 get:
   operationId: listIdentities
-  summary: Перечислить личности владельцев
+  summary: List the identities of the owners
   tags:
     - Identities
   parameters:
@@ -11,7 +11,7 @@ get:
       $ref: '#/parameters/deadline'
     - 
       name: providerID
-      description: Идентификатор провайдера услуг
+      description: Service provider's identifier
       in: query
       required: false
       type: string
@@ -27,7 +27,7 @@ get:
           $ref: '#/definitions/ContinuationToken'
   responses:
     '200':
-      description: Результат поиска
+      description: Search result
       schema:
         type: object
         properties:
@@ -36,7 +36,7 @@ get:
               - 
                 $ref: '#/definitions/ContinuationToken'
           result:
-            description: Найденные личности
+            description: Identities found
             type: array
             items:
               $ref: '#/definitions/Identity'
@@ -46,7 +46,7 @@ get:
       $ref: '#/responses/Unauthorized'
 post:
   operationId: createIdentity
-  summary: Создать личность владельца
+  summary: Create owner identity
   tags:
     - Identities
   parameters:
@@ -56,17 +56,17 @@ post:
       $ref: '#/parameters/deadline'
     - 
       name: identity
-      description: Данные создаваемой личности
+      description: Data of the identity created
       in: body
       required: true
       schema:
         $ref: '#/definitions/Identity'
   responses:
     '201':
-      description: Личность владельца создана
+      description: Owner identity created
       headers:
         Location:
-          description: URI созданной личности
+          description: Created identity URI
           type: string
           format: uri
       schema:
@@ -78,6 +78,6 @@ post:
     '409':
       $ref: '#/responses/ConflictRequest'
     '422':
-      description: Неверные данные личности владельца
+      description: Invalid owner identity data
       schema:
         $ref: '#/definitions/InvalidOperationParameters'
