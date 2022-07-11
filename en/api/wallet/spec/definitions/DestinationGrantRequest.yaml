@@ -1,5 +1,5 @@
 ---
-description: Запрос на право управления выводами на приёмник средств
+description: Request for the right to control the outputs to the receiver of the means
 type: object
 required:
   - validUntil
@@ -7,13 +7,13 @@ properties:
   token:
     x-rebillyMerge:
       - 
-        description: Токен, дающий право управления выводами
+        description: Token granting the right to control the outputs
       - 
         $ref: '#/definitions/GrantToken'
       - 
         readOnly: true
   validUntil:
     description: |
-      Дата и время, до наступления которых выданное право действительно
+      Date and time until which the granted right is valid
     type: string
     format: date-time
