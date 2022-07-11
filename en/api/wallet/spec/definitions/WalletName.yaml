@@ -1,4 +1,4 @@
 ---
-description: Человекочитаемое название кошелька, по которому его легко узнать
+description: Human-readable name of the wallet, by which it is easy to recognize
 type: string
 example: Worldwide PHP Awareness Initiative
