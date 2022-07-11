@@ -6,10 +6,10 @@ properties:
       - 
         $ref: '#/definitions/ExternalID'
       - 
-        description: Переданное значение `externalID`, для которого обнаружен конфликт параметров запроса
+        description: The passed value of `externalID` for which a request parameter conflict was detected
   id:
-    description: Идентификатор сущности, созданной предыдущим запросом с указанным `externalID`
+    description: Identifier of the content, created by a previous query with the specified `externalID'
     type: string
   message:
-    description: Человекочитаемое описание ошибки
+    description: Human-readable description of the error
     type: string
