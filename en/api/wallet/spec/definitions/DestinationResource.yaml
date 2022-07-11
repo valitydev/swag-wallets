@@ -1,5 +1,5 @@
 ---
-description: Ресурс приёмника денежных средств, используемый для осуществления выводов
+description: Asset receiver resource used to make withdrawals
 type: object
 discriminator: type
 required:
@@ -7,9 +7,9 @@ required:
 properties:
   type:
     description: |
-      Тип ресурса приёмника средств.
+      The resource type of the asset receiver.
 
-      См. [Vality Payment Resource API](?api/payres/swagger.yaml).
+      See. [Vality Payment Resource API](?api/payres/swagger.yaml).
     type: string
     enum:
       - BankCardDestinationResource
