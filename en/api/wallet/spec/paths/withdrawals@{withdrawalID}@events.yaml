@@ -1,7 +1,7 @@
 ---
 get:
   operationId: pollWithdrawalEvents
-  summary: Запросить события вывода средств
+  summary: Request withdrawal events
   tags:
     - Withdrawals
   parameters:
@@ -17,7 +17,7 @@ get:
       $ref: '#/parameters/eventCursor'
   responses:
     '200':
-      description: События найдены
+      description: Events found
       schema:
         type: array
         items:
