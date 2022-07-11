@@ -1,7 +1,7 @@
 ---
 get:
   operationId: getDestinationByExternalID
-  summary: Получить приёмник средств по внешнему идентификатору
+  summary: Get a fund recipient by external identifier
   tags:
     - Withdrawals
   parameters:
@@ -13,7 +13,7 @@ get:
       $ref: '#/parameters/externalID'
   responses:
     '200':
-      description: Приёмник средств найден
+      description: Fund recipient found
       schema:
         $ref: '#/definitions/Destination'
     '400':
