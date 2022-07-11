@@ -1,15 +1,15 @@
 ---
-description: Контактные данные
+description: Contact details
 type: object
 properties:
   email:
-    description: Адрес электронной почты
+    description: Email address
     type: string
     format: email
     maxLength: 100
   phoneNumber:
     description: |
-      Номер мобильного телефона с международным префиксом согласно
+      Mobile phone number with international prefix according to
       [E.164](https://en.wikipedia.org/wiki/E.164).
     type: string
     format: '^\+\d{4,15}$'
