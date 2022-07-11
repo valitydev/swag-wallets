@@ -11,7 +11,7 @@ get:
       $ref: '#/parameters/deadline'
     - 
       name: externalID
-      description: Внешний идентификатор кошелька
+      description: External wallet identifier
       in: query
       required: true
       type: string
@@ -19,7 +19,7 @@ get:
       minLength: 1
   responses:
     '200':
-      description: Данные кошелька
+      description: Wallet details
       schema:
         $ref: '#/definitions/Wallet'
     '404':
