@@ -1,6 +1,6 @@
 ---
 description: |
-  Токен, сигнализирующий о том, что в ответе передана только часть данных.
-  Для получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.
-  Если токена нет, получена последняя часть данных.
+  A token signalling that only part of the data has been transmitted in the response.
+  To retrieve the next part, you need to contact the service again, specifying the same set of conditions and the received token.
+  If there is no token, the last piece of data is received.
 type: string
