@@ -1,7 +1,7 @@
 ---
 get:
   operationId: getDestination
-  summary: Получить приёмник средств
+  summary: Get a fund recipient
   tags:
     - Withdrawals
   parameters:
@@ -13,7 +13,7 @@ get:
       $ref: '#/parameters/destinationID'
   responses:
     '200':
-      description: Приёмник средств найден
+      description: Fund recipient found
       schema:
         $ref: '#/definitions/Destination'
     '400':
