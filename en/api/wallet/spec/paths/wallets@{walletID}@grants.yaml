@@ -1,7 +1,7 @@
 ---
 post:
   operationId: issueWalletGrant
-  summary: Выдать право управления средствами
+  summary: Grant the right to manage funds
   tags:
     - Wallets
   parameters:
@@ -13,14 +13,14 @@ post:
       $ref: '#/parameters/walletID'
     - 
       name: request
-      description: Запрос на право управления средствами на кошельке
+      description: Request for the right to manage funds on the wallet
       in: body
       required: true
       schema:
         $ref: '#/definitions/WalletGrantRequest'
   responses:
     '201':
-      description: Единоразовое право выдано
+      description: Single right granted
       schema:
         $ref: '#/definitions/WalletGrantRequest'
     '404':
@@ -30,6 +30,6 @@ post:
     '401':
       $ref: '#/responses/Unauthorized'
     '422':
-      description: Неверные данные для выдачи
+      description: Invalid data for issuance
       schema:
         $ref: '#/definitions/InvalidOperationParameters'
