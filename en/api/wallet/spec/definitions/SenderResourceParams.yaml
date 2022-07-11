@@ -1,5 +1,5 @@
 ---
-description: Параметры ресурса отправителя денежных средств
+description: Fund sender resource settings
 type: object
 discriminator: type
 required:
@@ -7,9 +7,9 @@ required:
 properties:
   type:
     description: |
-      Тип ресурса отправителя средств.
+      The resource type of the sender of the funds.
 
-      См. [Vality Payment Resource API](?api/payres/swagger.yaml).
+      See [Vality Payment Resource API](?api/payres/swagger.yaml).
     type: string
     enum:
       - BankCardSenderResourceParams
