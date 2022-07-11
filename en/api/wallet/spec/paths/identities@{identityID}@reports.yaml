@@ -1,6 +1,6 @@
 ---
 post:
-  description: Сгенерировать отчет с указанным типом по личности владельца за указанный промежуток времени
+  description: Generate a report with the specified type on the identity of the owner for the specified period of time
   tags:
     - Reports
   operationId: createReport
@@ -14,13 +14,13 @@ post:
     - 
       name: ReportParams
       in: body
-      description: Параметры генерации отчета
+      description: Report generation options
       required: true
       schema:
         $ref: '#/definitions/ReportParams'
   responses:
     '201':
-      description: Отчет создан
+      description: Report created
       schema:
         $ref: '#/definitions/Report'
     '400':
@@ -28,7 +28,7 @@ post:
     '401':
       $ref: '#/responses/Unauthorized'
 get:
-  description: Получить список отчетов по личности владельца за период
+  description: Get a list of owner identity reports for a period
   tags:
     - Reports
   operationId: getReports
@@ -46,14 +46,14 @@ get:
     - 
       name: type
       in: query
-      description: Тип получаемых отчетов
+      description: Type of reports received
       required: false
       type: string
       enum:
         - withdrawalRegistry
   responses:
     '200':
-      description: Найденные отчеты
+      description: Reports found
       schema:
         type: array
         items:
