@@ -1,7 +1,7 @@
 ---
 get:
   operationId: getIdentity
-  summary: Получить данные личности владельца
+  summary: Get the owner's identity
   tags:
     - Identities
   parameters:
@@ -13,7 +13,7 @@ get:
       $ref: '#/parameters/identityID'
   responses:
     '200':
-      description: Личность владельца найдена
+      description: Owner's identity found
       schema:
         $ref: '#/definitions/Identity'
     '404':
