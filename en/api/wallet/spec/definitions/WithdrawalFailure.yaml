@@ -4,7 +4,7 @@ required:
   - code
 properties:
   code:
-    description: Код ошибки вывода
+    description: Withdrawal error code
     type: string
   subError:
     $ref: '#/definitions/SubFailure'
