@@ -1,8 +1,8 @@
 ---
 post:
   operationId: createQuote
-  summary: Подготовка котировки
-  description: Фиксация курса обмена валют для проведения выплаты с конвертацией
+  summary: Quote preparation
+  description: Fixing the exchange rate for making payments with conversion
   tags:
     - Withdrawals
   parameters:
@@ -12,7 +12,7 @@ post:
       $ref: '#/parameters/deadline'
     - 
       name: withdrawalQuoteParams
-      description: Данные котировки для вывода
+      description: Quote data for withdrawal
       in: body
       required: true
       schema:
