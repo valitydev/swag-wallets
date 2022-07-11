@@ -1,5 +1,5 @@
 ---
-description: Данные корректировки поступления денежных средств
+description: Cash inflow adjustment data
 allOf:
   - 
     type: object
