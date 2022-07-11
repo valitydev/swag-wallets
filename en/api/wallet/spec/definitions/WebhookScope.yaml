@@ -1,14 +1,14 @@
 ---
 description: |
-  Область охвата webhook'а, ограничивающая набор типов событий, по которым
-  следует отправлять оповещения
+  The scope of a webhook, limiting the set of event types,
+  for which the notifications should be sent
 type: object
 discriminator: topic
 required:
   - topic
 properties:
   topic:
-    description: Предмет оповещений
+    description: Subject of notifications
     type: string
     enum:
       - WithdrawalsTopic
