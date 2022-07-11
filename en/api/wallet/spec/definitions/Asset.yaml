@@ -1,6 +1,6 @@
 ---
 description: |
-  Объём денежных средств
+  The amount of money
 type: object
 required:
   - amount
@@ -8,7 +8,7 @@ required:
 properties:
   amount:
     description: |
-      Сумма денежных средств в минорных единицах, например, в копейках
+      The amount of money in minor units, for example, in kopecks
     type: integer
     format: int64
     example: 1430000
