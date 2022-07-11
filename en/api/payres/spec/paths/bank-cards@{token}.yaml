@@ -1,7 +1,7 @@
 ---
 get:
   operationId: getBankCard
-  summary: Получить данные банковской карты
+  summary: Receive bank card details
   tags:
     - Payment Resources
   parameters:
@@ -9,7 +9,7 @@ get:
       $ref: '#/parameters/requestID'
     - 
       name: token
-      description: Данные банковской карты
+      description: Bank card details
       in: path
       required: true
       type: string
@@ -17,7 +17,7 @@ get:
       maxLength: 1000
   responses:
     '200':
-      description: Данные карты найдены
+      description: Card data found
       schema:
         $ref: '#/definitions/SecuredBankCard'
     '400':
