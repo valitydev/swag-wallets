@@ -1,6 +1,6 @@
 ---
 get:
-  summary: Получить кошелёк по указанному внешнему идентификатору
+  summary: Get wallet by specified external identifier
   operationId: getWalletByExternalID
   tags:
     - Wallets
