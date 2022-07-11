@@ -5,5 +5,5 @@ required:
   - requestType
 properties:
   requestType:
-    description: Тип браузерной операции
+    description: Type of browser operation
     type: string
