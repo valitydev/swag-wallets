@@ -1,6 +1,6 @@
 ---
 post:
-  description: Создать перевод
+  description: Create a transfer
   tags:
     - W2W
   operationId: createW2WTransfer
@@ -12,15 +12,15 @@ post:
     - 
       name: transferParams
       in: body
-      description: 'Параметры создания перевода'
+      description: 'Transfer creation options'
       schema:
         $ref: '#/definitions/W2WTransferParameters'
   responses:
     '202':
-      description: Перевод запущен
+      description: Transfer started
       headers:
         Location:
-          description: URI запущенного перевода
+          description: URI of the transfer started
           type: string
           format: uri
       schema:
@@ -32,6 +32,6 @@ post:
     '409':
       $ref: '#/responses/ConflictRequest'
     '422':
-      description: Неверные входные данные для перевода
+      description: Invalid transfer input data
       schema:
         $ref: '#/definitions/InvalidOperationParameters'
