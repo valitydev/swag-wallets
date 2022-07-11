@@ -1,5 +1,5 @@
 ---
-description: Данные поступления денежных средств
+description: Data on cash receipts
 allOf:
   - 
     type: object
@@ -16,7 +16,7 @@ allOf:
           - 
             readOnly: true
       createdAt:
-        description: Дата и время запуска пополнения
+        description: Replenishment start date and time
         type: string
         format: date-time
         readOnly: true
@@ -33,13 +33,13 @@ allOf:
           - 
             $ref: '#/definitions/Asset'
           - 
-            description: Объём поступивших средств
+            description: The amount of funds received
       fee:
         x-rebillyMerge:
           - 
             $ref: '#/definitions/Asset'
           - 
-            description: Сумма коммисии
+            description: Commission amount
       externalID:
         x-rebillyMerge:
           - 
