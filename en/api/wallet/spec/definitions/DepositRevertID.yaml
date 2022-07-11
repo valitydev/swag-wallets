@@ -1,4 +1,4 @@
 ---
-description: Идентификатор отмены поступления денежных средств 
+description: Cash receipt cancellation identifier
 type: string
 example: "10068321"
