@@ -1,5 +1,5 @@
 ---
-description: Данные личности владельца кошельков
+description: Personal data of the wallet owner
 type: object
 required:
   - name
@@ -13,11 +13,11 @@ properties:
         readOnly: true
   name:
     description: |
-      Человекочитаемое имя личности владельца, по которому его легко опознать
+      Human-readable name of the owner's identity, by which he can be easily identified
     type: string
     example: Keyn Fawkes
   createdAt:
-    description: Дата и время создания личности владельца
+    description: Date and time the owner identity was created
     type: string
     format: date-time
     readOnly: true
@@ -26,14 +26,14 @@ properties:
       - 
         $ref: '#/definitions/ProviderID'
   isBlocked:
-    description: Заблокирована ли личность владельца?
+    description: Is the owner's identity blocked?
     type: boolean
     readOnly: true
     example: false
   metadata:
     description: |
-      Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с
-      данной личностью владельца
+      An arbitrary, client-specific API and system-opaque set of data associated with
+      given identity of the owner
     type: object
     example:
       lkDisplayName: Sergej Ivanovich
