@@ -1,5 +1,5 @@
 ---
-description: Данные вывода денежных средств
+description: Funds withdrawal data
 allOf:
   - 
     type: object
@@ -15,7 +15,7 @@ allOf:
           - 
             readOnly: true
       createdAt:
-        description: Дата и время запуска вывода
+        description: Date and time the withdrawal started
         type: string
         format: date-time
         readOnly: true
@@ -32,17 +32,17 @@ allOf:
           - 
             $ref: '#/definitions/Asset'
           - 
-            description: Объём средств, которые необходимо вывести
+            description: Amount of funds to be withdrawn
       fee:
         x-rebillyMerge:
           - 
             $ref: '#/definitions/Asset'
           - 
-            description: Сумма коммисии
+            description: Commission amount
       metadata:
         description: |
-          Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с
-          данным выводом
+          A random, client-specific API and a data set that is not transparent to the system, associated with
+          this withdrawal
         type: object
         example:
           notify_email: iliketrains@example.com
