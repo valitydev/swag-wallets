@@ -1,5 +1,5 @@
 ---
-description: Параметры создания перевода
+description: Translation creation options
 type: object
 required:
   - sender
@@ -15,7 +15,7 @@ properties:
       - 
         $ref: '#/definitions/Asset'
       - 
-        description: Сумма перевода
+        description: Transfer amount
   externalID:
     x-rebillyMerge:
       - 
