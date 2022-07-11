@@ -1,5 +1,5 @@
 ---
-description: Данные кошелька
+description: Wallet details
 type: object
 required:
   - name
@@ -17,12 +17,12 @@ properties:
       - 
         $ref: '#/definitions/WalletName'
   createdAt:
-    description: Дата и время создания кошелька
+    description: Date and time of wallet creation
     type: string
     format: date-time
     readOnly: true
   isBlocked:
-    description: Заблокирован ли кошелёк?
+    description: Is the wallet blocked?
     type: boolean
     readOnly: true
     example: false
@@ -36,8 +36,8 @@ properties:
         $ref: '#/definitions/CurrencyID'
   metadata:
     description: |
-      Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с
-      данным кошельком
+      An arbitrary, client-specific API and system-opaque set of data associated with
+      this wallet
     type: object
     example:
       client_locale: RU_ru
