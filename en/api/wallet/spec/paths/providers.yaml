@@ -1,7 +1,7 @@
 ---
 get:
   operationId: listProviders
-  summary: Перечислить доступных провайдеров
+  summary: List available providers
   tags:
     - Providers
   parameters:
@@ -13,7 +13,7 @@ get:
       $ref: '#/parameters/residence'
   responses:
     '200':
-      description: Провайдеры найдены
+      description: Providers found
       schema:
         type: array
         items:
