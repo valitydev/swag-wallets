@@ -1,7 +1,7 @@
 ---
 get:
   operationId: getWithdrawalByExternalID
-  summary: Получить состояние вывода средств по внешнему идентификатору
+  summary: Get withdrawal status by external identifier
   tags:
     - Withdrawals
   parameters:
@@ -13,7 +13,7 @@ get:
       $ref: '#/parameters/externalID'
   responses:
     '200':
-      description: Вывод найден
+      description: Conclusion found
       schema:
         $ref: '#/definitions/Withdrawal'
     '400':
