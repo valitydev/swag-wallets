@@ -1,7 +1,7 @@
 ---
 get:
   operationId: listDestinations
-  summary: Перечислить приёмники средств
+  summary: List funds recipients
   tags:
     - Withdrawals
   parameters:
@@ -11,7 +11,7 @@ get:
       $ref: '#/parameters/deadline'
     - 
       name: identityID
-      description: Идентификатор личности владельца
+      description: Identifier of the owner's idenity
       in: query
       required: false
       type: string
@@ -31,7 +31,7 @@ get:
           $ref: '#/definitions/ContinuationToken'
   responses:
     '200':
-      description: Результат поиска
+      description: Search result
       schema:
         type: object
         properties:
@@ -40,7 +40,7 @@ get:
               - 
                 $ref: '#/definitions/ContinuationToken'
           result:
-            description: Найденные приёмники средств
+            description: Fund recipients found
             type: array
             items:
               $ref: '#/definitions/Destination'
@@ -50,7 +50,7 @@ get:
       $ref: '#/responses/Unauthorized'
 post:
   operationId: createDestination
-  summary: Завести приёмник средств
+  summary: Start a fund recipient
   tags:
     - Withdrawals
   parameters:
@@ -60,17 +60,17 @@ post:
       $ref: '#/parameters/deadline'
     - 
       name: destination
-      description: Данные приёмника средств
+      description: Fund recipient data
       in: body
       required: true
       schema:
         $ref: '#/definitions/Destination'
   responses:
     '201':
-      description: Приёмник средств создан
+      description: Fund recipient created
       headers:
         Location:
-          description: URI созданного приёмника средств
+          description: The URI of the created fund recipient
           type: string
           format: uri
       schema:
@@ -82,6 +82,6 @@ post:
     '409':
       $ref: '#/responses/ConflictRequest'
     '422':
-      description: Неверные данные приёмника средств
+      description: Incorrect recipient data
       schema:
         $ref: '#/definitions/InvalidOperationParameters'
