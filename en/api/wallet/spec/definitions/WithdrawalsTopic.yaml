@@ -1,6 +1,6 @@
 ---
 description: |
-  Область охвата, включающая события по выплатам в рамках определённого кошелька
+  Scope that includes payout events within a specific wallet
 allOf:
   - 
     $ref: '#/definitions/WebhookScope'
@@ -14,7 +14,7 @@ allOf:
           - 
             $ref: '#/definitions/WalletID'
       eventTypes:
-        description: Набор типов событий выплаты, о которых следует оповещать
+        description: Set of payout event types to be notified about
         type: array
         items:
           type: string
