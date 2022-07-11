@@ -1,4 +1,4 @@
 ---
-description: Идентификатор вывода денежных средств
+description: Identifier of funds withdrawal
 type: string
 example: tZ0jUmlsV0
