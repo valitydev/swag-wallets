@@ -1,5 +1,5 @@
 ---
-description: Данные провайдера услуг
+description: Service provider data
 type: object
 required:
   - id
@@ -12,13 +12,13 @@ properties:
         $ref: '#/definitions/ProviderID'
   name:
     description: |
-      Человекочитаемое наименование провайдера услуг
+      Human readable name of the service provider
     type: string
-    example: ООО «СЕРВИС ПРОВАЙДЕР»
+    example: SERVICE PROVIDER LLC
   residences:
     type: array
     description: |
-      Резиденции, в которых провайдер предоставляет услуги
+      Residences in which the provider provides services
     items:
       x-rebillyMerge:
         - 
