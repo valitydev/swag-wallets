@@ -1,5 +1,5 @@
 ---
-description: Ресурс получателя денежных средств, используемый для осуществления переводов
+description: The beneficiary's resource used to make the transfers
 type: object
 discriminator: type
 required:
@@ -7,9 +7,9 @@ required:
 properties:
   type:
     description: |
-      Тип ресурса получателя средств.
+      The resource type of the recipient of the funds.
 
-      См. [Vality Payment Resource API](?api/payres/swagger.yaml).
+      See. [Vality Payment Resource API](?api/payres/swagger.yaml).
     type: string
     enum:
       - BankCardReceiverResource
