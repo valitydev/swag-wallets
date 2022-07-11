@@ -1,7 +1,7 @@
 ---
 post:
   operationId: issueDestinationGrant
-  summary: Выдать право управления приёмником средств
+  summary: Grant the right to manage the recipient of funds
   tags:
     - Withdrawals
   parameters:
@@ -13,14 +13,14 @@ post:
       $ref: '#/parameters/destinationID'
     - 
       name: request
-      description: Запрос на право управления приёмником средств
+      description: Request for the right to manage the recipient of funds
       in: body
       required: true
       schema:
         $ref: '#/definitions/DestinationGrantRequest'
   responses:
     '201':
-      description: Право выдано
+      description: The right is granted
       schema:
         $ref: '#/definitions/DestinationGrantRequest'
     '404':
@@ -30,6 +30,6 @@ post:
     '401':
       $ref: '#/responses/Unauthorized'
     '422':
-      description: Неверные данные для выдачи
+      description: Invalid data for issuance
       schema:
         $ref: '#/definitions/InvalidOperationParameters'
