@@ -1,7 +1,6 @@
 ---
 description: |
-  Область охвата, включающая события по приёмникам денежных средств
-  в рамках определённого кошелька
+  A coverage area that includes events by asset receivers within a particular wallet
 allOf:
   - 
     $ref: '#/definitions/WebhookScope'
@@ -11,7 +10,7 @@ allOf:
       - eventTypes
     properties:
       eventTypes:
-        description: Набор типов событий приёмника денежных средств, о которых следует оповещать
+        description: Set of event types of the receiver of assets, which should be notified
         type: array
         items:
           type: string
