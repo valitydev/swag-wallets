@@ -1,5 +1,5 @@
 ---
-description: Данные котировки для вывода
+description: Quote data for withdrawal
 type: object
 required:
   - cashFrom
@@ -13,7 +13,7 @@ properties:
       - 
         $ref: '#/definitions/Asset'
       - 
-        description: Объём средств в исходной валюте
+        description: Amount of funds in source currency
       - 
         readOnly: true
   cashTo:
@@ -21,16 +21,16 @@ properties:
       - 
         $ref: '#/definitions/Asset'
       - 
-        description: Объём средств в конечной валюте
+        description: Amount of funds in target currency
       - 
         readOnly: true
   createdAt:
-    description: Дата и время получения котировки
+    description: Date and time the quote was received
     type: string
     format: date-time
     readOnly: true
   expiresOn:
-    description: Дата и время окончания действия котировки
+    description: Quote expiration date and time
     type: string
     format: date-time
     readOnly: true
