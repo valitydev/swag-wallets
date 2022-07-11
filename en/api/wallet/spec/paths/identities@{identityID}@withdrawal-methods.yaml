@@ -1,6 +1,6 @@
 ---
 get:
-  summary: Получить выплатные методы доступные по личности владельца
+  summary: Get payout methods available by owner identity
   tags:
     - Identities
   operationId: getWithdrawalMethods
@@ -13,7 +13,7 @@ get:
       $ref: '#/parameters/identityID'
   responses:
     '200':
-      description: Найденные методы
+      description: Methods found
       schema:
         type: object
         properties:
