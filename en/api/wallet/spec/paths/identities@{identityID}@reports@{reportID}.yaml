@@ -1,6 +1,6 @@
 ---
 get:
-  description: Получить отчет по данному идентификатору
+  description: Get a report for a given identifier
   tags:
     - Reports
   operationId: getReport
@@ -15,7 +15,7 @@ get:
       $ref: '#/parameters/reportID'
   responses:
     '200':
-      description: Найденный отчет
+      description: Report found
       schema:
         $ref: '#/definitions/Report'
     '404':
