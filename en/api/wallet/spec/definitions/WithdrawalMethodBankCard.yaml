@@ -9,7 +9,7 @@ allOf:
       - paymentSystems
     properties:
       paymentSystems:
-        description: Список платежных систем
+        description: List of payment systems
         type: array
         items:
           x-rebillyMerge:
