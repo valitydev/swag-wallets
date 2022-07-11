@@ -1,5 +1,5 @@
 ---
-description: Форма для отправки средствами браузера
+description: Browser submission form
 type: array
 items:
   type: object
@@ -9,12 +9,11 @@ items:
   properties:
     key:
       description: |
-        Значение ключа элемента формы, которую необходимо отправить средствами
-        браузера
+        The value of the key of the form element to be send by means of browser
       type: string
     template:
       description: |
-        Шаблон значения элемента формы
-        Шаблон представлен согласно стандарту
+        The template for the form element value
+        The template is presented according to the standard
         [RFC6570](https://tools.ietf.org/html/rfc6570).
       type: string
