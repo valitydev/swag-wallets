@@ -5,9 +5,9 @@ required:
   - expiresAt
 properties:
   url:
-    description: URL файла
+    description: URL of the file
     type: string
   expiresAt:
-    description: Время до которого ссылка будет считаться действительной
+    description: Time until which the link will be considered valid
     type: string
     format: date-time
