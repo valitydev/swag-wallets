@@ -1,6 +1,6 @@
 ---
 post:
-  description: Получить ссылку для скачивания файла
+  description: Get a link to download a file
   tags:
     - Downloads
   operationId: downloadFile
@@ -13,7 +13,7 @@ post:
       $ref: '#/parameters/fileID'
   responses:
     '201':
-      description: Данные для получения файла
+      description: Data to get file
       schema:
         $ref: '#/definitions/FileDownload'
     '404':
