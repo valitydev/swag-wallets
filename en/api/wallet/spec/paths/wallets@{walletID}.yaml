@@ -1,7 +1,7 @@
 ---
 get:
   operationId: getWallet
-  summary: Получить данные кошелька
+  summary: Get wallet data
   tags:
     - Wallets
   parameters:
@@ -13,7 +13,7 @@ get:
       $ref: '#/parameters/walletID'
   responses:
     '200':
-      description: Кошелёк найден
+      description: Wallet found
       schema:
         $ref: '#/definitions/Wallet'
     '404':
