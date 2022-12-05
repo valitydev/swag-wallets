@@ -22,7 +22,7 @@ properties:
     description: |
       Human readable currency name
     type: string
-    example: Russian ruble
+    example: United States Dollar
   sign:
     description: |
       Currency unit sign
