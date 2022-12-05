@@ -8,7 +8,7 @@ required:
 properties:
   amount:
     description: |
-      The amount of money in minor units, for example, in kopecks
+      The amount of money in minor units, for example, in cents
     type: integer
     format: int64
     example: 1430000
