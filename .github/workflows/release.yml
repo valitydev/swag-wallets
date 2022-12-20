@@ -21,7 +21,7 @@ jobs:
       - name: Bundle specification
         run: npm run build -- ../public
       - name: Deploy to release branch
-        uses: JamesIves/github-pages-deploy-action@v4.3.0
+        uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
           branch: release/v0
           folder: ../public/api

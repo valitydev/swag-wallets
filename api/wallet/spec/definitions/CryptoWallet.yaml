@@ -1,6 +1,5 @@
 description: Данные криптовалютного кошелька
 type: object
-discriminator: currency
 required:
   - id
   - currency
