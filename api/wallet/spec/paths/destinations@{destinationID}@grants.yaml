@@ -1,7 +1,7 @@
 ---
 post:
   operationId: issueDestinationGrant
-  summary: Grant the right to manage the recipient of funds
+  summary: Grant the right to manage the destinations
   tags:
     - Withdrawals
   parameters:
