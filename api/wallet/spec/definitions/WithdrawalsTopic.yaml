@@ -1,6 +1,6 @@
 ---
 description: |
-  Scope that includes payout events within a specific wallet
+  Scope that includes withdrawal events within a specific wallet
 allOf:
   - $ref: "#/definitions/WebhookScope"
   - type: object
