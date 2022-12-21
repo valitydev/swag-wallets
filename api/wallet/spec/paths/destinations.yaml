@@ -1,7 +1,7 @@
 ---
 get:
   operationId: listDestinations
-  summary: List funds recipients
+  summary: List of destinations
   tags:
     - Withdrawals
   parameters:

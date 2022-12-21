@@ -9,7 +9,7 @@ post:
     - $ref: "#/parameters/deadline"
     - $ref: "#/parameters/destinationID"
     - name: request
-      description: Request for the right to manage the recipient of funds
+      description: Request for the right to manage the destinations
       in: body
       required: true
       schema:

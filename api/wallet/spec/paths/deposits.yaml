@@ -23,7 +23,7 @@ get:
       required: false
     - name: depositID
       in: query
-      description: Identifier of the input of funds
+      description: Identifier of the deposit
       type: string
       required: false
       maxLength: 50

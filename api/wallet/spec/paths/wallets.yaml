@@ -41,7 +41,7 @@ get:
       $ref: "#/responses/Unauthorized"
 post:
   operationId: createWallet
-  summary: Get a new wallet
+  summary: Create a new wallet
   tags:
     - Wallets
   parameters:

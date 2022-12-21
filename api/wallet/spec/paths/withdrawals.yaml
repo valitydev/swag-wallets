@@ -30,7 +30,7 @@ get:
       minLength: 1
     - name: destinationID
       in: query
-      description: Identifier of the funds recipient
+      description: Identifier of the destination
       type: string
       maxLength: 40
       minLength: 1
@@ -45,13 +45,13 @@ get:
       required: false
     - name: createdAtFrom
       in: query
-      description: Creation date from
+      description: Creation date range start
       type: string
       format: date-time
       required: false
     - name: createdAtTo
       in: query
-      description: Creation date to
+      description: Creation date range end
       type: string
       format: date-time
       required: false
@@ -84,7 +84,7 @@ get:
       $ref: "#/responses/Unauthorized"
 post:
   operationId: createWithdrawal
-  summary: Start funds withdrawal
+  summary: Create withdrawal
   tags:
     - Withdrawals
   parameters:
@@ -101,7 +101,7 @@ post:
       description: Withdrawal started
       headers:
         Location:
-          description: URI of withdrawal started
+          description: URI of started withdrawal
           type: string
           format: uri
       schema:

@@ -1,5 +1,5 @@
 ---
-description: Commission Request Options
+description: Quote request options
 type: object
 required:
   - sender

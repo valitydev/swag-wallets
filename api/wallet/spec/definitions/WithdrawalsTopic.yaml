@@ -11,7 +11,7 @@ allOf:
         x-rebillyMerge:
           - $ref: "#/definitions/WalletID"
       eventTypes:
-        description: Set of payout event types to be notified about
+        description: Set of withdrawal event types to be notified about
         type: array
         items:
           type: string

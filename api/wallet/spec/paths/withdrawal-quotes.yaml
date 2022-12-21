@@ -2,7 +2,7 @@
 post:
   operationId: createQuote
   summary: Quote preparation
-  description: Fixing the exchange rate for making payments with conversion
+  description: Fixing the exchange rate for making withdrawals with conversion
   tags:
     - Withdrawals
   parameters:

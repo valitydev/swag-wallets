@@ -5,7 +5,7 @@ required:
   - method
 properties:
   method:
-    description: Payout method
+    description: Withdrawal method
     type: string
     enum:
       - WithdrawalMethodBankCard

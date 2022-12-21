@@ -128,7 +128,7 @@ parameters:
   destinationID:
     name: destinationID
     in: path
-    description: Identifier of the funds recipient
+    description: Identifier of the destination
     required: true
     type: string
     maxLength: 40
@@ -136,7 +136,7 @@ parameters:
   withdrawalID:
     name: withdrawalID
     in: path
-    description: Identifier of the funds withdrawal
+    description: Identifier of the withdrawal
     required: true
     type: string
     maxLength: 40
@@ -272,13 +272,13 @@ tags:
     x-displayName: Service providers
     description: ""
   - name: Identities
-    x-displayName: Owners
+    x-displayName: Identities
     description: ""
   - name: Wallets
     x-displayName: Wallets
     description: ""
   - name: Deposits
-    x-displayName: Replenishments
+    x-displayName: Deposits
     description: ""
   - name: Withdrawals
     x-displayName: Withdrawals

@@ -1,6 +1,6 @@
 ---
 description: |
   A token signalling that only part of the data has been transmitted in the response.
-  To retrieve the next part, you need to contact the service again, specifying the same set of conditions and the received token.
+  To retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.
   If there is no token, the last piece of data is received.
 type: string

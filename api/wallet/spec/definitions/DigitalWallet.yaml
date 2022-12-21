@@ -6,7 +6,7 @@ required:
   - provider
 properties:
   id:
-    description: Digital wallet data
+    description: Digital wallet ID
     type: string
     minLength: 1
     maxLength: 100

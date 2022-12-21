@@ -7,7 +7,7 @@ allOf:
       - providers
     properties:
       providers:
-        description: List of electronic money providers
+        description: List of digital wallet providers
         type: array
         items:
           x-rebillyMerge:

@@ -8,8 +8,8 @@ properties:
       | Meaning     | Explanation                                             |
       | ----------- | ------------------------------------------------------- |
       | `Pending`   | Deposit revert in progress                              |
-      | `Succeeded` | Deposit revert of receipt of funds was successful       |
-      | `Failed`    | Deposit revert of incoming funds failed                 |
+      | `Succeeded` | Deposit revert completed successfully       |
+      | `Failed`    | Deposit revert failed                 |
 
     type: string
     enum:

@@ -10,7 +10,7 @@ get:
     - $ref: "#/parameters/externalID"
   responses:
     "200":
-      description: Conclusion found
+      description: Withdrawal found
       schema:
         $ref: "#/definitions/Withdrawal"
     "400":

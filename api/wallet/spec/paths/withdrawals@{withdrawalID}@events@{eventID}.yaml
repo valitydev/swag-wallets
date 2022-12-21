@@ -1,7 +1,7 @@
 ---
 get:
   operationId: getWithdrawalEvents
-  summary: Get an event of funds withdrawal
+  summary: Get an event of withdrawal
   tags:
     - Withdrawals
   parameters:
