@@ -1,62 +1,62 @@
-swagger: '2.0'
+---
+swagger: "2.0"
 info:
-  version: '0.1.0'
+  version: "0.1.0"
   title: Vality Wallet API
   description: >
 
-    Vality Wallet API является базовой и единственной точкой взаимодействия с системой кошельков. Все изменения состояний системы осуществляются с помощью вызовов соответствующих методов API. Любые сторонние приложения, включая наши веб-сайты и другие UI-интерфейсы, являются внешними приложениями-клиентами.
+    The Vality Wallet API is the base and only point of interaction with the wallet system. All system state changes are carried out by calling the corresponding API methods. Any third party applications, including our websites and other UIs, are external client applications.
 
-    Vality API работает поверх HTTP-протокола. Мы используем REST архитектуру, схема описывается в соответствии с [OpenAPI 2.0](https://spec.openapis.org/oas/v2.0). Коды возврата описываются соответствующими HTTP-статусами. Система принимает и возвращает значения JSON в теле запросов и ответов.
+    The Vality API works on top of the HTTP protocol. We use REST architecture, the scheme is described according to [OpenAPI 2.0](https://spec.openapis.org/oas/v2.0). Return codes are described by the corresponding HTTP statuses. The system accepts and returns JSON values in the body of requests and responses.
 
-    ## Формат содержимого
+    ## Content Format
 
-    Любой запрос к API должен выполняться в кодировке UTF-8 и с указанием содержимого в формате JSON.
+    Any API request must be encoded in UTF-8 and must contain JSON content.
 
     ```
       Content-Type: application/json; charset=utf-8
     ```
 
-    ## Формат дат
+    ## Date format
 
-    Система принимает и возвращает значения отметок времени в формате `date-time`, описанном в [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339):
+    The system accepts and returns timestamp values in the `date-time` format described in [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339):
 
     ```
       2017-01-01T00:00:00Z
       2017-01-01T00:00:01+00:00
     ```
 
-    ## Максимальное время обработки запроса
+    ## Maximum request processing time
 
-    При любом обращении к API в заголовке `X-Request-Deadline` соответствующего запроса можно передать параметр отсечки по времени, определяющий максимальное время ожидания завершения операции по запросу:
+    In any API call, you can pass a timeout parameter in the `X-Request-Deadline` header of the corresponding request, which determines the maximum time to wait for the operation to complete on the request:
 
     ```
      X-Request-Deadline: 10s
     ```
 
-    По истечении указанного времени система прекращает обработку запроса. Рекомендуется указывать значение не более одной минуты, но не менее трёх секунд.
+    After the specified time has elapsed, the system stops processing the request. It is recommended to specify a value of no more than one minute, but no less than three seconds.
 
-    `X-Request-Deadline` может:
+    `X-Request-Deadline` can:
 
-    * задаваться в формате `date-time` согласно [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339);
-    * задаваться в относительных величинах: в миллисекундах (`150000ms`), секундах (`540s`) или минутах (`3.5m`).
+    * set in `date-time` format according to [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339); 
+    * specified in relative terms: in milliseconds (`150000ms`), seconds (`540s`) or minutes (`3.5m`).
 
-    ## Ошибки обработки запросов
+    ## Request processing errors
 
-    В процессе обработки запросов силами нашей системы могут происходить различные непредвиденные ситуации. Об их появлении система сигнализирует по протоколу HTTP соответствующими [статусами][5xx], обозначающими ошибки сервера.
+    During the processing of requests by our system, various unforeseen situations may occur. The system signals about their appearance via the HTTP protocol with the corresponding [statuses][5xx], indicating server errors.
 
-     |  Код    |  Описание  |
-     | ------- | ---------- |
-     | **500** | В процессе обработки системой запроса возникла непредвиденная ситуация. При получении подобного кода ответа мы рекомендуем обратиться в техническую поддержку. |
-     | **503** | Система временно недоступна и не готова обслуживать данный запрос. Запрос гарантированно не выполнен, при получении подобного кода ответа попробуйте выполнить его позднее, когда доступность системы будет восстановлена. |
-     | **504** | Система превысила допустимое время обработки запроса, результат запроса не определён. Попробуйте отправить запрос повторно или выяснить результат выполнения исходного запроса, если повторное исполнение запроса нежелательно. |
+     |  Code    |  Description  |
+     | ------- | -------------- |
+     | **500** | An unexpected situation occurred while the system was processing the request. If you receive such a response code, we recommend that you contact technical support. |
+     | **503** | The system is temporarily unavailable and not ready to serve this request. The request is guaranteed to fail, if you receive a response code like this, try to implement it later when the system is restored to availability. |
+     | **504** | The system has exceeded the allowable request processing time, the result of the request is undefined. Try to resubmit the request or find out the result of the original request, if you do not want to re-execute the request. |
 
     [5xx]: https://tools.ietf.org/html/rfc7231#section-6.6
-
-  termsOfService: 'https://vality.dev/'
+  termsOfService: "https://vality.dev/"
   contact:
-    name: Команда техподдержки
+    name: Technical support team
     email: support@vality.dev
-    url: 'https://api.vality.dev'
+    url: "https://api.vality.dev"
 host: api.vality.dev
 basePath: /wallet/v0
 schemes:
@@ -71,7 +71,7 @@ securityDefinitions:
     name: Authorization
     in: header
     description: >
-      Для аутентификации вызовов мы используем [JWT](https://jwt.io). Соответствующий ключ передается в заголовке.
+      We use [JWT](https://jwt.io) for call authentication. The corresponding key is passed in the header.
 
       ```shell
        Authorization: Bearer {YOUR_API_KEY_JWT}
@@ -79,286 +79,245 @@ securityDefinitions:
 
 security:
   - bearer: []
-
 responses:
-
   BadRequest:
-    description: Недопустимые для операции входные данные
+    description: Invalid input data for operation
     schema:
-      $ref: '#/definitions/BadRequest'
-
+      $ref: "#/definitions/BadRequest"
   ConflictRequest:
-    description: Переданное значение `externalID` уже использовалось вами ранее с другими параметрами запроса
+    description: The passed value `externalID` has already been used by you with other query parameters
     schema:
-      $ref: '#/definitions/ConflictRequest'
-
+      $ref: "#/definitions/ConflictRequest"
   NotFound:
-    description: Искомая сущность не найдена
-
+    description: The content you are looking for was not found
   Unauthorized:
-    description: Ошибка авторизации
-
+    description: Authorization error
 parameters:
-
   requestID:
     name: X-Request-ID
     in: header
-    description: Уникальный идентификатор запроса к системе
+    description: Unique identifier of the request to the system
     required: true
     type: string
     maxLength: 32
     minLength: 1
-
   providerID:
     name: providerID
     in: path
-    description: Идентификатор провайдера
+    description: Identifier of the provider
     required: true
     type: string
     maxLength: 40
     minLength: 1
-
   identityID:
     name: identityID
     in: path
-    description: Идентификатор личности владельца
+    description: Identifier of the owner's identity
     required: true
     type: string
     maxLength: 40
     minLength: 1
-
   walletID:
     name: walletID
     in: path
-    description: Идентификатор кошелька
+    description: Identifier of the wallet
     required: true
     type: string
     maxLength: 40
     minLength: 1
-
   destinationID:
     name: destinationID
     in: path
-    description: Идентификатор приёмника средств
+    description: Identifier of the funds recipient
     required: true
     type: string
     maxLength: 40
     minLength: 1
-
   withdrawalID:
     name: withdrawalID
     in: path
-    description: Идентификатор вывода денежных средств
+    description: Identifier of the funds withdrawal
     required: true
     type: string
     maxLength: 40
     minLength: 1
-
   externalID:
     name: externalID
     in: path
-    description: Внешний идентификатор
+    description: External identifier
     required: true
     type: string
-
   residence:
     name: residence
     in: query
     description: |
-      Резиденция, в рамках которой производится оказание услуг,
-      код страны или региона по стандарту [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)
+      The residence within which the services are provided,
+      [ISO 3166-1] country or region code (https://en.wikipedia.org/wiki/ISO_3166-1)
     type: string
-    pattern: '^[A-Za-z]{3}$'
+    pattern: "^[A-Za-z]{3}$"
     required: false
-
   amountFrom:
     name: amountFrom
     in: query
-    description: Сумма денежных средств в минорных единицах
+    description: Amount of monetary funds in minor units
     type: integer
     format: int64
     required: false
-
   amountTo:
     name: amountTo
     in: query
-    description: Сумма денежных средств в минорных единицах
+    description: Amount of monetary funds in minor units
     type: integer
     format: int64
     required: false
-
   currencyID:
     name: currencyID
     in: query
     description: |
-      Валюта, символьный код согласно [ISO
+      Currency, character code according to [ISO
       4217](http://www.iso.org/iso/home/standards/currency_codes.htm).
     type: string
-    pattern: '^[A-Z]{3}$'
-
+    pattern: "^[A-Z]{3}$"
   limit:
     name: limit
     in: query
-    description: Лимит выборки
+    description: Selection limit
     required: true
     type: integer
     format: int32
     minimum: 1
     maximum: 1000
-
   eventCursor:
     name: eventCursor
     in: query
     description: |
-      Идентификатор последнего известного события.
+      The identifier of the last known event.
 
-      Все события, произошедшие _после_ указанного, попадут в выборку.
-      Если этот параметр не указан, в выборку попадут события, начиная с самого первого.
+      All events that occurred _after_ the specified one will be included in the selection.
+      If this parameter is not specified, the selection will include events starting from the very first one.
     required: false
     type: integer
     format: int32
-
   eventID:
     name: eventID
     in: path
     description: |
-      Идентификатор события процедуры идентификации.
+      Identifier of the identification procedure event.
     required: true
     type: integer
     format: int32
-
   reportID:
     name: reportID
     in: path
-    description: Идентификатор отчета
+    description: The report identifier
     required: true
     type: integer
     format: int64
-
   fileID:
     name: fileID
     in: path
-    description: Идентификатор файла
+    description: The file identifier
     required: true
     type: string
     maxLength: 40
     minLength: 1
-
   fromTime:
     name: fromTime
     in: query
-    description: Начало временного отрезка
+    description: Start of the time period
     required: true
     type: string
     format: date-time
-
   toTime:
     name: toTime
     in: query
-    description: Конец временного отрезка
+    description: End of the time period
     required: true
     type: string
     format: date-time
-
   deadline:
     name: X-Request-Deadline
     in: header
-    description: Максимальное время обработки запроса
+    description: Maximum request processing time
     required: false
     type: string
     maxLength: 40
     minLength: 1
-
   webhookID:
     name: webhookID
     in: path
-    description: Идентификатор webhook'а
+    description: Webhook identifier
     required: true
     type: string
     maxLength: 40
     minLength: 1
-
   queryIdentityID:
     name: identityID
     in: query
-    description: Идентификатор личности владельца
+    description: Identifier of the owner's identity
     required: true
     type: string
     maxLength: 40
     minLength: 1
-
   w2wTransferID:
     name: w2wTransferID
     in: path
-    description: Идентификатор перевода
+    description: Identifier of transfer
     required: true
     type: string
     maxLength: 40
     minLength: 1
-
 tags:
-
   - name: Providers
-    x-displayName: Провайдеры услуг
+    x-displayName: Service providers
     description: ""
-
   - name: Identities
-    x-displayName: Владельцы
+    x-displayName: Owners
     description: ""
-
   - name: Wallets
-    x-displayName: Кошельки
+    x-displayName: Wallets
     description: ""
-
   - name: Deposits
-    x-displayName: Пополнения
+    x-displayName: Replenishments
     description: ""
-
   - name: Withdrawals
-    x-displayName: Выводы
+    x-displayName: Withdrawals
     description: ""
-
   - name: Residences
-    x-displayName: Резиденции
+    x-displayName: Residences
     description: ""
-
   - name: Currencies
-    x-displayName: Валюты
+    x-displayName: Currencies
     description: ""
-
   - name: Reports
-    x-displayName: Отчеты
+    x-displayName: Reports
     description: ""
-
   - name: Downloads
-    x-displayName: Загрузка файлов
+    x-displayName: File upload
     description: ""
-
   - name: W2W
-    x-displayName: Переводы внутри системы
-    description: "Переводы средств между кошельками внутри системы"
-
+    x-displayName: Transfers within the system
+    description: "Transfers of funds between wallets within the system"
   - name: Webhooks
     x-displayName: Webhooks
     description: >
       ## Vality Webhooks Management API
 
-      В данном разделе описаны методы, позволяющие управлять Webhook'ами, или инструментами для получения асинхронных оповещений посредством HTTP-запросов при наступлении одного или группы интересующих вас событий, например, о том, что выплата в рамках созданного кошелька была успешно проведена.
+      This section describes methods that allow you to manage Webhooks, or tools for receiving asynchronous notifications via HTTP requests when one or a group of events of interest to you occurs, for example, that a payment within the created wallet was successfully completed.
 
       ## Vality Webhooks Events API
 
-      Внимание! Только Webhooks Management API является частью системы Vality, а следовательно и данной спецификации. Для реализации обработчика присылаемых уведомлений вам необходимо будет ознакомиться с OpenAPI-спецификацией [Vality Wallets Webhook Events API](https://vality.github.io/swag-wallets-webhook-events/).
-
+      Attention! Only the Webhooks Management API is part of the Vality system and hence this specification. To implement the notification handler, you will need to read the OpenAPI specification [Vality Wallets Webhook Events API](https://vality.github.io/swag-wallets-webhook-events/).
   - name: Error Codes
-    x-displayName: Коды ошибок
+    x-displayName: Error codes
     description: >
 
-      ## Ошибки перевода
+      ## Withdrawal errors
 
-        | Код                    | Описание                                                                                                                                       |
-        | ---                    | --------                                                                                                                                       |
-        | InvalidSenderResource  | Неверный источник перевода (введен номер несуществующей карты, отсутствующего аккаунта и т.п.)                                                 |
-        | InvalidReceiverResource| Неверный получатель перевода (введен номер несуществующей карты и т.п.)                                                                        |
-        | InsufficientFunds      | Недостаточно средств на счете банковской карты                                                                                                 |
-        | PreauthorizationFailed | Предварительная авторизация отклонена (введен неверный код 3D-Secure, на форме 3D-Secure нажата ссылка отмены)                                 |
-        | RejectedByIssuer       | Перевод отклонён эмитентом (установлены запреты по стране списания, запрет на покупки в интернете, платеж отклонен антифродом эмитента и т.п.) |
+        | Code                   | Description                                                                                                                                                                                      |
+        | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+        | InvalidSenderResource  | Invalid transfer source (entered the number of a non-existent card, missing account, etc.)                                                                                                       |
+        | InvalidReceiverResource| Wrong transfer recipient (invalid card number entered, etc.)                                                                                                                                     |
+        | InsufficientFunds      | Insufficient funds on the bank card account                                                                                                                                                      |
+        | PreauthorizationFailed | Pre-Authorization Rejected (Wrong 3D-Secure Code Entered, Cancel Link Clicked on 3D-Secure Form)                                                                                                 |
+        | RejectedByIssuer       | The transfer was rejected by the issuer (prohibitions were established by the country of debiting, a ban on purchases on the Internet, the payment was rejected by the issuer's antifraud, etc.) |

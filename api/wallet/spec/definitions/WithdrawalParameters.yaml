@@ -1,31 +1,32 @@
-description: Параметры создаваемого вывода
+---
+description: Options of generated withdrawal
 allOf:
-  - $ref: '#/definitions/Withdrawal'
+  - $ref: "#/definitions/Withdrawal"
   - type: object
     properties:
       walletGrant:
         x-rebillyMerge:
-          - $ref: '#/definitions/GrantToken'
+          - $ref: "#/definitions/GrantToken"
           - description: |
-              Токен, дающий право на списание с кошелька для оплаты вывода.
+              A token that gives the right to withdraw from the wallet to pay for the withdrawal.
 
-              Необходимо предоставить в том случае, если оплата производится засчёт средств _чужого_
-              кошелька. Владелец указанного кошелька может
-              [выдать на это право](#operation/issueWalletGrant).
+              Must be provided if payment is made at the expense of _foreign_
+              wallet. The owner of said wallet can
+              [issue this right](#operation/issueWalletGrant).
       destinationGrant:
         x-rebillyMerge:
-          - $ref: '#/definitions/GrantToken'
+          - $ref: "#/definitions/GrantToken"
           - description: |
-              Токен, дающий право вывода.
+              A token that gives the right to withdraw.
 
-              Необходимо предоставить в том случае, если вывод производится посредством _чужого_ приёмника
-              средств. Владелец указанного приёмника может
-              [выдать на это право](#operation/issueDestinationGrant).
+              Must be provided if the withdrawal is made through a _foreign_ recipient of
+              funds. The owner of the specified recipient can
+              [issue this right](#operation/issueDestinationGrant).
       quoteToken:
         x-rebillyMerge:
-          - $ref: '#/definitions/GrantToken'
+          - $ref: "#/definitions/GrantToken"
           - description: |
-              Котировка, по которой следует проводить вывод средств.
+              Quote at which funds should be withdrawn.
 
-              Должна быть [получена](#operation/createQuote)
-              заранее для каждой отдельной операции вывода с конвертацией.
+              Must be [obtained](#operation/createQuote)
+              in advance for each individual withdrawal operation with conversion.

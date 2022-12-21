@@ -1,2 +1,3 @@
+---
 allOf:
-  - $ref: '#/definitions/CryptoWallet'
+  - $ref: "#/definitions/CryptoWallet"

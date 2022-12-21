@@ -1,20 +1,21 @@
+---
 get:
   operationId: getWalletAccount
-  summary: Получить состояние счёта
+  summary: Get account status
   tags:
     - Wallets
   parameters:
-    - $ref: '#/parameters/requestID'
-    - $ref: '#/parameters/deadline'
-    - $ref: '#/parameters/walletID'
+    - $ref: "#/parameters/requestID"
+    - $ref: "#/parameters/deadline"
+    - $ref: "#/parameters/walletID"
   responses:
-    '200':
-      description: Счёт кошелька получен
+    "200":
+      description: Wallet account received
       schema:
-        $ref: '#/definitions/WalletAccount'
-    '404':
-      $ref: '#/responses/NotFound'
-    '400':
-      $ref: '#/responses/BadRequest'
-    '401':
-      $ref: '#/responses/Unauthorized'
+        $ref: "#/definitions/WalletAccount"
+    "404":
+      $ref: "#/responses/NotFound"
+    "400":
+      $ref: "#/responses/BadRequest"
+    "401":
+      $ref: "#/responses/Unauthorized"

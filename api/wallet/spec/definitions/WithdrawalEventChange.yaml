@@ -1,12 +1,13 @@
+---
 description: |
-  Изменение, возникшее в процессе вывода средств
+  Change, that occurred in the funds withdrawal process
 type: object
 discriminator: type
 required:
   - type
 properties:
   type:
-    description: Тип произошедшего изменения
+    description: The type of change that occurred
     type: string
     enum:
       - WithdrawalStatusChanged

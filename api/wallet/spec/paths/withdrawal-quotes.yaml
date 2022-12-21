@@ -1,30 +1,31 @@
+---
 post:
   operationId: createQuote
-  summary: Подготовка котировки
-  description: Фиксация курса обмена валют для проведения выплаты с конвертацией
+  summary: Quote preparation
+  description: Fixing the exchange rate for making payments with conversion
   tags:
     - Withdrawals
   parameters:
-    - $ref: '#/parameters/requestID'
-    - $ref: '#/parameters/deadline'
+    - $ref: "#/parameters/requestID"
+    - $ref: "#/parameters/deadline"
     - name: withdrawalQuoteParams
-      description: Данные котировки для вывода
+      description: Quote data for withdrawal
       in: body
       required: true
       schema:
-        $ref: '#/definitions/WithdrawalQuoteParams'
+        $ref: "#/definitions/WithdrawalQuoteParams"
   responses:
-    '202':
-      description: Полученная котировка
+    "202":
+      description: Received quote
       schema:
-        $ref: '#/definitions/WithdrawalQuote'
-    '400':
-      $ref: '#/responses/BadRequest'
-    '401':
-      $ref: '#/responses/Unauthorized'
-    '409':
-      $ref: '#/responses/ConflictRequest'
-    '422':
-      description: Неверные данные для получения котировки
+        $ref: "#/definitions/WithdrawalQuote"
+    "400":
+      $ref: "#/responses/BadRequest"
+    "401":
+      $ref: "#/responses/Unauthorized"
+    "409":
+      $ref: "#/responses/ConflictRequest"
+    "422":
+      description: Invalid data for getting a quote
       schema:
-        $ref: '#/definitions/InvalidOperationParameters'
+        $ref: "#/definitions/InvalidOperationParameters"

@@ -1,11 +1,12 @@
+---
 description: |
-  Детализация описания ошибки
+  Detailed description of the error
 type: object
 required:
   - code
 properties:
   code:
-    description: Детализация кода ошибки
+    description: Details of the error code
     type: string
   subError:
-    $ref: '#/definitions/SubFailure'
+    $ref: "#/definitions/SubFailure"

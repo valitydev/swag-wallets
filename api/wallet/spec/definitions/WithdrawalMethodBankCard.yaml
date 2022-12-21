@@ -1,13 +1,14 @@
+---
 type: object
 allOf:
-  - $ref: '#/definitions/WithdrawalMethod'
+  - $ref: "#/definitions/WithdrawalMethod"
   - type: object
     required:
       - paymentSystems
     properties:
       paymentSystems:
-        description: Список платежных систем
+        description: List of payment systems
         type: array
         items:
           x-rebillyMerge:
-            - $ref: '#/definitions/BankCardPaymentSystem'
+            - $ref: "#/definitions/BankCardPaymentSystem"

@@ -1,14 +1,6 @@
+---
 description: |
-    Платежная система.
+  Payment system.
 
-    Набор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getWithdrawalMethods).
+  The set of systems available for making payments can be found by calling the corresponding [operation](#operation/getWithdrawalMethods).
 type: string
-# enum:
-#   - visa
-#   - mastercard
-#   - amex
-#   - dinersclub
-#   - discover
-#   - unionpay
-#   - jcb
-#   - nspkmir

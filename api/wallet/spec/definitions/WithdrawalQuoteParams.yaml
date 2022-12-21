@@ -1,4 +1,5 @@
-description: Параметры котировки для вывода
+---
+description: Quote parameters for withdrawal
 type: object
 required:
   - walletID
@@ -8,40 +9,34 @@ required:
 properties:
   externalID:
     x-rebillyMerge:
-      - $ref: '#/definitions/ExternalID'
+      - $ref: "#/definitions/ExternalID"
   walletID:
     x-rebillyMerge:
-      - $ref: '#/definitions/WalletID'
+      - $ref: "#/definitions/WalletID"
   destinationID:
     x-rebillyMerge:
-      - $ref: '#/definitions/DestinationID'
+      - $ref: "#/definitions/DestinationID"
   currencyFrom:
     x-rebillyMerge:
-      - $ref: '#/definitions/CurrencyID'
-      - description: Код исходной валюты
+      - $ref: "#/definitions/CurrencyID"
+      - description: Source currency code
   currencyTo:
     x-rebillyMerge:
-      - $ref: '#/definitions/CurrencyID'
-      - description: Код конечной валюты
+      - $ref: "#/definitions/CurrencyID"
+      - description: Target currency code
   cash:
     x-rebillyMerge:
-      - $ref: '#/definitions/Asset'
-      - description: Объём средств для получения котировки в одной из валют обмена
+      - $ref: "#/definitions/Asset"
+      - description: The amount of funds for receiving a quote in one of the exchange currencies
   walletGrant:
     x-rebillyMerge:
-      - $ref: '#/definitions/GrantToken'
+      - $ref: "#/definitions/GrantToken"
       - description: >
-          Токен, дающий право на списание с кошелька для оплаты вывода.
-
-          Необходимо предоставить в том случае, если оплата производится
-          засчёт средств _чужого_ кошелька. Владелец указанного кошелька
-          может [выдать на это право](#operation/issueWalletGrant)
+          A token that gives the right to withdraw from the wallet to pay for the withdrawal.
+          It is necessary to provide if the payment is made at the expense of the funds of a _foreign_ wallet. The owner of the specified wallet can [issue this right](#operation/issueWalletGrant)
   destinationGrant:
     x-rebillyMerge:
-      - $ref: '#/definitions/GrantToken'
+      - $ref: "#/definitions/GrantToken"
       - description: >
-          Токен, дающий право вывода.
-
-          Необходимо предоставить в том случае, если вывод производится
-          посредством _чужого_ приёмника средств. Владелец указанного
-          приёмника может [выдать на это право](#operation/issueDestinationGrant)
+          A token that gives the right to withdraw.
+          Must be provided if the withdrawal is made through a _foreign_ fund recipient. The owner of the specified recipient can [grant this right](#operation/issueDestinationGrant)

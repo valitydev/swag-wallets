@@ -1,4 +1,5 @@
-description: Данные вывода денежных средств
+---
+description: Funds withdrawal data
 allOf:
   - type: object
     required:
@@ -8,35 +9,35 @@ allOf:
     properties:
       id:
         x-rebillyMerge:
-          - $ref: '#/definitions/WithdrawalID'
+          - $ref: "#/definitions/WithdrawalID"
           - readOnly: true
       createdAt:
-        description: Дата и время запуска вывода
+        description: Date and time the withdrawal started
         type: string
         format: date-time
         readOnly: true
       wallet:
         x-rebillyMerge:
-          - $ref: '#/definitions/WalletID'
+          - $ref: "#/definitions/WalletID"
       destination:
         x-rebillyMerge:
-          - $ref: '#/definitions/DestinationID'
+          - $ref: "#/definitions/DestinationID"
       body:
         x-rebillyMerge:
-          - $ref: '#/definitions/Asset'
-          - description: Объём средств, которые необходимо вывести
+          - $ref: "#/definitions/Asset"
+          - description: Amount of funds to be withdrawn
       fee:
         x-rebillyMerge:
-          - $ref: '#/definitions/Asset'
-          - description: Сумма коммисии
+          - $ref: "#/definitions/Asset"
+          - description: Fee amount
       metadata:
         description: |
-          Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с
-          данным выводом
+          A random, client-specific API and a data set that is not transparent to the system, associated with
+          this withdrawal
         type: object
         example:
           notify_email: iliketrains@example.com
       externalID:
         x-rebillyMerge:
-          - $ref: '#/definitions/ExternalID'
-  - $ref: '#/definitions/WithdrawalStatus'
+          - $ref: "#/definitions/ExternalID"
+  - $ref: "#/definitions/WithdrawalStatus"

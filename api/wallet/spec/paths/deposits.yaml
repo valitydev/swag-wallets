@@ -1,35 +1,36 @@
+---
 get:
   operationId: listDeposits
-  summary: Поиск пополнений
+  summary: Search for deposits
   tags:
     - Deposits
   parameters:
-    - $ref: '#/parameters/requestID'
-    - $ref: '#/parameters/deadline'
+    - $ref: "#/parameters/requestID"
+    - $ref: "#/parameters/deadline"
     - name: walletID
       in: query
-      description: Идентификатор кошелька
+      description: Identifier of the wallet
       type: string
       maxLength: 40
       minLength: 1
       required: false
     - name: identityID
       in: query
-      description: Идентификатор личности владельца
+      description: Identifier of the owner's identity
       type: string
       maxLength: 40
       minLength: 1
       required: false
     - name: depositID
       in: query
-      description: Идентификатор ввода денежных средств
+      description: Identifier of the input of funds
       type: string
       required: false
       maxLength: 50
       minLength: 1
     - name: sourceID
       in: query
-      description: Идентификатор источника средств
+      description: Identifier of the funds source
       type: string
       maxLength: 40
       minLength: 1
@@ -44,13 +45,13 @@ get:
       required: false
     - name: createdAtFrom
       in: query
-      description: Дата создания с
+      description: Creation date from
       type: string
       format: date-time
       required: false
     - name: createdAtTo
       in: query
-      description: Дата создания до
+      description: Creation date to
       type: string
       format: date-time
       required: false
@@ -62,30 +63,30 @@ get:
         - Partial
         - Full
       required: false
-    - $ref: '#/parameters/amountFrom'
-    - $ref: '#/parameters/amountTo'
-    - $ref: '#/parameters/currencyID'
-    - $ref: '#/parameters/limit'
+    - $ref: "#/parameters/amountFrom"
+    - $ref: "#/parameters/amountTo"
+    - $ref: "#/parameters/currencyID"
+    - $ref: "#/parameters/limit"
     - x-rebillyMerge:
-      - name: continuationToken
-        in: query
-        required: false
-      - $ref: '#/definitions/ContinuationToken'
+        - name: continuationToken
+          in: query
+          required: false
+        - $ref: "#/definitions/ContinuationToken"
   responses:
-    '200':
-      description: Результат поиска
+    "200":
+      description: Search results
       schema:
         type: object
         properties:
           continuationToken:
             x-rebillyMerge:
-              - $ref: '#/definitions/ContinuationToken'
+              - $ref: "#/definitions/ContinuationToken"
           result:
-            description: Найденные пополнения
+            description: Found deposits
             type: array
             items:
-              $ref: '#/definitions/Deposit'
-    '400':
-      $ref: '#/responses/BadRequest'
-    '401':
-      $ref: '#/responses/Unauthorized'
+              $ref: "#/definitions/Deposit"
+    "400":
+      $ref: "#/responses/BadRequest"
+    "401":
+      $ref: "#/responses/Unauthorized"

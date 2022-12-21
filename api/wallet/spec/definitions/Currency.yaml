@@ -1,4 +1,5 @@
-description: Описание валюты
+---
+description: Currency description
 type: object
 required:
   - id
@@ -8,28 +9,28 @@ required:
 properties:
   id:
     x-rebillyMerge:
-      - $ref: '#/definitions/CurrencyID'
+      - $ref: "#/definitions/CurrencyID"
   numericCode:
     description: |
-      Цифровой код валюты согласно
+      Digital currency code according to
       [ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm)
     type: string
-    pattern: '^[0-9]{3}$'
-    example: '643'
+    pattern: "^[0-9]{3}$"
+    example: "840"
   name:
     description: |
-      Человекочитаемое название валюты
+      Human readable currency name
     type: string
-    example: Российский рубль
+    example: United States Dollar
   sign:
     description: |
-      Знак единицы валюты
+      Currency unit sign
     type: string
-    example: '₽'
+    example: "$"
   exponent:
     description: |
-      Количество допустимых знаков после запятой в сумме средств, в которых может
-      указываться количество минорных денежных единиц
+      The number of acceptable decimal places in the amount of funds, 
+      in which the number of minor monetary units can be indicated
     type: integer
     minimum: 0
     example: 2

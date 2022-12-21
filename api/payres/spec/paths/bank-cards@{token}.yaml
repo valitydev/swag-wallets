@@ -1,25 +1,26 @@
+---
 get:
   operationId: getBankCard
-  summary: Получить данные банковской карты
+  summary: Receive bank card details
   tags:
     - Payment Resources
   parameters:
-    - $ref: '#/parameters/requestID'
+    - $ref: "#/parameters/requestID"
     - name: token
-      description: Данные банковской карты
+      description: Bank card details
       in: path
       required: true
       type: string
       minLength: 1
       maxLength: 1000
   responses:
-    '200':
-      description: Данные карты найдены
+    "200":
+      description: Card data found
       schema:
-        $ref: '#/definitions/SecuredBankCard'
-    '400':
-      $ref: '#/responses/BadRequest'
-    '401':
-      $ref: '#/responses/Unauthorized'
-    '404':
-      $ref: '#/responses/NotFound'
+        $ref: "#/definitions/SecuredBankCard"
+    "400":
+      $ref: "#/responses/BadRequest"
+    "401":
+      $ref: "#/responses/Unauthorized"
+    "404":
+      $ref: "#/responses/NotFound"

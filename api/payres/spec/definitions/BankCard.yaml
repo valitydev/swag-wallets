@@ -1,31 +1,33 @@
-description: Данные банковской карты
+---
+description: Bank card details
 type: object
 required:
   - cardNumber
 properties:
   type:
-    description: Банковская карта
+    description: Card
     type: string
-    enum: [BankCard]
+    enum:
+      - BankCard
   cardNumber:
-    description: Номер банковской карты
+    description: Card number
     type: string
     pattern: '^\d{12,19}$'
     example: "4242424242424242"
   expDate:
-    description: Срок действия банковской карты
+    description: Сard expiration date
     type: string
     pattern: '^\d{2}\/(\d{2}|\d{4})$'
     example: "12/21"
   cardHolder:
-    description: Имя держателя карты
+    description: Cardholder name
     type: string
-    pattern: '^[[:alpha:][:space:][:punct:]]+$'
+    pattern: "^[[:alpha:][:space:][:punct:]]+$"
     minLength: 1
     maxLength: 100
-    example: "LEXA SVOTIN"
+    example: "LEEROY JENKINS"
   cvv:
-    description: Код верификации
+    description: Verification code
     type: string
     pattern: '^\d{3,4}$'
     example: "321"

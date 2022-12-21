@@ -1,4 +1,5 @@
-description: Параметры ресурса получателя денежных средств
+---
+description: Recipient resource parameters
 type: object
 discriminator: type
 required:
@@ -6,9 +7,9 @@ required:
 properties:
   type:
     description: |
-      Тип ресурса получателя средств.
+      The resource type of the payee.
 
-      См. [Vality Payment Resource API](?api/payres/swagger.yaml).
+      See [Vality Payment Resource API](?api/payres/swagger.yaml).
     type: string
     enum:
       - BankCardReceiverResourceParams

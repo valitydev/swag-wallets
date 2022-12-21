@@ -1,20 +1,21 @@
+---
 get:
   operationId: getProvider
-  summary: Получить данные провайдера
+  summary: Get provider details
   tags:
     - Providers
   parameters:
-    - $ref: '#/parameters/requestID'
-    - $ref: '#/parameters/deadline'
-    - $ref: '#/parameters/providerID'
+    - $ref: "#/parameters/requestID"
+    - $ref: "#/parameters/deadline"
+    - $ref: "#/parameters/providerID"
   responses:
-    '200':
-      description: Провайдер найден
+    "200":
+      description: Provider found
       schema:
-        $ref: '#/definitions/Provider'
-    '404':
-      $ref: '#/responses/NotFound'
-    '400':
-      $ref: '#/responses/BadRequest'
-    '401':
-      $ref: '#/responses/Unauthorized'
+        $ref: "#/definitions/Provider"
+    "404":
+      $ref: "#/responses/NotFound"
+    "400":
+      $ref: "#/responses/BadRequest"
+    "401":
+      $ref: "#/responses/Unauthorized"

@@ -1,3 +1,4 @@
+---
 type: object
 required:
   - id
@@ -9,30 +10,30 @@ required:
   - files
 properties:
   id:
-    description: Идентификатор отчета
+    description: Report identifier
     type: integer
     format: int64
   createdAt:
-    description: Дата и время создания
+    description: Date and time of creation
     type: string
     format: date-time
   fromTime:
-    description: Дата и время начала периода
+    description: Date and time of the beginning of the period
     type: string
     format: date-time
   toTime:
-    description: Дата и время конца периода
+    description: Date and time of end of period
     type: string
     format: date-time
   status:
-    description: Статус формирования отчета
+    description: Report generation status
     type: string
     enum:
       - pending
       - created
       - canceled
   type:
-    description: Тип отчета
+    description: Report type
     type: string
     enum:
       - withdrawalRegistry
@@ -44,7 +45,7 @@ properties:
         - id
       properties:
         id:
-          description: Идентификатор файла
+          description: File identifier
           type: string
           maxLength: 40
           minLength: 1

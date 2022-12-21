@@ -1,10 +1,11 @@
+---
 type: object
 discriminator: method
 required:
   - method
 properties:
   method:
-    description: Метод для проведения выплаты
+    description: Payout method
     type: string
     enum:
       - WithdrawalMethodBankCard

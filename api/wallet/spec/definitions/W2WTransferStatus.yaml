@@ -1,17 +1,17 @@
+---
 type: object
 required:
   - status
 properties:
   status:
     description: |
-      Статус перевода денежных средств.
+      The status of the money transfer.
 
-      | Значение    | Пояснение                                  |
-      | ----------- | ------------------------------------------ |
-      | `Pending`   | Перевод в процессе выполнения                |
-      | `Succeeded` | Перевод средств произведён успешно           |
-      | `Failed`    | Перевод средств завершился неудачей          |
-
+      | Meaning     | Explanation                          |
+      | ----------- | ------------------------------------ |
+      | `Pending`   | Translation in progress              |
+      | `Succeeded` | Fund transfer completed successfully |
+      | `Failed`    | Fund transfer failed                 |
     type: string
     enum:
       - Pending
@@ -20,7 +20,7 @@ properties:
   failure:
     x-rebillyMerge:
       - description: |
-          > Если `status` == `Failed`
+          > If `status` == `Failed`
 
-          Пояснение причины неудачи
-      - $ref: '#/definitions/W2WTransferFailure'
+          Explanation of the reason for failure
+      - $ref: "#/definitions/W2WTransferFailure"

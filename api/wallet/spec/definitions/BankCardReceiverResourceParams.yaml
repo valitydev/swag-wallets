@@ -1,4 +1,5 @@
+---
 description: Банковская карта
 allOf:
-  - $ref: '#/definitions/ReceiverResourceParams'
-  - $ref: '#/definitions/SecuredBankCard'
+  - $ref: "#/definitions/ReceiverResourceParams"
+  - $ref: "#/definitions/SecuredBankCard"

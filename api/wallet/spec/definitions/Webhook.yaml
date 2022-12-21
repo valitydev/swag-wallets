@@ -1,3 +1,4 @@
+---
 type: object
 required:
   - identityID
@@ -6,33 +7,30 @@ required:
 properties:
   id:
     description: |
-      Идентификатор webhook'а
+      Identifier of the webhook
     type: string
     readOnly: true
   identityID:
     x-rebillyMerge:
-    - $ref: '#/definitions/IdentityID'
+      - $ref: "#/definitions/IdentityID"
   active:
     description: |
-      Включена ли в данный момент доставка оповещений?
+      Is notification delivery currently enabled?
     type: boolean
     readOnly: true
   scope:
-    $ref: '#/definitions/WebhookScope'
+    $ref: "#/definitions/WebhookScope"
   url:
     description: |
-      URL, на который будут поступать оповещения о произошедших событиях
+      The URL that will receive notifications of events that have occurred
     type: string
     format: uri
     maxLength: 1000
   publicKey:
     description: |
-      Содержимое публичного ключа, служащего для проверки авторитативности
-      приходящих на `url` оповещений
+      The content of the public key used to check the authoritativeness of
+      notifications coming to `url`
     type: string
     format: hexadecimal
     readOnly: true
-    example: "\
-      MIGJAoGBAM1fmNUvezts3yglTdhXuqG7OhHxQtDFA+Ss//YuUGjw5ossDbEMoS+S\
-      IFuYZ/UL9Xg0rEHNRSbmf48OK+mz0FobEtbji8MADayzGfFopXsfRFa7MVy3Uhu5\
-      jBDpLsN3DyJapAkK0TAYINlZXxVjDwxRNheTvC+xub5WNdiwc28fAgMBAAE="
+    example: "\\ MIGJAoGBAM1fmNUvezts3yglTdhXuqG7OhHxQtDFA+Ss//YuUGjw5ossDbEMoS+S\\ IFuYZ/UL9Xg0rEHNRSbmf48OK+mz0FobEtbji8MADayzGfFopXsfRFa7MVy3Uhu5\\ jBDpLsN3DyJapAkK0TAYINlZXxVjDwxRNheTvC+xub5WNdiwc28fAgMBAAE="

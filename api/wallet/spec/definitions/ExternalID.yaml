@@ -1,6 +1,7 @@
+---
 description: |
-  Уникальный идентификатор сущности на вашей стороне.
-  
-  При указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.
+  The unique identifier of the content on your side.
+
+  When specified, will be used to ensure idempotent processing of the operation.
 type: string
 example: "10036274"
