@@ -1,6 +1,6 @@
 ---
 get:
-  summary: Get payout methods available by owner identity
+  summary: Get withdrawal methods available by owner identity
   tags:
     - Identities
   operationId: getWithdrawalMethods
