@@ -8,8 +8,8 @@ properties:
       | Meaning     | Explanation                                             |
       | ----------- | ------------------------------------------------------- |
       | `Pending`   | Deposit revert in progress                              |
-      | `Succeeded` | Deposit revert completed successfully       |
-      | `Failed`    | Deposit revert failed                 |
+      | `Succeeded` | Deposit revert completed successfully                   |
+      | `Failed`    | Deposit revert failed                                   |
 
     type: string
     enum:
@@ -19,11 +19,9 @@ properties:
     readOnly: true
   failure:
     x-rebillyMerge:
-      - 
-        description: |
+      - description: |
           > If `status` == `Failed`
 
           Explanation of the reason for failure
         readOnly: true
-      - 
-        $ref: '#/definitions/DepositRevertFailure'
+      - $ref: "#/definitions/DepositRevertFailure"
