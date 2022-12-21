@@ -29,7 +29,7 @@ securityDefinitions:
       The corresponding key is passed in the header.
 
       ```shell
-      Authorization: Bearer {TOKENIZATION|PRIVATE_JWT}
+       Authorization: Bearer {TOKENIZATION|PRIVATE_JWT}
       ```
 
 security:
