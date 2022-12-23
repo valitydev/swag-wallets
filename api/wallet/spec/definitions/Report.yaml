@@ -18,7 +18,7 @@ properties:
     type: string
     format: date-time
   fromTime:
-    description: Date and time of the beginning of the period
+    description: Date and time of the start of the period
     type: string
     format: date-time
   toTime:
