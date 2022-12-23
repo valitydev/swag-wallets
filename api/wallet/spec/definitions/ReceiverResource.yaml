@@ -7,7 +7,7 @@ required:
 properties:
   type:
     description: |
-      The resource type of the recipient of the funds.
+      The resource type of the receiver of the funds.
 
       See [Vality Payment Resource API](?api/payres/swagger.yaml).
     type: string
