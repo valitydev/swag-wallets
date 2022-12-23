@@ -25,7 +25,7 @@ securityDefinitions:
     name: Authorization
     in: header
     description: >
-      We use [JWT](https://jwt.io) for call authentication.
+      Use [JWT](https://jwt.io) for call authentication.
       The corresponding key is passed in the header.
 
       ```shell
