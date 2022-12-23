@@ -11,7 +11,7 @@ properties:
       - $ref: "#/definitions/ProviderID"
   name:
     description: |
-      Human readable name of the service provider
+      Human-readable name of the service provider
     type: string
     example: SERVICE PROVIDER LLC
   residences:
