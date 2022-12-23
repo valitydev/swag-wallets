@@ -1,5 +1,5 @@
 ---
-description: Translation data
+description: Transfer data
 type: object
 required:
   - id
