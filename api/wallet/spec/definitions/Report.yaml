@@ -22,7 +22,7 @@ properties:
     type: string
     format: date-time
   toTime:
-    description: Date and time of end of period
+    description: Date and time of the end of period
     type: string
     format: date-time
   status:
