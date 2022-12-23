@@ -29,8 +29,7 @@ properties:
     example: false
   metadata:
     description: |
-      An arbitrary, client-specific API and system-opaque set of data associated with
-      given identity of the owner
+     Some non-transparent for system set of data associated with this identity
     type: object
     example:
       lkDisplayName: James Smith
