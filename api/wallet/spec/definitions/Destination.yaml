@@ -37,8 +37,7 @@ allOf:
         $ref: "#/definitions/DestinationResource"
       metadata:
         description: |
-          An arbitrary, client-specific API and non-transparent set of data associated with
-          given destination
+          Some non-transparent for system set of data associated with this destination
         type: object
         example:
           color_hint: olive-green
