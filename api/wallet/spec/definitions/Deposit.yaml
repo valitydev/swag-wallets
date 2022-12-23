@@ -1,5 +1,5 @@
 ---
-description: Data on cash receipts
+description: Deposit data
 allOf:
   - type: object
     required:
