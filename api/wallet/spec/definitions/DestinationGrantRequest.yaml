@@ -11,6 +11,6 @@ properties:
       - readOnly: true
   validUntil:
     description: |
-      Date and time until which the granted right is valid
+      The date and time by which the granted right is valid
     type: string
     format: date-time
