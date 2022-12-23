@@ -8,6 +8,6 @@ properties:
     description: URL of the file
     type: string
   expiresAt:
-    description: Time until which the link will be considered valid
+    description: The date and time by which the link will be valid
     type: string
     format: date-time
