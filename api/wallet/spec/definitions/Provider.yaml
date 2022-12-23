@@ -17,7 +17,7 @@ properties:
   residences:
     type: array
     description: |
-      Residences in which the provider provides services
+      Residences in which the provider can service
     items:
       x-rebillyMerge:
         - $ref: "#/definitions/ResidenceID"
