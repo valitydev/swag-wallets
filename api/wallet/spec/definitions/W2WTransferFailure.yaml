@@ -1,12 +1,12 @@
 ---
 description: |
-  [Error occurred during the translation process](#tag/Error-Codes)
+  [Error occurred during the transfer process](#tag/Error-Codes)
 type: object
 required:
   - code
 properties:
   code:
-    description: Basic error code
+    description: Main error code
     type: string
   subError:
     $ref: "#/definitions/SubFailure"

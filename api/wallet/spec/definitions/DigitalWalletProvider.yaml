@@ -2,7 +2,7 @@
 description: |
   Digital wallet provider.
 
-  The set of providers available for making payments can be found by calling
+  The set of providers available for making withdrawals can be found by calling
   corresponding [operation](#operation/getWithdrawalMethods).
 type: string
 example: Paypal

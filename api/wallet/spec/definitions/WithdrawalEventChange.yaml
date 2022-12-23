@@ -1,6 +1,6 @@
 ---
 description: |
-  Change, that occurred in the funds withdrawal process
+  Change that occurred in the funds withdrawal process
 type: object
 discriminator: type
 required:

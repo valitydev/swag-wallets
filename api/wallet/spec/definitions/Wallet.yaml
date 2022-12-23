@@ -31,8 +31,7 @@ properties:
       - $ref: "#/definitions/CurrencyID"
   metadata:
     description: |
-      An arbitrary, client-specific API and system-opaque set of data associated with
-      this wallet
+      Some non-transparent for system set of data associated with this wallet
     type: object
     example:
       client_locale: en_US

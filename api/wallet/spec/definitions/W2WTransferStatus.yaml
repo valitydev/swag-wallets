@@ -9,7 +9,7 @@ properties:
 
       | Meaning     | Explanation                          |
       | ----------- | ------------------------------------ |
-      | `Pending`   | Translation in progress              |
+      | `Pending`   | Transfer in progress              |
       | `Succeeded` | Fund transfer completed successfully |
       | `Failed`    | Fund transfer failed                 |
     type: string

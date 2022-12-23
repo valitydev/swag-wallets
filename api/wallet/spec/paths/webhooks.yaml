@@ -1,6 +1,6 @@
 ---
 post:
-  description: Set up a new webhook.
+  description: Create a new webhook.
   tags:
     - Webhooks
   operationId: createWebhook
@@ -8,14 +8,14 @@ post:
     - $ref: "#/parameters/requestID"
     - $ref: "#/parameters/deadline"
     - name: webhookParams
-      description: Parameters of the installed webhook
+      description: Parameters of the created webhook
       in: body
       required: true
       schema:
         $ref: "#/definitions/Webhook"
   responses:
     "201":
-      description: Webhook is set
+      description: Webhook created
       schema:
         $ref: "#/definitions/Webhook"
     "400":
@@ -27,7 +27,7 @@ post:
       schema:
         $ref: "#/definitions/InvalidOperationParameters"
 get:
-  description: Get set of installed webhooks.
+  description: Get list of existing webhooks.
   tags:
     - Webhooks
   operationId: getWebhooks
@@ -37,7 +37,7 @@ get:
     - $ref: "#/parameters/queryIdentityID"
   responses:
     "200":
-      description: A set of webhooks
+      description: A list of webhooks
       schema:
         type: array
         items:

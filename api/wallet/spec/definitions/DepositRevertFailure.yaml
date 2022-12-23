@@ -4,7 +4,7 @@ required:
   - code
 properties:
   code:
-    description: Cancellation error code
+    description: Deposit revert error code
     type: string
   subError:
     $ref: "#/definitions/SubFailure"

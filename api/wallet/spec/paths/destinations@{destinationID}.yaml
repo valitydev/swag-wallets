@@ -1,7 +1,7 @@
 ---
 get:
   operationId: getDestination
-  summary: Get a fund recipient
+  summary: Get a specific destination
   tags:
     - Withdrawals
   parameters:
@@ -10,7 +10,7 @@ get:
     - $ref: "#/parameters/destinationID"
   responses:
     "200":
-      description: Fund recipient found
+      description: Destination found
       schema:
         $ref: "#/definitions/Destination"
     "400":

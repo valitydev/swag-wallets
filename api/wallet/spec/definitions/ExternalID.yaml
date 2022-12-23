@@ -1,6 +1,6 @@
 ---
 description: |
-  The unique identifier of the content on your side.
+  The unique identifier of the entity on your side.
 
   When specified, will be used to ensure idempotent processing of the operation.
 type: string

@@ -14,7 +14,7 @@ properties:
     x-rebillyMerge:
       - $ref: "#/definitions/Asset"
       - description: |
-          Funds available for use are usually equal to own funds
+          Funds available for use. Usually equal to own funds
           minus the sum of all pending transactions
         example:
           amount: 1200000

@@ -4,7 +4,7 @@ required:
   - code
 properties:
   code:
-    description: Correction error code
+    description: Adjustment error code
     type: string
   subError:
     $ref: "#/definitions/SubFailure"

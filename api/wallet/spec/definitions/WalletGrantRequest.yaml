@@ -1,5 +1,5 @@
 ---
-description: Request for a one-time right to manage funds on the wallet
+description: Request for a one-time permission to manage funds on the wallet
 type: object
 required:
   - asset
@@ -7,7 +7,7 @@ required:
 properties:
   token:
     x-rebillyMerge:
-      - description: A token that gives the right to one-time management of funds on the wallet
+      - description: A token that gives the permission to one-time management of funds on the wallet
       - $ref: "#/definitions/GrantToken"
       - readOnly: true
   asset:

@@ -1,5 +1,5 @@
 ---
-description: Translation creation options
+description: Transfer creation options
 type: object
 required:
   - sender

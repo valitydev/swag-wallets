@@ -31,7 +31,7 @@ get:
             x-rebillyMerge:
               - $ref: "#/definitions/ContinuationToken"
           result:
-            description: Fund recipients found
+            description: Destinations found
             type: array
             items:
               $ref: "#/definitions/Destination"
@@ -41,14 +41,14 @@ get:
       $ref: "#/responses/Unauthorized"
 post:
   operationId: createDestination
-  summary: Start a fund recipient
+  summary: Start a destination creation
   tags:
     - Withdrawals
   parameters:
     - $ref: "#/parameters/requestID"
     - $ref: "#/parameters/deadline"
     - name: destination
-      description: Fund recipient data
+      description: Destination data
       in: body
       required: true
       schema:
@@ -58,7 +58,7 @@ post:
       description: Destination created
       headers:
         Location:
-          description: The URI of the created fund recipient
+          description: The URI of the created destination
           type: string
           format: uri
       schema:
@@ -70,6 +70,6 @@ post:
     "409":
       $ref: "#/responses/ConflictRequest"
     "422":
-      description: Incorrect recipient data
+      description: Incorrect destination data
       schema:
         $ref: "#/definitions/InvalidOperationParameters"

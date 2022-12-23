@@ -32,8 +32,7 @@ allOf:
           - description: Fee amount
       metadata:
         description: |
-          A random, client-specific API and a data set that is not transparent to the system, associated with
-          this withdrawal
+          Some non-transparent for system set of data associated with this withdrawal
         type: object
         example:
           notify_email: iliketrains@example.com

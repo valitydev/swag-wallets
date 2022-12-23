@@ -1,5 +1,5 @@
 ---
-description: Cash inflow adjustment data
+description: Deposit adjustment data
 allOf:
   - type: object
     properties:

@@ -16,8 +16,11 @@ properties:
     x-rebillyMerge:
       - $ref: "#/definitions/DigitalWalletProvider"
   token:
-    description: A string containing authorization data for transactions on this wallet
+    description: A string containing authorization data for transactions on this digital wallet
     type: string
     minLength: 1
     maxLength: 4000
-    example: " eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF\\ 0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\\ "
+    example: "
+      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF\
+      0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\
+    "
