@@ -1,5 +1,5 @@
 ---
-description: Personal data of the wallet owner
+description: Data of the wallet owner
 type: object
 required:
   - name
