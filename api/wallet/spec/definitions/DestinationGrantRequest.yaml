@@ -1,5 +1,5 @@
 ---
-description: Request for the right to control the withdrawals to the destination
+description: Request for the permission to control the withdrawals to the destination
 type: object
 required:
   - validUntil
