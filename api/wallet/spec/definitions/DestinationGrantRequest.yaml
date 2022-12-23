@@ -6,7 +6,7 @@ required:
 properties:
   token:
     x-rebillyMerge:
-      - description: Token granting the right to control the withdrawals
+      - description: Token granting the permission to control the withdrawals
       - $ref: "#/definitions/GrantToken"
       - readOnly: true
   validUntil:
