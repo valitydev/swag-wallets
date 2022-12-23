@@ -1,5 +1,5 @@
 ---
-description: Quote request options
+description: Quote request parameters
 type: object
 required:
   - sender
