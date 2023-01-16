@@ -1,4 +1,5 @@
-description: Данные перевода
+---
+description: Transfer data
 type: object
 required:
   - id
@@ -10,21 +11,21 @@ required:
 properties:
   id:
     x-rebillyMerge:
-      - $ref: '#/definitions/W2WTransferID'
+      - $ref: "#/definitions/W2WTransferID"
   createdAt:
-    description: Дата и время создания
+    description: Date and time of creation
     type: string
     format: date-time
   body:
     x-rebillyMerge:
-      - $ref: '#/definitions/Asset'
-      - description: Сумма операции
+      - $ref: "#/definitions/Asset"
+      - description: Transaction amount
   sender:
-    $ref: '#/definitions/WalletID'
+    $ref: "#/definitions/WalletID"
   receiver:
-    $ref: '#/definitions/WalletID'
+    $ref: "#/definitions/WalletID"
   status:
-    $ref: '#/definitions/W2WTransferStatus'
+    $ref: "#/definitions/W2WTransferStatus"
   externalID:
     x-rebillyMerge:
-      - $ref: '#/definitions/ExternalID'
+      - $ref: "#/definitions/ExternalID"

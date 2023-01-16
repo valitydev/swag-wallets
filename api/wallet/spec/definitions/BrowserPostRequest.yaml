@@ -1,6 +1,7 @@
+---
 type: object
 allOf:
-  - $ref: '#/definitions/BrowserRequest'
+  - $ref: "#/definitions/BrowserRequest"
   - type: object
     required:
       - uriTemplate
@@ -8,10 +9,10 @@ allOf:
     properties:
       uriTemplate:
         description: |
-          Шаблон значения URL для отправки формы
+          URL value template for form submission
 
-          Шаблон представлен согласно стандарту
+          The template is represented according to the standard
           [RFC6570](https://tools.ietf.org/html/rfc6570).
         type: string
       form:
-        $ref: '#/definitions/UserInteractionForm'
+        $ref: "#/definitions/UserInteractionForm"

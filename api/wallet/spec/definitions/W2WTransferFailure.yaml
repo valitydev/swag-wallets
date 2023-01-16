@@ -1,11 +1,12 @@
+---
 description: |
-  [Ошибка, возникшая в процессе проведения перевода](#tag/Error-Codes)
+  [Error occurred during the transfer process](#tag/Error-Codes)
 type: object
 required:
   - code
 properties:
   code:
-    description: Основной код ошибки
+    description: Main error code
     type: string
   subError:
-    $ref: '#/definitions/SubFailure'
+    $ref: "#/definitions/SubFailure"

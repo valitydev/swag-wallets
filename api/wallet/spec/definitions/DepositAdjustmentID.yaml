@@ -1,3 +1,4 @@
-description: Идентификатор корректировки поступления денежных средств
+---
+description: Deposit adjustment identifier
 type: string
 example: tZ0jUmlsV0

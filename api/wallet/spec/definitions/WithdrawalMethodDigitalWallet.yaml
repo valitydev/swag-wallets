@@ -1,13 +1,14 @@
+---
 type: object
 allOf:
-  - $ref: '#/definitions/WithdrawalMethod'
+  - $ref: "#/definitions/WithdrawalMethod"
   - type: object
     required:
       - providers
     properties:
       providers:
-        description: Список провайдеров электронных денежных средств
+        description: List of digital wallet providers
         type: array
         items:
           x-rebillyMerge:
-            - $ref: '#/definitions/DigitalWalletProvider'
+            - $ref: "#/definitions/DigitalWalletProvider"

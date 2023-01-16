@@ -1,20 +1,21 @@
+---
 get:
   operationId: getWithdrawalByExternalID
-  summary: Получить состояние вывода средств по внешнему идентификатору
+  summary: Get withdrawal status by external identifier
   tags:
     - Withdrawals
   parameters:
-    - $ref: '#/parameters/requestID'
-    - $ref: '#/parameters/deadline'
-    - $ref: '#/parameters/externalID'
+    - $ref: "#/parameters/requestID"
+    - $ref: "#/parameters/deadline"
+    - $ref: "#/parameters/externalID"
   responses:
-    '200':
-      description: Вывод найден
+    "200":
+      description: Withdrawal found
       schema:
-        $ref: '#/definitions/Withdrawal'
-    '400':
-      $ref: '#/responses/BadRequest'
-    '401':
-      $ref: '#/responses/Unauthorized'
-    '404':
-      $ref: '#/responses/NotFound'
+        $ref: "#/definitions/Withdrawal"
+    "400":
+      $ref: "#/responses/BadRequest"
+    "401":
+      $ref: "#/responses/Unauthorized"
+    "404":
+      $ref: "#/responses/NotFound"

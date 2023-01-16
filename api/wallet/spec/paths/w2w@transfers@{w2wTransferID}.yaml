@@ -1,20 +1,21 @@
+---
 get:
-  description: Получить состояние перевода.
+  description: Get the transfer status.
   tags:
     - W2W
   operationId: getW2WTransfer
   parameters:
-    - $ref: '#/parameters/requestID'
-    - $ref: '#/parameters/deadline'
-    - $ref: '#/parameters/w2wTransferID'
+    - $ref: "#/parameters/requestID"
+    - $ref: "#/parameters/deadline"
+    - $ref: "#/parameters/w2wTransferID"
   responses:
-    '200':
-      description: Найденный перевод
+    "200":
+      description: Transfer found
       schema:
-        $ref: '#/definitions/W2WTransfer'
-    '400':
-      $ref: '#/responses/BadRequest'
-    '401':
-      $ref: '#/responses/Unauthorized'
-    '404':
-      $ref: '#/responses/NotFound'
+        $ref: "#/definitions/W2WTransfer"
+    "400":
+      $ref: "#/responses/BadRequest"
+    "401":
+      $ref: "#/responses/Unauthorized"
+    "404":
+      $ref: "#/responses/NotFound"

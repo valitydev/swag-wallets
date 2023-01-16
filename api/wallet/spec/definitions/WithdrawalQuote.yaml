@@ -1,4 +1,5 @@
-description: Данные котировки для вывода
+---
+description: Quote data for withdrawal
 type: object
 required:
   - cashFrom
@@ -9,28 +10,27 @@ required:
 properties:
   cashFrom:
     x-rebillyMerge:
-      - $ref: '#/definitions/Asset'
-      - description: Объём средств в исходной валюте
+      - $ref: "#/definitions/Asset"
+      - description: Amount of funds in source currency
       - readOnly: true
   cashTo:
     x-rebillyMerge:
-      - $ref: '#/definitions/Asset'
-      - description: Объём средств в конечной валюте
+      - $ref: "#/definitions/Asset"
+      - description: Amount of funds in target currency
       - readOnly: true
   createdAt:
-    description: Дата и время получения котировки
+    description: Date and time the quote was received
     type: string
     format: date-time
     readOnly: true
   expiresOn:
-    description: Дата и время окончания действия котировки
+    description: Quote expiration date and time
     type: string
     format: date-time
     readOnly: true
   quoteToken:
     x-rebillyMerge:
-      - $ref: '#/definitions/GrantToken'
+      - $ref: "#/definitions/GrantToken"
       - description: >
-          Котировка, по которой следует проводить вывод средств.
-
-          Необходимо предоставить при создании вывода с конвертацией
+          Quote at which funds should be withdrawn.
+          Must be provided when creating withdrawal with conversion

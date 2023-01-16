@@ -1,4 +1,5 @@
-description: Криптовалютные денежные средства
+---
+description: Cryptocurrency funds
 allOf:
-  - $ref: '#/definitions/DestinationResource'
-  - $ref: '#/definitions/CryptoWallet'
+  - $ref: "#/definitions/DestinationResource"
+  - $ref: "#/definitions/CryptoWallet"

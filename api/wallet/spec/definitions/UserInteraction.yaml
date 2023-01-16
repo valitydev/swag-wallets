@@ -1,8 +1,9 @@
+---
 type: object
 discriminator: interactionType
 required:
   - interactionType
 properties:
   interactionType:
-    description: Тип взаимодействия с пользователем
+    description: Type of interaction with the user
     type: string

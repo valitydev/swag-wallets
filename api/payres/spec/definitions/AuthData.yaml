@@ -1,7 +1,8 @@
+---
 type: object
 properties:
   authData:
-    description: Данные для авторизации платежа по карте
+    description: Data for card withdrawal authorization
     type: string
     minLength: 1
     maxLength: 1000

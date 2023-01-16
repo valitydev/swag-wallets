@@ -1,4 +1,5 @@
-description: Запрос на единоразовое право управления средствами на кошельке
+---
+description: Request for a one-time permission to manage funds on the wallet
 type: object
 required:
   - asset
@@ -6,15 +7,15 @@ required:
 properties:
   token:
     x-rebillyMerge:
-      - description: Токен, дающий право единоразового управления средствами на кошельке
-      - $ref: '#/definitions/GrantToken'
+      - description: A token that gives the permission to one-time management of funds on the wallet
+      - $ref: "#/definitions/GrantToken"
       - readOnly: true
   asset:
     x-rebillyMerge:
-      - $ref: '#/definitions/Asset'
-      - description: Допустимый к использованию объём средств
+      - $ref: "#/definitions/Asset"
+      - description: Amount of funds allowed for use
   validUntil:
     description: |
-      Дата и время, до наступления которых выданное право действительно
+      Date and time until which the granted right is valid
     type: string
     format: date-time

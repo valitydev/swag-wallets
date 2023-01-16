@@ -1,9 +1,10 @@
+---
 type: object
 allOf:
-  - $ref: '#/definitions/UserInteractionChange'
+  - $ref: "#/definitions/UserInteractionChange"
   - type: object
     required:
       - userInteraction
     properties:
       userInteraction:
-        $ref: '#/definitions/UserInteraction'
+        $ref: "#/definitions/UserInteraction"

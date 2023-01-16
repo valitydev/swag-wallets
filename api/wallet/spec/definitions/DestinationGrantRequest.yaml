@@ -1,15 +1,16 @@
-description: Запрос на право управления выводами на приёмник средств
+---
+description: Request for the permission to control the withdrawals to the destination
 type: object
 required:
   - validUntil
 properties:
   token:
     x-rebillyMerge:
-      - description: Токен, дающий право управления выводами
-      - $ref: '#/definitions/GrantToken'
+      - description: Token granting the permission to control the withdrawals
+      - $ref: "#/definitions/GrantToken"
       - readOnly: true
   validUntil:
     description: |
-      Дата и время, до наступления которых выданное право действительно
+      The date and time by which the granted right is valid
     type: string
     format: date-time

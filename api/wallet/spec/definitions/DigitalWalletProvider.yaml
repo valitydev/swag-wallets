@@ -1,7 +1,8 @@
+---
 description: |
-    Провайдер электронных денежных средств.
+  Digital wallet provider.
 
-    Набор провайдеров, доступных для проведения выплат, можно узнать, вызвав
-    соответствующую [операцию](#operation/getWithdrawalMethods).
+  The set of providers available for making withdrawals can be found by calling
+  corresponding [operation](#operation/getWithdrawalMethods).
 type: string
 example: Paypal

@@ -1,15 +1,15 @@
+---
 type: object
 properties:
   status:
     description: |
-      Статус вывода денежных средств.
+      Withdrawal status.
 
-      | Значение    | Пояснение                                  |
-      | ----------- | ------------------------------------------ |
-      | `Pending`   | Вывод в процессе выполнения                |
-      | `Succeeded` | Вывод средств произведён успешно           |
-      | `Failed`    | Вывод средств завершился неудачей          |
-
+      | Meaning     | Explanation                          |
+      | ----------- | ------------------------------------ |
+      | `Pending`   | Withdrawal in progress               |
+      | `Succeeded` | Withdrawal completed successfully    |
+      | `Failed`    | Withdrawal failed                    |
     type: string
     enum:
       - Pending
@@ -19,8 +19,8 @@ properties:
   failure:
     x-rebillyMerge:
       - description: |
-          > Если `status` == `Failed`
+          > If `status` == `Failed`
 
-          Пояснение причины неудачи
+          Explaining the reason for failure
         readOnly: true
-      - $ref: '#/definitions/WithdrawalFailure'
+      - $ref: "#/definitions/WithdrawalFailure"

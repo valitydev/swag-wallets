@@ -1,14 +1,15 @@
+---
 type: object
 allOf:
-  - $ref: '#/definitions/BrowserRequest'
+  - $ref: "#/definitions/BrowserRequest"
   - type: object
     required:
       - uriTemplate
     properties:
       uriTemplate:
         description: |
-          Шаблон значения URL для перехода в браузере
+          URL value template for browser navigation
 
-          Шаблон представлен согласно стандарту
+          The template is represented according to the standard
           [RFC6570](https://tools.ietf.org/html/rfc6570).
         type: string
