@@ -303,7 +303,7 @@ tags:
     description: >
       ## Vality Webhooks Management API
 
-      This section describes methods that allow you to manage Webhooks, or tools for receiving asynchronous notifications via HTTP requests when one or a group of events of interest to you occurs, for example, that a payment within the created wallet was successfully completed.
+      This section describes methods that allow you to manage Webhooks, or tools for receiving asynchronous notifications via HTTP requests when one or a group of events of interest to you occurs, for example, that a withdrawal within the created wallet was successfully completed.
 
       ## Vality Webhooks Events API
 
@@ -314,10 +314,10 @@ tags:
 
       ## Withdrawal errors
 
-      | Code                   | Description                                                                                                                                                                                      |
-      | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-      | InvalidSenderResource  | Invalid transfer source (entered the number of a non-existent card, missing account, etc.)                                                                                                       |
-      | InvalidReceiverResource| Wrong transfer receiver (invalid card number entered, etc.)                                                                                                                                     |
-      | InsufficientFunds      | Insufficient funds on the bank card account                                                                                                                                                      |
-      | PreauthorizationFailed | Pre-Authorization Rejected (Wrong 3D-Secure Code Entered, Cancel Link Clicked on 3D-Secure Form)                                                                                                 |
-      | RejectedByIssuer       | The transfer was rejected by the issuer (prohibitions were established by the country of debiting, a ban on purchases on the Internet, the payment was rejected by the issuer's antifraud, etc.) |
+      | Code                   | Description                                                                                                                                                                                         |
+      | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+      | InvalidSenderResource  | Invalid transfer source (entered the number of a non-existent card, missing account, etc.)                                                                                                          |
+      | InvalidReceiverResource| Wrong transfer receiver (invalid card number entered, etc.)                                                                                                                                         |
+      | InsufficientFunds      | Insufficient funds on the bank card account                                                                                                                                                         |
+      | PreauthorizationFailed | Pre-Authorization Rejected (Wrong 3D-Secure Code Entered, Cancel Link Clicked on 3D-Secure Form)                                                                                                    |
+      | RejectedByIssuer       | The transfer was rejected by the issuer (prohibitions were established by the country of debiting, a ban on purchases on the Internet, the withdrawal was rejected by the issuer's antifraud, etc.) |

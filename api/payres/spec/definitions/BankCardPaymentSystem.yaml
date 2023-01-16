@@ -2,5 +2,5 @@
 description: |
   Payment system.
 
-  The set of systems available for making payments can be found by calling the corresponding [operation](#operation/getWithdrawalMethods).
+  The set of systems available for making withdrawals can be found by calling the corresponding [operation](#operation/getWithdrawalMethods).
 type: string

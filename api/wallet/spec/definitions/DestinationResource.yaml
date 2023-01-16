@@ -9,7 +9,7 @@ properties:
     description: |
       The resource type of the destination.
 
-      See [Vality Payment Resource API](?api/payres/swagger.yaml).
+      See [Vality Withdrawal Resource API](?api/payres/swagger.yaml).
     type: string
     enum:
       - BankCardDestinationResource

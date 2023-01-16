@@ -33,7 +33,7 @@ properties:
       - $ref: "#/definitions/GrantToken"
       - description: >
           A token that gives the right to withdraw from the wallet to pay for the withdrawal.
-          It is necessary to provide if the payment is made at the expense of the funds of a _foreign_ wallet. The owner of the specified wallet can [issue this right](#operation/issueWalletGrant)
+          It is necessary to provide if the withdrawal is made at the expense of the funds of a _foreign_ wallet. The owner of the specified wallet can [issue this right](#operation/issueWalletGrant)
   destinationGrant:
     x-rebillyMerge:
       - $ref: "#/definitions/GrantToken"

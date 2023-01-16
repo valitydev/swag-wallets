@@ -3,7 +3,7 @@ post:
   operationId: storeBankCard
   summary: Save card
   tags:
-    - Payment Resources
+    - Withdrawal Resources
   parameters:
     - $ref: "#/parameters/requestID"
     - name: bankCard

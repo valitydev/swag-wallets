@@ -2,6 +2,6 @@
 description: |
   Cryptocurrency.
 
-  The set of cryptocurrencies available for payments can be found out by calling the appropriate [operation](#operation/getWithdrawalMethods).
+  The set of cryptocurrencies available for withdrawals can be found out by calling the appropriate [operation](#operation/getWithdrawalMethods).
 type: string
 example: BTC

@@ -2,7 +2,7 @@
 type: object
 properties:
   validUntil:
-    description: The date and time by which the payment resource token remains valid
+    description: The date and time by which the withdrawal resource token remains valid
     type: string
     format: date-time
     readOnly: true

@@ -7,7 +7,7 @@ allOf:
       - providers
     properties:
       providers:
-        description: List of payment service providers
+        description: List of withdrawal service providers
         type: array
         items:
           x-rebillyMerge:

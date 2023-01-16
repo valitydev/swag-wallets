@@ -9,7 +9,7 @@ properties:
     description: |
       The resource type of the sender of the funds.
 
-      See [Vality Payment Resource API](?api/payres/swagger.yaml).
+      See [Vality Withdrawal Resource API](?api/payres/swagger.yaml).
     type: string
     enum:
       - BankCardSenderResource

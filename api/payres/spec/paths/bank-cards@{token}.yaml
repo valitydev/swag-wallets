@@ -3,7 +3,7 @@ get:
   operationId: getBankCard
   summary: Receive bank card details
   tags:
-    - Payment Resources
+    - Withdrawal Resources
   parameters:
     - $ref: "#/parameters/requestID"
     - name: token

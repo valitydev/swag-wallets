@@ -10,7 +10,7 @@ allOf:
           - description: |
               A token that gives the right to withdraw from the wallet to pay for the withdrawal.
 
-              Must be provided if payment is made at the expense of _foreign_
+              Must be provided if withdrawal is made at the expense of _foreign_
               wallet. The owner of said wallet can
               [issue this right](#operation/issueWalletGrant).
       destinationGrant:
