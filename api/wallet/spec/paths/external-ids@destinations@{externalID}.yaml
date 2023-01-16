@@ -1,7 +1,7 @@
 ---
 get:
   operationId: getDestinationByExternalID
-  summary: Get a fund recipient by external identifier
+  summary: Get a destination by external identifier
   tags:
     - Withdrawals
   parameters:
@@ -10,7 +10,7 @@ get:
     - $ref: "#/parameters/externalID"
   responses:
     "200":
-      description: Fund recipient found
+      description: Destination found
       schema:
         $ref: "#/definitions/Destination"
     "400":

@@ -1,5 +1,5 @@
 ---
-description: Recipient resource parameters
+description: Receiver resource parameters
 type: object
 discriminator: type
 required:
@@ -7,7 +7,7 @@ required:
 properties:
   type:
     description: |
-      The resource type of the payee.
+      The resource type of the receiver.
 
       See [Vality Withdrawal Resource API](?api/payres/swagger.yaml).
     type: string

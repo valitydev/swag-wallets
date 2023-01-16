@@ -45,10 +45,10 @@ info:
 
     During the processing of requests by our system, various unforeseen situations may occur. The system signals about their appearance via the HTTP protocol with the corresponding [statuses][5xx], indicating server errors.
 
-    |  Code    |  Description  |
-    | ------- | -------------- |
-    | **500** | An unexpected situation occurred while the system was processing the request. If you receive such a response code, we recommend that you contact technical support. |
-    | **503** | The system is temporarily unavailable and not ready to serve this request. The request is guaranteed to fail, if you receive a response code like this, try to implement it later when the system is restored to availability. |
+    | Code    | Description                                                                                                                                                                                                                      |
+    | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+    | **500** | An unexpected situation occurred while the system was processing the request. If you receive such a response code, we recommend that you contact technical support.                                                              |
+    | **503** | The system is temporarily unavailable and not ready to serve this request. The request is guaranteed to fail, if you receive a response code like this, try to implement it later when the system is restored to availability.   |
     | **504** | The system has exceeded the allowable request processing time, the result of the request is undefined. Try to resubmit the request or find out the result of the original request, if you do not want to re-execute the request. |
 
     [5xx]: https://tools.ietf.org/html/rfc7231#section-6.6
@@ -71,7 +71,7 @@ securityDefinitions:
     name: Authorization
     in: header
     description: >
-      We use [JWT](https://jwt.io) for call authentication. The corresponding key is passed in the header.
+      Use [JWT](https://jwt.io) for call authentication. The corresponding key is passed in the header.
 
       ```shell
        Authorization: Bearer {YOUR_API_KEY_JWT}
