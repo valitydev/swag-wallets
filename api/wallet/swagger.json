@@ -3,10 +3,10 @@
   "info": {
     "version": "0.1.0",
     "title": "Vality Wallet API",
-    "description": "\nVality Wallet API является базовой и единственной точкой взаимодействия с системой кошельков. Все изменения состояний системы осуществляются с помощью вызовов соответствующих методов API. Любые сторонние приложения, включая наши веб-сайты и другие UI-интерфейсы, являются внешними приложениями-клиентами.\nVality API работает поверх HTTP-протокола. Мы используем REST архитектуру, схема описывается в соответствии с [OpenAPI 2.0](https://spec.openapis.org/oas/v2.0). Коды возврата описываются соответствующими HTTP-статусами. Система принимает и возвращает значения JSON в теле запросов и ответов.\n## Формат содержимого\nЛюбой запрос к API должен выполняться в кодировке UTF-8 и с указанием содержимого в формате JSON.\n```\n  Content-Type: application/json; charset=utf-8\n```\n## Формат дат\nСистема принимает и возвращает значения отметок времени в формате `date-time`, описанном в [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339):\n```\n  2017-01-01T00:00:00Z\n  2017-01-01T00:00:01+00:00\n```\n## Максимальное время обработки запроса\nПри любом обращении к API в заголовке `X-Request-Deadline` соответствующего запроса можно передать параметр отсечки по времени, определяющий максимальное время ожидания завершения операции по запросу:\n```\n X-Request-Deadline: 10s\n```\nПо истечении указанного времени система прекращает обработку запроса. Рекомендуется указывать значение не более одной минуты, но не менее трёх секунд.\n`X-Request-Deadline` может:\n* задаваться в формате `date-time` согласно [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339); * задаваться в относительных величинах: в миллисекундах (`150000ms`), секундах (`540s`) или минутах (`3.5m`).\n## Ошибки обработки запросов\nВ процессе обработки запросов силами нашей системы могут происходить различные непредвиденные ситуации. Об их появлении система сигнализирует по протоколу HTTP соответствующими [статусами][5xx], обозначающими ошибки сервера.\n\n |  Код    |  Описание  |\n | ------- | ---------- |\n | **500** | В процессе обработки системой запроса возникла непредвиденная ситуация. При получении подобного кода ответа мы рекомендуем обратиться в техническую поддержку. |\n | **503** | Система временно недоступна и не готова обслуживать данный запрос. Запрос гарантированно не выполнен, при получении подобного кода ответа попробуйте выполнить его позднее, когда доступность системы будет восстановлена. |\n | **504** | Система превысила допустимое время обработки запроса, результат запроса не определён. Попробуйте отправить запрос повторно или выяснить результат выполнения исходного запроса, если повторное исполнение запроса нежелательно. |\n\n[5xx]: https://tools.ietf.org/html/rfc7231#section-6.6\n",
+    "description": "\nThe Vality Wallet API is the base and only point of interaction with the wallet system. All system state changes are carried out by calling the corresponding API methods. Any third party applications, including our websites and other UIs, are external client applications.\nThe Vality API works on top of the HTTP protocol. We use REST architecture, the scheme is described according to [OpenAPI 2.0](https://spec.openapis.org/oas/v2.0). Return codes are described by the corresponding HTTP statuses. The system accepts and returns JSON values in the body of requests and responses.\n## Content Format\nAny API request must be encoded in UTF-8 and must contain JSON content.\n```\n  Content-Type: application/json; charset=utf-8\n```\n## Date format\nThe system accepts and returns timestamp values in the `date-time` format described in [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339):\n```\n  2017-01-01T00:00:00Z\n  2017-01-01T00:00:01+00:00\n```\n## Maximum request processing time\nIn any API call, you can pass a timeout parameter in the `X-Request-Deadline` header of the corresponding request, which determines the maximum time to wait for the operation to complete on the request:\n```\n X-Request-Deadline: 10s\n```\nAfter the specified time has elapsed, the system stops processing the request. It is recommended to specify a value of no more than one minute, but no less than three seconds.\n`X-Request-Deadline` can:\n* set in `date-time` format according to [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339);  * specified in relative terms: in milliseconds (`150000ms`), seconds (`540s`) or minutes (`3.5m`).\n## Request processing errors\nDuring the processing of requests by our system, various unforeseen situations may occur. The system signals about their appearance via the HTTP protocol with the corresponding [statuses][5xx], indicating server errors.\n|  Code    |  Description  | | ------- | -------------- | | **500** | An unexpected situation occurred while the system was processing the request. If you receive such a response code, we recommend that you contact technical support. | | **503** | The system is temporarily unavailable and not ready to serve this request. The request is guaranteed to fail, if you receive a response code like this, try to implement it later when the system is restored to availability. | | **504** | The system has exceeded the allowable request processing time, the result of the request is undefined. Try to resubmit the request or find out the result of the original request, if you do not want to re-execute the request. |\n[5xx]: https://tools.ietf.org/html/rfc7231#section-6.6\n",
     "termsOfService": "https://vality.dev/",
     "contact": {
-      "name": "Команда техподдержки",
+      "name": "Technical support team",
       "email": "support@vality.dev",
       "url": "https://api.vality.dev"
     }
@@ -27,7 +27,7 @@
       "type": "apiKey",
       "name": "Authorization",
       "in": "header",
-      "description": "Для аутентификации вызовов мы используем [JWT](https://jwt.io). Соответствующий ключ передается в заголовке.\n```shell\n Authorization: Bearer {YOUR_API_KEY_JWT}\n```\n"
+      "description": "We use [JWT](https://jwt.io) for call authentication. The corresponding key is passed in the header.\n```shell\n Authorization: Bearer {YOUR_API_KEY_JWT}\n```\n"
     }
   },
   "security": [
@@ -37,29 +37,29 @@
   ],
   "responses": {
     "BadRequest": {
-      "description": "Недопустимые для операции входные данные",
+      "description": "Invalid input data for operation",
       "schema": {
         "$ref": "#/definitions/BadRequest"
       }
     },
     "ConflictRequest": {
-      "description": "Переданное значение `externalID` уже использовалось вами ранее с другими параметрами запроса",
+      "description": "The passed value `externalID` has already been used by you with other query parameters",
       "schema": {
         "$ref": "#/definitions/ConflictRequest"
       }
     },
     "NotFound": {
-      "description": "Искомая сущность не найдена"
+      "description": "The content you are looking for was not found"
     },
     "Unauthorized": {
-      "description": "Ошибка авторизации"
+      "description": "Authorization error"
     }
   },
   "parameters": {
     "requestID": {
       "name": "X-Request-ID",
       "in": "header",
-      "description": "Уникальный идентификатор запроса к системе",
+      "description": "Unique identifier of the request to the system",
       "required": true,
       "type": "string",
       "maxLength": 32,
@@ -68,7 +68,7 @@
     "providerID": {
       "name": "providerID",
       "in": "path",
-      "description": "Идентификатор провайдера",
+      "description": "Identifier of the provider",
       "required": true,
       "type": "string",
       "maxLength": 40,
@@ -77,7 +77,7 @@
     "identityID": {
       "name": "identityID",
       "in": "path",
-      "description": "Идентификатор личности владельца",
+      "description": "Identifier of the owner's identity",
       "required": true,
       "type": "string",
       "maxLength": 40,
@@ -86,7 +86,7 @@
     "walletID": {
       "name": "walletID",
       "in": "path",
-      "description": "Идентификатор кошелька",
+      "description": "Identifier of the wallet",
       "required": true,
       "type": "string",
       "maxLength": 40,
@@ -95,7 +95,7 @@
     "destinationID": {
       "name": "destinationID",
       "in": "path",
-      "description": "Идентификатор приёмника средств",
+      "description": "Identifier of the destination",
       "required": true,
       "type": "string",
       "maxLength": 40,
@@ -104,7 +104,7 @@
     "withdrawalID": {
       "name": "withdrawalID",
       "in": "path",
-      "description": "Идентификатор вывода денежных средств",
+      "description": "Identifier of the withdrawal",
       "required": true,
       "type": "string",
       "maxLength": 40,
@@ -113,14 +113,14 @@
     "externalID": {
       "name": "externalID",
       "in": "path",
-      "description": "Внешний идентификатор",
+      "description": "External identifier",
       "required": true,
       "type": "string"
     },
     "residence": {
       "name": "residence",
       "in": "query",
-      "description": "Резиденция, в рамках которой производится оказание услуг,\nкод страны или региона по стандарту [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)\n",
+      "description": "The residence within which the services are provided,\n[ISO 3166-1] country or region code (https://en.wikipedia.org/wiki/ISO_3166-1)\n",
       "type": "string",
       "pattern": "^[A-Za-z]{3}$",
       "required": false
@@ -128,7 +128,7 @@
     "amountFrom": {
       "name": "amountFrom",
       "in": "query",
-      "description": "Сумма денежных средств в минорных единицах",
+      "description": "Amount of monetary funds in minor units",
       "type": "integer",
       "format": "int64",
       "required": false
@@ -136,7 +136,7 @@
     "amountTo": {
       "name": "amountTo",
       "in": "query",
-      "description": "Сумма денежных средств в минорных единицах",
+      "description": "Amount of monetary funds in minor units",
       "type": "integer",
       "format": "int64",
       "required": false
@@ -144,14 +144,14 @@
     "currencyID": {
       "name": "currencyID",
       "in": "query",
-      "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+      "description": "Currency, character code according to [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
       "type": "string",
       "pattern": "^[A-Z]{3}$"
     },
     "limit": {
       "name": "limit",
       "in": "query",
-      "description": "Лимит выборки",
+      "description": "Selection limit",
       "required": true,
       "type": "integer",
       "format": "int32",
@@ -161,7 +161,7 @@
     "eventCursor": {
       "name": "eventCursor",
       "in": "query",
-      "description": "Идентификатор последнего известного события.\n\nВсе события, произошедшие _после_ указанного, попадут в выборку.\nЕсли этот параметр не указан, в выборку попадут события, начиная с самого первого.\n",
+      "description": "The identifier of the last known event.\n\nAll events that occurred _after_ the specified one will be included in the selection.\nIf this parameter is not specified, the selection will include events starting from the very first one.\n",
       "required": false,
       "type": "integer",
       "format": "int32"
@@ -169,7 +169,7 @@
     "eventID": {
       "name": "eventID",
       "in": "path",
-      "description": "Идентификатор события процедуры идентификации.\n",
+      "description": "Identifier of the identification procedure event.\n",
       "required": true,
       "type": "integer",
       "format": "int32"
@@ -177,7 +177,7 @@
     "reportID": {
       "name": "reportID",
       "in": "path",
-      "description": "Идентификатор отчета",
+      "description": "The report identifier",
       "required": true,
       "type": "integer",
       "format": "int64"
@@ -185,7 +185,7 @@
     "fileID": {
       "name": "fileID",
       "in": "path",
-      "description": "Идентификатор файла",
+      "description": "The file identifier",
       "required": true,
       "type": "string",
       "maxLength": 40,
@@ -194,7 +194,7 @@
     "fromTime": {
       "name": "fromTime",
       "in": "query",
-      "description": "Начало временного отрезка",
+      "description": "Start of the time period",
       "required": true,
       "type": "string",
       "format": "date-time"
@@ -202,7 +202,7 @@
     "toTime": {
       "name": "toTime",
       "in": "query",
-      "description": "Конец временного отрезка",
+      "description": "End of the time period",
       "required": true,
       "type": "string",
       "format": "date-time"
@@ -210,7 +210,7 @@
     "deadline": {
       "name": "X-Request-Deadline",
       "in": "header",
-      "description": "Максимальное время обработки запроса",
+      "description": "Maximum request processing time",
       "required": false,
       "type": "string",
       "maxLength": 40,
@@ -219,7 +219,7 @@
     "webhookID": {
       "name": "webhookID",
       "in": "path",
-      "description": "Идентификатор webhook'а",
+      "description": "Webhook identifier",
       "required": true,
       "type": "string",
       "maxLength": 40,
@@ -228,7 +228,7 @@
     "queryIdentityID": {
       "name": "identityID",
       "in": "query",
-      "description": "Идентификатор личности владельца",
+      "description": "Identifier of the owner's identity",
       "required": true,
       "type": "string",
       "maxLength": 40,
@@ -237,7 +237,7 @@
     "w2wTransferID": {
       "name": "w2wTransferID",
       "in": "path",
-      "description": "Идентификатор перевода",
+      "description": "Identifier of transfer",
       "required": true,
       "type": "string",
       "maxLength": 40,
@@ -247,70 +247,70 @@
   "tags": [
     {
       "name": "Providers",
-      "x-displayName": "Провайдеры услуг",
+      "x-displayName": "Service providers",
       "description": ""
     },
     {
       "name": "Identities",
-      "x-displayName": "Владельцы",
+      "x-displayName": "Identities",
       "description": ""
     },
     {
       "name": "Wallets",
-      "x-displayName": "Кошельки",
+      "x-displayName": "Wallets",
       "description": ""
     },
     {
       "name": "Deposits",
-      "x-displayName": "Пополнения",
+      "x-displayName": "Deposits",
       "description": ""
     },
     {
       "name": "Withdrawals",
-      "x-displayName": "Выводы",
+      "x-displayName": "Withdrawals",
       "description": ""
     },
     {
       "name": "Residences",
-      "x-displayName": "Резиденции",
+      "x-displayName": "Residences",
       "description": ""
     },
     {
       "name": "Currencies",
-      "x-displayName": "Валюты",
+      "x-displayName": "Currencies",
       "description": ""
     },
     {
       "name": "Reports",
-      "x-displayName": "Отчеты",
+      "x-displayName": "Reports",
       "description": ""
     },
     {
       "name": "Downloads",
-      "x-displayName": "Загрузка файлов",
+      "x-displayName": "File upload",
       "description": ""
     },
     {
       "name": "W2W",
-      "x-displayName": "Переводы внутри системы",
-      "description": "Переводы средств между кошельками внутри системы"
+      "x-displayName": "Transfers within the system",
+      "description": "Transfers of funds between wallets within the system"
     },
     {
       "name": "Webhooks",
       "x-displayName": "Webhooks",
-      "description": "## Vality Webhooks Management API\nВ данном разделе описаны методы, позволяющие управлять Webhook'ами, или инструментами для получения асинхронных оповещений посредством HTTP-запросов при наступлении одного или группы интересующих вас событий, например, о том, что выплата в рамках созданного кошелька была успешно проведена.\n## Vality Webhooks Events API\nВнимание! Только Webhooks Management API является частью системы Vality, а следовательно и данной спецификации. Для реализации обработчика присылаемых уведомлений вам необходимо будет ознакомиться с OpenAPI-спецификацией [Vality Wallets Webhook Events API](https://vality.github.io/swag-wallets-webhook-events/).\n"
+      "description": "## Vality Webhooks Management API\nThis section describes methods that allow you to manage Webhooks, or tools for receiving asynchronous notifications via HTTP requests when one or a group of events of interest to you occurs, for example, that a withdrawal within the created wallet was successfully completed.\n## Vality Webhooks Events API\nAttention! Only the Webhooks Management API is part of the Vality system and hence this specification. To implement the notification handler, you will need to read the OpenAPI specification [Vality Wallets Webhook Events API](https://vality.github.io/swag-wallets-webhook-events/).\n"
     },
     {
       "name": "Error Codes",
-      "x-displayName": "Коды ошибок",
-      "description": "\n## Ошибки перевода\n\n  | Код                    | Описание                                                                                                                                       |\n  | ---                    | --------                                                                                                                                       |\n  | InvalidSenderResource  | Неверный источник перевода (введен номер несуществующей карты, отсутствующего аккаунта и т.п.)                                                 |\n  | InvalidReceiverResource| Неверный получатель перевода (введен номер несуществующей карты и т.п.)                                                                        |\n  | InsufficientFunds      | Недостаточно средств на счете банковской карты                                                                                                 |\n  | PreauthorizationFailed | Предварительная авторизация отклонена (введен неверный код 3D-Secure, на форме 3D-Secure нажата ссылка отмены)                                 |\n  | RejectedByIssuer       | Перевод отклонён эмитентом (установлены запреты по стране списания, запрет на покупки в интернете, платеж отклонен антифродом эмитента и т.п.) |\n"
+      "x-displayName": "Error codes",
+      "description": "\n## Withdrawal errors\n| Code                   | Description                                                                                                                                                                                         | | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | | InvalidSenderResource  | Invalid transfer source (entered the number of a non-existent card, missing account, etc.)                                                                                                          | | InvalidReceiverResource| Wrong transfer receiver (invalid card number entered, etc.)                                                                                                                                         | | InsufficientFunds      | Insufficient funds on the bank card account                                                                                                                                                         | | PreauthorizationFailed | Pre-Authorization Rejected (Wrong 3D-Secure Code Entered, Cancel Link Clicked on 3D-Secure Form)                                                                                                    | | RejectedByIssuer       | The transfer was rejected by the issuer (prohibitions were established by the country of debiting, a ban on purchases on the Internet, the withdrawal was rejected by the issuer's antifraud, etc.) |\n"
     }
   ],
   "paths": {
     "/currencies/{currencyID}": {
       "get": {
         "operationId": "getCurrency",
-        "summary": "Получить описание валюты",
+        "summary": "Get currency description",
         "tags": [
           "Currencies"
         ],
@@ -324,7 +324,7 @@
           {
             "name": "currencyID",
             "in": "path",
-            "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+            "description": "Currency, character code according to [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
             "type": "string",
             "required": true,
             "pattern": "^[A-Za-z]{3}$"
@@ -332,7 +332,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Валюта найдена",
+            "description": "Currency found",
             "schema": {
               "$ref": "#/definitions/Currency"
             }
@@ -352,7 +352,7 @@
     "/deposit-adjustments": {
       "get": {
         "operationId": "listDepositAdjustments",
-        "summary": "Поиск корректировок",
+        "summary": "Finding adjustments",
         "tags": [
           "Deposits"
         ],
@@ -366,7 +366,7 @@
           {
             "name": "walletID",
             "in": "query",
-            "description": "Идентификатор кошелька",
+            "description": "Wallet identifier",
             "type": "string",
             "maxLength": 40,
             "minLength": 1,
@@ -375,7 +375,7 @@
           {
             "name": "identityID",
             "in": "query",
-            "description": "Идентификатор личности владельца",
+            "description": "Identifier of the owner's identity",
             "type": "string",
             "maxLength": 40,
             "minLength": 1,
@@ -384,7 +384,7 @@
           {
             "name": "depositID",
             "in": "query",
-            "description": "Идентификатор ввода денежных средств",
+            "description": "Identifier of the input of funds",
             "type": "string",
             "required": false,
             "maxLength": 50,
@@ -393,7 +393,7 @@
           {
             "name": "sourceID",
             "in": "query",
-            "description": "Идентификатор источника средств",
+            "description": "Identifier of the fund source",
             "type": "string",
             "maxLength": 40,
             "minLength": 1,
@@ -413,7 +413,7 @@
           {
             "name": "createdAtFrom",
             "in": "query",
-            "description": "Дата создания с",
+            "description": "Creation date from",
             "type": "string",
             "format": "date-time",
             "required": false
@@ -421,7 +421,7 @@
           {
             "name": "createdAtTo",
             "in": "query",
-            "description": "Дата создания до",
+            "description": "Creation date to",
             "type": "string",
             "format": "date-time",
             "required": false
@@ -442,22 +442,22 @@
             "name": "continuationToken",
             "in": "query",
             "required": false,
-            "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
+            "description": "A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n",
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Результат поиска",
+            "description": "Search results",
             "schema": {
               "type": "object",
               "properties": {
                 "continuationToken": {
-                  "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
+                  "description": "A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n",
                   "type": "string"
                 },
                 "result": {
-                  "description": "Найденные корректировки",
+                  "description": "Found adjustments",
                   "type": "array",
                   "items": {
                     "$ref": "#/definitions/DepositAdjustment"
@@ -478,7 +478,7 @@
     "/deposit-reverts": {
       "get": {
         "operationId": "listDepositReverts",
-        "summary": "Поиск отмен",
+        "summary": "Search for reverts",
         "tags": [
           "Deposits"
         ],
@@ -492,7 +492,7 @@
           {
             "name": "walletID",
             "in": "query",
-            "description": "Идентификатор кошелька",
+            "description": "Identifier of the wallet",
             "type": "string",
             "maxLength": 40,
             "minLength": 1,
@@ -501,7 +501,7 @@
           {
             "name": "identityID",
             "in": "query",
-            "description": "Идентификатор личности владельца",
+            "description": "Identifier of the owner's identity",
             "type": "string",
             "maxLength": 40,
             "minLength": 1,
@@ -510,7 +510,7 @@
           {
             "name": "depositID",
             "in": "query",
-            "description": "Идентификатор ввода денежных средств",
+            "description": "Identifier of the input of funds",
             "type": "string",
             "required": false,
             "maxLength": 50,
@@ -519,7 +519,7 @@
           {
             "name": "sourceID",
             "in": "query",
-            "description": "Идентификатор источника средств",
+            "description": "Identifier of the source of funds",
             "type": "string",
             "maxLength": 40,
             "minLength": 1,
@@ -539,7 +539,7 @@
           {
             "name": "createdAtFrom",
             "in": "query",
-            "description": "Дата создания с",
+            "description": "Creation date from",
             "type": "string",
             "format": "date-time",
             "required": false
@@ -547,7 +547,7 @@
           {
             "name": "createdAtTo",
             "in": "query",
-            "description": "Дата создания до",
+            "description": "Creation date to",
             "type": "string",
             "format": "date-time",
             "required": false
@@ -568,22 +568,22 @@
             "name": "continuationToken",
             "in": "query",
             "required": false,
-            "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
+            "description": "A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n",
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Результат поиска",
+            "description": "Search result",
             "schema": {
               "type": "object",
               "properties": {
                 "continuationToken": {
-                  "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
+                  "description": "A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n",
                   "type": "string"
                 },
                 "result": {
-                  "description": "Найденные отмены",
+                  "description": "Found reverts",
                   "type": "array",
                   "items": {
                     "$ref": "#/definitions/DepositRevert"
@@ -604,7 +604,7 @@
     "/deposits": {
       "get": {
         "operationId": "listDeposits",
-        "summary": "Поиск пополнений",
+        "summary": "Search for deposits",
         "tags": [
           "Deposits"
         ],
@@ -618,7 +618,7 @@
           {
             "name": "walletID",
             "in": "query",
-            "description": "Идентификатор кошелька",
+            "description": "Identifier of the wallet",
             "type": "string",
             "maxLength": 40,
             "minLength": 1,
@@ -627,7 +627,7 @@
           {
             "name": "identityID",
             "in": "query",
-            "description": "Идентификатор личности владельца",
+            "description": "Identifier of the owner's identity",
             "type": "string",
             "maxLength": 40,
             "minLength": 1,
@@ -636,7 +636,7 @@
           {
             "name": "depositID",
             "in": "query",
-            "description": "Идентификатор ввода денежных средств",
+            "description": "Identifier of the deposit",
             "type": "string",
             "required": false,
             "maxLength": 50,
@@ -645,7 +645,7 @@
           {
             "name": "sourceID",
             "in": "query",
-            "description": "Идентификатор источника средств",
+            "description": "Identifier of the funds source",
             "type": "string",
             "maxLength": 40,
             "minLength": 1,
@@ -665,7 +665,7 @@
           {
             "name": "createdAtFrom",
             "in": "query",
-            "description": "Дата создания с",
+            "description": "Creation date from",
             "type": "string",
             "format": "date-time",
             "required": false
@@ -673,7 +673,7 @@
           {
             "name": "createdAtTo",
             "in": "query",
-            "description": "Дата создания до",
+            "description": "Creation date to",
             "type": "string",
             "format": "date-time",
             "required": false
@@ -705,22 +705,22 @@
             "name": "continuationToken",
             "in": "query",
             "required": false,
-            "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
+            "description": "A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n",
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Результат поиска",
+            "description": "Search results",
             "schema": {
               "type": "object",
               "properties": {
                 "continuationToken": {
-                  "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
+                  "description": "A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n",
                   "type": "string"
                 },
                 "result": {
-                  "description": "Найденные пополнения",
+                  "description": "Found deposits",
                   "type": "array",
                   "items": {
                     "$ref": "#/definitions/Deposit"
@@ -741,7 +741,7 @@
     "/destinations": {
       "get": {
         "operationId": "listDestinations",
-        "summary": "Перечислить приёмники средств",
+        "summary": "List of destinations",
         "tags": [
           "Withdrawals"
         ],
@@ -754,7 +754,7 @@
           },
           {
             "name": "identityID",
-            "description": "Идентификатор личности владельца",
+            "description": "Identifier of the owner's idenity",
             "in": "query",
             "required": false,
             "type": "string",
@@ -771,22 +771,22 @@
             "name": "continuationToken",
             "in": "query",
             "required": false,
-            "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
+            "description": "A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n",
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Результат поиска",
+            "description": "Search result",
             "schema": {
               "type": "object",
               "properties": {
                 "continuationToken": {
-                  "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
+                  "description": "A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n",
                   "type": "string"
                 },
                 "result": {
-                  "description": "Найденные приёмники средств",
+                  "description": "Destinations found",
                   "type": "array",
                   "items": {
                     "$ref": "#/definitions/Destination"
@@ -805,7 +805,7 @@
       },
       "post": {
         "operationId": "createDestination",
-        "summary": "Завести приёмник средств",
+        "summary": "Start a destination creation",
         "tags": [
           "Withdrawals"
         ],
@@ -818,7 +818,7 @@
           },
           {
             "name": "destination",
-            "description": "Данные приёмника средств",
+            "description": "Destination data",
             "in": "body",
             "required": true,
             "schema": {
@@ -828,10 +828,10 @@
         ],
         "responses": {
           "201": {
-            "description": "Приёмник средств создан",
+            "description": "Destination created",
             "headers": {
               "Location": {
-                "description": "URI созданного приёмника средств",
+                "description": "The URI of the created destination",
                 "type": "string",
                 "format": "uri"
               }
@@ -850,7 +850,7 @@
             "$ref": "#/responses/ConflictRequest"
           },
           "422": {
-            "description": "Неверные данные приёмника средств",
+            "description": "Incorrect destination data",
             "schema": {
               "$ref": "#/definitions/InvalidOperationParameters"
             }
@@ -861,7 +861,7 @@
     "/destinations/{destinationID}": {
       "get": {
         "operationId": "getDestination",
-        "summary": "Получить приёмник средств",
+        "summary": "Get a specific destination",
         "tags": [
           "Withdrawals"
         ],
@@ -878,7 +878,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Приёмник средств найден",
+            "description": "Destination found",
             "schema": {
               "$ref": "#/definitions/Destination"
             }
@@ -898,7 +898,7 @@
     "/destinations/{destinationID}/grants": {
       "post": {
         "operationId": "issueDestinationGrant",
-        "summary": "Выдать право управления приёмником средств",
+        "summary": "Grant the right to manage the destinations",
         "tags": [
           "Withdrawals"
         ],
@@ -914,7 +914,7 @@
           },
           {
             "name": "request",
-            "description": "Запрос на право управления приёмником средств",
+            "description": "Request for the right to manage the destinations",
             "in": "body",
             "required": true,
             "schema": {
@@ -924,7 +924,7 @@
         ],
         "responses": {
           "201": {
-            "description": "Право выдано",
+            "description": "The right is granted",
             "schema": {
               "$ref": "#/definitions/DestinationGrantRequest"
             }
@@ -939,7 +939,7 @@
             "$ref": "#/responses/NotFound"
           },
           "422": {
-            "description": "Неверные данные для выдачи",
+            "description": "Invalid data for issuance",
             "schema": {
               "$ref": "#/definitions/InvalidOperationParameters"
             }
@@ -950,7 +950,7 @@
     "/external-ids/destinations/{externalID}": {
       "get": {
         "operationId": "getDestinationByExternalID",
-        "summary": "Получить приёмник средств по внешнему идентификатору",
+        "summary": "Get a fund recipient by external identifier",
         "tags": [
           "Withdrawals"
         ],
@@ -967,7 +967,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Приёмник средств найден",
+            "description": "Fund recipient found",
             "schema": {
               "$ref": "#/definitions/Destination"
             }
@@ -987,7 +987,7 @@
     "/external-ids/withdrawals/{externalID}": {
       "get": {
         "operationId": "getWithdrawalByExternalID",
-        "summary": "Получить состояние вывода средств по внешнему идентификатору",
+        "summary": "Get withdrawal status by external identifier",
         "tags": [
           "Withdrawals"
         ],
@@ -1004,7 +1004,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Вывод найден",
+            "description": "Withdrawal found",
             "schema": {
               "$ref": "#/definitions/Withdrawal"
             }
@@ -1023,7 +1023,7 @@
     },
     "/external/wallets": {
       "get": {
-        "summary": "Получить кошелёк по указанному внешнему идентификатору",
+        "summary": "Get wallet by specified external identifier",
         "operationId": "getWalletByExternalID",
         "tags": [
           "Wallets"
@@ -1037,7 +1037,7 @@
           },
           {
             "name": "externalID",
-            "description": "Внешний идентификатор кошелька",
+            "description": "External wallet identifier",
             "in": "query",
             "required": true,
             "type": "string",
@@ -1047,7 +1047,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Данные кошелька",
+            "description": "Wallet details",
             "schema": {
               "$ref": "#/definitions/Wallet"
             }
@@ -1066,7 +1066,7 @@
     },
     "/files/{fileID}/download": {
       "post": {
-        "description": "Получить ссылку для скачивания файла",
+        "description": "Get a link to download a file",
         "tags": [
           "Downloads"
         ],
@@ -1084,7 +1084,7 @@
         ],
         "responses": {
           "201": {
-            "description": "Данные для получения файла",
+            "description": "Data to get file",
             "schema": {
               "$ref": "#/definitions/FileDownload"
             }
@@ -1104,7 +1104,7 @@
     "/identities": {
       "get": {
         "operationId": "listIdentities",
-        "summary": "Перечислить личности владельцев",
+        "summary": "List the identities of the owners",
         "tags": [
           "Identities"
         ],
@@ -1117,7 +1117,7 @@
           },
           {
             "name": "providerID",
-            "description": "Идентификатор провайдера услуг",
+            "description": "Service provider's identifier",
             "in": "query",
             "required": false,
             "type": "string",
@@ -1128,22 +1128,22 @@
             "name": "continuationToken",
             "in": "query",
             "required": false,
-            "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
+            "description": "A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n",
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Результат поиска",
+            "description": "Search result",
             "schema": {
               "type": "object",
               "properties": {
                 "continuationToken": {
-                  "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
+                  "description": "A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n",
                   "type": "string"
                 },
                 "result": {
-                  "description": "Найденные личности",
+                  "description": "Identities found",
                   "type": "array",
                   "items": {
                     "$ref": "#/definitions/Identity"
@@ -1162,7 +1162,7 @@
       },
       "post": {
         "operationId": "createIdentity",
-        "summary": "Создать личность владельца",
+        "summary": "Create owner identity",
         "tags": [
           "Identities"
         ],
@@ -1175,7 +1175,7 @@
           },
           {
             "name": "identity",
-            "description": "Данные создаваемой личности",
+            "description": "Data of the identity created",
             "in": "body",
             "required": true,
             "schema": {
@@ -1185,10 +1185,10 @@
         ],
         "responses": {
           "201": {
-            "description": "Личность владельца создана",
+            "description": "Owner identity created",
             "headers": {
               "Location": {
-                "description": "URI созданной личности",
+                "description": "Created identity URI",
                 "type": "string",
                 "format": "uri"
               }
@@ -1207,7 +1207,7 @@
             "$ref": "#/responses/ConflictRequest"
           },
           "422": {
-            "description": "Неверные данные личности владельца",
+            "description": "Invalid owner identity data",
             "schema": {
               "$ref": "#/definitions/InvalidOperationParameters"
             }
@@ -1218,7 +1218,7 @@
     "/identities/{identityID}": {
       "get": {
         "operationId": "getIdentity",
-        "summary": "Получить данные личности владельца",
+        "summary": "Get the owner's identity",
         "tags": [
           "Identities"
         ],
@@ -1235,7 +1235,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Личность владельца найдена",
+            "description": "Owner's identity found",
             "schema": {
               "$ref": "#/definitions/Identity"
             }
@@ -1254,7 +1254,7 @@
     },
     "/identities/{identityID}/reports": {
       "post": {
-        "description": "Сгенерировать отчет с указанным типом по личности владельца за указанный промежуток времени",
+        "description": "Generate a report with the specified type on the identity of the owner for the specified period of time",
         "tags": [
           "Reports"
         ],
@@ -1272,7 +1272,7 @@
           {
             "name": "ReportParams",
             "in": "body",
-            "description": "Параметры генерации отчета",
+            "description": "Report generation options",
             "required": true,
             "schema": {
               "$ref": "#/definitions/ReportParams"
@@ -1281,7 +1281,7 @@
         ],
         "responses": {
           "201": {
-            "description": "Отчет создан",
+            "description": "Report created",
             "schema": {
               "$ref": "#/definitions/Report"
             }
@@ -1295,7 +1295,7 @@
         }
       },
       "get": {
-        "description": "Получить список отчетов по личности владельца за период",
+        "description": "Get a list of owner identity reports for a period",
         "tags": [
           "Reports"
         ],
@@ -1319,7 +1319,7 @@
           {
             "name": "type",
             "in": "query",
-            "description": "Тип получаемых отчетов",
+            "description": "Type of reports received",
             "required": false,
             "type": "string",
             "enum": [
@@ -1329,7 +1329,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Найденные отчеты",
+            "description": "Reports found",
             "schema": {
               "type": "array",
               "items": {
@@ -1348,7 +1348,7 @@
     },
     "/identities/{identityID}/reports/{reportID}": {
       "get": {
-        "description": "Получить отчет по данному идентификатору",
+        "description": "Get a report for a given identifier",
         "tags": [
           "Reports"
         ],
@@ -1369,7 +1369,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Найденный отчет",
+            "description": "Report found",
             "schema": {
               "$ref": "#/definitions/Report"
             }
@@ -1388,7 +1388,7 @@
     },
     "/identities/{identityID}/withdrawal-methods": {
       "get": {
-        "summary": "Получить выплатные методы доступные по личности владельца",
+        "summary": "Get withdrawal methods available by owner identity",
         "tags": [
           "Identities"
         ],
@@ -1406,7 +1406,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Найденные методы",
+            "description": "Methods found",
             "schema": {
               "type": "object",
               "properties": {
@@ -1431,7 +1431,7 @@
     "/providers": {
       "get": {
         "operationId": "listProviders",
-        "summary": "Перечислить доступных провайдеров",
+        "summary": "List available providers",
         "tags": [
           "Providers"
         ],
@@ -1448,7 +1448,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Провайдеры найдены",
+            "description": "Providers found",
             "schema": {
               "type": "array",
               "items": {
@@ -1468,7 +1468,7 @@
     "/providers/{providerID}": {
       "get": {
         "operationId": "getProvider",
-        "summary": "Получить данные провайдера",
+        "summary": "Get provider details",
         "tags": [
           "Providers"
         ],
@@ -1485,7 +1485,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Провайдер найден",
+            "description": "Provider found",
             "schema": {
               "$ref": "#/definitions/Provider"
             }
@@ -1505,7 +1505,7 @@
     "/residences/{residence}": {
       "get": {
         "operationId": "getResidence",
-        "summary": "Получить описание региона резиденции",
+        "summary": "Get a description of the residence region",
         "tags": [
           "Residences"
         ],
@@ -1519,7 +1519,7 @@
           {
             "name": "residence",
             "in": "path",
-            "description": "Резиденция, в рамках которой производится оказание услуг,\nкод страны или региона по стандарту [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)\n",
+            "description": "The residence within which the services are provided,\n[ISO 3166-1] country or region code (https://en.wikipedia.org/wiki/ISO_3166-1)\n",
             "type": "string",
             "pattern": "^[A-Za-z]{3}$",
             "required": true
@@ -1527,7 +1527,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Регион резиденции найден",
+            "description": "Residence region found",
             "schema": {
               "$ref": "#/definitions/Residence"
             }
@@ -1546,7 +1546,7 @@
     },
     "/w2w/transfers": {
       "post": {
-        "description": "Создать перевод",
+        "description": "Create a transfer",
         "tags": [
           "W2W"
         ],
@@ -1561,7 +1561,7 @@
           {
             "name": "transferParams",
             "in": "body",
-            "description": "Параметры создания перевода",
+            "description": "Transfer creation options",
             "schema": {
               "$ref": "#/definitions/W2WTransferParameters"
             }
@@ -1569,10 +1569,10 @@
         ],
         "responses": {
           "202": {
-            "description": "Перевод запущен",
+            "description": "Transfer started",
             "headers": {
               "Location": {
-                "description": "URI запущенного перевода",
+                "description": "URI of the transfer started",
                 "type": "string",
                 "format": "uri"
               }
@@ -1591,7 +1591,7 @@
             "$ref": "#/responses/ConflictRequest"
           },
           "422": {
-            "description": "Неверные входные данные для перевода",
+            "description": "Invalid transfer input data",
             "schema": {
               "$ref": "#/definitions/InvalidOperationParameters"
             }
@@ -1601,7 +1601,7 @@
     },
     "/w2w/transfers/{w2wTransferID}": {
       "get": {
-        "description": "Получить состояние перевода.",
+        "description": "Get the transfer status.",
         "tags": [
           "W2W"
         ],
@@ -1619,7 +1619,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Найденный перевод",
+            "description": "Transfer found",
             "schema": {
               "$ref": "#/definitions/W2WTransfer"
             }
@@ -1639,7 +1639,7 @@
     "/wallets": {
       "get": {
         "operationId": "listWallets",
-        "summary": "Перечислить кошельки",
+        "summary": "List the wallets",
         "tags": [
           "Wallets"
         ],
@@ -1652,7 +1652,7 @@
           },
           {
             "name": "identityID",
-            "description": "Идентификатор личности владельца",
+            "description": "Identifier of owner's identity",
             "in": "query",
             "required": false,
             "type": "string",
@@ -1669,22 +1669,22 @@
             "name": "continuationToken",
             "in": "query",
             "required": false,
-            "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
+            "description": "A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n",
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Результат поиска",
+            "description": "Search result",
             "schema": {
               "type": "object",
               "properties": {
                 "continuationToken": {
-                  "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
+                  "description": "A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n",
                   "type": "string"
                 },
                 "result": {
-                  "description": "Найденные кошельки",
+                  "description": "Wallets found",
                   "type": "array",
                   "items": {
                     "$ref": "#/definitions/Wallet"
@@ -1703,7 +1703,7 @@
       },
       "post": {
         "operationId": "createWallet",
-        "summary": "Завести новый кошелёк",
+        "summary": "Create a new wallet",
         "tags": [
           "Wallets"
         ],
@@ -1716,7 +1716,7 @@
           },
           {
             "name": "wallet",
-            "description": "Данные создаваемого кошелька",
+            "description": "Data of the created wallet",
             "in": "body",
             "required": true,
             "schema": {
@@ -1726,10 +1726,10 @@
         ],
         "responses": {
           "201": {
-            "description": "Кошелёк создан",
+            "description": "Wallet created",
             "headers": {
               "Location": {
-                "description": "URI созданного кошелька",
+                "description": "URI of the wallet created",
                 "type": "string",
                 "format": "uri"
               }
@@ -1748,7 +1748,7 @@
             "$ref": "#/responses/ConflictRequest"
           },
           "422": {
-            "description": "Неверные данные кошелька",
+            "description": "Invalid data of the wallet",
             "schema": {
               "$ref": "#/definitions/InvalidOperationParameters"
             }
@@ -1759,7 +1759,7 @@
     "/wallets/{walletID}": {
       "get": {
         "operationId": "getWallet",
-        "summary": "Получить данные кошелька",
+        "summary": "Get wallet data",
         "tags": [
           "Wallets"
         ],
@@ -1776,7 +1776,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Кошелёк найден",
+            "description": "Wallet found",
             "schema": {
               "$ref": "#/definitions/Wallet"
             }
@@ -1796,7 +1796,7 @@
     "/wallets/{walletID}/account": {
       "get": {
         "operationId": "getWalletAccount",
-        "summary": "Получить состояние счёта",
+        "summary": "Get account status",
         "tags": [
           "Wallets"
         ],
@@ -1813,7 +1813,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Счёт кошелька получен",
+            "description": "Wallet account received",
             "schema": {
               "$ref": "#/definitions/WalletAccount"
             }
@@ -1833,7 +1833,7 @@
     "/wallets/{walletID}/grants": {
       "post": {
         "operationId": "issueWalletGrant",
-        "summary": "Выдать право управления средствами",
+        "summary": "Grant the right to manage funds",
         "tags": [
           "Wallets"
         ],
@@ -1849,7 +1849,7 @@
           },
           {
             "name": "request",
-            "description": "Запрос на право управления средствами на кошельке",
+            "description": "Request for the right to manage funds on the wallet",
             "in": "body",
             "required": true,
             "schema": {
@@ -1859,7 +1859,7 @@
         ],
         "responses": {
           "201": {
-            "description": "Единоразовое право выдано",
+            "description": "Single right granted",
             "schema": {
               "$ref": "#/definitions/WalletGrantRequest"
             }
@@ -1874,7 +1874,7 @@
             "$ref": "#/responses/NotFound"
           },
           "422": {
-            "description": "Неверные данные для выдачи",
+            "description": "Invalid data for issuance",
             "schema": {
               "$ref": "#/definitions/InvalidOperationParameters"
             }
@@ -1884,7 +1884,7 @@
     },
     "/webhooks": {
       "post": {
-        "description": "Установить новый webhook.",
+        "description": "Create a new webhook.",
         "tags": [
           "Webhooks"
         ],
@@ -1898,7 +1898,7 @@
           },
           {
             "name": "webhookParams",
-            "description": "Параметры устанавливаемого webhook'а",
+            "description": "Parameters of the created webhook",
             "in": "body",
             "required": true,
             "schema": {
@@ -1908,7 +1908,7 @@
         ],
         "responses": {
           "201": {
-            "description": "Webhook установлен",
+            "description": "Webhook created",
             "schema": {
               "$ref": "#/definitions/Webhook"
             }
@@ -1920,7 +1920,7 @@
             "$ref": "#/responses/Unauthorized"
           },
           "422": {
-            "description": "Неверные данные для создания webhook'а",
+            "description": "Invalid data for webhook creation",
             "schema": {
               "$ref": "#/definitions/InvalidOperationParameters"
             }
@@ -1928,7 +1928,7 @@
         }
       },
       "get": {
-        "description": "Получить набор установленных webhook'ов.",
+        "description": "Get list of existing webhooks.",
         "tags": [
           "Webhooks"
         ],
@@ -1946,7 +1946,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Набор webhook'ов",
+            "description": "A list of webhooks",
             "schema": {
               "type": "array",
               "items": {
@@ -1961,7 +1961,7 @@
             "$ref": "#/responses/Unauthorized"
           },
           "422": {
-            "description": "Неверные данные для получения webhook'ов",
+            "description": "Invalid data for obtaining webhooks",
             "schema": {
               "$ref": "#/definitions/InvalidOperationParameters"
             }
@@ -1971,7 +1971,7 @@
     },
     "/webhooks/{webhookID}": {
       "get": {
-        "description": "Получить webhook по его идентификатору.",
+        "description": "Get a webhook by its identifier.",
         "tags": [
           "Webhooks"
         ],
@@ -1992,7 +1992,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Данные webhook'а",
+            "description": "Webhook's data",
             "schema": {
               "$ref": "#/definitions/Webhook"
             }
@@ -2007,7 +2007,7 @@
             "$ref": "#/responses/NotFound"
           },
           "422": {
-            "description": "Неверные данные для получения webhook'а",
+            "description": "Invalid data for obtaining a webhook",
             "schema": {
               "$ref": "#/definitions/InvalidOperationParameters"
             }
@@ -2015,7 +2015,7 @@
         }
       },
       "delete": {
-        "description": "Снять указанный webhook.",
+        "description": "Remove the specified webhook.",
         "tags": [
           "Webhooks"
         ],
@@ -2036,7 +2036,7 @@
         ],
         "responses": {
           "204": {
-            "description": "Webhook успешно снят"
+            "description": "Webhook successfully removed"
           },
           "400": {
             "$ref": "#/responses/BadRequest"
@@ -2048,7 +2048,7 @@
             "$ref": "#/responses/NotFound"
           },
           "422": {
-            "description": "Неверные данные для снятия webhook'а",
+            "description": "Invalid data for removing webhook",
             "schema": {
               "$ref": "#/definitions/InvalidOperationParameters"
             }
@@ -2059,8 +2059,8 @@
     "/withdrawal-quotes": {
       "post": {
         "operationId": "createQuote",
-        "summary": "Подготовка котировки",
-        "description": "Фиксация курса обмена валют для проведения выплаты с конвертацией",
+        "summary": "Quote preparation",
+        "description": "Fixing the exchange rate for making withdrawals with conversion",
         "tags": [
           "Withdrawals"
         ],
@@ -2073,7 +2073,7 @@
           },
           {
             "name": "withdrawalQuoteParams",
-            "description": "Данные котировки для вывода",
+            "description": "Quote data for withdrawal",
             "in": "body",
             "required": true,
             "schema": {
@@ -2083,7 +2083,7 @@
         ],
         "responses": {
           "202": {
-            "description": "Полученная котировка",
+            "description": "Received quote",
             "schema": {
               "$ref": "#/definitions/WithdrawalQuote"
             }
@@ -2098,7 +2098,7 @@
             "$ref": "#/responses/ConflictRequest"
           },
           "422": {
-            "description": "Неверные данные для получения котировки",
+            "description": "Invalid data for getting a quote",
             "schema": {
               "$ref": "#/definitions/InvalidOperationParameters"
             }
@@ -2109,7 +2109,7 @@
     "/withdrawals": {
       "get": {
         "operationId": "listWithdrawals",
-        "summary": "Поиск выводов",
+        "summary": "Search of withdrawals",
         "tags": [
           "Withdrawals"
         ],
@@ -2123,7 +2123,7 @@
           {
             "name": "walletID",
             "in": "query",
-            "description": "Идентификатор кошелька",
+            "description": "Identifier of the wallet",
             "type": "string",
             "maxLength": 40,
             "minLength": 1,
@@ -2132,7 +2132,7 @@
           {
             "name": "identityID",
             "in": "query",
-            "description": "Идентификатор личности владельца",
+            "description": "Identifier of the owner's identity",
             "type": "string",
             "maxLength": 40,
             "minLength": 1,
@@ -2141,7 +2141,7 @@
           {
             "name": "withdrawalID",
             "in": "query",
-            "description": "Идентификатор вывода денежных средств",
+            "description": "Identifier of the funds withdrawal",
             "type": "string",
             "required": false,
             "maxLength": 40,
@@ -2150,7 +2150,7 @@
           {
             "name": "destinationID",
             "in": "query",
-            "description": "Идентификатор приёмника средств",
+            "description": "Identifier of the destination",
             "type": "string",
             "maxLength": 40,
             "minLength": 1,
@@ -2170,7 +2170,7 @@
           {
             "name": "createdAtFrom",
             "in": "query",
-            "description": "Дата создания с",
+            "description": "Creation date range start",
             "type": "string",
             "format": "date-time",
             "required": false
@@ -2178,7 +2178,7 @@
           {
             "name": "createdAtTo",
             "in": "query",
-            "description": "Дата создания до",
+            "description": "Creation date range end",
             "type": "string",
             "format": "date-time",
             "required": false
@@ -2199,22 +2199,22 @@
             "name": "continuationToken",
             "in": "query",
             "required": false,
-            "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
+            "description": "A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n",
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "Результат поиска",
+            "description": "Search result",
             "schema": {
               "type": "object",
               "properties": {
                 "continuationToken": {
-                  "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
+                  "description": "A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n",
                   "type": "string"
                 },
                 "result": {
-                  "description": "Найденные выводы",
+                  "description": "Withdrawals found",
                   "type": "array",
                   "items": {
                     "$ref": "#/definitions/Withdrawal"
@@ -2233,7 +2233,7 @@
       },
       "post": {
         "operationId": "createWithdrawal",
-        "summary": "Запустить вывод средств",
+        "summary": "Create withdrawal",
         "tags": [
           "Withdrawals"
         ],
@@ -2246,7 +2246,7 @@
           },
           {
             "name": "withdrawal",
-            "description": "Данные вывода",
+            "description": "Withdrawal data",
             "in": "body",
             "required": true,
             "schema": {
@@ -2256,10 +2256,10 @@
         ],
         "responses": {
           "202": {
-            "description": "Вывод запущен",
+            "description": "Withdrawal started",
             "headers": {
               "Location": {
-                "description": "URI запущенного вывода",
+                "description": "URI of started withdrawal",
                 "type": "string",
                 "format": "uri"
               }
@@ -2278,7 +2278,7 @@
             "$ref": "#/responses/ConflictRequest"
           },
           "422": {
-            "description": "Неверные данные для осуществления вывода",
+            "description": "Invalid data for withdrawal",
             "schema": {
               "$ref": "#/definitions/InvalidOperationParameters"
             }
@@ -2289,7 +2289,7 @@
     "/withdrawals/{withdrawalID}": {
       "get": {
         "operationId": "getWithdrawal",
-        "summary": "Получить состояние вывода средств",
+        "summary": "Get withdrawal status",
         "tags": [
           "Withdrawals"
         ],
@@ -2306,7 +2306,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Вывод найден",
+            "description": "Withdrawal found",
             "schema": {
               "$ref": "#/definitions/Withdrawal"
             }
@@ -2326,7 +2326,7 @@
     "/withdrawals/{withdrawalID}/events": {
       "get": {
         "operationId": "pollWithdrawalEvents",
-        "summary": "Запросить события вывода средств",
+        "summary": "Request withdrawal events",
         "tags": [
           "Withdrawals"
         ],
@@ -2349,7 +2349,7 @@
         ],
         "responses": {
           "200": {
-            "description": "События найдены",
+            "description": "Events found",
             "schema": {
               "type": "array",
               "items": {
@@ -2372,7 +2372,7 @@
     "/withdrawals/{withdrawalID}/events/{eventID}": {
       "get": {
         "operationId": "getWithdrawalEvents",
-        "summary": "Получить событие вывода средств",
+        "summary": "Get an event of withdrawal",
         "tags": [
           "Withdrawals"
         ],
@@ -2392,7 +2392,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Событие найдено",
+            "description": "Event found",
             "schema": {
               "$ref": "#/definitions/WithdrawalEvent"
             }
@@ -2412,7 +2412,7 @@
   },
   "definitions": {
     "Asset": {
-      "description": "Объём денежных средств\n",
+      "description": "The amount of money\n",
       "type": "object",
       "required": [
         "amount",
@@ -2420,21 +2420,21 @@
       ],
       "properties": {
         "amount": {
-          "description": "Сумма денежных средств в минорных единицах, например, в копейках\n",
+          "description": "The amount of money in minor units, for example, in cents\n",
           "type": "integer",
           "format": "int64",
           "example": 1430000
         },
         "currency": {
-          "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+          "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
           "type": "string",
           "pattern": "^[A-Z]{3}$",
-          "example": "RUB"
+          "example": "USD"
         }
       }
     },
     "BankCardDestinationResource": {
-      "description": "Банковская карта",
+      "description": "Card",
       "allOf": [
         {
           "$ref": "#/definitions/DestinationResource"
@@ -2445,7 +2445,7 @@
       ]
     },
     "BankCardReceiverResource": {
-      "description": "Банковская карта",
+      "description": "Card",
       "allOf": [
         {
           "$ref": "#/definitions/ReceiverResource"
@@ -2457,7 +2457,7 @@
           "type": "object",
           "properties": {
             "paymentSystem": {
-              "description": "Платежная система.\n\nНабор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getWithdrawalMethods).\n",
+              "description": "Payment system.\n\nThe set of systems available for making withdrawals can be found by calling the corresponding [operation](#operation/getWithdrawalMethods).\n",
               "type": "string",
               "readOnly": true
             }
@@ -2489,7 +2489,7 @@
           "type": "object",
           "properties": {
             "paymentSystem": {
-              "description": "Платежная система.\n\nНабор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getWithdrawalMethods).\n",
+              "description": "Payment system.\n\nThe set of systems available for making withdrawals can be found by calling the corresponding [operation](#operation/getWithdrawalMethods).\n",
               "type": "string",
               "readOnly": true
             }
@@ -2498,7 +2498,7 @@
       ]
     },
     "BankCardSenderResourceParams": {
-      "description": "Банковская карта",
+      "description": "Card",
       "allOf": [
         {
           "$ref": "#/definitions/SenderResourceParams"
@@ -2513,7 +2513,7 @@
           ],
           "properties": {
             "authData": {
-              "description": "Данные авторизации, полученные при сохранении карты",
+              "description": "Authorization data received when saving the card",
               "type": "string",
               "maxLength": 1000
             }
@@ -2534,7 +2534,7 @@
           ],
           "properties": {
             "uriTemplate": {
-              "description": "Шаблон значения URL для перехода в браузере\n\nШаблон представлен согласно стандарту\n[RFC6570](https://tools.ietf.org/html/rfc6570).\n",
+              "description": "URL value template for browser navigation\n\nThe template is represented according to the standard\n[RFC6570](https://tools.ietf.org/html/rfc6570).\n",
               "type": "string"
             }
           }
@@ -2555,7 +2555,7 @@
           ],
           "properties": {
             "uriTemplate": {
-              "description": "Шаблон значения URL для отправки формы\n\nШаблон представлен согласно стандарту\n[RFC6570](https://tools.ietf.org/html/rfc6570).\n",
+              "description": "URL value template for form submission\n\nThe template is represented according to the standard\n[RFC6570](https://tools.ietf.org/html/rfc6570).\n",
               "type": "string"
             },
             "form": {
@@ -2573,39 +2573,39 @@
       ],
       "properties": {
         "requestType": {
-          "description": "Тип браузерной операции",
+          "description": "Type of browser operation",
           "type": "string"
         }
       }
     },
     "ContactInfo": {
-      "description": "Контактные данные",
+      "description": "Contact details",
       "type": "object",
       "properties": {
         "email": {
-          "description": "Адрес электронной почты",
+          "description": "Email address",
           "type": "string",
           "format": "email",
           "maxLength": 100
         },
         "phoneNumber": {
-          "description": "Номер мобильного телефона с международным префиксом согласно\n[E.164](https://en.wikipedia.org/wiki/E.164).\n",
+          "description": "Mobile phone number with international prefix according to\n[E.164](https://en.wikipedia.org/wiki/E.164).\n",
           "type": "string",
           "format": "^\\+\\d{4,15}$"
         }
       }
     },
     "ContinuationToken": {
-      "description": "Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n",
+      "description": "A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n",
       "type": "string"
     },
     "CryptoCurrency": {
-      "description": "Криптовалюта.\n\nНабор криптовалют, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getWithdrawalMethods).\n",
+      "description": "Cryptocurrency.\n\nThe set of cryptocurrencies available for withdrawals can be found out by calling the appropriate [operation](#operation/getWithdrawalMethods).\n",
       "type": "string",
       "example": "BTC"
     },
     "CryptoWallet": {
-      "description": "Данные криптовалютного кошелька",
+      "description": "Cryptocurrency wallet details",
       "type": "object",
       "required": [
         "id",
@@ -2613,21 +2613,21 @@
       ],
       "properties": {
         "id": {
-          "description": "Идентификатор (он же адрес) криптовалютного кошелька",
+          "description": "Identifier (aka address) of a cryptocurrency wallet",
           "type": "string",
           "minLength": 16,
           "maxLength": 256,
           "example": "zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQ"
         },
         "currency": {
-          "description": "Криптовалюта.\n\nНабор криптовалют, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getWithdrawalMethods).\n",
+          "description": "Cryptocurrency.\n\nThe set of cryptocurrencies available for withdrawals can be found out by calling the appropriate [operation](#operation/getWithdrawalMethods).\n",
           "type": "string",
           "example": "BTC"
         }
       }
     },
     "CryptoWalletDestinationResource": {
-      "description": "Криптовалютные денежные средства",
+      "description": "Cryptocurrency funds",
       "allOf": [
         {
           "$ref": "#/definitions/DestinationResource"
@@ -2638,7 +2638,7 @@
       ]
     },
     "Currency": {
-      "description": "Описание валюты",
+      "description": "Currency description",
       "type": "object",
       "required": [
         "id",
@@ -2648,29 +2648,29 @@
       ],
       "properties": {
         "id": {
-          "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+          "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
           "type": "string",
           "pattern": "^[A-Z]{3}$",
-          "example": "RUB"
+          "example": "USD"
         },
         "numericCode": {
-          "description": "Цифровой код валюты согласно\n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm)\n",
+          "description": "Digital currency code according to\n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm)\n",
           "type": "string",
           "pattern": "^[0-9]{3}$",
-          "example": "643"
+          "example": "840"
         },
         "name": {
-          "description": "Человекочитаемое название валюты\n",
+          "description": "Human readable currency name\n",
           "type": "string",
-          "example": "Российский рубль"
+          "example": "United States Dollar"
         },
         "sign": {
-          "description": "Знак единицы валюты\n",
+          "description": "Currency unit sign\n",
           "type": "string",
-          "example": "₽"
+          "example": "$"
         },
         "exponent": {
-          "description": "Количество допустимых знаков после запятой в сумме средств, в которых может\nуказываться количество минорных денежных единиц\n",
+          "description": "The number of acceptable decimal places in the amount of funds, \nin which the number of minor monetary units can be indicated\n",
           "type": "integer",
           "minimum": 0,
           "example": 2
@@ -2678,13 +2678,13 @@
       }
     },
     "CurrencyID": {
-      "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+      "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
       "type": "string",
       "pattern": "^[A-Z]{3}$",
-      "example": "RUB"
+      "example": "USD"
     },
     "Deposit": {
-      "description": "Данные поступления денежных средств",
+      "description": "Deposit data",
       "allOf": [
         {
           "type": "object",
@@ -2696,29 +2696,29 @@
           ],
           "properties": {
             "id": {
-              "description": "Идентификатор поступления денежных средств",
+              "description": "Deposit identifier",
               "type": "string",
               "example": "tZ0jUmlsV0",
               "readOnly": true
             },
             "createdAt": {
-              "description": "Дата и время запуска пополнения",
+              "description": "Deposit start date and time",
               "type": "string",
               "format": "date-time",
               "readOnly": true
             },
             "wallet": {
-              "description": "Идентификатор кошелька",
+              "description": "Identifier of the wallet",
               "type": "string",
               "example": "10068321"
             },
             "source": {
-              "description": "Идентификатор источника денежных средств",
+              "description": "Funds source identifier",
               "type": "string",
               "example": "107498"
             },
             "body": {
-              "description": "Объём поступивших средств",
+              "description": "The amount of funds received",
               "type": "object",
               "required": [
                 "amount",
@@ -2726,21 +2726,21 @@
               ],
               "properties": {
                 "amount": {
-                  "description": "Сумма денежных средств в минорных единицах, например, в копейках\n",
+                  "description": "The amount of money in minor units, for example, in cents\n",
                   "type": "integer",
                   "format": "int64",
                   "example": 1430000
                 },
                 "currency": {
-                  "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+                  "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
                   "type": "string",
                   "pattern": "^[A-Z]{3}$",
-                  "example": "RUB"
+                  "example": "USD"
                 }
               }
             },
             "fee": {
-              "description": "Сумма коммисии",
+              "description": "Fee amount",
               "type": "object",
               "required": [
                 "amount",
@@ -2748,21 +2748,21 @@
               ],
               "properties": {
                 "amount": {
-                  "description": "Сумма денежных средств в минорных единицах, например, в копейках\n",
+                  "description": "The amount of money in minor units, for example, in cents\n",
                   "type": "integer",
                   "format": "int64",
                   "example": 1430000
                 },
                 "currency": {
-                  "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+                  "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
                   "type": "string",
                   "pattern": "^[A-Z]{3}$",
-                  "example": "RUB"
+                  "example": "USD"
                 }
               }
             },
             "externalID": {
-              "description": "Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n",
+              "description": "The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n",
               "type": "string",
               "example": "10036274"
             }
@@ -2774,25 +2774,25 @@
       ]
     },
     "DepositAdjustment": {
-      "description": "Данные корректировки поступления денежных средств",
+      "description": "Deposit adjustment data",
       "allOf": [
         {
           "type": "object",
           "properties": {
             "id": {
-              "description": "Идентификатор корректировки поступления денежных средств",
+              "description": "Deposit adjustment identifier",
               "type": "string",
               "example": "tZ0jUmlsV0",
               "readOnly": true
             },
             "createdAt": {
-              "description": "Дата и время запуска корректировки",
+              "description": "Date and time the adjustment was started",
               "type": "string",
               "format": "date-time",
               "readOnly": true
             },
             "externalID": {
-              "description": "Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n",
+              "description": "The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n",
               "type": "string",
               "example": "10036274"
             }
@@ -2810,7 +2810,7 @@
       ],
       "properties": {
         "code": {
-          "description": "Код ошибки коррекции",
+          "description": "Adjustment error code",
           "type": "string"
         },
         "subError": {
@@ -2819,7 +2819,7 @@
       }
     },
     "DepositAdjustmentID": {
-      "description": "Идентификатор корректировки поступления денежных средств",
+      "description": "Deposit adjustment identifier",
       "type": "string",
       "example": "tZ0jUmlsV0"
     },
@@ -2827,7 +2827,7 @@
       "type": "object",
       "properties": {
         "status": {
-          "description": "Статус корректировки поступления денежных средств.\n\n| Значение    | Пояснение                                               |\n| ----------- | ------------------------------------------------------- |\n| `Pending`   | Корректировка в процессе выполнения                     |\n| `Succeeded` | Корректировка произведёна успешно                       |\n| `Failed`    | Корректировка завершилась неудачей                      |\n",
+          "description": "Deposit adjustment status.\n\n| Meaning     | Explanation                                             |\n| ----------- | ------------------------------------------------------- |\n| `Pending`   | Adjustment in progress                                  |\n| `Succeeded` | Adjustment completed successfully                       |\n| `Failed`    | Adjustment failed                                       |\n",
           "type": "string",
           "enum": [
             "Pending",
@@ -2837,7 +2837,7 @@
           "readOnly": true
         },
         "failure": {
-          "description": "> Если `status` == `Failed`\n\nПояснение причины неудачи\n",
+          "description": "> If `status` == `Failed`\n\nExplanation of the reason for failure\n",
           "readOnly": true,
           "type": "object",
           "required": [
@@ -2845,7 +2845,7 @@
           ],
           "properties": {
             "code": {
-              "description": "Код ошибки коррекции",
+              "description": "Adjustment error code",
               "type": "string"
             },
             "subError": {
@@ -2862,7 +2862,7 @@
       ],
       "properties": {
         "code": {
-          "description": "Код ошибки поступления",
+          "description": "Deposit error code",
           "type": "string"
         },
         "subError": {
@@ -2871,12 +2871,12 @@
       }
     },
     "DepositID": {
-      "description": "Идентификатор поступления денежных средств",
+      "description": "Deposit identifier",
       "type": "string",
       "example": "tZ0jUmlsV0"
     },
     "DepositRevert": {
-      "description": "Данные отмены поступления денежных средств",
+      "description": "Deposit revert data",
       "allOf": [
         {
           "type": "object",
@@ -2887,29 +2887,29 @@
           ],
           "properties": {
             "id": {
-              "description": "Идентификатор отмены поступления денежных средств ",
+              "description": "Deposit revert identifier",
               "type": "string",
               "example": "10068321",
               "readOnly": true
             },
             "createdAt": {
-              "description": "Дата и время запуска отмены",
+              "description": "Date and time of revert start",
               "type": "string",
               "format": "date-time",
               "readOnly": true
             },
             "wallet": {
-              "description": "Идентификатор кошелька",
+              "description": "Identifier of the wallet",
               "type": "string",
               "example": "10068321"
             },
             "source": {
-              "description": "Идентификатор источника денежных средств",
+              "description": "Funds source identifier",
               "type": "string",
               "example": "107498"
             },
             "body": {
-              "description": "Объем денежных средств",
+              "description": "Amount of funds",
               "type": "object",
               "required": [
                 "amount",
@@ -2917,16 +2917,16 @@
               ],
               "properties": {
                 "amount": {
-                  "description": "Сумма денежных средств в минорных единицах, например, в копейках\n",
+                  "description": "The amount of money in minor units, for example, in cents\n",
                   "type": "integer",
                   "format": "int64",
                   "example": 1430000
                 },
                 "currency": {
-                  "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+                  "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
                   "type": "string",
                   "pattern": "^[A-Z]{3}$",
-                  "example": "RUB"
+                  "example": "USD"
                 }
               }
             },
@@ -2934,7 +2934,7 @@
               "type": "string"
             },
             "externalID": {
-              "description": "Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n",
+              "description": "The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n",
               "type": "string",
               "example": "10036274"
             }
@@ -2952,7 +2952,7 @@
       ],
       "properties": {
         "code": {
-          "description": "Код ошибки отмены",
+          "description": "Deposit revert error code",
           "type": "string"
         },
         "subError": {
@@ -2961,7 +2961,7 @@
       }
     },
     "DepositRevertID": {
-      "description": "Идентификатор отмены поступления денежных средств ",
+      "description": "Deposit revert identifier",
       "type": "string",
       "example": "10068321"
     },
@@ -2969,7 +2969,7 @@
       "type": "object",
       "properties": {
         "status": {
-          "description": "Статус отмены поступления денежных средств.\n\n| Значение    | Пояснение                                               |\n| ----------- | ------------------------------------------------------- |\n| `Pending`   | Отмена в процессе выполнения                            |\n| `Succeeded` | Отмена поступления средств произведёна успешно          |\n| `Failed`    | Отмена поступления средств завершилась неудачей         |\n",
+          "description": "Deposit revert status.\n\n| Meaning     | Explanation                                             |\n| ----------- | ------------------------------------------------------- |\n| `Pending`   | Deposit revert in progress                              |\n| `Succeeded` | Deposit revert completed successfully                   |\n| `Failed`    | Deposit revert failed                                   |\n",
           "type": "string",
           "enum": [
             "Pending",
@@ -2979,7 +2979,7 @@
           "readOnly": true
         },
         "failure": {
-          "description": "> Если `status` == `Failed`\n\nПояснение причины неудачи\n",
+          "description": "> If `status` == `Failed`\n\nExplanation of the reason for failure\n",
           "readOnly": true,
           "type": "object",
           "required": [
@@ -2987,7 +2987,7 @@
           ],
           "properties": {
             "code": {
-              "description": "Код ошибки отмены",
+              "description": "Deposit revert error code",
               "type": "string"
             },
             "subError": {
@@ -3001,7 +3001,7 @@
       "type": "object",
       "properties": {
         "status": {
-          "description": "Статус поступления денежных средств.\n\n| Значение    | Пояснение                                        |\n| ----------- | ------------------------------------------------ |\n| `Pending`   | Поступление в процессе выполнения                |\n| `Succeeded` | Поступление средств произведён успешно           |\n| `Failed`    | Поступление средств завершился неудачей          |\n",
+          "description": "Status of deposit.\n\n| Meaning     | Explanation                                      |\n| ----------- | ------------------------------------------------ |\n| `Pending`   | Deposit in progress                              |\n| `Succeeded` | Deposit of funds made successfully               |\n| `Failed`    | Deposit of funds ended in failure                |\n",
           "type": "string",
           "enum": [
             "Pending",
@@ -3011,7 +3011,7 @@
           "readOnly": true
         },
         "failure": {
-          "description": "> Если `status` == `Failed`\n\nПояснение причины неудачи\n",
+          "description": "> If `status` == `Failed`\n\nExplanation of the reason for failure\n",
           "readOnly": true,
           "type": "object",
           "required": [
@@ -3019,7 +3019,7 @@
           ],
           "properties": {
             "code": {
-              "description": "Код ошибки поступления",
+              "description": "Deposit error code",
               "type": "string"
             },
             "subError": {
@@ -3030,7 +3030,7 @@
       }
     },
     "Destination": {
-      "description": "Данные приёмника денежных средств",
+      "description": "Destination data",
       "allOf": [
         {
           "type": "object",
@@ -3042,51 +3042,51 @@
           ],
           "properties": {
             "id": {
-              "description": "Идентификатор приёмника денежных средств",
+              "description": "Destination identifier",
               "type": "string",
               "example": "107498",
               "readOnly": true
             },
             "name": {
-              "description": "Человекочитаемое название приёмника средств, по которому его легко узнать\n",
+              "description": "A human-readable name for the destination by which it is easily recognizable\n",
               "type": "string",
               "example": "Squarey plastic thingy"
             },
             "createdAt": {
-              "description": "Дата и время создания приёмника средств",
+              "description": "Date and time of creation of the destination of the funds",
               "type": "string",
               "format": "date-time",
               "readOnly": true
             },
             "isBlocked": {
-              "description": "Заблокирован ли приёмник средств?",
+              "description": "Is the destination blocked?",
               "type": "boolean",
               "readOnly": true,
               "example": false
             },
             "identity": {
-              "description": "Идентификатор личности владельца кошелька",
+              "description": "Identifier of wallet owner",
               "type": "string",
               "example": "10036274"
             },
             "currency": {
-              "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+              "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
               "type": "string",
               "pattern": "^[A-Z]{3}$",
-              "example": "RUB"
+              "example": "USD"
             },
             "resource": {
               "$ref": "#/definitions/DestinationResource"
             },
             "metadata": {
-              "description": "Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с\nданным приёмником\n",
+              "description": "Some non-transparent for system set of data associated with this destination\n",
               "type": "object",
               "example": {
                 "color_hint": "olive-green"
               }
             },
             "externalID": {
-              "description": "Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n",
+              "description": "The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n",
               "type": "string",
               "example": "10036274"
             }
@@ -3098,14 +3098,14 @@
       ]
     },
     "DestinationGrantRequest": {
-      "description": "Запрос на право управления выводами на приёмник средств",
+      "description": "Request for the permission to control the withdrawals to the destination",
       "type": "object",
       "required": [
         "validUntil"
       ],
       "properties": {
         "token": {
-          "description": "Токен, дающий право управления выводами",
+          "description": "Token granting the permission to control the withdrawals",
           "type": "string",
           "minLength": 1,
           "maxLength": 4000,
@@ -3113,19 +3113,19 @@
           "readOnly": true
         },
         "validUntil": {
-          "description": "Дата и время, до наступления которых выданное право действительно\n",
+          "description": "The date and time by which the granted right is valid\n",
           "type": "string",
           "format": "date-time"
         }
       }
     },
     "DestinationID": {
-      "description": "Идентификатор приёмника денежных средств",
+      "description": "Destination identifier",
       "type": "string",
       "example": "107498"
     },
     "DestinationResource": {
-      "description": "Ресурс приёмника денежных средств, используемый для осуществления выводов",
+      "description": "Destination resource used to make withdrawals",
       "type": "object",
       "discriminator": "type",
       "required": [
@@ -3133,7 +3133,7 @@
       ],
       "properties": {
         "type": {
-          "description": "Тип ресурса приёмника средств.\n\nСм. [Vality Payment Resource API](?api/payres/swagger.yaml).\n",
+          "description": "The resource type of the destination.\n\nSee [Vality Withdrawal Resource API](?api/payres/swagger.yaml).\n",
           "type": "string",
           "enum": [
             "BankCardDestinationResource",
@@ -3147,7 +3147,7 @@
       "type": "object",
       "properties": {
         "status": {
-          "description": "Статус приёмника денежных средств.\n\n| Значение       | Пояснение                                  |\n| -------------- | ------------------------------------------ |\n| `Unauthorized` | Не авторизован владельцем на вывод средств |\n| `Authorized`   | Авторизован владельцем на вывод средств    |\n",
+          "description": "The status of the destination.\n\n| Meaning        | Explanation                                   |\n| -------------- | --------------------------------------------- |\n| `Unauthorized` | Not authorized by the owner to withdraw funds |\n| `Authorized`   | Authorized by the owner to withdraw funds     |\n",
           "type": "string",
           "enum": [
             "Unauthorized",
@@ -3157,7 +3157,7 @@
           "example": "Authorized"
         },
         "validUntil": {
-          "description": "> Если `status` == `Authorized`\n\nДата и время, до наступления которых авторизация действительна\n",
+          "description": "> If `status` == `Authorized`\n\nDate and time until which authorization is valid\n",
           "type": "string",
           "format": "date-time",
           "readOnly": true
@@ -3165,7 +3165,7 @@
       }
     },
     "DestinationsTopic": {
-      "description": "Область охвата, включающая события по приёмникам денежных средств\nв рамках определённого кошелька\n",
+      "description": "A coverage area that includes events by asset destinations within a particular wallet\n",
       "allOf": [
         {
           "$ref": "#/definitions/WebhookScope"
@@ -3177,7 +3177,7 @@
           ],
           "properties": {
             "eventTypes": {
-              "description": "Набор типов событий приёмника денежных средств, о которых следует оповещать",
+              "description": "Set of event types of the destination, which should be notified",
               "type": "array",
               "items": {
                 "type": "string",
@@ -3193,7 +3193,7 @@
       ]
     },
     "DigitalWallet": {
-      "description": "Данные цифрового кошелька",
+      "description": "Digital wallet data",
       "type": "object",
       "required": [
         "id",
@@ -3201,19 +3201,19 @@
       ],
       "properties": {
         "id": {
-          "description": "Идентификатор цифрового кошелька",
+          "description": "Digital wallet ID",
           "type": "string",
           "minLength": 1,
           "maxLength": 100,
           "example": "zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQ"
         },
         "provider": {
-          "description": "Провайдер электронных денежных средств.\n\nНабор провайдеров, доступных для проведения выплат, можно узнать, вызвав\nсоответствующую [операцию](#operation/getWithdrawalMethods).\n",
+          "description": "Digital wallet provider.\n\nThe set of providers available for making withdrawals can be found by calling\ncorresponding [operation](#operation/getWithdrawalMethods).\n",
           "type": "string",
           "example": "Paypal"
         },
         "token": {
-          "description": "Строка, содержащая данные для авторизации операций над этим кошельком",
+          "description": "A string containing authorization data for transactions on this digital wallet",
           "type": "string",
           "minLength": 1,
           "maxLength": 4000,
@@ -3222,7 +3222,7 @@
       }
     },
     "DigitalWalletDestinationResource": {
-      "description": "Цифровой кошелек",
+      "description": "Digital wallet",
       "allOf": [
         {
           "$ref": "#/definitions/DestinationResource"
@@ -3233,12 +3233,12 @@
       ]
     },
     "DigitalWalletProvider": {
-      "description": "Провайдер электронных денежных средств.\n\nНабор провайдеров, доступных для проведения выплат, можно узнать, вызвав\nсоответствующую [операцию](#operation/getWithdrawalMethods).\n",
+      "description": "Digital wallet provider.\n\nThe set of providers available for making withdrawals can be found by calling\ncorresponding [operation](#operation/getWithdrawalMethods).\n",
       "type": "string",
       "example": "Paypal"
     },
     "InvalidOperationParameters": {
-      "description": "Неверные входные данные для операции",
+      "description": "Invalid input data for operation",
       "type": "object",
       "properties": {
         "message": {
@@ -3248,7 +3248,7 @@
       }
     },
     "ExternalID": {
-      "description": "Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n",
+      "description": "The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n",
       "type": "string",
       "example": "10036274"
     },
@@ -3260,18 +3260,18 @@
       ],
       "properties": {
         "url": {
-          "description": "URL файла",
+          "description": "URL of the file",
           "type": "string"
         },
         "expiresAt": {
-          "description": "Время до которого ссылка будет считаться действительной",
+          "description": "The date and time by which the link will be valid",
           "type": "string",
           "format": "date-time"
         }
       }
     },
     "GenericProvider": {
-      "description": "Провайдер сервисов выплат.\n\nНабор провайдеров, доступных для проведения выплат, можно узнать, вызвав\nсоответствующую [операцию](#operation/getWithdrawalMethods).\n",
+      "description": "Withdrawal service provider.\n\nThe set of providers available for making withdrawals can be found by calling\ncorresponding [operation](#operation/getWithdrawalMethods).\n",
       "type": "string",
       "example": "YourBankName"
     },
@@ -3282,7 +3282,7 @@
       "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n"
     },
     "Identity": {
-      "description": "Данные личности владельца кошельков",
+      "description": "Data of the wallet owner",
       "type": "object",
       "required": [
         "name",
@@ -3290,47 +3290,47 @@
       ],
       "properties": {
         "id": {
-          "description": "Идентификатор личности владельца кошелька",
+          "description": "Identifier of wallet owner",
           "type": "string",
           "example": "10036274",
           "readOnly": true
         },
         "name": {
-          "description": "Человекочитаемое имя личности владельца, по которому его легко опознать\n",
+          "description": "Human-readable name of the owner's identity, by which he can be easily identified\n",
           "type": "string",
           "example": "Keyn Fawkes"
         },
         "createdAt": {
-          "description": "Дата и время создания личности владельца",
+          "description": "Date and time the owner identity was created",
           "type": "string",
           "format": "date-time",
           "readOnly": true
         },
         "provider": {
-          "description": "Идентификатор провайдера услуг",
+          "description": "Identifier of the service provider",
           "type": "string",
           "example": "serviceprovider"
         },
         "isBlocked": {
-          "description": "Заблокирована ли личность владельца?",
+          "description": "Is the owner's identity blocked?",
           "type": "boolean",
           "readOnly": true,
           "example": false
         },
         "metadata": {
-          "description": "Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с\nданной личностью владельца\n",
+          "description": "Some non-transparent for system set of data associated with this identity\n",
           "type": "object",
           "example": {
-            "lkDisplayName": "Сергей Иванович"
+            "lkDisplayName": "James Smith"
           }
         },
         "externalID": {
-          "description": "Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n",
+          "description": "The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n",
           "type": "string",
           "example": "10036274"
         },
         "partyID": {
-          "description": "Уникальный в рамках системы идентификатор участника.",
+          "description": "The participant's unique identifier within the system.",
           "type": "string",
           "minLength": 1,
           "maxLength": 40
@@ -3338,7 +3338,7 @@
       }
     },
     "IdentityID": {
-      "description": "Идентификатор личности владельца кошелька",
+      "description": "Identifier of wallet owner",
       "type": "string",
       "example": "10036274"
     },
@@ -3349,7 +3349,7 @@
       ],
       "properties": {
         "errorType": {
-          "description": "Тип ошибки в данных",
+          "description": "Error type",
           "type": "string",
           "enum": [
             "SchemaViolated",
@@ -3366,12 +3366,12 @@
           "example": "NotFound"
         },
         "name": {
-          "description": "Имя или идентификатор элемента сообщения, содержащего недопустимые данные",
+          "description": "Name or identifier of message element containing invalid data",
           "type": "string",
           "example": "X-Request-ID"
         },
         "description": {
-          "description": "Пояснение, почему данные считаются недопустимыми",
+          "description": "Explanation of why the data is invalid",
           "type": "string",
           "example": "Required parameter was not sent"
         }
@@ -3381,47 +3381,47 @@
       "type": "object",
       "properties": {
         "externalID": {
-          "description": "Переданное значение `externalID`, для которого обнаружен конфликт параметров запроса",
+          "description": "The passed value of `externalID` for which a request parameter conflict was detected",
           "type": "string",
           "example": "10036274"
         },
         "id": {
-          "description": "Идентификатор сущности, созданной предыдущим запросом с указанным `externalID`",
+          "description": "Identifier of the entity, created by a previous query with the specified `externalID'",
           "type": "string"
         },
         "message": {
-          "description": "Человекочитаемое описание ошибки",
+          "description": "Human-readable description of the error",
           "type": "string"
         }
       }
     },
     "BankCardPaymentSystem": {
-      "description": "Платежная система.\n\nНабор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getWithdrawalMethods).\n",
+      "description": "Payment system.\n\nThe set of systems available for making withdrawals can be found by calling the corresponding [operation](#operation/getWithdrawalMethods).\n",
       "type": "string"
     },
     "SecuredBankCard": {
-      "description": "Безопасные данные банковской карты",
+      "description": "Secure bank card details",
       "type": "object",
       "required": [
         "token"
       ],
       "properties": {
         "token": {
-          "description": "Токен, идентифицирующий исходные данные карты",
+          "description": "Token identifying the original card data",
           "type": "string",
           "minLength": 1,
           "maxLength": 1000,
           "example": "zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQg9xMkh"
         },
         "bin": {
-          "description": "[Идентификационный номер][1] банка-эмитента карты\n\n[1]: https://en.wikipedia.org/wiki/Payment_card_number#Issuer_identification_number_(IIN)\n",
+          "description": "[Identification number][1] of the card issuing bank\n\n[1]: https://en.wikipedia.org/wiki/Payment_card_number#Issuer_identification_number_(IIN)\n",
           "type": "string",
           "pattern": "^\\d{6,8}$",
           "example": "424242",
           "readOnly": true
         },
         "lastDigits": {
-          "description": "Последние цифры номера карты",
+          "description": "Card last digits",
           "type": "string",
           "pattern": "^\\d{2,4}$",
           "example": "4242",
@@ -3430,13 +3430,13 @@
       }
     },
     "PartyID": {
-      "description": "Уникальный в рамках системы идентификатор участника.",
+      "description": "The participant's unique identifier within the system.",
       "type": "string",
       "minLength": 1,
       "maxLength": 40
     },
     "Provider": {
-      "description": "Данные провайдера услуг",
+      "description": "Service provider data",
       "type": "object",
       "required": [
         "id",
@@ -3445,20 +3445,20 @@
       ],
       "properties": {
         "id": {
-          "description": "Идентификатор провайдера услуг",
+          "description": "Identifier of the service provider",
           "type": "string",
           "example": "serviceprovider"
         },
         "name": {
-          "description": "Человекочитаемое наименование провайдера услуг\n",
+          "description": "Human-readable name of the service provider\n",
           "type": "string",
-          "example": "ООО «СЕРВИС ПРОВАЙДЕР»"
+          "example": "SERVICE PROVIDER LLC"
         },
         "residences": {
           "type": "array",
-          "description": "Резиденции, в которых провайдер предоставляет услуги\n",
+          "description": "Residences in which the provider can service\n",
           "items": {
-            "description": "Резиденция, символьный код по стандарту [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)\n",
+            "description": "Residence symbol code by standard [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)\n",
             "type": "string",
             "pattern": "^[A-Z]{3}$",
             "example": "RUS"
@@ -3467,12 +3467,12 @@
       }
     },
     "ProviderID": {
-      "description": "Идентификатор провайдера услуг",
+      "description": "Identifier of the service provider",
       "type": "string",
       "example": "serviceprovider"
     },
     "QuoteParameters": {
-      "description": "Параметры запроса комиссий",
+      "description": "Quote request parameters",
       "type": "object",
       "required": [
         "sender",
@@ -3488,12 +3488,12 @@
           "$ref": "#/definitions/ReceiverResource"
         },
         "identityID": {
-          "description": "Идентификатор личности владельца кошелька",
+          "description": "Identifier of wallet owner",
           "type": "string",
           "example": "10036274"
         },
         "body": {
-          "description": "Сумма операции",
+          "description": "Transaction amount",
           "type": "object",
           "required": [
             "amount",
@@ -3501,23 +3501,23 @@
           ],
           "properties": {
             "amount": {
-              "description": "Сумма денежных средств в минорных единицах, например, в копейках\n",
+              "description": "The amount of money in minor units, for example, in cents\n",
               "type": "integer",
               "format": "int64",
               "example": 1430000
             },
             "currency": {
-              "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+              "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
               "type": "string",
               "pattern": "^[A-Z]{3}$",
-              "example": "RUB"
+              "example": "USD"
             }
           }
         }
       }
     },
     "ReceiverResource": {
-      "description": "Ресурс получателя денежных средств, используемый для осуществления переводов",
+      "description": "The beneficiary's resource used to make the transfers",
       "type": "object",
       "discriminator": "type",
       "required": [
@@ -3525,7 +3525,7 @@
       ],
       "properties": {
         "type": {
-          "description": "Тип ресурса получателя средств.\n\nСм. [Vality Payment Resource API](?api/payres/swagger.yaml).\n",
+          "description": "The resource type of the receiver of the funds.\n\nSee [Vality Withdrawal Resource API](?api/payres/swagger.yaml).\n",
           "type": "string",
           "enum": [
             "BankCardReceiverResource"
@@ -3534,7 +3534,7 @@
       }
     },
     "ReceiverResourceParams": {
-      "description": "Параметры ресурса получателя денежных средств",
+      "description": "Recipient resource parameters",
       "type": "object",
       "discriminator": "type",
       "required": [
@@ -3542,7 +3542,7 @@
       ],
       "properties": {
         "type": {
-          "description": "Тип ресурса получателя средств.\n\nСм. [Vality Payment Resource API](?api/payres/swagger.yaml).\n",
+          "description": "The resource type of the payee.\n\nSee [Vality Withdrawal Resource API](?api/payres/swagger.yaml).\n",
           "type": "string",
           "enum": [
             "BankCardReceiverResourceParams"
@@ -3582,27 +3582,27 @@
       ],
       "properties": {
         "id": {
-          "description": "Идентификатор отчета",
+          "description": "Report identifier",
           "type": "integer",
           "format": "int64"
         },
         "createdAt": {
-          "description": "Дата и время создания",
+          "description": "Date and time of creation",
           "type": "string",
           "format": "date-time"
         },
         "fromTime": {
-          "description": "Дата и время начала периода",
+          "description": "Date and time of the start of the period",
           "type": "string",
           "format": "date-time"
         },
         "toTime": {
-          "description": "Дата и время конца периода",
+          "description": "Date and time of the end of period",
           "type": "string",
           "format": "date-time"
         },
         "status": {
-          "description": "Статус формирования отчета",
+          "description": "Report generation status",
           "type": "string",
           "enum": [
             "pending",
@@ -3611,7 +3611,7 @@
           ]
         },
         "type": {
-          "description": "Тип отчета",
+          "description": "Report type",
           "type": "string",
           "enum": [
             "withdrawalRegistry"
@@ -3626,7 +3626,7 @@
             ],
             "properties": {
               "id": {
-                "description": "Идентификатор файла",
+                "description": "File identifier",
                 "type": "string",
                 "maxLength": 40,
                 "minLength": 1
@@ -3645,26 +3645,26 @@
       ],
       "properties": {
         "reportType": {
-          "description": "Тип отчета",
+          "description": "Type of report",
           "type": "string",
           "enum": [
             "withdrawalRegistry"
           ]
         },
         "fromTime": {
-          "description": "Начало временного отрезка",
+          "description": "Start of the time period",
           "type": "string",
           "format": "date-time"
         },
         "toTime": {
-          "description": "Конец временного отрезка",
+          "description": "End of the time period",
           "type": "string",
           "format": "date-time"
         }
       }
     },
     "Residence": {
-      "description": "Описание региона резиденции",
+      "description": "Description of the region of residence",
       "type": "object",
       "required": [
         "id",
@@ -3672,31 +3672,31 @@
       ],
       "properties": {
         "id": {
-          "description": "Резиденция, символьный код по стандарту [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)\n",
+          "description": "Residence symbol code by standard [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)\n",
           "type": "string",
           "pattern": "^[A-Z]{3}$",
           "example": "RUS"
         },
         "name": {
-          "description": "Человекочитаемое название региона резиденции\n",
+          "description": "Human-readable name of the region of residence\n",
           "type": "string",
-          "example": "Российская федерация"
+          "example": "The United States of America"
         },
         "flag": {
-          "description": "Флаг региона резиденции\n",
+          "description": "Residence region flag\n",
           "type": "string",
-          "example": "🇷🇺"
+          "example": "🇺🇸"
         }
       }
     },
     "ResidenceID": {
-      "description": "Резиденция, символьный код по стандарту [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)\n",
+      "description": "Residence symbol code by standard [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)\n",
       "type": "string",
       "pattern": "^[A-Z]{3}$",
       "example": "RUS"
     },
     "SenderResource": {
-      "description": "Ресурс отправителя денежных средств, используемый для осуществления переводов",
+      "description": "The sender resource used to make transfers",
       "type": "object",
       "discriminator": "type",
       "required": [
@@ -3704,7 +3704,7 @@
       ],
       "properties": {
         "type": {
-          "description": "Тип ресурса отправителя средств.\n\nСм. [Vality Payment Resource API](?api/payres/swagger.yaml).\n",
+          "description": "The resource type of the sender of the funds.\n\nSee [Vality Withdrawal Resource API](?api/payres/swagger.yaml).\n",
           "type": "string",
           "enum": [
             "BankCardSenderResource"
@@ -3713,7 +3713,7 @@
       }
     },
     "SenderResourceParams": {
-      "description": "Параметры ресурса отправителя денежных средств",
+      "description": "Fund sender resource settings",
       "type": "object",
       "discriminator": "type",
       "required": [
@@ -3721,7 +3721,7 @@
       ],
       "properties": {
         "type": {
-          "description": "Тип ресурса отправителя средств.\n\nСм. [Vality Payment Resource API](?api/payres/swagger.yaml).\n",
+          "description": "The resource type of the sender of the funds.\n\nSee [Vality Withdrawal Resource API](?api/payres/swagger.yaml).\n",
           "type": "string",
           "enum": [
             "BankCardSenderResourceParams"
@@ -3730,32 +3730,25 @@
       }
     },
     "SourceID": {
-      "description": "Идентификатор источника денежных средств",
+      "description": "Funds source identifier",
       "type": "string",
       "example": "107498"
     },
     "SubFailure": {
-      "description": "Детализация описания ошибки\n",
+      "description": "Detailed description of the error\n",
       "type": "object",
       "required": [
         "code"
       ],
       "properties": {
         "code": {
-          "description": "Детализация кода ошибки",
+          "description": "Details of the error code",
           "type": "string"
         },
         "subError": {
           "$ref": "#/definitions/SubFailure"
         }
       }
-    },
-    "USDT": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/CryptoWallet"
-        }
-      ]
     },
     "UserInteraction": {
       "type": "object",
@@ -3765,7 +3758,7 @@
       ],
       "properties": {
         "interactionType": {
-          "description": "Тип взаимодействия с пользователем",
+          "description": "Type of interaction with the user",
           "type": "string"
         }
       }
@@ -3778,7 +3771,7 @@
       ],
       "properties": {
         "changeType": {
-          "description": "Вид изменения взаимодействию с пользователем.",
+          "description": "Type of change in user interaction.",
           "type": "string",
           "enum": [
             "UserInteractionCreated",
@@ -3815,7 +3808,7 @@
       ]
     },
     "UserInteractionForm": {
-      "description": "Форма для отправки средствами браузера",
+      "description": "Browser submission form",
       "type": "array",
       "items": {
         "type": "object",
@@ -3825,18 +3818,18 @@
         ],
         "properties": {
           "key": {
-            "description": "Значение ключа элемента формы, которую необходимо отправить средствами\nбраузера\n",
+            "description": "The value of the key of the form element to be send by means of browser\n",
             "type": "string"
           },
           "template": {
-            "description": "Шаблон значения элемента формы\nШаблон представлен согласно стандарту\n[RFC6570](https://tools.ietf.org/html/rfc6570).\n",
+            "description": "The template for the form element value\nThe template is presented according to the standard\n[RFC6570](https://tools.ietf.org/html/rfc6570).\n",
             "type": "string"
           }
         }
       }
     },
     "W2WTransfer": {
-      "description": "Данные перевода",
+      "description": "Transfer data",
       "type": "object",
       "required": [
         "id",
@@ -3848,19 +3841,19 @@
       ],
       "properties": {
         "id": {
-          "description": "Идентификатор перевода",
+          "description": "Transfer identifier",
           "type": "string",
           "example": "10a0b68D3E21",
           "maxLength": 40,
           "minLength": 1
         },
         "createdAt": {
-          "description": "Дата и время создания",
+          "description": "Date and time of creation",
           "type": "string",
           "format": "date-time"
         },
         "body": {
-          "description": "Сумма операции",
+          "description": "Transaction amount",
           "type": "object",
           "required": [
             "amount",
@@ -3868,16 +3861,16 @@
           ],
           "properties": {
             "amount": {
-              "description": "Сумма денежных средств в минорных единицах, например, в копейках\n",
+              "description": "The amount of money in minor units, for example, in cents\n",
               "type": "integer",
               "format": "int64",
               "example": 1430000
             },
             "currency": {
-              "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+              "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
               "type": "string",
               "pattern": "^[A-Z]{3}$",
-              "example": "RUB"
+              "example": "USD"
             }
           }
         },
@@ -3891,21 +3884,21 @@
           "$ref": "#/definitions/W2WTransferStatus"
         },
         "externalID": {
-          "description": "Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n",
+          "description": "The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n",
           "type": "string",
           "example": "10036274"
         }
       }
     },
     "W2WTransferFailure": {
-      "description": "[Ошибка, возникшая в процессе проведения перевода](#tag/Error-Codes)\n",
+      "description": "[Error occurred during the transfer process](#tag/Error-Codes)\n",
       "type": "object",
       "required": [
         "code"
       ],
       "properties": {
         "code": {
-          "description": "Основной код ошибки",
+          "description": "Main error code",
           "type": "string"
         },
         "subError": {
@@ -3914,14 +3907,14 @@
       }
     },
     "W2WTransferID": {
-      "description": "Идентификатор перевода",
+      "description": "Transfer identifier",
       "type": "string",
       "example": "10a0b68D3E21",
       "maxLength": 40,
       "minLength": 1
     },
     "W2WTransferParameters": {
-      "description": "Параметры создания перевода",
+      "description": "Transfer creation options",
       "type": "object",
       "required": [
         "sender",
@@ -3936,7 +3929,7 @@
           "$ref": "#/definitions/WalletID"
         },
         "body": {
-          "description": "Сумма перевода",
+          "description": "Transfer amount",
           "type": "object",
           "required": [
             "amount",
@@ -3944,21 +3937,21 @@
           ],
           "properties": {
             "amount": {
-              "description": "Сумма денежных средств в минорных единицах, например, в копейках\n",
+              "description": "The amount of money in minor units, for example, in cents\n",
               "type": "integer",
               "format": "int64",
               "example": 1430000
             },
             "currency": {
-              "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+              "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
               "type": "string",
               "pattern": "^[A-Z]{3}$",
-              "example": "RUB"
+              "example": "USD"
             }
           }
         },
         "externalID": {
-          "description": "Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n",
+          "description": "The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n",
           "type": "string",
           "example": "10036274"
         }
@@ -3971,7 +3964,7 @@
       ],
       "properties": {
         "status": {
-          "description": "Статус перевода денежных средств.\n\n| Значение    | Пояснение                                  |\n| ----------- | ------------------------------------------ |\n| `Pending`   | Перевод в процессе выполнения                |\n| `Succeeded` | Перевод средств произведён успешно           |\n| `Failed`    | Перевод средств завершился неудачей          |\n",
+          "description": "The status of the money transfer.\n\n| Meaning     | Explanation                          |\n| ----------- | ------------------------------------ |\n| `Pending`   | Transfer in progress              |\n| `Succeeded` | Fund transfer completed successfully |\n| `Failed`    | Fund transfer failed                 |\n",
           "type": "string",
           "enum": [
             "Pending",
@@ -3980,14 +3973,14 @@
           ]
         },
         "failure": {
-          "description": "[Ошибка, возникшая в процессе проведения перевода](#tag/Error-Codes)\n",
+          "description": "[Error occurred during the transfer process](#tag/Error-Codes)\n",
           "type": "object",
           "required": [
             "code"
           ],
           "properties": {
             "code": {
-              "description": "Основной код ошибки",
+              "description": "Main error code",
               "type": "string"
             },
             "subError": {
@@ -3998,7 +3991,7 @@
       }
     },
     "Wallet": {
-      "description": "Данные кошелька",
+      "description": "Wallet details",
       "type": "object",
       "required": [
         "name",
@@ -4007,55 +4000,55 @@
       ],
       "properties": {
         "id": {
-          "description": "Идентификатор кошелька",
+          "description": "Identifier of the wallet",
           "type": "string",
           "example": "10068321",
           "readOnly": true
         },
         "name": {
-          "description": "Человекочитаемое название кошелька, по которому его легко узнать",
+          "description": "Human-readable name of the wallet, by which it is easy to recognize",
           "type": "string",
           "example": "Worldwide PHP Awareness Initiative"
         },
         "createdAt": {
-          "description": "Дата и время создания кошелька",
+          "description": "Date and time of wallet creation",
           "type": "string",
           "format": "date-time",
           "readOnly": true
         },
         "isBlocked": {
-          "description": "Заблокирован ли кошелёк?",
+          "description": "Is the wallet blocked?",
           "type": "boolean",
           "readOnly": true,
           "example": false
         },
         "identity": {
-          "description": "Идентификатор личности владельца кошелька",
+          "description": "Identifier of wallet owner",
           "type": "string",
           "example": "10036274"
         },
         "currency": {
-          "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+          "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
           "type": "string",
           "pattern": "^[A-Z]{3}$",
-          "example": "RUB"
+          "example": "USD"
         },
         "metadata": {
-          "description": "Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с\nданным кошельком\n",
+          "description": "Some non-transparent for system set of data associated with this wallet\n",
           "type": "object",
           "example": {
-            "client_locale": "RU_ru"
+            "client_locale": "en_US"
           }
         },
         "externalID": {
-          "description": "Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n",
+          "description": "The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n",
           "type": "string",
           "example": "10036274"
         }
       }
     },
     "WalletAccount": {
-      "description": "Состояние счёта кошелька",
+      "description": "Wallet account status",
       "type": "object",
       "required": [
         "own",
@@ -4063,7 +4056,7 @@
       ],
       "properties": {
         "own": {
-          "description": "Собственные средства\n",
+          "description": "Own funds\n",
           "type": "object",
           "required": [
             "amount",
@@ -4071,21 +4064,21 @@
           ],
           "properties": {
             "amount": {
-              "description": "Сумма денежных средств в минорных единицах, например, в копейках\n",
+              "description": "The amount of money in minor units, for example, in cents\n",
               "type": "integer",
               "format": "int64",
               "example": 1430000
             },
             "currency": {
-              "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+              "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
               "type": "string",
               "pattern": "^[A-Z]{3}$",
-              "example": "RUB"
+              "example": "USD"
             }
           }
         },
         "available": {
-          "description": "Доступные к использованию средства, обычно равны собственным средствам\nза вычетом сумм всех незавершённых операций\n",
+          "description": "Funds available for use. Usually equal to own funds\nminus the sum of all pending transactions\n",
           "type": "object",
           "required": [
             "amount",
@@ -4093,27 +4086,27 @@
           ],
           "properties": {
             "amount": {
-              "description": "Сумма денежных средств в минорных единицах, например, в копейках\n",
+              "description": "The amount of money in minor units, for example, in cents\n",
               "type": "integer",
               "format": "int64",
               "example": 1430000
             },
             "currency": {
-              "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+              "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
               "type": "string",
               "pattern": "^[A-Z]{3}$",
-              "example": "RUB"
+              "example": "USD"
             }
           },
           "example": {
             "amount": 1200000,
-            "currency": "RUB"
+            "currency": "USD"
           }
         }
       }
     },
     "WalletGrantRequest": {
-      "description": "Запрос на единоразовое право управления средствами на кошельке",
+      "description": "Request for a one-time permission to manage funds on the wallet",
       "type": "object",
       "required": [
         "asset",
@@ -4121,7 +4114,7 @@
       ],
       "properties": {
         "token": {
-          "description": "Токен, дающий право единоразового управления средствами на кошельке",
+          "description": "A token that gives the permission to one-time management of funds on the wallet",
           "type": "string",
           "minLength": 1,
           "maxLength": 4000,
@@ -4129,7 +4122,7 @@
           "readOnly": true
         },
         "asset": {
-          "description": "Допустимый к использованию объём средств",
+          "description": "Amount of funds allowed for use",
           "type": "object",
           "required": [
             "amount",
@@ -4137,33 +4130,33 @@
           ],
           "properties": {
             "amount": {
-              "description": "Сумма денежных средств в минорных единицах, например, в копейках\n",
+              "description": "The amount of money in minor units, for example, in cents\n",
               "type": "integer",
               "format": "int64",
               "example": 1430000
             },
             "currency": {
-              "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+              "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
               "type": "string",
               "pattern": "^[A-Z]{3}$",
-              "example": "RUB"
+              "example": "USD"
             }
           }
         },
         "validUntil": {
-          "description": "Дата и время, до наступления которых выданное право действительно\n",
+          "description": "Date and time until which the granted right is valid\n",
           "type": "string",
           "format": "date-time"
         }
       }
     },
     "WalletID": {
-      "description": "Идентификатор кошелька",
+      "description": "Identifier of the wallet",
       "type": "string",
       "example": "10068321"
     },
     "WalletName": {
-      "description": "Человекочитаемое название кошелька, по которому его легко узнать",
+      "description": "Human-readable name of the wallet, by which it is easy to recognize",
       "type": "string",
       "example": "Worldwide PHP Awareness Initiative"
     },
@@ -4176,17 +4169,17 @@
       ],
       "properties": {
         "id": {
-          "description": "Идентификатор webhook'а\n",
+          "description": "Identifier of the webhook\n",
           "type": "string",
           "readOnly": true
         },
         "identityID": {
-          "description": "Идентификатор личности владельца кошелька",
+          "description": "Identifier of wallet owner",
           "type": "string",
           "example": "10036274"
         },
         "active": {
-          "description": "Включена ли в данный момент доставка оповещений?\n",
+          "description": "Is notification delivery currently enabled?\n",
           "type": "boolean",
           "readOnly": true
         },
@@ -4194,13 +4187,13 @@
           "$ref": "#/definitions/WebhookScope"
         },
         "url": {
-          "description": "URL, на который будут поступать оповещения о произошедших событиях\n",
+          "description": "The URL that will receive notifications of events that have occurred\n",
           "type": "string",
           "format": "uri",
           "maxLength": 1000
         },
         "publicKey": {
-          "description": "Содержимое публичного ключа, служащего для проверки авторитативности\nприходящих на `url` оповещений\n",
+          "description": "The content of the public key used to check the authoritativeness of\nnotifications coming to `url`\n",
           "type": "string",
           "format": "hexadecimal",
           "readOnly": true,
@@ -4209,7 +4202,7 @@
       }
     },
     "WebhookScope": {
-      "description": "Область охвата webhook'а, ограничивающая набор типов событий, по которым\nследует отправлять оповещения\n",
+      "description": "The scope of a webhook, limiting the set of event types,\nfor which the notifications should be sent\n",
       "type": "object",
       "discriminator": "topic",
       "required": [
@@ -4217,7 +4210,7 @@
       ],
       "properties": {
         "topic": {
-          "description": "Предмет оповещений",
+          "description": "Subject of notifications",
           "type": "string",
           "enum": [
             "WithdrawalsTopic",
@@ -4227,7 +4220,7 @@
       }
     },
     "Withdrawal": {
-      "description": "Данные вывода денежных средств",
+      "description": "Funds withdrawal data",
       "allOf": [
         {
           "type": "object",
@@ -4238,29 +4231,29 @@
           ],
           "properties": {
             "id": {
-              "description": "Идентификатор вывода денежных средств",
+              "description": "Identifier of funds withdrawal",
               "type": "string",
               "example": "tZ0jUmlsV0",
               "readOnly": true
             },
             "createdAt": {
-              "description": "Дата и время запуска вывода",
+              "description": "Date and time the withdrawal started",
               "type": "string",
               "format": "date-time",
               "readOnly": true
             },
             "wallet": {
-              "description": "Идентификатор кошелька",
+              "description": "Identifier of the wallet",
               "type": "string",
               "example": "10068321"
             },
             "destination": {
-              "description": "Идентификатор приёмника денежных средств",
+              "description": "Destination identifier",
               "type": "string",
               "example": "107498"
             },
             "body": {
-              "description": "Объём средств, которые необходимо вывести",
+              "description": "Amount of funds to be withdrawn",
               "type": "object",
               "required": [
                 "amount",
@@ -4268,21 +4261,21 @@
               ],
               "properties": {
                 "amount": {
-                  "description": "Сумма денежных средств в минорных единицах, например, в копейках\n",
+                  "description": "The amount of money in minor units, for example, in cents\n",
                   "type": "integer",
                   "format": "int64",
                   "example": 1430000
                 },
                 "currency": {
-                  "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+                  "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
                   "type": "string",
                   "pattern": "^[A-Z]{3}$",
-                  "example": "RUB"
+                  "example": "USD"
                 }
               }
             },
             "fee": {
-              "description": "Сумма коммисии",
+              "description": "Fee amount",
               "type": "object",
               "required": [
                 "amount",
@@ -4290,28 +4283,28 @@
               ],
               "properties": {
                 "amount": {
-                  "description": "Сумма денежных средств в минорных единицах, например, в копейках\n",
+                  "description": "The amount of money in minor units, for example, in cents\n",
                   "type": "integer",
                   "format": "int64",
                   "example": 1430000
                 },
                 "currency": {
-                  "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+                  "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
                   "type": "string",
                   "pattern": "^[A-Z]{3}$",
-                  "example": "RUB"
+                  "example": "USD"
                 }
               }
             },
             "metadata": {
-              "description": "Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с\nданным выводом\n",
+              "description": "Some non-transparent for system set of data associated with this withdrawal\n",
               "type": "object",
               "example": {
                 "notify_email": "iliketrains@example.com"
               }
             },
             "externalID": {
-              "description": "Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n",
+              "description": "The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n",
               "type": "string",
               "example": "10036274"
             }
@@ -4323,7 +4316,7 @@
       ]
     },
     "WithdrawalEvent": {
-      "description": "Событие, возникшее в процессе вывода средств\n",
+      "description": "An event that occurred during the funds withdrawal process\n",
       "type": "object",
       "required": [
         "eventID",
@@ -4332,13 +4325,13 @@
       ],
       "properties": {
         "eventID": {
-          "description": "Идентификатор события вывода средств",
+          "description": "Identifier of the funds withdrawal event",
           "type": "integer",
           "format": "int32",
           "example": 42
         },
         "occuredAt": {
-          "description": "Дата и время возникновения события",
+          "description": "Date and time the event occurrence",
           "type": "string",
           "format": "date-time"
         },
@@ -4351,7 +4344,7 @@
       }
     },
     "WithdrawalEventChange": {
-      "description": "Изменение, возникшее в процессе вывода средств\n",
+      "description": "Change that occurred in the funds withdrawal process\n",
       "type": "object",
       "discriminator": "type",
       "required": [
@@ -4359,7 +4352,7 @@
       ],
       "properties": {
         "type": {
-          "description": "Тип произошедшего изменения",
+          "description": "The type of change that occurred",
           "type": "string",
           "enum": [
             "WithdrawalStatusChanged"
@@ -4374,7 +4367,7 @@
       ],
       "properties": {
         "code": {
-          "description": "Код ошибки вывода",
+          "description": "Withdrawal error code",
           "type": "string"
         },
         "subError": {
@@ -4383,7 +4376,7 @@
       }
     },
     "WithdrawalID": {
-      "description": "Идентификатор вывода денежных средств",
+      "description": "Identifier of funds withdrawal",
       "type": "string",
       "example": "tZ0jUmlsV0"
     },
@@ -4395,7 +4388,7 @@
       ],
       "properties": {
         "method": {
-          "description": "Метод для проведения выплаты",
+          "description": "Withdrawal method",
           "type": "string",
           "enum": [
             "WithdrawalMethodBankCard",
@@ -4418,10 +4411,10 @@
           ],
           "properties": {
             "paymentSystems": {
-              "description": "Список платежных систем",
+              "description": "List of payment systems",
               "type": "array",
               "items": {
-                "description": "Платежная система.\n\nНабор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getWithdrawalMethods).\n",
+                "description": "Payment system.\n\nThe set of systems available for making withdrawals can be found by calling the corresponding [operation](#operation/getWithdrawalMethods).\n",
                 "type": "string"
               }
             }
@@ -4442,10 +4435,10 @@
           ],
           "properties": {
             "providers": {
-              "description": "Список провайдеров электронных денежных средств",
+              "description": "List of digital wallet providers",
               "type": "array",
               "items": {
-                "description": "Провайдер электронных денежных средств.\n\nНабор провайдеров, доступных для проведения выплат, можно узнать, вызвав\nсоответствующую [операцию](#operation/getWithdrawalMethods).\n",
+                "description": "Digital wallet provider.\n\nThe set of providers available for making withdrawals can be found by calling\ncorresponding [operation](#operation/getWithdrawalMethods).\n",
                 "type": "string",
                 "example": "Paypal"
               }
@@ -4467,10 +4460,10 @@
           ],
           "properties": {
             "providers": {
-              "description": "Список провайдеров сервисов выплат",
+              "description": "List of withdrawal service providers",
               "type": "array",
               "items": {
-                "description": "Провайдер сервисов выплат.\n\nНабор провайдеров, доступных для проведения выплат, можно узнать, вызвав\nсоответствующую [операцию](#operation/getWithdrawalMethods).\n",
+                "description": "Withdrawal service provider.\n\nThe set of providers available for making withdrawals can be found by calling\ncorresponding [operation](#operation/getWithdrawalMethods).\n",
                 "type": "string",
                 "example": "YourBankName"
               }
@@ -4480,7 +4473,7 @@
       ]
     },
     "WithdrawalParameters": {
-      "description": "Параметры создаваемого вывода",
+      "description": "Options of generated withdrawal",
       "allOf": [
         {
           "$ref": "#/definitions/Withdrawal"
@@ -4493,28 +4486,28 @@
               "minLength": 1,
               "maxLength": 4000,
               "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n",
-              "description": "Токен, дающий право на списание с кошелька для оплаты вывода.\n\nНеобходимо предоставить в том случае, если оплата производится засчёт средств _чужого_\nкошелька. Владелец указанного кошелька может\n[выдать на это право](#operation/issueWalletGrant).\n"
+              "description": "A token that gives the right to withdraw from the wallet to pay for the withdrawal.\n\nMust be provided if withdrawal is made at the expense of _foreign_\nwallet. The owner of said wallet can\n[issue this right](#operation/issueWalletGrant).\n"
             },
             "destinationGrant": {
               "type": "string",
               "minLength": 1,
               "maxLength": 4000,
               "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n",
-              "description": "Токен, дающий право вывода.\n\nНеобходимо предоставить в том случае, если вывод производится посредством _чужого_ приёмника\nсредств. Владелец указанного приёмника может\n[выдать на это право](#operation/issueDestinationGrant).\n"
+              "description": "A token that gives the right to withdraw.\n\nMust be provided if the withdrawal is made through a _foreign_ recipient of\nfunds. The owner of the specified recipient can\n[issue this right](#operation/issueDestinationGrant).\n"
             },
             "quoteToken": {
               "type": "string",
               "minLength": 1,
               "maxLength": 4000,
               "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n",
-              "description": "Котировка, по которой следует проводить вывод средств.\n\nДолжна быть [получена](#operation/createQuote)\nзаранее для каждой отдельной операции вывода с конвертацией.\n"
+              "description": "Quote at which funds should be withdrawn.\n\nMust be [obtained](#operation/createQuote)\nin advance for each individual withdrawal operation with conversion.\n"
             }
           }
         }
       ]
     },
     "WithdrawalQuote": {
-      "description": "Данные котировки для вывода",
+      "description": "Quote data for withdrawal",
       "type": "object",
       "required": [
         "cashFrom",
@@ -4525,7 +4518,7 @@
       ],
       "properties": {
         "cashFrom": {
-          "description": "Объём средств в исходной валюте",
+          "description": "Amount of funds in source currency",
           "type": "object",
           "required": [
             "amount",
@@ -4533,22 +4526,22 @@
           ],
           "properties": {
             "amount": {
-              "description": "Сумма денежных средств в минорных единицах, например, в копейках\n",
+              "description": "The amount of money in minor units, for example, in cents\n",
               "type": "integer",
               "format": "int64",
               "example": 1430000
             },
             "currency": {
-              "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+              "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
               "type": "string",
               "pattern": "^[A-Z]{3}$",
-              "example": "RUB"
+              "example": "USD"
             }
           },
           "readOnly": true
         },
         "cashTo": {
-          "description": "Объём средств в конечной валюте",
+          "description": "Amount of funds in target currency",
           "type": "object",
           "required": [
             "amount",
@@ -4556,28 +4549,28 @@
           ],
           "properties": {
             "amount": {
-              "description": "Сумма денежных средств в минорных единицах, например, в копейках\n",
+              "description": "The amount of money in minor units, for example, in cents\n",
               "type": "integer",
               "format": "int64",
               "example": 1430000
             },
             "currency": {
-              "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+              "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
               "type": "string",
               "pattern": "^[A-Z]{3}$",
-              "example": "RUB"
+              "example": "USD"
             }
           },
           "readOnly": true
         },
         "createdAt": {
-          "description": "Дата и время получения котировки",
+          "description": "Date and time the quote was received",
           "type": "string",
           "format": "date-time",
           "readOnly": true
         },
         "expiresOn": {
-          "description": "Дата и время окончания действия котировки",
+          "description": "Quote expiration date and time",
           "type": "string",
           "format": "date-time",
           "readOnly": true
@@ -4587,12 +4580,12 @@
           "minLength": 1,
           "maxLength": 4000,
           "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n",
-          "description": "Котировка, по которой следует проводить вывод средств.\nНеобходимо предоставить при создании вывода с конвертацией\n"
+          "description": "Quote at which funds should be withdrawn. Must be provided when creating withdrawal with conversion\n"
         }
       }
     },
     "WithdrawalQuoteParams": {
-      "description": "Параметры котировки для вывода",
+      "description": "Quote parameters for withdrawal",
       "type": "object",
       "required": [
         "walletID",
@@ -4602,34 +4595,34 @@
       ],
       "properties": {
         "externalID": {
-          "description": "Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n",
+          "description": "The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n",
           "type": "string",
           "example": "10036274"
         },
         "walletID": {
-          "description": "Идентификатор кошелька",
+          "description": "Identifier of the wallet",
           "type": "string",
           "example": "10068321"
         },
         "destinationID": {
-          "description": "Идентификатор приёмника денежных средств",
+          "description": "Destination identifier",
           "type": "string",
           "example": "107498"
         },
         "currencyFrom": {
-          "description": "Код исходной валюты",
+          "description": "Source currency code",
           "type": "string",
           "pattern": "^[A-Z]{3}$",
-          "example": "RUB"
+          "example": "USD"
         },
         "currencyTo": {
-          "description": "Код конечной валюты",
+          "description": "Target currency code",
           "type": "string",
           "pattern": "^[A-Z]{3}$",
-          "example": "RUB"
+          "example": "USD"
         },
         "cash": {
-          "description": "Объём средств для получения котировки в одной из валют обмена",
+          "description": "The amount of funds for receiving a quote in one of the exchange currencies",
           "type": "object",
           "required": [
             "amount",
@@ -4637,16 +4630,16 @@
           ],
           "properties": {
             "amount": {
-              "description": "Сумма денежных средств в минорных единицах, например, в копейках\n",
+              "description": "The amount of money in minor units, for example, in cents\n",
               "type": "integer",
               "format": "int64",
               "example": 1430000
             },
             "currency": {
-              "description": "Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+              "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
               "type": "string",
               "pattern": "^[A-Z]{3}$",
-              "example": "RUB"
+              "example": "USD"
             }
           }
         },
@@ -4655,14 +4648,14 @@
           "minLength": 1,
           "maxLength": 4000,
           "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n",
-          "description": "Токен, дающий право на списание с кошелька для оплаты вывода.\nНеобходимо предоставить в том случае, если оплата производится засчёт средств _чужого_ кошелька. Владелец указанного кошелька может [выдать на это право](#operation/issueWalletGrant)\n"
+          "description": "A token that gives the right to withdraw from the wallet to pay for the withdrawal. It is necessary to provide if the withdrawal is made at the expense of the funds of a _foreign_ wallet. The owner of the specified wallet can [issue this right](#operation/issueWalletGrant)\n"
         },
         "destinationGrant": {
           "type": "string",
           "minLength": 1,
           "maxLength": 4000,
           "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n",
-          "description": "Токен, дающий право вывода.\nНеобходимо предоставить в том случае, если вывод производится посредством _чужого_ приёмника средств. Владелец указанного приёмника может [выдать на это право](#operation/issueDestinationGrant)\n"
+          "description": "A token that gives the right to withdraw. Must be provided if the withdrawal is made through a _foreign_ fund recipient. The owner of the specified recipient can [grant this right](#operation/issueDestinationGrant)\n"
         }
       }
     },
@@ -4670,7 +4663,7 @@
       "type": "object",
       "properties": {
         "status": {
-          "description": "Статус вывода денежных средств.\n\n| Значение    | Пояснение                                  |\n| ----------- | ------------------------------------------ |\n| `Pending`   | Вывод в процессе выполнения                |\n| `Succeeded` | Вывод средств произведён успешно           |\n| `Failed`    | Вывод средств завершился неудачей          |\n",
+          "description": "Withdrawal status.\n\n| Meaning     | Explanation                          |\n| ----------- | ------------------------------------ |\n| `Pending`   | Withdrawal in progress               |\n| `Succeeded` | Withdrawal completed successfully    |\n| `Failed`    | Withdrawal failed                    |\n",
           "type": "string",
           "enum": [
             "Pending",
@@ -4680,7 +4673,7 @@
           "readOnly": true
         },
         "failure": {
-          "description": "> Если `status` == `Failed`\n\nПояснение причины неудачи\n",
+          "description": "> If `status` == `Failed`\n\nExplaining the reason for failure\n",
           "readOnly": true,
           "type": "object",
           "required": [
@@ -4688,7 +4681,7 @@
           ],
           "properties": {
             "code": {
-              "description": "Код ошибки вывода",
+              "description": "Withdrawal error code",
               "type": "string"
             },
             "subError": {
@@ -4699,7 +4692,7 @@
       }
     },
     "WithdrawalStatusChanged": {
-      "description": "Изменение статуса вывода средств",
+      "description": "Change of withdrawal status",
       "allOf": [
         {
           "$ref": "#/definitions/WithdrawalEventChange"
@@ -4710,7 +4703,7 @@
       ]
     },
     "WithdrawalsTopic": {
-      "description": "Область охвата, включающая события по выплатам в рамках определённого кошелька\n",
+      "description": "Scope that includes withdrawal events within a specific wallet\n",
       "allOf": [
         {
           "$ref": "#/definitions/WebhookScope"
@@ -4722,12 +4715,12 @@
           ],
           "properties": {
             "walletID": {
-              "description": "Идентификатор кошелька",
+              "description": "Identifier of the wallet",
               "type": "string",
               "example": "10068321"
             },
             "eventTypes": {
-              "description": "Набор типов событий выплаты, о которых следует оповещать",
+              "description": "Set of withdrawal event types to be notified about",
               "type": "array",
               "items": {
                 "type": "string",
@@ -4739,13 +4732,6 @@
               }
             }
           }
-        }
-      ]
-    },
-    "Zcash": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/CryptoWallet"
         }
       ]
     }
