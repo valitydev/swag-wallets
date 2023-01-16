@@ -3,7 +3,7 @@
   "info": {
     "version": "0.1.0",
     "title": "Vality Wallet API",
-    "description": "\nThe Vality Wallet API is the base and only point of interaction with the wallet system. All system state changes are carried out by calling the corresponding API methods. Any third party applications, including our websites and other UIs, are external client applications.\nThe Vality API works on top of the HTTP protocol. We use REST architecture, the scheme is described according to [OpenAPI 2.0](https://spec.openapis.org/oas/v2.0). Return codes are described by the corresponding HTTP statuses. The system accepts and returns JSON values in the body of requests and responses.\n## Content Format\nAny API request must be encoded in UTF-8 and must contain JSON content.\n```\n  Content-Type: application/json; charset=utf-8\n```\n## Date format\nThe system accepts and returns timestamp values in the `date-time` format described in [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339):\n```\n  2017-01-01T00:00:00Z\n  2017-01-01T00:00:01+00:00\n```\n## Maximum request processing time\nIn any API call, you can pass a timeout parameter in the `X-Request-Deadline` header of the corresponding request, which determines the maximum time to wait for the operation to complete on the request:\n```\n X-Request-Deadline: 10s\n```\nAfter the specified time has elapsed, the system stops processing the request. It is recommended to specify a value of no more than one minute, but no less than three seconds.\n`X-Request-Deadline` can:\n* set in `date-time` format according to [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339);  * specified in relative terms: in milliseconds (`150000ms`), seconds (`540s`) or minutes (`3.5m`).\n## Request processing errors\nDuring the processing of requests by our system, various unforeseen situations may occur. The system signals about their appearance via the HTTP protocol with the corresponding [statuses][5xx], indicating server errors.\n|  Code    |  Description  | | ------- | -------------- | | **500** | An unexpected situation occurred while the system was processing the request. If you receive such a response code, we recommend that you contact technical support. | | **503** | The system is temporarily unavailable and not ready to serve this request. The request is guaranteed to fail, if you receive a response code like this, try to implement it later when the system is restored to availability. | | **504** | The system has exceeded the allowable request processing time, the result of the request is undefined. Try to resubmit the request or find out the result of the original request, if you do not want to re-execute the request. |\n[5xx]: https://tools.ietf.org/html/rfc7231#section-6.6\n",
+    "description": "\nThe Vality Wallet API is the base and only point of interaction with the wallet system. All system state changes are carried out by calling the corresponding API methods. Any third party applications, including our websites and other UIs, are external client applications.\nThe Vality API works on top of the HTTP protocol. We use REST architecture, the scheme is described according to [OpenAPI 2.0](https://spec.openapis.org/oas/v2.0). Return codes are described by the corresponding HTTP statuses. The system accepts and returns JSON values in the body of requests and responses.\n## Content Format\nAny API request must be encoded in UTF-8 and must contain JSON content.\n```\n  Content-Type: application/json; charset=utf-8\n```\n## Date format\nThe system accepts and returns timestamp values in the `date-time` format described in [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339):\n```\n  2017-01-01T00:00:00Z\n  2017-01-01T00:00:01+00:00\n```\n## Maximum request processing time\nIn any API call, you can pass a timeout parameter in the `X-Request-Deadline` header of the corresponding request, which determines the maximum time to wait for the operation to complete on the request:\n```\n X-Request-Deadline: 10s\n```\nAfter the specified time has elapsed, the system stops processing the request. It is recommended to specify a value of no more than one minute, but no less than three seconds.\n`X-Request-Deadline` can:\n* set in `date-time` format according to [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339);  * specified in relative terms: in milliseconds (`150000ms`), seconds (`540s`) or minutes (`3.5m`).\n## Request processing errors\nDuring the processing of requests by our system, various unforeseen situations may occur. The system signals about their appearance via the HTTP protocol with the corresponding [statuses][5xx], indicating server errors.\n| Code    | Description                                                                                                                                                                                                                      | | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | | **500** | An unexpected situation occurred while the system was processing the request. If you receive such a response code, we recommend that you contact technical support.                                                              | | **503** | The system is temporarily unavailable and not ready to serve this request. The request is guaranteed to fail, if you receive a response code like this, try to implement it later when the system is restored to availability.   | | **504** | The system has exceeded the allowable request processing time, the result of the request is undefined. Try to resubmit the request or find out the result of the original request, if you do not want to re-execute the request. |\n[5xx]: https://tools.ietf.org/html/rfc7231#section-6.6\n",
     "termsOfService": "https://vality.dev/",
     "contact": {
       "name": "Technical support team",
@@ -27,7 +27,7 @@
       "type": "apiKey",
       "name": "Authorization",
       "in": "header",
-      "description": "We use [JWT](https://jwt.io) for call authentication. The corresponding key is passed in the header.\n```shell\n Authorization: Bearer {YOUR_API_KEY_JWT}\n```\n"
+      "description": "Use [JWT](https://jwt.io) for call authentication. The corresponding key is passed in the header.\n```shell\n Authorization: Bearer {YOUR_API_KEY_JWT}\n```\n"
     }
   },
   "security": [
@@ -324,7 +324,7 @@
           {
             "name": "currencyID",
             "in": "path",
-            "description": "Currency, character code according to [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+            "description": "Currency character code according to [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
             "type": "string",
             "required": true,
             "pattern": "^[A-Za-z]{3}$"
@@ -950,7 +950,7 @@
     "/external-ids/destinations/{externalID}": {
       "get": {
         "operationId": "getDestinationByExternalID",
-        "summary": "Get a fund recipient by external identifier",
+        "summary": "Get a destination by external identifier",
         "tags": [
           "Withdrawals"
         ],
@@ -967,7 +967,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Fund recipient found",
+            "description": "Destination found",
             "schema": {
               "$ref": "#/definitions/Destination"
             }
@@ -3534,7 +3534,7 @@
       }
     },
     "ReceiverResourceParams": {
-      "description": "Recipient resource parameters",
+      "description": "Receiver resource parameters",
       "type": "object",
       "discriminator": "type",
       "required": [
@@ -3542,7 +3542,7 @@
       ],
       "properties": {
         "type": {
-          "description": "The resource type of the payee.\n\nSee [Vality Withdrawal Resource API](?api/payres/swagger.yaml).\n",
+          "description": "The resource type of the receiver.\n\nSee [Vality Withdrawal Resource API](?api/payres/swagger.yaml).\n",
           "type": "string",
           "enum": [
             "BankCardReceiverResourceParams"
