@@ -81,12 +81,12 @@ get_raw() ->
     #{
   <<"swagger">> => <<"2.0">>,
   <<"info">> => #{
-    <<"description">> => <<"\nVality Payment Resource API служит для токенизации чувствительных данных платёжных ресурсов пользователей.\n">>,
+    <<"description">> => <<"\nThe Vality Payment Resource API is used to tokenize sensitive data of users' payment resources.\n">>,
     <<"version">> => <<"0.1.0">>,
     <<"title">> => <<"Vality Payment Resource API">>,
     <<"termsOfService">> => <<"https://vality.dev/">>,
     <<"contact">> => #{
-      <<"name">> => <<"Команда техподдержки">>,
+      <<"name">> => <<"Support Team">>,
       <<"url">> => <<"https://vality.dev/">>,
       <<"email">> => <<"support@vality.dev">>
     }
@@ -96,7 +96,7 @@ get_raw() ->
   <<"tags">> => [ #{
     <<"name">> => <<"Payment Resources">>,
     <<"description">> => <<"">>,
-    <<"x-displayName">> => <<"Платёжные ресурсы">>
+    <<"x-displayName">> => <<"Payment resources">>
   } ],
   <<"schemes">> => [ <<"https">> ],
   <<"consumes">> => [ <<"application/json; charset=utf-8">> ],
@@ -107,13 +107,13 @@ get_raw() ->
   <<"paths">> => #{
     <<"/bank-cards">> => #{
       <<"post">> => #{
-        <<"tags">> => [ <<"Payment Resources">> ],
-        <<"summary">> => <<"Сохранить банковскую карту">>,
+        <<"tags">> => [ <<"Withdrawal Resources">> ],
+        <<"summary">> => <<"Save card">>,
         <<"operationId">> => <<"storeBankCard">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -121,7 +121,7 @@ get_raw() ->
         }, #{
           <<"in">> => <<"body">>,
           <<"name">> => <<"bankCard">>,
-          <<"description">> => <<"Данные банковской карты">>,
+          <<"description">> => <<"Сard details">>,
           <<"required">> => true,
           <<"schema">> => #{
             <<"$ref">> => <<"#/definitions/BankCard">>
@@ -129,22 +129,22 @@ get_raw() ->
         } ],
         <<"responses">> => #{
           <<"201">> => #{
-            <<"description">> => <<"Карта сохранена">>,
+            <<"description">> => <<"Card saved">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/StoreBankCardResponse">>
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization Error">>
           },
           <<"422">> => #{
-            <<"description">> => <<"Непригодные данные банковской карты">>,
+            <<"description">> => <<"Invalid сard details">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/InvalidBankCard">>
             }
@@ -154,13 +154,13 @@ get_raw() ->
     },
     <<"/bank-cards/{token}">> => #{
       <<"get">> => #{
-        <<"tags">> => [ <<"Payment Resources">> ],
-        <<"summary">> => <<"Получить данные банковской карты">>,
+        <<"tags">> => [ <<"Withdrawal Resources">> ],
+        <<"summary">> => <<"Receive bank card details">>,
         <<"operationId">> => <<"getBankCard">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -168,7 +168,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"token">>,
           <<"in">> => <<"path">>,
-          <<"description">> => <<"Данные банковской карты">>,
+          <<"description">> => <<"Bank card details">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 1000,
@@ -176,22 +176,22 @@ get_raw() ->
         } ],
         <<"responses">> => #{
           <<"200">> => #{
-            <<"description">> => <<"Данные карты найдены">>,
+            <<"description">> => <<"Card data found">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/SecuredBankCard">>
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization Error">>
           },
           <<"404">> => #{
-            <<"description">> => <<"Искомая сущность не найдена">>
+            <<"description">> => <<"The content you are looking for was not found">>
           }
         }
       }
@@ -199,7 +199,7 @@ get_raw() ->
   },
   <<"securityDefinitions">> => #{
     <<"bearer">> => #{
-      <<"description">> => <<"Для аутентификации вызовов мы используем [JWT](https://jwt.io). Cоответствующий ключ передается в заголовке.\n```shell\n Authorization: Bearer {TOKENIZATION|PRIVATE_JWT}\n```\n">>,
+      <<"description">> => <<"Use [JWT](https://jwt.io) for call authentication. The corresponding key is passed in the header.\n```shell\n Authorization: Bearer {TOKENIZATION|PRIVATE_JWT}\n```\n">>,
       <<"type">> => <<"apiKey">>,
       <<"name">> => <<"Authorization">>,
       <<"in">> => <<"header">>
@@ -212,7 +212,7 @@ get_raw() ->
         <<"authData">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"GVpEyibo60jJwyoJqriv1nAjiwfvzC9KVqFFjhhUA">>,
-          <<"description">> => <<"Данные для авторизации платежа по карте">>,
+          <<"description">> => <<"Data for card withdrawal authorization">>,
           <<"minLength">> => 1,
           <<"maxLength">> => 1000
         }
@@ -224,25 +224,25 @@ get_raw() ->
       <<"properties">> => #{
         <<"type">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Банковская карта">>,
+          <<"description">> => <<"Card">>,
           <<"enum">> => [ <<"BankCard">> ]
         },
         <<"cardNumber">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"4242424242424242">>,
-          <<"description">> => <<"Номер банковской карты">>,
+          <<"description">> => <<"Card number">>,
           <<"pattern">> => <<"^\\d{12,19}$">>
         },
         <<"expDate">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"12/21">>,
-          <<"description">> => <<"Срок действия банковской карты">>,
+          <<"description">> => <<"Сard expiration date">>,
           <<"pattern">> => <<"^\\d{2}\\/(\\d{2}|\\d{4})$">>
         },
         <<"cardHolder">> => #{
           <<"type">> => <<"string">>,
-          <<"example">> => <<"LEXA SVOTIN">>,
-          <<"description">> => <<"Имя держателя карты">>,
+          <<"example">> => <<"LEEROY JENKINS">>,
+          <<"description">> => <<"Cardholder name">>,
           <<"minLength">> => 1,
           <<"maxLength">> => 100,
           <<"pattern">> => <<"^[[:alpha:][:space:][:punct:]]+$">>
@@ -250,14 +250,14 @@ get_raw() ->
         <<"cvv">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"321">>,
-          <<"description">> => <<"Код верификации">>,
+          <<"description">> => <<"Verification code">>,
           <<"pattern">> => <<"^\\d{3,4}$">>
         }
       },
-      <<"description">> => <<"Данные банковской карты">>,
+      <<"description">> => <<"Bank card details">>,
       <<"example">> => #{
         <<"cvv">> => <<"321">>,
-        <<"cardHolder">> => <<"LEXA SVOTIN">>,
+        <<"cardHolder">> => <<"LEEROY JENKINS">>,
         <<"type">> => <<"BankCard">>,
         <<"cardNumber">> => <<"4242424242424242">>,
         <<"expDate">> => <<"12/21">>
@@ -265,7 +265,7 @@ get_raw() ->
     },
     <<"BankCardPaymentSystem">> => #{
       <<"type">> => <<"string">>,
-      <<"description">> => <<"Платежная система.\n\nНабор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getWithdrawalMethods).\n">>
+      <<"description">> => <<"Payment system.\n\nThe set of systems available for making withdrawals can be found by calling the corresponding [operation](#operation/getWithdrawalMethods).\n">>
     },
     <<"InvalidBankCard">> => #{
       <<"type">> => <<"object">>,
@@ -283,18 +283,18 @@ get_raw() ->
         <<"errorType">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"NotFound">>,
-          <<"description">> => <<"Тип ошибки в данных">>,
+          <<"description">> => <<"Error type">>,
           <<"enum">> => [ <<"SchemaViolated">>, <<"NotFound">>, <<"WrongType">>, <<"NotInRange">>, <<"WrongSize">>, <<"WrongLength">>, <<"WrongArray">>, <<"NoMatch">>, <<"InvalidResourceToken">>, <<"InvalidToken">> ]
         },
         <<"name">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"X-Request-ID">>,
-          <<"description">> => <<"Имя или идентификатор элемента сообщения, содержащего недопустимые данные">>
+          <<"description">> => <<"Name or identifier of message element containing invalid data">>
         },
         <<"description">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"Required parameter was not sent">>,
-          <<"description">> => <<"Пояснение, почему данные считаются недопустимыми">>
+          <<"description">> => <<"Explanation of why the data is invalid">>
         }
       }
     },
@@ -305,26 +305,26 @@ get_raw() ->
         <<"token">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQg9xMkh">>,
-          <<"description">> => <<"Токен, идентифицирующий исходные данные карты">>,
+          <<"description">> => <<"Token identifying the original card data">>,
           <<"minLength">> => 1,
           <<"maxLength">> => 1000
         },
         <<"bin">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"424242">>,
-          <<"description">> => <<"[Идентификационный номер][1] банка-эмитента карты\n\n[1]: https://en.wikipedia.org/wiki/Payment_card_number#Issuer_identification_number_(IIN)\n">>,
+          <<"description">> => <<"[Identification number][1] of the card issuing bank\n\n[1]: https://en.wikipedia.org/wiki/Payment_card_number#Issuer_identification_number_(IIN)\n">>,
           <<"readOnly">> => true,
           <<"pattern">> => <<"^\\d{6,8}$">>
         },
         <<"lastDigits">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"4242">>,
-          <<"description">> => <<"Последние цифры номера карты">>,
+          <<"description">> => <<"Card last digits">>,
           <<"readOnly">> => true,
           <<"pattern">> => <<"^\\d{2,4}$">>
         }
       },
-      <<"description">> => <<"Безопасные данные банковской карты">>,
+      <<"description">> => <<"Secure bank card details">>,
       <<"example">> => #{
         <<"bin">> => <<"424242">>,
         <<"lastDigits">> => <<"4242">>,
@@ -344,7 +344,7 @@ get_raw() ->
         <<"validUntil">> => #{
           <<"type">> => <<"string">>,
           <<"format">> => <<"date-time">>,
-          <<"description">> => <<"Дата и время, до наступления которых токен платёжного ресурса остается действительным">>,
+          <<"description">> => <<"The date and time by which the withdrawal resource token remains valid">>,
           <<"readOnly">> => true
         }
       }
@@ -354,7 +354,7 @@ get_raw() ->
     <<"requestID">> => #{
       <<"name">> => <<"X-Request-ID">>,
       <<"in">> => <<"header">>,
-      <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+      <<"description">> => <<"Unique identifier of the request to the system">>,
       <<"required">> => true,
       <<"type">> => <<"string">>,
       <<"maxLength">> => 32,
@@ -363,16 +363,16 @@ get_raw() ->
   },
   <<"responses">> => #{
     <<"NotFound">> => #{
-      <<"description">> => <<"Искомая сущность не найдена">>
+      <<"description">> => <<"The content you are looking for was not found">>
     },
     <<"BadRequest">> => #{
-      <<"description">> => <<"Недопустимые для операции входные данные">>,
+      <<"description">> => <<"Invalid input data for operation">>,
       <<"schema">> => #{
         <<"$ref">> => <<"#/definitions/BadRequest">>
       }
     },
     <<"Unauthorized">> => #{
-      <<"description">> => <<"Ошибка авторизации">>
+      <<"description">> => <<"Authorization Error">>
     }
   }
 }.

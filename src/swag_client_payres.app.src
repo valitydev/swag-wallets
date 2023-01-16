@@ -1,5 +1,5 @@
 {application, swag_client_payres, [
-    {description, " Vality Payment Resource API служит для токенизации чувствительных данных платёжных ресурсов пользователей. "},
+    {description, " The Vality Payment Resource API is used to tokenize sensitive data of users&#39; payment resources. "},
     {vsn, "1.0.0"},
     {registered, []},
     {applications, [

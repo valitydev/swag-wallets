@@ -1,5 +1,5 @@
 %% -*- mode: erlang -*-
--module(swag_client_payres_payment_resources_api).
+-module(swag_client_payres_withdrawal_resources_api).
 
 %% generated methods
 
