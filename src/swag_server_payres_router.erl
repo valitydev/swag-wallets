@@ -93,11 +93,11 @@ get_operations() ->
         'GetBankCard' => #{
             path => "/payres/v0/bank-cards/:token",
             method => <<"GET">>,
-            handler => 'swag_server_payres_payment_resources_handler'
+            handler => 'swag_server_payres_withdrawal_resources_handler'
         },
         'StoreBankCard' => #{
             path => "/payres/v0/bank-cards",
             method => <<"POST">>,
-            handler => 'swag_server_payres_payment_resources_handler'
+            handler => 'swag_server_payres_withdrawal_resources_handler'
         }
     }.

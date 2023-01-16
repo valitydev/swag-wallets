@@ -1,7 +1,7 @@
 %% -*- mode: erlang -*-
 
 %% basic handler
--module(swag_server_payres_payment_resources_handler).
+-module(swag_server_payres_withdrawal_resources_handler).
 
 %% Cowboy REST callbacks
 -export([allowed_methods/2]).
