@@ -1,10 +1,11 @@
-description: Банковская карта
+---
+description: Card
 allOf:
-  - $ref: '#/definitions/ReceiverResource'
-  - $ref: '#/definitions/SecuredBankCard'
+  - $ref: "#/definitions/ReceiverResource"
+  - $ref: "#/definitions/SecuredBankCard"
   - type: object
     properties:
       paymentSystem:
         x-rebillyMerge:
-          - $ref: '#/definitions/BankCardPaymentSystem'
+          - $ref: "#/definitions/BankCardPaymentSystem"
           - readOnly: true

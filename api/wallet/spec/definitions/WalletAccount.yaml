@@ -1,4 +1,5 @@
-description: Состояние счёта кошелька
+---
+description: Wallet account status
 type: object
 required:
   - own
@@ -6,15 +7,15 @@ required:
 properties:
   own:
     x-rebillyMerge:
-      - $ref: '#/definitions/Asset'
+      - $ref: "#/definitions/Asset"
       - description: |
-          Собственные средства
+          Own funds
   available:
     x-rebillyMerge:
-      - $ref: '#/definitions/Asset'
+      - $ref: "#/definitions/Asset"
       - description: |
-          Доступные к использованию средства, обычно равны собственным средствам
-          за вычетом сумм всех незавершённых операций
+          Funds available for use. Usually equal to own funds
+          minus the sum of all pending transactions
         example:
           amount: 1200000
-          currency: RUB
+          currency: USD

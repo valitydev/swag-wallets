@@ -1,27 +1,28 @@
+---
 get:
   operationId: getCurrency
-  summary: Получить описание валюты
+  summary: Get currency description
   tags:
     - Currencies
   parameters:
-    - $ref: '#/parameters/requestID'
-    - $ref: '#/parameters/deadline'
+    - $ref: "#/parameters/requestID"
+    - $ref: "#/parameters/deadline"
     - name: currencyID
       in: path
       description: |
-        Валюта, символьный код согласно [ISO
+        Currency, character code according to [ISO
         4217](http://www.iso.org/iso/home/standards/currency_codes.htm).
       type: string
       required: true
-      pattern: '^[A-Za-z]{3}$'
+      pattern: "^[A-Za-z]{3}$"
   responses:
-    '200':
-      description: Валюта найдена
+    "200":
+      description: Currency found
       schema:
-        $ref: '#/definitions/Currency'
-    '404':
-      $ref: '#/responses/NotFound'
-    '400':
-      $ref: '#/responses/BadRequest'
-    '401':
-      $ref: '#/responses/Unauthorized'
+        $ref: "#/definitions/Currency"
+    "404":
+      $ref: "#/responses/NotFound"
+    "400":
+      $ref: "#/responses/BadRequest"
+    "401":
+      $ref: "#/responses/Unauthorized"

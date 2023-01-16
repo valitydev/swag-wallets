@@ -1,20 +1,21 @@
+---
 get:
   operationId: listProviders
-  summary: Перечислить доступных провайдеров
+  summary: List available providers
   tags:
     - Providers
   parameters:
-    - $ref: '#/parameters/requestID'
-    - $ref: '#/parameters/deadline'
-    - $ref: '#/parameters/residence'
+    - $ref: "#/parameters/requestID"
+    - $ref: "#/parameters/deadline"
+    - $ref: "#/parameters/residence"
   responses:
-    '200':
-      description: Провайдеры найдены
+    "200":
+      description: Providers found
       schema:
         type: array
         items:
-          $ref: '#/definitions/Provider'
-    '400':
-      $ref: '#/responses/BadRequest'
-    '401':
-      $ref: '#/responses/Unauthorized'
+          $ref: "#/definitions/Provider"
+    "400":
+      $ref: "#/responses/BadRequest"
+    "401":
+      $ref: "#/responses/Unauthorized"

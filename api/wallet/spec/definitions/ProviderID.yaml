@@ -1,3 +1,4 @@
-description: Идентификатор провайдера услуг
+---
+description: Identifier of the service provider
 type: string
 example: serviceprovider

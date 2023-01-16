@@ -1,4 +1,5 @@
-description: Данные приёмника денежных средств
+---
+description: Destination data
 allOf:
   - type: object
     required:
@@ -9,39 +10,38 @@ allOf:
     properties:
       id:
         x-rebillyMerge:
-          - $ref: '#/definitions/DestinationID'
+          - $ref: "#/definitions/DestinationID"
           - readOnly: true
       name:
         description: |
-          Человекочитаемое название приёмника средств, по которому его легко узнать
+          A human-readable name for the destination by which it is easily recognizable
         type: string
         example: Squarey plastic thingy
       createdAt:
-        description: Дата и время создания приёмника средств
+        description: Date and time of creation of the destination of the funds
         type: string
         format: date-time
         readOnly: true
       isBlocked:
-        description: Заблокирован ли приёмник средств?
+        description: Is the destination blocked?
         type: boolean
         readOnly: true
         example: false
       identity:
         x-rebillyMerge:
-          - $ref: '#/definitions/IdentityID'
+          - $ref: "#/definitions/IdentityID"
       currency:
         x-rebillyMerge:
-          - $ref: '#/definitions/CurrencyID'
+          - $ref: "#/definitions/CurrencyID"
       resource:
-        $ref: '#/definitions/DestinationResource'
+        $ref: "#/definitions/DestinationResource"
       metadata:
         description: |
-          Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с
-          данным приёмником
+          Some non-transparent for system set of data associated with this destination
         type: object
         example:
           color_hint: olive-green
       externalID:
         x-rebillyMerge:
-          - $ref: '#/definitions/ExternalID'
-  - $ref: '#/definitions/DestinationStatus'
+          - $ref: "#/definitions/ExternalID"
+  - $ref: "#/definitions/DestinationStatus"

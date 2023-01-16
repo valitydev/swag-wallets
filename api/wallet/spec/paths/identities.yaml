@@ -1,73 +1,73 @@
+---
 get:
   operationId: listIdentities
-  summary: Перечислить личности владельцев
+  summary: List the identities of the owners
   tags:
     - Identities
   parameters:
-    - $ref: '#/parameters/requestID'
-    - $ref: '#/parameters/deadline'
+    - $ref: "#/parameters/requestID"
+    - $ref: "#/parameters/deadline"
     - name: providerID
-      description: Идентификатор провайдера услуг
+      description: Service provider's identifier
       in: query
       required: false
       type: string
       maxLength: 40
       minLength: 1
     - x-rebillyMerge:
-      - name: continuationToken
-        in: query
-        required: false
-      - $ref: '#/definitions/ContinuationToken'
+        - name: continuationToken
+          in: query
+          required: false
+        - $ref: "#/definitions/ContinuationToken"
   responses:
-    '200':
-      description: Результат поиска
+    "200":
+      description: Search result
       schema:
         type: object
         properties:
           continuationToken:
             x-rebillyMerge:
-              - $ref: '#/definitions/ContinuationToken'
+              - $ref: "#/definitions/ContinuationToken"
           result:
-            description: Найденные личности
+            description: Identities found
             type: array
             items:
-              $ref: '#/definitions/Identity'
-    '400':
-      $ref: '#/responses/BadRequest'
-    '401':
-      $ref: '#/responses/Unauthorized'
-
+              $ref: "#/definitions/Identity"
+    "400":
+      $ref: "#/responses/BadRequest"
+    "401":
+      $ref: "#/responses/Unauthorized"
 post:
   operationId: createIdentity
-  summary: Создать личность владельца
+  summary: Create owner identity
   tags:
     - Identities
   parameters:
-    - $ref: '#/parameters/requestID'
-    - $ref: '#/parameters/deadline'
+    - $ref: "#/parameters/requestID"
+    - $ref: "#/parameters/deadline"
     - name: identity
-      description: Данные создаваемой личности
+      description: Data of the identity created
       in: body
       required: true
       schema:
-        $ref: '#/definitions/Identity'
+        $ref: "#/definitions/Identity"
   responses:
-    '201':
-      description: Личность владельца создана
+    "201":
+      description: Owner identity created
       headers:
         Location:
-          description: URI созданной личности
+          description: Created identity URI
           type: string
           format: uri
       schema:
-        $ref: '#/definitions/Identity'
-    '400':
-      $ref: '#/responses/BadRequest'
-    '401':
-      $ref: '#/responses/Unauthorized'
-    '409':
-      $ref: '#/responses/ConflictRequest'
-    '422':
-      description: Неверные данные личности владельца
+        $ref: "#/definitions/Identity"
+    "400":
+      $ref: "#/responses/BadRequest"
+    "401":
+      $ref: "#/responses/Unauthorized"
+    "409":
+      $ref: "#/responses/ConflictRequest"
+    "422":
+      description: Invalid owner identity data
       schema:
-        $ref: '#/definitions/InvalidOperationParameters'
+        $ref: "#/definitions/InvalidOperationParameters"

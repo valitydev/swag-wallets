@@ -1,14 +1,15 @@
+---
 type: object
 properties:
   status:
     description: |
-      Статус отмены поступления денежных средств.
+      Deposit revert status.
 
-      | Значение    | Пояснение                                               |
+      | Meaning     | Explanation                                             |
       | ----------- | ------------------------------------------------------- |
-      | `Pending`   | Отмена в процессе выполнения                            |
-      | `Succeeded` | Отмена поступления средств произведёна успешно          |
-      | `Failed`    | Отмена поступления средств завершилась неудачей         |
+      | `Pending`   | Deposit revert in progress                              |
+      | `Succeeded` | Deposit revert completed successfully                   |
+      | `Failed`    | Deposit revert failed                                   |
 
     type: string
     enum:
@@ -19,8 +20,8 @@ properties:
   failure:
     x-rebillyMerge:
       - description: |
-          > Если `status` == `Failed`
+          > If `status` == `Failed`
 
-          Пояснение причины неудачи
+          Explanation of the reason for failure
         readOnly: true
-      - $ref: '#/definitions/DepositRevertFailure'
+      - $ref: "#/definitions/DepositRevertFailure"

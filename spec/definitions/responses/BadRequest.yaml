@@ -3,7 +3,7 @@ required:
   - errorType
 properties:
   errorType:
-    description: Тип ошибки в данных
+    description: Error type
     type: string
     enum:
       - SchemaViolated
@@ -18,10 +18,10 @@ properties:
       - InvalidToken
     example: NotFound
   name:
-    description: Имя или идентификатор элемента сообщения, содержащего недопустимые данные
+    description: Name or identifier of message element containing invalid data
     type: string
     example: X-Request-ID
   description:
-    description: Пояснение, почему данные считаются недопустимыми
+    description: Explanation of why the data is invalid
     type: string
     example: Required parameter was not sent

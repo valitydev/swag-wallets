@@ -1,3 +1,4 @@
+---
 type: object
 required:
   - reportType
@@ -5,15 +6,15 @@ required:
   - toTime
 properties:
   reportType:
-    description: Тип отчета
+    description: Type of report
     type: string
     enum:
       - withdrawalRegistry
   fromTime:
-    description: Начало временного отрезка
+    description: Start of the time period
     type: string
     format: date-time
   toTime:
-    description: Конец временного отрезка
+    description: End of the time period
     type: string
     format: date-time

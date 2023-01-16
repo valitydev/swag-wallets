@@ -1,10 +1,7 @@
+---
 description: |
-    Криптовалюта.
+  Cryptocurrency.
 
-    Набор криптовалют, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getWithdrawalMethods).
+  The set of cryptocurrencies available for withdrawals can be found out by calling the appropriate [operation](#operation/getWithdrawalMethods).
 type: string
 example: BTC
-# enum:
-#   - BTC
-#   - LTC
-#   - ETH

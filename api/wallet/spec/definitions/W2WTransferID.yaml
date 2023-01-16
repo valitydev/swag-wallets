@@ -1,4 +1,5 @@
-description: Идентификатор перевода
+---
+description: Transfer identifier
 type: string
 example: "10a0b68D3E21"
 maxLength: 40

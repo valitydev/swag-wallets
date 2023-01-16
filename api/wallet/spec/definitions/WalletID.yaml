@@ -1,3 +1,4 @@
-description: Идентификатор кошелька
+---
+description: Identifier of the wallet
 type: string
 example: "10068321"

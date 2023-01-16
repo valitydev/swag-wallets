@@ -1,3 +1,4 @@
-description: Идентификатор отмены поступления денежных средств 
+---
+description: Deposit revert identifier
 type: string
 example: "10068321"

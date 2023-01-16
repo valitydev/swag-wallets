@@ -1,8 +1,9 @@
+---
 type: object
 discriminator: requestType
 required:
   - requestType
 properties:
   requestType:
-    description: Тип браузерной операции
+    description: Type of browser operation
     type: string

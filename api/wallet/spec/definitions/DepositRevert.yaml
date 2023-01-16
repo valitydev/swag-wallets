@@ -1,4 +1,5 @@
-description: Данные отмены поступления денежных средств
+---
+description: Deposit revert data
 allOf:
   - type: object
     required:
@@ -8,26 +9,26 @@ allOf:
     properties:
       id:
         x-rebillyMerge:
-          - $ref: '#/definitions/DepositRevertID'
+          - $ref: "#/definitions/DepositRevertID"
           - readOnly: true
       createdAt:
-        description: Дата и время запуска отмены
+        description: Date and time of revert start
         type: string
         format: date-time
         readOnly: true
       wallet:
         x-rebillyMerge:
-          - $ref: '#/definitions/WalletID'
+          - $ref: "#/definitions/WalletID"
       source:
         x-rebillyMerge:
-          - $ref: '#/definitions/SourceID'
+          - $ref: "#/definitions/SourceID"
       body:
         x-rebillyMerge:
-          - $ref: '#/definitions/Asset'
-          - description: Объем денежных средств
+          - $ref: "#/definitions/Asset"
+          - description: Amount of funds
       reason:
         type: string
       externalID:
         x-rebillyMerge:
-          - $ref: '#/definitions/ExternalID'
-  - $ref: '#/definitions/DepositRevertStatus'
+          - $ref: "#/definitions/ExternalID"
+  - $ref: "#/definitions/DepositRevertStatus"

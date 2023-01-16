@@ -1,17 +1,18 @@
-description: Данные корректировки поступления денежных средств
+---
+description: Deposit adjustment data
 allOf:
   - type: object
     properties:
       id:
         x-rebillyMerge:
-          - $ref: '#/definitions/DepositAdjustmentID'
+          - $ref: "#/definitions/DepositAdjustmentID"
           - readOnly: true
       createdAt:
-        description: Дата и время запуска корректировки
+        description: Date and time the adjustment was started
         type: string
         format: date-time
         readOnly: true
       externalID:
         x-rebillyMerge:
-          - $ref: '#/definitions/ExternalID'
-  - $ref: '#/definitions/DepositAdjustmentStatus'
+          - $ref: "#/definitions/ExternalID"
+  - $ref: "#/definitions/DepositAdjustmentStatus"

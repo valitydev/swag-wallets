@@ -1,26 +1,27 @@
+---
 post:
   operationId: storeBankCard
-  summary: Сохранить банковскую карту
+  summary: Save card
   tags:
-    - Payment Resources
+    - Withdrawal Resources
   parameters:
-    - $ref: '#/parameters/requestID'
+    - $ref: "#/parameters/requestID"
     - name: bankCard
-      description: Данные банковской карты
+      description: Сard details
       in: body
       required: true
       schema:
-        $ref: '#/definitions/BankCard'
+        $ref: "#/definitions/BankCard"
   responses:
-    '201':
-      description: Карта сохранена
+    "201":
+      description: Card saved
       schema:
-        $ref: '#/definitions/StoreBankCardResponse'
-    '400':
-      $ref: '#/responses/BadRequest'
-    '401':
-      $ref: '#/responses/Unauthorized'
-    '422':
-      description: Непригодные данные банковской карты
+        $ref: "#/definitions/StoreBankCardResponse"
+    "400":
+      $ref: "#/responses/BadRequest"
+    "401":
+      $ref: "#/responses/Unauthorized"
+    "422":
+      description: Invalid сard details
       schema:
-        $ref: '#/definitions/InvalidBankCard'
+        $ref: "#/definitions/InvalidBankCard"

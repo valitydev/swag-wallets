@@ -1,20 +1,21 @@
+---
 post:
-  description: Получить ссылку для скачивания файла
+  description: Get a link to download a file
   tags:
     - Downloads
   operationId: downloadFile
   parameters:
-    - $ref: '#/parameters/requestID'
-    - $ref: '#/parameters/deadline'
-    - $ref: '#/parameters/fileID'
+    - $ref: "#/parameters/requestID"
+    - $ref: "#/parameters/deadline"
+    - $ref: "#/parameters/fileID"
   responses:
-    '201':
-      description: Данные для получения файла
+    "201":
+      description: Data to get file
       schema:
-        $ref: '#/definitions/FileDownload'
-    '404':
-      $ref: '#/responses/NotFound'
-    '400':
-      $ref: '#/responses/BadRequest'
-    '401':
-      $ref: '#/responses/Unauthorized'
+        $ref: "#/definitions/FileDownload"
+    "404":
+      $ref: "#/responses/NotFound"
+    "400":
+      $ref: "#/responses/BadRequest"
+    "401":
+      $ref: "#/responses/Unauthorized"

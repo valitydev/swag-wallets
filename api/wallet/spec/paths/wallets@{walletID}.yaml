@@ -1,20 +1,21 @@
+---
 get:
   operationId: getWallet
-  summary: Получить данные кошелька
+  summary: Get wallet data
   tags:
     - Wallets
   parameters:
-    - $ref: '#/parameters/requestID'
-    - $ref: '#/parameters/deadline'
-    - $ref: '#/parameters/walletID'
+    - $ref: "#/parameters/requestID"
+    - $ref: "#/parameters/deadline"
+    - $ref: "#/parameters/walletID"
   responses:
-    '200':
-      description: Кошелёк найден
+    "200":
+      description: Wallet found
       schema:
-        $ref: '#/definitions/Wallet'
-    '404':
-      $ref: '#/responses/NotFound'
-    '400':
-      $ref: '#/responses/BadRequest'
-    '401':
-      $ref: '#/responses/Unauthorized'
+        $ref: "#/definitions/Wallet"
+    "404":
+      $ref: "#/responses/NotFound"
+    "400":
+      $ref: "#/responses/BadRequest"
+    "401":
+      $ref: "#/responses/Unauthorized"

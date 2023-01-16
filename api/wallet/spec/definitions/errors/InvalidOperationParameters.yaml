@@ -1,4 +1,5 @@
-description: Неверные входные данные для операции
+---
+description: Invalid input data for operation
 type: object
 properties:
   message:
