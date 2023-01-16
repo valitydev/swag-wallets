@@ -81,12 +81,12 @@ get_raw() ->
     #{
   <<"swagger">> => <<"2.0">>,
   <<"info">> => #{
-    <<"description">> => <<"\nVality Wallet API является базовой и единственной точкой взаимодействия с системой кошельков. Все изменения состояний системы осуществляются с помощью вызовов соответствующих методов API. Любые сторонние приложения, включая наши веб-сайты и другие UI-интерфейсы, являются внешними приложениями-клиентами.\nVality API работает поверх HTTP-протокола. Мы используем REST архитектуру, схема описывается в соответствии с [OpenAPI 2.0](https://spec.openapis.org/oas/v2.0). Коды возврата описываются соответствующими HTTP-статусами. Система принимает и возвращает значения JSON в теле запросов и ответов.\n## Формат содержимого\nЛюбой запрос к API должен выполняться в кодировке UTF-8 и с указанием содержимого в формате JSON.\n```\n  Content-Type: application/json; charset=utf-8\n```\n## Формат дат\nСистема принимает и возвращает значения отметок времени в формате `date-time`, описанном в [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339):\n```\n  2017-01-01T00:00:00Z\n  2017-01-01T00:00:01+00:00\n```\n## Максимальное время обработки запроса\nПри любом обращении к API в заголовке `X-Request-Deadline` соответствующего запроса можно передать параметр отсечки по времени, определяющий максимальное время ожидания завершения операции по запросу:\n```\n X-Request-Deadline: 10s\n```\nПо истечении указанного времени система прекращает обработку запроса. Рекомендуется указывать значение не более одной минуты, но не менее трёх секунд.\n`X-Request-Deadline` может:\n* задаваться в формате `date-time` согласно [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339); * задаваться в относительных величинах: в миллисекундах (`150000ms`), секундах (`540s`) или минутах (`3.5m`).\n## Ошибки обработки запросов\nВ процессе обработки запросов силами нашей системы могут происходить различные непредвиденные ситуации. Об их появлении система сигнализирует по протоколу HTTP соответствующими [статусами][5xx], обозначающими ошибки сервера.\n\n |  Код    |  Описание  |\n | ------- | ---------- |\n | **500** | В процессе обработки системой запроса возникла непредвиденная ситуация. При получении подобного кода ответа мы рекомендуем обратиться в техническую поддержку. |\n | **503** | Система временно недоступна и не готова обслуживать данный запрос. Запрос гарантированно не выполнен, при получении подобного кода ответа попробуйте выполнить его позднее, когда доступность системы будет восстановлена. |\n | **504** | Система превысила допустимое время обработки запроса, результат запроса не определён. Попробуйте отправить запрос повторно или выяснить результат выполнения исходного запроса, если повторное исполнение запроса нежелательно. |\n\n[5xx]: https://tools.ietf.org/html/rfc7231#section-6.6\n">>,
+    <<"description">> => <<"\nThe Vality Wallet API is the base and only point of interaction with the wallet system. All system state changes are carried out by calling the corresponding API methods. Any third party applications, including our websites and other UIs, are external client applications.\nThe Vality API works on top of the HTTP protocol. We use REST architecture, the scheme is described according to [OpenAPI 2.0](https://spec.openapis.org/oas/v2.0). Return codes are described by the corresponding HTTP statuses. The system accepts and returns JSON values in the body of requests and responses.\n## Content Format\nAny API request must be encoded in UTF-8 and must contain JSON content.\n```\n  Content-Type: application/json; charset=utf-8\n```\n## Date format\nThe system accepts and returns timestamp values in the `date-time` format described in [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339):\n```\n  2017-01-01T00:00:00Z\n  2017-01-01T00:00:01+00:00\n```\n## Maximum request processing time\nIn any API call, you can pass a timeout parameter in the `X-Request-Deadline` header of the corresponding request, which determines the maximum time to wait for the operation to complete on the request:\n```\n X-Request-Deadline: 10s\n```\nAfter the specified time has elapsed, the system stops processing the request. It is recommended to specify a value of no more than one minute, but no less than three seconds.\n`X-Request-Deadline` can:\n* set in `date-time` format according to [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339);  * specified in relative terms: in milliseconds (`150000ms`), seconds (`540s`) or minutes (`3.5m`).\n## Request processing errors\nDuring the processing of requests by our system, various unforeseen situations may occur. The system signals about their appearance via the HTTP protocol with the corresponding [statuses][5xx], indicating server errors.\n|  Code    |  Description  | | ------- | -------------- | | **500** | An unexpected situation occurred while the system was processing the request. If you receive such a response code, we recommend that you contact technical support. | | **503** | The system is temporarily unavailable and not ready to serve this request. The request is guaranteed to fail, if you receive a response code like this, try to implement it later when the system is restored to availability. | | **504** | The system has exceeded the allowable request processing time, the result of the request is undefined. Try to resubmit the request or find out the result of the original request, if you do not want to re-execute the request. |\n[5xx]: https://tools.ietf.org/html/rfc7231#section-6.6\n">>,
     <<"version">> => <<"0.1.0">>,
     <<"title">> => <<"Vality Wallet API">>,
     <<"termsOfService">> => <<"https://vality.dev/">>,
     <<"contact">> => #{
-      <<"name">> => <<"Команда техподдержки">>,
+      <<"name">> => <<"Technical support team">>,
       <<"url">> => <<"https://api.vality.dev">>,
       <<"email">> => <<"support@vality.dev">>
     }
@@ -96,51 +96,51 @@ get_raw() ->
   <<"tags">> => [ #{
     <<"name">> => <<"Providers">>,
     <<"description">> => <<"">>,
-    <<"x-displayName">> => <<"Провайдеры услуг">>
+    <<"x-displayName">> => <<"Service providers">>
   }, #{
     <<"name">> => <<"Identities">>,
     <<"description">> => <<"">>,
-    <<"x-displayName">> => <<"Владельцы">>
+    <<"x-displayName">> => <<"Identities">>
   }, #{
     <<"name">> => <<"Wallets">>,
     <<"description">> => <<"">>,
-    <<"x-displayName">> => <<"Кошельки">>
+    <<"x-displayName">> => <<"Wallets">>
   }, #{
     <<"name">> => <<"Deposits">>,
     <<"description">> => <<"">>,
-    <<"x-displayName">> => <<"Пополнения">>
+    <<"x-displayName">> => <<"Deposits">>
   }, #{
     <<"name">> => <<"Withdrawals">>,
     <<"description">> => <<"">>,
-    <<"x-displayName">> => <<"Выводы">>
+    <<"x-displayName">> => <<"Withdrawals">>
   }, #{
     <<"name">> => <<"Residences">>,
     <<"description">> => <<"">>,
-    <<"x-displayName">> => <<"Резиденции">>
+    <<"x-displayName">> => <<"Residences">>
   }, #{
     <<"name">> => <<"Currencies">>,
     <<"description">> => <<"">>,
-    <<"x-displayName">> => <<"Валюты">>
+    <<"x-displayName">> => <<"Currencies">>
   }, #{
     <<"name">> => <<"Reports">>,
     <<"description">> => <<"">>,
-    <<"x-displayName">> => <<"Отчеты">>
+    <<"x-displayName">> => <<"Reports">>
   }, #{
     <<"name">> => <<"Downloads">>,
     <<"description">> => <<"">>,
-    <<"x-displayName">> => <<"Загрузка файлов">>
+    <<"x-displayName">> => <<"File upload">>
   }, #{
     <<"name">> => <<"W2W">>,
-    <<"description">> => <<"Переводы средств между кошельками внутри системы">>,
-    <<"x-displayName">> => <<"Переводы внутри системы">>
+    <<"description">> => <<"Transfers of funds between wallets within the system">>,
+    <<"x-displayName">> => <<"Transfers within the system">>
   }, #{
     <<"name">> => <<"Webhooks">>,
-    <<"description">> => <<"## Vality Webhooks Management API\nВ данном разделе описаны методы, позволяющие управлять Webhook'ами, или инструментами для получения асинхронных оповещений посредством HTTP-запросов при наступлении одного или группы интересующих вас событий, например, о том, что выплата в рамках созданного кошелька была успешно проведена.\n## Vality Webhooks Events API\nВнимание! Только Webhooks Management API является частью системы Vality, а следовательно и данной спецификации. Для реализации обработчика присылаемых уведомлений вам необходимо будет ознакомиться с OpenAPI-спецификацией [Vality Wallets Webhook Events API](https://vality.github.io/swag-wallets-webhook-events/).\n">>,
+    <<"description">> => <<"## Vality Webhooks Management API\nThis section describes methods that allow you to manage Webhooks, or tools for receiving asynchronous notifications via HTTP requests when one or a group of events of interest to you occurs, for example, that a withdrawal within the created wallet was successfully completed.\n## Vality Webhooks Events API\nAttention! Only the Webhooks Management API is part of the Vality system and hence this specification. To implement the notification handler, you will need to read the OpenAPI specification [Vality Wallets Webhook Events API](https://vality.github.io/swag-wallets-webhook-events/).\n">>,
     <<"x-displayName">> => <<"Webhooks">>
   }, #{
     <<"name">> => <<"Error Codes">>,
-    <<"description">> => <<"\n## Ошибки перевода\n\n  | Код                    | Описание                                                                                                                                       |\n  | ---                    | --------                                                                                                                                       |\n  | InvalidSenderResource  | Неверный источник перевода (введен номер несуществующей карты, отсутствующего аккаунта и т.п.)                                                 |\n  | InvalidReceiverResource| Неверный получатель перевода (введен номер несуществующей карты и т.п.)                                                                        |\n  | InsufficientFunds      | Недостаточно средств на счете банковской карты                                                                                                 |\n  | PreauthorizationFailed | Предварительная авторизация отклонена (введен неверный код 3D-Secure, на форме 3D-Secure нажата ссылка отмены)                                 |\n  | RejectedByIssuer       | Перевод отклонён эмитентом (установлены запреты по стране списания, запрет на покупки в интернете, платеж отклонен антифродом эмитента и т.п.) |\n">>,
-    <<"x-displayName">> => <<"Коды ошибок">>
+    <<"description">> => <<"\n## Withdrawal errors\n| Code                   | Description                                                                                                                                                                                         | | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | | InvalidSenderResource  | Invalid transfer source (entered the number of a non-existent card, missing account, etc.)                                                                                                          | | InvalidReceiverResource| Wrong transfer receiver (invalid card number entered, etc.)                                                                                                                                         | | InsufficientFunds      | Insufficient funds on the bank card account                                                                                                                                                         | | PreauthorizationFailed | Pre-Authorization Rejected (Wrong 3D-Secure Code Entered, Cancel Link Clicked on 3D-Secure Form)                                                                                                    | | RejectedByIssuer       | The transfer was rejected by the issuer (prohibitions were established by the country of debiting, a ban on purchases on the Internet, the withdrawal was rejected by the issuer's antifraud, etc.) |\n">>,
+    <<"x-displayName">> => <<"Error codes">>
   } ],
   <<"schemes">> => [ <<"https">> ],
   <<"consumes">> => [ <<"application/json; charset=utf-8">> ],
@@ -152,12 +152,12 @@ get_raw() ->
     <<"/currencies/{currencyID}">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Currencies">> ],
-        <<"summary">> => <<"Получить описание валюты">>,
+        <<"summary">> => <<"Get currency description">>,
         <<"operationId">> => <<"getCurrency">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -165,7 +165,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -173,29 +173,29 @@ get_raw() ->
         }, #{
           <<"name">> => <<"currencyID">>,
           <<"in">> => <<"path">>,
-          <<"description">> => <<"Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
+          <<"description">> => <<"Currency, character code according to [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"pattern">> => <<"^[A-Za-z]{3}$">>
         } ],
         <<"responses">> => #{
           <<"200">> => #{
-            <<"description">> => <<"Валюта найдена">>,
+            <<"description">> => <<"Currency found">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/Currency">>
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           },
           <<"404">> => #{
-            <<"description">> => <<"Искомая сущность не найдена">>
+            <<"description">> => <<"The content you are looking for was not found">>
           }
         }
       }
@@ -203,12 +203,12 @@ get_raw() ->
     <<"/deposit-adjustments">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Deposits">> ],
-        <<"summary">> => <<"Поиск корректировок">>,
+        <<"summary">> => <<"Finding adjustments">>,
         <<"operationId">> => <<"listDepositAdjustments">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -216,7 +216,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -224,7 +224,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"walletID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Идентификатор кошелька">>,
+          <<"description">> => <<"Wallet identifier">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -232,7 +232,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"identityID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Идентификатор личности владельца">>,
+          <<"description">> => <<"Identifier of the owner's identity">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -240,7 +240,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"depositID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Идентификатор ввода денежных средств">>,
+          <<"description">> => <<"Identifier of the input of funds">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 50,
@@ -248,7 +248,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"sourceID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Идентификатор источника средств">>,
+          <<"description">> => <<"Identifier of the fund source">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -262,42 +262,42 @@ get_raw() ->
         }, #{
           <<"name">> => <<"createdAtFrom">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Дата создания с">>,
+          <<"description">> => <<"Creation date from">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"format">> => <<"date-time">>
         }, #{
           <<"name">> => <<"createdAtTo">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Дата создания до">>,
+          <<"description">> => <<"Creation date to">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"format">> => <<"date-time">>
         }, #{
           <<"name">> => <<"amountFrom">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Сумма денежных средств в минорных единицах">>,
+          <<"description">> => <<"Amount of monetary funds in minor units">>,
           <<"required">> => false,
           <<"type">> => <<"integer">>,
           <<"format">> => <<"int64">>
         }, #{
           <<"name">> => <<"amountTo">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Сумма денежных средств в минорных единицах">>,
+          <<"description">> => <<"Amount of monetary funds in minor units">>,
           <<"required">> => false,
           <<"type">> => <<"integer">>,
           <<"format">> => <<"int64">>
         }, #{
           <<"name">> => <<"currencyID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
+          <<"description">> => <<"Currency, character code according to [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"pattern">> => <<"^[A-Z]{3}$">>
         }, #{
           <<"name">> => <<"limit">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Лимит выборки">>,
+          <<"description">> => <<"Selection limit">>,
           <<"required">> => true,
           <<"type">> => <<"integer">>,
           <<"maximum">> => 1000,
@@ -306,25 +306,25 @@ get_raw() ->
         }, #{
           <<"name">> => <<"continuationToken">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n">>,
+          <<"description">> => <<"A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n">>,
           <<"required">> => false,
           <<"type">> => <<"string">>
         } ],
         <<"responses">> => #{
           <<"200">> => #{
-            <<"description">> => <<"Результат поиска">>,
+            <<"description">> => <<"Search results">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/inline_response_200">>
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           }
         }
       }
@@ -332,12 +332,12 @@ get_raw() ->
     <<"/deposit-reverts">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Deposits">> ],
-        <<"summary">> => <<"Поиск отмен">>,
+        <<"summary">> => <<"Search for reverts">>,
         <<"operationId">> => <<"listDepositReverts">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -345,7 +345,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -353,7 +353,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"walletID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Идентификатор кошелька">>,
+          <<"description">> => <<"Identifier of the wallet">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -361,7 +361,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"identityID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Идентификатор личности владельца">>,
+          <<"description">> => <<"Identifier of the owner's identity">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -369,7 +369,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"depositID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Идентификатор ввода денежных средств">>,
+          <<"description">> => <<"Identifier of the input of funds">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 50,
@@ -377,7 +377,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"sourceID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Идентификатор источника средств">>,
+          <<"description">> => <<"Identifier of the source of funds">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -391,42 +391,42 @@ get_raw() ->
         }, #{
           <<"name">> => <<"createdAtFrom">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Дата создания с">>,
+          <<"description">> => <<"Creation date from">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"format">> => <<"date-time">>
         }, #{
           <<"name">> => <<"createdAtTo">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Дата создания до">>,
+          <<"description">> => <<"Creation date to">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"format">> => <<"date-time">>
         }, #{
           <<"name">> => <<"amountFrom">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Сумма денежных средств в минорных единицах">>,
+          <<"description">> => <<"Amount of monetary funds in minor units">>,
           <<"required">> => false,
           <<"type">> => <<"integer">>,
           <<"format">> => <<"int64">>
         }, #{
           <<"name">> => <<"amountTo">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Сумма денежных средств в минорных единицах">>,
+          <<"description">> => <<"Amount of monetary funds in minor units">>,
           <<"required">> => false,
           <<"type">> => <<"integer">>,
           <<"format">> => <<"int64">>
         }, #{
           <<"name">> => <<"currencyID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
+          <<"description">> => <<"Currency, character code according to [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"pattern">> => <<"^[A-Z]{3}$">>
         }, #{
           <<"name">> => <<"limit">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Лимит выборки">>,
+          <<"description">> => <<"Selection limit">>,
           <<"required">> => true,
           <<"type">> => <<"integer">>,
           <<"maximum">> => 1000,
@@ -435,25 +435,25 @@ get_raw() ->
         }, #{
           <<"name">> => <<"continuationToken">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n">>,
+          <<"description">> => <<"A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n">>,
           <<"required">> => false,
           <<"type">> => <<"string">>
         } ],
         <<"responses">> => #{
           <<"200">> => #{
-            <<"description">> => <<"Результат поиска">>,
+            <<"description">> => <<"Search result">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/inline_response_200_1">>
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           }
         }
       }
@@ -461,12 +461,12 @@ get_raw() ->
     <<"/deposits">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Deposits">> ],
-        <<"summary">> => <<"Поиск пополнений">>,
+        <<"summary">> => <<"Search for deposits">>,
         <<"operationId">> => <<"listDeposits">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -474,7 +474,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -482,7 +482,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"walletID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Идентификатор кошелька">>,
+          <<"description">> => <<"Identifier of the wallet">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -490,7 +490,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"identityID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Идентификатор личности владельца">>,
+          <<"description">> => <<"Identifier of the owner's identity">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -498,7 +498,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"depositID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Идентификатор ввода денежных средств">>,
+          <<"description">> => <<"Identifier of the deposit">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 50,
@@ -506,7 +506,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"sourceID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Идентификатор источника средств">>,
+          <<"description">> => <<"Identifier of the funds source">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -520,14 +520,14 @@ get_raw() ->
         }, #{
           <<"name">> => <<"createdAtFrom">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Дата создания с">>,
+          <<"description">> => <<"Creation date from">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"format">> => <<"date-time">>
         }, #{
           <<"name">> => <<"createdAtTo">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Дата создания до">>,
+          <<"description">> => <<"Creation date to">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"format">> => <<"date-time">>
@@ -540,28 +540,28 @@ get_raw() ->
         }, #{
           <<"name">> => <<"amountFrom">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Сумма денежных средств в минорных единицах">>,
+          <<"description">> => <<"Amount of monetary funds in minor units">>,
           <<"required">> => false,
           <<"type">> => <<"integer">>,
           <<"format">> => <<"int64">>
         }, #{
           <<"name">> => <<"amountTo">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Сумма денежных средств в минорных единицах">>,
+          <<"description">> => <<"Amount of monetary funds in minor units">>,
           <<"required">> => false,
           <<"type">> => <<"integer">>,
           <<"format">> => <<"int64">>
         }, #{
           <<"name">> => <<"currencyID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
+          <<"description">> => <<"Currency, character code according to [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"pattern">> => <<"^[A-Z]{3}$">>
         }, #{
           <<"name">> => <<"limit">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Лимит выборки">>,
+          <<"description">> => <<"Selection limit">>,
           <<"required">> => true,
           <<"type">> => <<"integer">>,
           <<"maximum">> => 1000,
@@ -570,25 +570,25 @@ get_raw() ->
         }, #{
           <<"name">> => <<"continuationToken">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n">>,
+          <<"description">> => <<"A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n">>,
           <<"required">> => false,
           <<"type">> => <<"string">>
         } ],
         <<"responses">> => #{
           <<"200">> => #{
-            <<"description">> => <<"Результат поиска">>,
+            <<"description">> => <<"Search results">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/inline_response_200_2">>
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           }
         }
       }
@@ -596,12 +596,12 @@ get_raw() ->
     <<"/destinations">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Withdrawals">> ],
-        <<"summary">> => <<"Перечислить приёмники средств">>,
+        <<"summary">> => <<"List of destinations">>,
         <<"operationId">> => <<"listDestinations">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -609,7 +609,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -617,7 +617,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"identityID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Идентификатор личности владельца">>,
+          <<"description">> => <<"Identifier of the owner's idenity">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -625,14 +625,14 @@ get_raw() ->
         }, #{
           <<"name">> => <<"currencyID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
+          <<"description">> => <<"Currency, character code according to [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"pattern">> => <<"^[A-Z]{3}$">>
         }, #{
           <<"name">> => <<"limit">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Лимит выборки">>,
+          <<"description">> => <<"Selection limit">>,
           <<"required">> => true,
           <<"type">> => <<"integer">>,
           <<"maximum">> => 1000,
@@ -641,36 +641,36 @@ get_raw() ->
         }, #{
           <<"name">> => <<"continuationToken">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n">>,
+          <<"description">> => <<"A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n">>,
           <<"required">> => false,
           <<"type">> => <<"string">>
         } ],
         <<"responses">> => #{
           <<"200">> => #{
-            <<"description">> => <<"Результат поиска">>,
+            <<"description">> => <<"Search result">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/inline_response_200_3">>
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           }
         }
       },
       <<"post">> => #{
         <<"tags">> => [ <<"Withdrawals">> ],
-        <<"summary">> => <<"Завести приёмник средств">>,
+        <<"summary">> => <<"Start a destination creation">>,
         <<"operationId">> => <<"createDestination">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -678,7 +678,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -686,7 +686,7 @@ get_raw() ->
         }, #{
           <<"in">> => <<"body">>,
           <<"name">> => <<"destination">>,
-          <<"description">> => <<"Данные приёмника средств">>,
+          <<"description">> => <<"Destination data">>,
           <<"required">> => true,
           <<"schema">> => #{
             <<"$ref">> => <<"#/definitions/Destination">>
@@ -694,12 +694,12 @@ get_raw() ->
         } ],
         <<"responses">> => #{
           <<"201">> => #{
-            <<"description">> => <<"Приёмник средств создан">>,
+            <<"description">> => <<"Destination created">>,
             <<"headers">> => #{
               <<"Location">> => #{
                 <<"type">> => <<"string">>,
                 <<"format">> => <<"uri">>,
-                <<"description">> => <<"URI созданного приёмника средств">>
+                <<"description">> => <<"The URI of the created destination">>
               }
             },
             <<"schema">> => #{
@@ -707,22 +707,22 @@ get_raw() ->
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           },
           <<"409">> => #{
-            <<"description">> => <<"Переданное значение `externalID` уже использовалось вами ранее с другими параметрами запроса">>,
+            <<"description">> => <<"The passed value `externalID` has already been used by you with other query parameters">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/ConflictRequest">>
             }
           },
           <<"422">> => #{
-            <<"description">> => <<"Неверные данные приёмника средств">>,
+            <<"description">> => <<"Incorrect destination data">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/InvalidOperationParameters">>
             }
@@ -733,12 +733,12 @@ get_raw() ->
     <<"/destinations/{destinationID}">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Withdrawals">> ],
-        <<"summary">> => <<"Получить приёмник средств">>,
+        <<"summary">> => <<"Get a specific destination">>,
         <<"operationId">> => <<"getDestination">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -746,7 +746,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -754,7 +754,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"destinationID">>,
           <<"in">> => <<"path">>,
-          <<"description">> => <<"Идентификатор приёмника средств">>,
+          <<"description">> => <<"Identifier of the destination">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -762,22 +762,22 @@ get_raw() ->
         } ],
         <<"responses">> => #{
           <<"200">> => #{
-            <<"description">> => <<"Приёмник средств найден">>,
+            <<"description">> => <<"Destination found">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/Destination">>
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           },
           <<"404">> => #{
-            <<"description">> => <<"Искомая сущность не найдена">>
+            <<"description">> => <<"The content you are looking for was not found">>
           }
         }
       }
@@ -785,12 +785,12 @@ get_raw() ->
     <<"/destinations/{destinationID}/grants">> => #{
       <<"post">> => #{
         <<"tags">> => [ <<"Withdrawals">> ],
-        <<"summary">> => <<"Выдать право управления приёмником средств">>,
+        <<"summary">> => <<"Grant the right to manage the destinations">>,
         <<"operationId">> => <<"issueDestinationGrant">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -798,7 +798,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -806,7 +806,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"destinationID">>,
           <<"in">> => <<"path">>,
-          <<"description">> => <<"Идентификатор приёмника средств">>,
+          <<"description">> => <<"Identifier of the destination">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -814,7 +814,7 @@ get_raw() ->
         }, #{
           <<"in">> => <<"body">>,
           <<"name">> => <<"request">>,
-          <<"description">> => <<"Запрос на право управления приёмником средств">>,
+          <<"description">> => <<"Request for the right to manage the destinations">>,
           <<"required">> => true,
           <<"schema">> => #{
             <<"$ref">> => <<"#/definitions/DestinationGrantRequest">>
@@ -822,25 +822,25 @@ get_raw() ->
         } ],
         <<"responses">> => #{
           <<"201">> => #{
-            <<"description">> => <<"Право выдано">>,
+            <<"description">> => <<"The right is granted">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/DestinationGrantRequest">>
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           },
           <<"404">> => #{
-            <<"description">> => <<"Искомая сущность не найдена">>
+            <<"description">> => <<"The content you are looking for was not found">>
           },
           <<"422">> => #{
-            <<"description">> => <<"Неверные данные для выдачи">>,
+            <<"description">> => <<"Invalid data for issuance">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/InvalidOperationParameters">>
             }
@@ -851,12 +851,12 @@ get_raw() ->
     <<"/external-ids/destinations/{externalID}">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Withdrawals">> ],
-        <<"summary">> => <<"Получить приёмник средств по внешнему идентификатору">>,
+        <<"summary">> => <<"Get a fund recipient by external identifier">>,
         <<"operationId">> => <<"getDestinationByExternalID">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -864,7 +864,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -872,28 +872,28 @@ get_raw() ->
         }, #{
           <<"name">> => <<"externalID">>,
           <<"in">> => <<"path">>,
-          <<"description">> => <<"Внешний идентификатор">>,
+          <<"description">> => <<"External identifier">>,
           <<"required">> => true,
           <<"type">> => <<"string">>
         } ],
         <<"responses">> => #{
           <<"200">> => #{
-            <<"description">> => <<"Приёмник средств найден">>,
+            <<"description">> => <<"Fund recipient found">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/Destination">>
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           },
           <<"404">> => #{
-            <<"description">> => <<"Искомая сущность не найдена">>
+            <<"description">> => <<"The content you are looking for was not found">>
           }
         }
       }
@@ -901,12 +901,12 @@ get_raw() ->
     <<"/external-ids/withdrawals/{externalID}">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Withdrawals">> ],
-        <<"summary">> => <<"Получить состояние вывода средств по внешнему идентификатору">>,
+        <<"summary">> => <<"Get withdrawal status by external identifier">>,
         <<"operationId">> => <<"getWithdrawalByExternalID">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -914,7 +914,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -922,28 +922,28 @@ get_raw() ->
         }, #{
           <<"name">> => <<"externalID">>,
           <<"in">> => <<"path">>,
-          <<"description">> => <<"Внешний идентификатор">>,
+          <<"description">> => <<"External identifier">>,
           <<"required">> => true,
           <<"type">> => <<"string">>
         } ],
         <<"responses">> => #{
           <<"200">> => #{
-            <<"description">> => <<"Вывод найден">>,
+            <<"description">> => <<"Withdrawal found">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/Withdrawal">>
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           },
           <<"404">> => #{
-            <<"description">> => <<"Искомая сущность не найдена">>
+            <<"description">> => <<"The content you are looking for was not found">>
           }
         }
       }
@@ -951,12 +951,12 @@ get_raw() ->
     <<"/external/wallets">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Wallets">> ],
-        <<"summary">> => <<"Получить кошелёк по указанному внешнему идентификатору">>,
+        <<"summary">> => <<"Get wallet by specified external identifier">>,
         <<"operationId">> => <<"getWalletByExternalID">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -964,7 +964,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -972,7 +972,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"externalID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Внешний идентификатор кошелька">>,
+          <<"description">> => <<"External wallet identifier">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -980,22 +980,22 @@ get_raw() ->
         } ],
         <<"responses">> => #{
           <<"200">> => #{
-            <<"description">> => <<"Данные кошелька">>,
+            <<"description">> => <<"Wallet details">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/Wallet">>
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           },
           <<"404">> => #{
-            <<"description">> => <<"Искомая сущность не найдена">>
+            <<"description">> => <<"The content you are looking for was not found">>
           }
         }
       }
@@ -1003,12 +1003,12 @@ get_raw() ->
     <<"/files/{fileID}/download">> => #{
       <<"post">> => #{
         <<"tags">> => [ <<"Downloads">> ],
-        <<"description">> => <<"Получить ссылку для скачивания файла">>,
+        <<"description">> => <<"Get a link to download a file">>,
         <<"operationId">> => <<"downloadFile">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -1016,7 +1016,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -1024,7 +1024,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"fileID">>,
           <<"in">> => <<"path">>,
-          <<"description">> => <<"Идентификатор файла">>,
+          <<"description">> => <<"The file identifier">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -1032,22 +1032,22 @@ get_raw() ->
         } ],
         <<"responses">> => #{
           <<"201">> => #{
-            <<"description">> => <<"Данные для получения файла">>,
+            <<"description">> => <<"Data to get file">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/FileDownload">>
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           },
           <<"404">> => #{
-            <<"description">> => <<"Искомая сущность не найдена">>
+            <<"description">> => <<"The content you are looking for was not found">>
           }
         }
       }
@@ -1055,12 +1055,12 @@ get_raw() ->
     <<"/identities">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Identities">> ],
-        <<"summary">> => <<"Перечислить личности владельцев">>,
+        <<"summary">> => <<"List the identities of the owners">>,
         <<"operationId">> => <<"listIdentities">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -1068,7 +1068,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -1076,7 +1076,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"providerID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Идентификатор провайдера услуг">>,
+          <<"description">> => <<"Service provider's identifier">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -1084,36 +1084,36 @@ get_raw() ->
         }, #{
           <<"name">> => <<"continuationToken">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n">>,
+          <<"description">> => <<"A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n">>,
           <<"required">> => false,
           <<"type">> => <<"string">>
         } ],
         <<"responses">> => #{
           <<"200">> => #{
-            <<"description">> => <<"Результат поиска">>,
+            <<"description">> => <<"Search result">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/inline_response_200_4">>
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           }
         }
       },
       <<"post">> => #{
         <<"tags">> => [ <<"Identities">> ],
-        <<"summary">> => <<"Создать личность владельца">>,
+        <<"summary">> => <<"Create owner identity">>,
         <<"operationId">> => <<"createIdentity">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -1121,7 +1121,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -1129,7 +1129,7 @@ get_raw() ->
         }, #{
           <<"in">> => <<"body">>,
           <<"name">> => <<"identity">>,
-          <<"description">> => <<"Данные создаваемой личности">>,
+          <<"description">> => <<"Data of the identity created">>,
           <<"required">> => true,
           <<"schema">> => #{
             <<"$ref">> => <<"#/definitions/Identity">>
@@ -1137,12 +1137,12 @@ get_raw() ->
         } ],
         <<"responses">> => #{
           <<"201">> => #{
-            <<"description">> => <<"Личность владельца создана">>,
+            <<"description">> => <<"Owner identity created">>,
             <<"headers">> => #{
               <<"Location">> => #{
                 <<"type">> => <<"string">>,
                 <<"format">> => <<"uri">>,
-                <<"description">> => <<"URI созданной личности">>
+                <<"description">> => <<"Created identity URI">>
               }
             },
             <<"schema">> => #{
@@ -1150,22 +1150,22 @@ get_raw() ->
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           },
           <<"409">> => #{
-            <<"description">> => <<"Переданное значение `externalID` уже использовалось вами ранее с другими параметрами запроса">>,
+            <<"description">> => <<"The passed value `externalID` has already been used by you with other query parameters">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/ConflictRequest">>
             }
           },
           <<"422">> => #{
-            <<"description">> => <<"Неверные данные личности владельца">>,
+            <<"description">> => <<"Invalid owner identity data">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/InvalidOperationParameters">>
             }
@@ -1176,12 +1176,12 @@ get_raw() ->
     <<"/identities/{identityID}">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Identities">> ],
-        <<"summary">> => <<"Получить данные личности владельца">>,
+        <<"summary">> => <<"Get the owner's identity">>,
         <<"operationId">> => <<"getIdentity">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -1189,7 +1189,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -1197,7 +1197,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"identityID">>,
           <<"in">> => <<"path">>,
-          <<"description">> => <<"Идентификатор личности владельца">>,
+          <<"description">> => <<"Identifier of the owner's identity">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -1205,22 +1205,22 @@ get_raw() ->
         } ],
         <<"responses">> => #{
           <<"200">> => #{
-            <<"description">> => <<"Личность владельца найдена">>,
+            <<"description">> => <<"Owner's identity found">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/Identity">>
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           },
           <<"404">> => #{
-            <<"description">> => <<"Искомая сущность не найдена">>
+            <<"description">> => <<"The content you are looking for was not found">>
           }
         }
       }
@@ -1228,12 +1228,12 @@ get_raw() ->
     <<"/identities/{identityID}/reports">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Reports">> ],
-        <<"description">> => <<"Получить список отчетов по личности владельца за период">>,
+        <<"description">> => <<"Get a list of owner identity reports for a period">>,
         <<"operationId">> => <<"getReports">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -1241,7 +1241,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -1249,7 +1249,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"identityID">>,
           <<"in">> => <<"path">>,
-          <<"description">> => <<"Идентификатор личности владельца">>,
+          <<"description">> => <<"Identifier of the owner's identity">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -1257,28 +1257,28 @@ get_raw() ->
         }, #{
           <<"name">> => <<"fromTime">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Начало временного отрезка">>,
+          <<"description">> => <<"Start of the time period">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"format">> => <<"date-time">>
         }, #{
           <<"name">> => <<"toTime">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Конец временного отрезка">>,
+          <<"description">> => <<"End of the time period">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"format">> => <<"date-time">>
         }, #{
           <<"name">> => <<"type">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Тип получаемых отчетов">>,
+          <<"description">> => <<"Type of reports received">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"enum">> => [ <<"withdrawalRegistry">> ]
         } ],
         <<"responses">> => #{
           <<"200">> => #{
-            <<"description">> => <<"Найденные отчеты">>,
+            <<"description">> => <<"Reports found">>,
             <<"schema">> => #{
               <<"type">> => <<"array">>,
               <<"items">> => #{
@@ -1287,24 +1287,24 @@ get_raw() ->
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           }
         }
       },
       <<"post">> => #{
         <<"tags">> => [ <<"Reports">> ],
-        <<"description">> => <<"Сгенерировать отчет с указанным типом по личности владельца за указанный промежуток времени">>,
+        <<"description">> => <<"Generate a report with the specified type on the identity of the owner for the specified period of time">>,
         <<"operationId">> => <<"createReport">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -1312,7 +1312,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -1320,7 +1320,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"identityID">>,
           <<"in">> => <<"path">>,
-          <<"description">> => <<"Идентификатор личности владельца">>,
+          <<"description">> => <<"Identifier of the owner's identity">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -1328,7 +1328,7 @@ get_raw() ->
         }, #{
           <<"in">> => <<"body">>,
           <<"name">> => <<"ReportParams">>,
-          <<"description">> => <<"Параметры генерации отчета">>,
+          <<"description">> => <<"Report generation options">>,
           <<"required">> => true,
           <<"schema">> => #{
             <<"$ref">> => <<"#/definitions/ReportParams">>
@@ -1336,19 +1336,19 @@ get_raw() ->
         } ],
         <<"responses">> => #{
           <<"201">> => #{
-            <<"description">> => <<"Отчет создан">>,
+            <<"description">> => <<"Report created">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/Report">>
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           }
         }
       }
@@ -1356,12 +1356,12 @@ get_raw() ->
     <<"/identities/{identityID}/reports/{reportID}">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Reports">> ],
-        <<"description">> => <<"Получить отчет по данному идентификатору">>,
+        <<"description">> => <<"Get a report for a given identifier">>,
         <<"operationId">> => <<"getReport">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -1369,7 +1369,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -1377,7 +1377,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"identityID">>,
           <<"in">> => <<"path">>,
-          <<"description">> => <<"Идентификатор личности владельца">>,
+          <<"description">> => <<"Identifier of the owner's identity">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -1385,29 +1385,29 @@ get_raw() ->
         }, #{
           <<"name">> => <<"reportID">>,
           <<"in">> => <<"path">>,
-          <<"description">> => <<"Идентификатор отчета">>,
+          <<"description">> => <<"The report identifier">>,
           <<"required">> => true,
           <<"type">> => <<"integer">>,
           <<"format">> => <<"int64">>
         } ],
         <<"responses">> => #{
           <<"200">> => #{
-            <<"description">> => <<"Найденный отчет">>,
+            <<"description">> => <<"Report found">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/Report">>
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           },
           <<"404">> => #{
-            <<"description">> => <<"Искомая сущность не найдена">>
+            <<"description">> => <<"The content you are looking for was not found">>
           }
         }
       }
@@ -1415,12 +1415,12 @@ get_raw() ->
     <<"/identities/{identityID}/withdrawal-methods">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Identities">> ],
-        <<"summary">> => <<"Получить выплатные методы доступные по личности владельца">>,
+        <<"summary">> => <<"Get withdrawal methods available by owner identity">>,
         <<"operationId">> => <<"getWithdrawalMethods">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -1428,7 +1428,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -1436,7 +1436,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"identityID">>,
           <<"in">> => <<"path">>,
-          <<"description">> => <<"Идентификатор личности владельца">>,
+          <<"description">> => <<"Identifier of the owner's identity">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -1444,19 +1444,19 @@ get_raw() ->
         } ],
         <<"responses">> => #{
           <<"200">> => #{
-            <<"description">> => <<"Найденные методы">>,
+            <<"description">> => <<"Methods found">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/inline_response_200_5">>
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           }
         }
       }
@@ -1464,12 +1464,12 @@ get_raw() ->
     <<"/providers">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Providers">> ],
-        <<"summary">> => <<"Перечислить доступных провайдеров">>,
+        <<"summary">> => <<"List available providers">>,
         <<"operationId">> => <<"listProviders">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -1477,7 +1477,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -1485,14 +1485,14 @@ get_raw() ->
         }, #{
           <<"name">> => <<"residence">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Резиденция, в рамках которой производится оказание услуг,\nкод страны или региона по стандарту [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)\n">>,
+          <<"description">> => <<"The residence within which the services are provided,\n[ISO 3166-1] country or region code (https://en.wikipedia.org/wiki/ISO_3166-1)\n">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"pattern">> => <<"^[A-Za-z]{3}$">>
         } ],
         <<"responses">> => #{
           <<"200">> => #{
-            <<"description">> => <<"Провайдеры найдены">>,
+            <<"description">> => <<"Providers found">>,
             <<"schema">> => #{
               <<"type">> => <<"array">>,
               <<"items">> => #{
@@ -1501,13 +1501,13 @@ get_raw() ->
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           }
         }
       }
@@ -1515,12 +1515,12 @@ get_raw() ->
     <<"/providers/{providerID}">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Providers">> ],
-        <<"summary">> => <<"Получить данные провайдера">>,
+        <<"summary">> => <<"Get provider details">>,
         <<"operationId">> => <<"getProvider">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -1528,7 +1528,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -1536,7 +1536,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"providerID">>,
           <<"in">> => <<"path">>,
-          <<"description">> => <<"Идентификатор провайдера">>,
+          <<"description">> => <<"Identifier of the provider">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -1544,22 +1544,22 @@ get_raw() ->
         } ],
         <<"responses">> => #{
           <<"200">> => #{
-            <<"description">> => <<"Провайдер найден">>,
+            <<"description">> => <<"Provider found">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/Provider">>
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           },
           <<"404">> => #{
-            <<"description">> => <<"Искомая сущность не найдена">>
+            <<"description">> => <<"The content you are looking for was not found">>
           }
         }
       }
@@ -1567,12 +1567,12 @@ get_raw() ->
     <<"/residences/{residence}">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Residences">> ],
-        <<"summary">> => <<"Получить описание региона резиденции">>,
+        <<"summary">> => <<"Get a description of the residence region">>,
         <<"operationId">> => <<"getResidence">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -1580,7 +1580,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -1588,29 +1588,29 @@ get_raw() ->
         }, #{
           <<"name">> => <<"residence">>,
           <<"in">> => <<"path">>,
-          <<"description">> => <<"Резиденция, в рамках которой производится оказание услуг,\nкод страны или региона по стандарту [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)\n">>,
+          <<"description">> => <<"The residence within which the services are provided,\n[ISO 3166-1] country or region code (https://en.wikipedia.org/wiki/ISO_3166-1)\n">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"pattern">> => <<"^[A-Za-z]{3}$">>
         } ],
         <<"responses">> => #{
           <<"200">> => #{
-            <<"description">> => <<"Регион резиденции найден">>,
+            <<"description">> => <<"Residence region found">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/Residence">>
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           },
           <<"404">> => #{
-            <<"description">> => <<"Искомая сущность не найдена">>
+            <<"description">> => <<"The content you are looking for was not found">>
           }
         }
       }
@@ -1618,12 +1618,12 @@ get_raw() ->
     <<"/w2w/transfers">> => #{
       <<"post">> => #{
         <<"tags">> => [ <<"W2W">> ],
-        <<"description">> => <<"Создать перевод">>,
+        <<"description">> => <<"Create a transfer">>,
         <<"operationId">> => <<"createW2WTransfer">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -1631,7 +1631,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -1639,7 +1639,7 @@ get_raw() ->
         }, #{
           <<"in">> => <<"body">>,
           <<"name">> => <<"transferParams">>,
-          <<"description">> => <<"Параметры создания перевода">>,
+          <<"description">> => <<"Transfer creation options">>,
           <<"required">> => false,
           <<"schema">> => #{
             <<"$ref">> => <<"#/definitions/W2WTransferParameters">>
@@ -1647,12 +1647,12 @@ get_raw() ->
         } ],
         <<"responses">> => #{
           <<"202">> => #{
-            <<"description">> => <<"Перевод запущен">>,
+            <<"description">> => <<"Transfer started">>,
             <<"headers">> => #{
               <<"Location">> => #{
                 <<"type">> => <<"string">>,
                 <<"format">> => <<"uri">>,
-                <<"description">> => <<"URI запущенного перевода">>
+                <<"description">> => <<"URI of the transfer started">>
               }
             },
             <<"schema">> => #{
@@ -1660,22 +1660,22 @@ get_raw() ->
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           },
           <<"409">> => #{
-            <<"description">> => <<"Переданное значение `externalID` уже использовалось вами ранее с другими параметрами запроса">>,
+            <<"description">> => <<"The passed value `externalID` has already been used by you with other query parameters">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/ConflictRequest">>
             }
           },
           <<"422">> => #{
-            <<"description">> => <<"Неверные входные данные для перевода">>,
+            <<"description">> => <<"Invalid transfer input data">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/InvalidOperationParameters">>
             }
@@ -1686,12 +1686,12 @@ get_raw() ->
     <<"/w2w/transfers/{w2wTransferID}">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"W2W">> ],
-        <<"description">> => <<"Получить состояние перевода.">>,
+        <<"description">> => <<"Get the transfer status.">>,
         <<"operationId">> => <<"getW2WTransfer">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -1699,7 +1699,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -1707,7 +1707,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"w2wTransferID">>,
           <<"in">> => <<"path">>,
-          <<"description">> => <<"Идентификатор перевода">>,
+          <<"description">> => <<"Identifier of transfer">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -1715,22 +1715,22 @@ get_raw() ->
         } ],
         <<"responses">> => #{
           <<"200">> => #{
-            <<"description">> => <<"Найденный перевод">>,
+            <<"description">> => <<"Transfer found">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/W2WTransfer">>
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           },
           <<"404">> => #{
-            <<"description">> => <<"Искомая сущность не найдена">>
+            <<"description">> => <<"The content you are looking for was not found">>
           }
         }
       }
@@ -1738,12 +1738,12 @@ get_raw() ->
     <<"/wallets">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Wallets">> ],
-        <<"summary">> => <<"Перечислить кошельки">>,
+        <<"summary">> => <<"List the wallets">>,
         <<"operationId">> => <<"listWallets">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -1751,7 +1751,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -1759,7 +1759,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"identityID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Идентификатор личности владельца">>,
+          <<"description">> => <<"Identifier of owner's identity">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -1767,14 +1767,14 @@ get_raw() ->
         }, #{
           <<"name">> => <<"currencyID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
+          <<"description">> => <<"Currency, character code according to [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"pattern">> => <<"^[A-Z]{3}$">>
         }, #{
           <<"name">> => <<"limit">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Лимит выборки">>,
+          <<"description">> => <<"Selection limit">>,
           <<"required">> => true,
           <<"type">> => <<"integer">>,
           <<"maximum">> => 1000,
@@ -1783,36 +1783,36 @@ get_raw() ->
         }, #{
           <<"name">> => <<"continuationToken">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n">>,
+          <<"description">> => <<"A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n">>,
           <<"required">> => false,
           <<"type">> => <<"string">>
         } ],
         <<"responses">> => #{
           <<"200">> => #{
-            <<"description">> => <<"Результат поиска">>,
+            <<"description">> => <<"Search result">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/inline_response_200_6">>
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           }
         }
       },
       <<"post">> => #{
         <<"tags">> => [ <<"Wallets">> ],
-        <<"summary">> => <<"Завести новый кошелёк">>,
+        <<"summary">> => <<"Create a new wallet">>,
         <<"operationId">> => <<"createWallet">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -1820,7 +1820,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -1828,7 +1828,7 @@ get_raw() ->
         }, #{
           <<"in">> => <<"body">>,
           <<"name">> => <<"wallet">>,
-          <<"description">> => <<"Данные создаваемого кошелька">>,
+          <<"description">> => <<"Data of the created wallet">>,
           <<"required">> => true,
           <<"schema">> => #{
             <<"$ref">> => <<"#/definitions/Wallet">>
@@ -1836,12 +1836,12 @@ get_raw() ->
         } ],
         <<"responses">> => #{
           <<"201">> => #{
-            <<"description">> => <<"Кошелёк создан">>,
+            <<"description">> => <<"Wallet created">>,
             <<"headers">> => #{
               <<"Location">> => #{
                 <<"type">> => <<"string">>,
                 <<"format">> => <<"uri">>,
-                <<"description">> => <<"URI созданного кошелька">>
+                <<"description">> => <<"URI of the wallet created">>
               }
             },
             <<"schema">> => #{
@@ -1849,22 +1849,22 @@ get_raw() ->
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           },
           <<"409">> => #{
-            <<"description">> => <<"Переданное значение `externalID` уже использовалось вами ранее с другими параметрами запроса">>,
+            <<"description">> => <<"The passed value `externalID` has already been used by you with other query parameters">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/ConflictRequest">>
             }
           },
           <<"422">> => #{
-            <<"description">> => <<"Неверные данные кошелька">>,
+            <<"description">> => <<"Invalid data of the wallet">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/InvalidOperationParameters">>
             }
@@ -1875,12 +1875,12 @@ get_raw() ->
     <<"/wallets/{walletID}">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Wallets">> ],
-        <<"summary">> => <<"Получить данные кошелька">>,
+        <<"summary">> => <<"Get wallet data">>,
         <<"operationId">> => <<"getWallet">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -1888,7 +1888,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -1896,7 +1896,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"walletID">>,
           <<"in">> => <<"path">>,
-          <<"description">> => <<"Идентификатор кошелька">>,
+          <<"description">> => <<"Identifier of the wallet">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -1904,22 +1904,22 @@ get_raw() ->
         } ],
         <<"responses">> => #{
           <<"200">> => #{
-            <<"description">> => <<"Кошелёк найден">>,
+            <<"description">> => <<"Wallet found">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/Wallet">>
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           },
           <<"404">> => #{
-            <<"description">> => <<"Искомая сущность не найдена">>
+            <<"description">> => <<"The content you are looking for was not found">>
           }
         }
       }
@@ -1927,12 +1927,12 @@ get_raw() ->
     <<"/wallets/{walletID}/account">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Wallets">> ],
-        <<"summary">> => <<"Получить состояние счёта">>,
+        <<"summary">> => <<"Get account status">>,
         <<"operationId">> => <<"getWalletAccount">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -1940,7 +1940,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -1948,7 +1948,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"walletID">>,
           <<"in">> => <<"path">>,
-          <<"description">> => <<"Идентификатор кошелька">>,
+          <<"description">> => <<"Identifier of the wallet">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -1956,22 +1956,22 @@ get_raw() ->
         } ],
         <<"responses">> => #{
           <<"200">> => #{
-            <<"description">> => <<"Счёт кошелька получен">>,
+            <<"description">> => <<"Wallet account received">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/WalletAccount">>
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           },
           <<"404">> => #{
-            <<"description">> => <<"Искомая сущность не найдена">>
+            <<"description">> => <<"The content you are looking for was not found">>
           }
         }
       }
@@ -1979,12 +1979,12 @@ get_raw() ->
     <<"/wallets/{walletID}/grants">> => #{
       <<"post">> => #{
         <<"tags">> => [ <<"Wallets">> ],
-        <<"summary">> => <<"Выдать право управления средствами">>,
+        <<"summary">> => <<"Grant the right to manage funds">>,
         <<"operationId">> => <<"issueWalletGrant">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -1992,7 +1992,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -2000,7 +2000,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"walletID">>,
           <<"in">> => <<"path">>,
-          <<"description">> => <<"Идентификатор кошелька">>,
+          <<"description">> => <<"Identifier of the wallet">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -2008,7 +2008,7 @@ get_raw() ->
         }, #{
           <<"in">> => <<"body">>,
           <<"name">> => <<"request">>,
-          <<"description">> => <<"Запрос на право управления средствами на кошельке">>,
+          <<"description">> => <<"Request for the right to manage funds on the wallet">>,
           <<"required">> => true,
           <<"schema">> => #{
             <<"$ref">> => <<"#/definitions/WalletGrantRequest">>
@@ -2016,25 +2016,25 @@ get_raw() ->
         } ],
         <<"responses">> => #{
           <<"201">> => #{
-            <<"description">> => <<"Единоразовое право выдано">>,
+            <<"description">> => <<"Single right granted">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/WalletGrantRequest">>
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           },
           <<"404">> => #{
-            <<"description">> => <<"Искомая сущность не найдена">>
+            <<"description">> => <<"The content you are looking for was not found">>
           },
           <<"422">> => #{
-            <<"description">> => <<"Неверные данные для выдачи">>,
+            <<"description">> => <<"Invalid data for issuance">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/InvalidOperationParameters">>
             }
@@ -2045,12 +2045,12 @@ get_raw() ->
     <<"/webhooks">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Webhooks">> ],
-        <<"description">> => <<"Получить набор установленных webhook'ов.">>,
+        <<"description">> => <<"Get list of existing webhooks.">>,
         <<"operationId">> => <<"getWebhooks">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -2058,7 +2058,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -2066,7 +2066,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"identityID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Идентификатор личности владельца">>,
+          <<"description">> => <<"Identifier of the owner's identity">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -2074,7 +2074,7 @@ get_raw() ->
         } ],
         <<"responses">> => #{
           <<"200">> => #{
-            <<"description">> => <<"Набор webhook'ов">>,
+            <<"description">> => <<"A list of webhooks">>,
             <<"schema">> => #{
               <<"type">> => <<"array">>,
               <<"items">> => #{
@@ -2083,16 +2083,16 @@ get_raw() ->
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           },
           <<"422">> => #{
-            <<"description">> => <<"Неверные данные для получения webhook'ов">>,
+            <<"description">> => <<"Invalid data for obtaining webhooks">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/InvalidOperationParameters">>
             }
@@ -2101,12 +2101,12 @@ get_raw() ->
       },
       <<"post">> => #{
         <<"tags">> => [ <<"Webhooks">> ],
-        <<"description">> => <<"Установить новый webhook.">>,
+        <<"description">> => <<"Create a new webhook.">>,
         <<"operationId">> => <<"createWebhook">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -2114,7 +2114,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -2122,7 +2122,7 @@ get_raw() ->
         }, #{
           <<"in">> => <<"body">>,
           <<"name">> => <<"webhookParams">>,
-          <<"description">> => <<"Параметры устанавливаемого webhook'а">>,
+          <<"description">> => <<"Parameters of the created webhook">>,
           <<"required">> => true,
           <<"schema">> => #{
             <<"$ref">> => <<"#/definitions/Webhook">>
@@ -2130,22 +2130,22 @@ get_raw() ->
         } ],
         <<"responses">> => #{
           <<"201">> => #{
-            <<"description">> => <<"Webhook установлен">>,
+            <<"description">> => <<"Webhook created">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/Webhook">>
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           },
           <<"422">> => #{
-            <<"description">> => <<"Неверные данные для создания webhook'а">>,
+            <<"description">> => <<"Invalid data for webhook creation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/InvalidOperationParameters">>
             }
@@ -2156,12 +2156,12 @@ get_raw() ->
     <<"/webhooks/{webhookID}">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Webhooks">> ],
-        <<"description">> => <<"Получить webhook по его идентификатору.">>,
+        <<"description">> => <<"Get a webhook by its identifier.">>,
         <<"operationId">> => <<"getWebhookByID">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -2169,7 +2169,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -2177,7 +2177,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"webhookID">>,
           <<"in">> => <<"path">>,
-          <<"description">> => <<"Идентификатор webhook'а">>,
+          <<"description">> => <<"Webhook identifier">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -2185,7 +2185,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"identityID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Идентификатор личности владельца">>,
+          <<"description">> => <<"Identifier of the owner's identity">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -2193,25 +2193,25 @@ get_raw() ->
         } ],
         <<"responses">> => #{
           <<"200">> => #{
-            <<"description">> => <<"Данные webhook'а">>,
+            <<"description">> => <<"Webhook's data">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/Webhook">>
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           },
           <<"404">> => #{
-            <<"description">> => <<"Искомая сущность не найдена">>
+            <<"description">> => <<"The content you are looking for was not found">>
           },
           <<"422">> => #{
-            <<"description">> => <<"Неверные данные для получения webhook'а">>,
+            <<"description">> => <<"Invalid data for obtaining a webhook">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/InvalidOperationParameters">>
             }
@@ -2220,12 +2220,12 @@ get_raw() ->
       },
       <<"delete">> => #{
         <<"tags">> => [ <<"Webhooks">> ],
-        <<"description">> => <<"Снять указанный webhook.">>,
+        <<"description">> => <<"Remove the specified webhook.">>,
         <<"operationId">> => <<"deleteWebhookByID">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -2233,7 +2233,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -2241,7 +2241,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"webhookID">>,
           <<"in">> => <<"path">>,
-          <<"description">> => <<"Идентификатор webhook'а">>,
+          <<"description">> => <<"Webhook identifier">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -2249,7 +2249,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"identityID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Идентификатор личности владельца">>,
+          <<"description">> => <<"Identifier of the owner's identity">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -2257,22 +2257,22 @@ get_raw() ->
         } ],
         <<"responses">> => #{
           <<"204">> => #{
-            <<"description">> => <<"Webhook успешно снят">>
+            <<"description">> => <<"Webhook successfully removed">>
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           },
           <<"404">> => #{
-            <<"description">> => <<"Искомая сущность не найдена">>
+            <<"description">> => <<"The content you are looking for was not found">>
           },
           <<"422">> => #{
-            <<"description">> => <<"Неверные данные для снятия webhook'а">>,
+            <<"description">> => <<"Invalid data for removing webhook">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/InvalidOperationParameters">>
             }
@@ -2283,13 +2283,13 @@ get_raw() ->
     <<"/withdrawal-quotes">> => #{
       <<"post">> => #{
         <<"tags">> => [ <<"Withdrawals">> ],
-        <<"summary">> => <<"Подготовка котировки">>,
-        <<"description">> => <<"Фиксация курса обмена валют для проведения выплаты с конвертацией">>,
+        <<"summary">> => <<"Quote preparation">>,
+        <<"description">> => <<"Fixing the exchange rate for making withdrawals with conversion">>,
         <<"operationId">> => <<"createQuote">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -2297,7 +2297,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -2305,7 +2305,7 @@ get_raw() ->
         }, #{
           <<"in">> => <<"body">>,
           <<"name">> => <<"withdrawalQuoteParams">>,
-          <<"description">> => <<"Данные котировки для вывода">>,
+          <<"description">> => <<"Quote data for withdrawal">>,
           <<"required">> => true,
           <<"schema">> => #{
             <<"$ref">> => <<"#/definitions/WithdrawalQuoteParams">>
@@ -2313,28 +2313,28 @@ get_raw() ->
         } ],
         <<"responses">> => #{
           <<"202">> => #{
-            <<"description">> => <<"Полученная котировка">>,
+            <<"description">> => <<"Received quote">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/WithdrawalQuote">>
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           },
           <<"409">> => #{
-            <<"description">> => <<"Переданное значение `externalID` уже использовалось вами ранее с другими параметрами запроса">>,
+            <<"description">> => <<"The passed value `externalID` has already been used by you with other query parameters">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/ConflictRequest">>
             }
           },
           <<"422">> => #{
-            <<"description">> => <<"Неверные данные для получения котировки">>,
+            <<"description">> => <<"Invalid data for getting a quote">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/InvalidOperationParameters">>
             }
@@ -2345,12 +2345,12 @@ get_raw() ->
     <<"/withdrawals">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Withdrawals">> ],
-        <<"summary">> => <<"Поиск выводов">>,
+        <<"summary">> => <<"Search of withdrawals">>,
         <<"operationId">> => <<"listWithdrawals">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -2358,7 +2358,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -2366,7 +2366,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"walletID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Идентификатор кошелька">>,
+          <<"description">> => <<"Identifier of the wallet">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -2374,7 +2374,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"identityID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Идентификатор личности владельца">>,
+          <<"description">> => <<"Identifier of the owner's identity">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -2382,7 +2382,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"withdrawalID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Идентификатор вывода денежных средств">>,
+          <<"description">> => <<"Identifier of the funds withdrawal">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -2390,7 +2390,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"destinationID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Идентификатор приёмника средств">>,
+          <<"description">> => <<"Identifier of the destination">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -2404,42 +2404,42 @@ get_raw() ->
         }, #{
           <<"name">> => <<"createdAtFrom">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Дата создания с">>,
+          <<"description">> => <<"Creation date range start">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"format">> => <<"date-time">>
         }, #{
           <<"name">> => <<"createdAtTo">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Дата создания до">>,
+          <<"description">> => <<"Creation date range end">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"format">> => <<"date-time">>
         }, #{
           <<"name">> => <<"amountFrom">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Сумма денежных средств в минорных единицах">>,
+          <<"description">> => <<"Amount of monetary funds in minor units">>,
           <<"required">> => false,
           <<"type">> => <<"integer">>,
           <<"format">> => <<"int64">>
         }, #{
           <<"name">> => <<"amountTo">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Сумма денежных средств в минорных единицах">>,
+          <<"description">> => <<"Amount of monetary funds in minor units">>,
           <<"required">> => false,
           <<"type">> => <<"integer">>,
           <<"format">> => <<"int64">>
         }, #{
           <<"name">> => <<"currencyID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
+          <<"description">> => <<"Currency, character code according to [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"pattern">> => <<"^[A-Z]{3}$">>
         }, #{
           <<"name">> => <<"limit">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Лимит выборки">>,
+          <<"description">> => <<"Selection limit">>,
           <<"required">> => true,
           <<"type">> => <<"integer">>,
           <<"maximum">> => 1000,
@@ -2448,36 +2448,36 @@ get_raw() ->
         }, #{
           <<"name">> => <<"continuationToken">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n">>,
+          <<"description">> => <<"A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n">>,
           <<"required">> => false,
           <<"type">> => <<"string">>
         } ],
         <<"responses">> => #{
           <<"200">> => #{
-            <<"description">> => <<"Результат поиска">>,
+            <<"description">> => <<"Search result">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/inline_response_200_7">>
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           }
         }
       },
       <<"post">> => #{
         <<"tags">> => [ <<"Withdrawals">> ],
-        <<"summary">> => <<"Запустить вывод средств">>,
+        <<"summary">> => <<"Create withdrawal">>,
         <<"operationId">> => <<"createWithdrawal">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -2485,7 +2485,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -2493,7 +2493,7 @@ get_raw() ->
         }, #{
           <<"in">> => <<"body">>,
           <<"name">> => <<"withdrawal">>,
-          <<"description">> => <<"Данные вывода">>,
+          <<"description">> => <<"Withdrawal data">>,
           <<"required">> => true,
           <<"schema">> => #{
             <<"$ref">> => <<"#/definitions/WithdrawalParameters">>
@@ -2501,12 +2501,12 @@ get_raw() ->
         } ],
         <<"responses">> => #{
           <<"202">> => #{
-            <<"description">> => <<"Вывод запущен">>,
+            <<"description">> => <<"Withdrawal started">>,
             <<"headers">> => #{
               <<"Location">> => #{
                 <<"type">> => <<"string">>,
                 <<"format">> => <<"uri">>,
-                <<"description">> => <<"URI запущенного вывода">>
+                <<"description">> => <<"URI of started withdrawal">>
               }
             },
             <<"schema">> => #{
@@ -2514,22 +2514,22 @@ get_raw() ->
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           },
           <<"409">> => #{
-            <<"description">> => <<"Переданное значение `externalID` уже использовалось вами ранее с другими параметрами запроса">>,
+            <<"description">> => <<"The passed value `externalID` has already been used by you with other query parameters">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/ConflictRequest">>
             }
           },
           <<"422">> => #{
-            <<"description">> => <<"Неверные данные для осуществления вывода">>,
+            <<"description">> => <<"Invalid data for withdrawal">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/InvalidOperationParameters">>
             }
@@ -2540,12 +2540,12 @@ get_raw() ->
     <<"/withdrawals/{withdrawalID}">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Withdrawals">> ],
-        <<"summary">> => <<"Получить состояние вывода средств">>,
+        <<"summary">> => <<"Get withdrawal status">>,
         <<"operationId">> => <<"getWithdrawal">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -2553,7 +2553,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -2561,7 +2561,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"withdrawalID">>,
           <<"in">> => <<"path">>,
-          <<"description">> => <<"Идентификатор вывода денежных средств">>,
+          <<"description">> => <<"Identifier of the withdrawal">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -2569,22 +2569,22 @@ get_raw() ->
         } ],
         <<"responses">> => #{
           <<"200">> => #{
-            <<"description">> => <<"Вывод найден">>,
+            <<"description">> => <<"Withdrawal found">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/Withdrawal">>
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           },
           <<"404">> => #{
-            <<"description">> => <<"Искомая сущность не найдена">>
+            <<"description">> => <<"The content you are looking for was not found">>
           }
         }
       }
@@ -2592,12 +2592,12 @@ get_raw() ->
     <<"/withdrawals/{withdrawalID}/events">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Withdrawals">> ],
-        <<"summary">> => <<"Запросить события вывода средств">>,
+        <<"summary">> => <<"Request withdrawal events">>,
         <<"operationId">> => <<"pollWithdrawalEvents">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -2605,7 +2605,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -2613,7 +2613,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"withdrawalID">>,
           <<"in">> => <<"path">>,
-          <<"description">> => <<"Идентификатор вывода денежных средств">>,
+          <<"description">> => <<"Identifier of the withdrawal">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -2621,7 +2621,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"limit">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Лимит выборки">>,
+          <<"description">> => <<"Selection limit">>,
           <<"required">> => true,
           <<"type">> => <<"integer">>,
           <<"maximum">> => 1000,
@@ -2630,14 +2630,14 @@ get_raw() ->
         }, #{
           <<"name">> => <<"eventCursor">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Идентификатор последнего известного события.\n\nВсе события, произошедшие _после_ указанного, попадут в выборку.\nЕсли этот параметр не указан, в выборку попадут события, начиная с самого первого.\n">>,
+          <<"description">> => <<"The identifier of the last known event.\n\nAll events that occurred _after_ the specified one will be included in the selection.\nIf this parameter is not specified, the selection will include events starting from the very first one.\n">>,
           <<"required">> => false,
           <<"type">> => <<"integer">>,
           <<"format">> => <<"int32">>
         } ],
         <<"responses">> => #{
           <<"200">> => #{
-            <<"description">> => <<"События найдены">>,
+            <<"description">> => <<"Events found">>,
             <<"schema">> => #{
               <<"type">> => <<"array">>,
               <<"items">> => #{
@@ -2646,16 +2646,16 @@ get_raw() ->
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           },
           <<"404">> => #{
-            <<"description">> => <<"Искомая сущность не найдена">>
+            <<"description">> => <<"The content you are looking for was not found">>
           }
         }
       }
@@ -2663,12 +2663,12 @@ get_raw() ->
     <<"/withdrawals/{withdrawalID}/events/{eventID}">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Withdrawals">> ],
-        <<"summary">> => <<"Получить событие вывода средств">>,
+        <<"summary">> => <<"Get an event of withdrawal">>,
         <<"operationId">> => <<"getWithdrawalEvents">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 32,
@@ -2676,7 +2676,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
-          <<"description">> => <<"Максимальное время обработки запроса">>,
+          <<"description">> => <<"Maximum request processing time">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -2684,7 +2684,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"withdrawalID">>,
           <<"in">> => <<"path">>,
-          <<"description">> => <<"Идентификатор вывода денежных средств">>,
+          <<"description">> => <<"Identifier of the withdrawal">>,
           <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -2692,29 +2692,29 @@ get_raw() ->
         }, #{
           <<"name">> => <<"eventID">>,
           <<"in">> => <<"path">>,
-          <<"description">> => <<"Идентификатор события процедуры идентификации.\n">>,
+          <<"description">> => <<"Identifier of the identification procedure event.\n">>,
           <<"required">> => true,
           <<"type">> => <<"integer">>,
           <<"format">> => <<"int32">>
         } ],
         <<"responses">> => #{
           <<"200">> => #{
-            <<"description">> => <<"Событие найдено">>,
+            <<"description">> => <<"Event found">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/WithdrawalEvent">>
             }
           },
           <<"400">> => #{
-            <<"description">> => <<"Недопустимые для операции входные данные">>,
+            <<"description">> => <<"Invalid input data for operation">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/BadRequest">>
             }
           },
           <<"401">> => #{
-            <<"description">> => <<"Ошибка авторизации">>
+            <<"description">> => <<"Authorization error">>
           },
           <<"404">> => #{
-            <<"description">> => <<"Искомая сущность не найдена">>
+            <<"description">> => <<"The content you are looking for was not found">>
           }
         }
       }
@@ -2722,7 +2722,7 @@ get_raw() ->
   },
   <<"securityDefinitions">> => #{
     <<"bearer">> => #{
-      <<"description">> => <<"Для аутентификации вызовов мы используем [JWT](https://jwt.io). Соответствующий ключ передается в заголовке.\n```shell\n Authorization: Bearer {YOUR_API_KEY_JWT}\n```\n">>,
+      <<"description">> => <<"We use [JWT](https://jwt.io) for call authentication. The corresponding key is passed in the header.\n```shell\n Authorization: Bearer {YOUR_API_KEY_JWT}\n```\n">>,
       <<"type">> => <<"apiKey">>,
       <<"name">> => <<"Authorization">>,
       <<"in">> => <<"header">>
@@ -2737,16 +2737,16 @@ get_raw() ->
           <<"type">> => <<"integer">>,
           <<"format">> => <<"int64">>,
           <<"example">> => 1430000,
-          <<"description">> => <<"Сумма денежных средств в минорных единицах, например, в копейках\n">>
+          <<"description">> => <<"The amount of money in minor units, for example, in cents\n">>
         },
         <<"currency">> => #{
           <<"type">> => <<"string">>,
-          <<"example">> => <<"RUB">>,
-          <<"description">> => <<"Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
+          <<"example">> => <<"USD">>,
+          <<"description">> => <<"Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
           <<"pattern">> => <<"^[A-Z]{3}$">>
         }
       },
-      <<"description">> => <<"Объём денежных средств\n">>
+      <<"description">> => <<"The amount of money\n">>
     },
     <<"BankCardDestinationResource">> => #{
       <<"allOf">> => [ #{
@@ -2754,7 +2754,7 @@ get_raw() ->
       }, #{
         <<"$ref">> => <<"#/definitions/SecuredBankCard">>
       } ],
-      <<"description">> => <<"Банковская карта">>
+      <<"description">> => <<"Card">>
     },
     <<"BankCardReceiverResource">> => #{
       <<"allOf">> => [ #{
@@ -2766,12 +2766,12 @@ get_raw() ->
         <<"properties">> => #{
           <<"paymentSystem">> => #{
             <<"type">> => <<"string">>,
-            <<"description">> => <<"Платежная система.\n\nНабор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getWithdrawalMethods).\n">>,
+            <<"description">> => <<"Payment system.\n\nThe set of systems available for making withdrawals can be found by calling the corresponding [operation](#operation/getWithdrawalMethods).\n">>,
             <<"readOnly">> => true
           }
         }
       } ],
-      <<"description">> => <<"Банковская карта">>
+      <<"description">> => <<"Card">>
     },
     <<"BankCardReceiverResourceParams">> => #{
       <<"allOf">> => [ #{
@@ -2791,7 +2791,7 @@ get_raw() ->
         <<"properties">> => #{
           <<"paymentSystem">> => #{
             <<"type">> => <<"string">>,
-            <<"description">> => <<"Платежная система.\n\nНабор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getWithdrawalMethods).\n">>,
+            <<"description">> => <<"Payment system.\n\nThe set of systems available for making withdrawals can be found by calling the corresponding [operation](#operation/getWithdrawalMethods).\n">>,
             <<"readOnly">> => true
           }
         }
@@ -2809,12 +2809,12 @@ get_raw() ->
         <<"properties">> => #{
           <<"authData">> => #{
             <<"type">> => <<"string">>,
-            <<"description">> => <<"Данные авторизации, полученные при сохранении карты">>,
+            <<"description">> => <<"Authorization data received when saving the card">>,
             <<"maxLength">> => 1000
           }
         }
       } ],
-      <<"description">> => <<"Банковская карта">>
+      <<"description">> => <<"Card">>
     },
     <<"BrowserGetRequest">> => #{
       <<"allOf">> => [ #{
@@ -2825,7 +2825,7 @@ get_raw() ->
         <<"properties">> => #{
           <<"uriTemplate">> => #{
             <<"type">> => <<"string">>,
-            <<"description">> => <<"Шаблон значения URL для перехода в браузере\n\nШаблон представлен согласно стандарту\n[RFC6570](https://tools.ietf.org/html/rfc6570).\n">>
+            <<"description">> => <<"URL value template for browser navigation\n\nThe template is represented according to the standard\n[RFC6570](https://tools.ietf.org/html/rfc6570).\n">>
           }
         }
       } ]
@@ -2839,7 +2839,7 @@ get_raw() ->
         <<"properties">> => #{
           <<"uriTemplate">> => #{
             <<"type">> => <<"string">>,
-            <<"description">> => <<"Шаблон значения URL для отправки формы\n\nШаблон представлен согласно стандарту\n[RFC6570](https://tools.ietf.org/html/rfc6570).\n">>
+            <<"description">> => <<"URL value template for form submission\n\nThe template is represented according to the standard\n[RFC6570](https://tools.ietf.org/html/rfc6570).\n">>
           },
           <<"form">> => #{
             <<"$ref">> => <<"#/definitions/UserInteractionForm">>
@@ -2854,7 +2854,7 @@ get_raw() ->
       <<"properties">> => #{
         <<"requestType">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Тип браузерной операции">>
+          <<"description">> => <<"Type of browser operation">>
         }
       }
     },
@@ -2864,24 +2864,24 @@ get_raw() ->
         <<"email">> => #{
           <<"type">> => <<"string">>,
           <<"format">> => <<"email">>,
-          <<"description">> => <<"Адрес электронной почты">>,
+          <<"description">> => <<"Email address">>,
           <<"maxLength">> => 100
         },
         <<"phoneNumber">> => #{
           <<"type">> => <<"string">>,
           <<"format">> => <<"^\\+\\d{4,15}$">>,
-          <<"description">> => <<"Номер мобильного телефона с международным префиксом согласно\n[E.164](https://en.wikipedia.org/wiki/E.164).\n">>
+          <<"description">> => <<"Mobile phone number with international prefix according to\n[E.164](https://en.wikipedia.org/wiki/E.164).\n">>
         }
       },
-      <<"description">> => <<"Контактные данные">>
+      <<"description">> => <<"Contact details">>
     },
     <<"ContinuationToken">> => #{
       <<"type">> => <<"string">>,
-      <<"description">> => <<"Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n">>
+      <<"description">> => <<"A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n">>
     },
     <<"CryptoCurrency">> => #{
       <<"type">> => <<"string">>,
-      <<"description">> => <<"Криптовалюта.\n\nНабор криптовалют, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getWithdrawalMethods).\n">>,
+      <<"description">> => <<"Cryptocurrency.\n\nThe set of cryptocurrencies available for withdrawals can be found out by calling the appropriate [operation](#operation/getWithdrawalMethods).\n">>,
       <<"example">> => <<"BTC">>
     },
     <<"CryptoWallet">> => #{
@@ -2891,17 +2891,17 @@ get_raw() ->
         <<"id">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQ">>,
-          <<"description">> => <<"Идентификатор (он же адрес) криптовалютного кошелька">>,
+          <<"description">> => <<"Identifier (aka address) of a cryptocurrency wallet">>,
           <<"minLength">> => 16,
           <<"maxLength">> => 256
         },
         <<"currency">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"BTC">>,
-          <<"description">> => <<"Криптовалюта.\n\nНабор криптовалют, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getWithdrawalMethods).\n">>
+          <<"description">> => <<"Cryptocurrency.\n\nThe set of cryptocurrencies available for withdrawals can be found out by calling the appropriate [operation](#operation/getWithdrawalMethods).\n">>
         }
       },
-      <<"description">> => <<"Данные криптовалютного кошелька">>
+      <<"description">> => <<"Cryptocurrency wallet details">>
     },
     <<"CryptoWalletDestinationResource">> => #{
       <<"allOf">> => [ #{
@@ -2909,7 +2909,7 @@ get_raw() ->
       }, #{
         <<"$ref">> => <<"#/definitions/CryptoWallet">>
       } ],
-      <<"description">> => <<"Криптовалютные денежные средства">>
+      <<"description">> => <<"Cryptocurrency funds">>
     },
     <<"Currency">> => #{
       <<"type">> => <<"object">>,
@@ -2917,47 +2917,47 @@ get_raw() ->
       <<"properties">> => #{
         <<"id">> => #{
           <<"type">> => <<"string">>,
-          <<"example">> => <<"RUB">>,
-          <<"description">> => <<"Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
+          <<"example">> => <<"USD">>,
+          <<"description">> => <<"Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
           <<"pattern">> => <<"^[A-Z]{3}$">>
         },
         <<"numericCode">> => #{
           <<"type">> => <<"string">>,
-          <<"example">> => <<"643">>,
-          <<"description">> => <<"Цифровой код валюты согласно\n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm)\n">>,
+          <<"example">> => <<"840">>,
+          <<"description">> => <<"Digital currency code according to\n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm)\n">>,
           <<"pattern">> => <<"^[0-9]{3}$">>
         },
         <<"name">> => #{
           <<"type">> => <<"string">>,
-          <<"example">> => <<"Российский рубль">>,
-          <<"description">> => <<"Человекочитаемое название валюты\n">>
+          <<"example">> => <<"United States Dollar">>,
+          <<"description">> => <<"Human readable currency name\n">>
         },
         <<"sign">> => #{
           <<"type">> => <<"string">>,
-          <<"example">> => <<"₽">>,
-          <<"description">> => <<"Знак единицы валюты\n">>
+          <<"example">> => <<"$">>,
+          <<"description">> => <<"Currency unit sign\n">>
         },
         <<"exponent">> => #{
           <<"type">> => <<"integer">>,
           <<"example">> => 2,
-          <<"description">> => <<"Количество допустимых знаков после запятой в сумме средств, в которых может\nуказываться количество минорных денежных единиц\n">>,
+          <<"description">> => <<"The number of acceptable decimal places in the amount of funds, \nin which the number of minor monetary units can be indicated\n">>,
           <<"minimum">> => 0
         }
       },
-      <<"description">> => <<"Описание валюты">>,
+      <<"description">> => <<"Currency description">>,
       <<"example">> => #{
-        <<"name">> => <<"Российский рубль">>,
-        <<"sign">> => <<"₽">>,
-        <<"id">> => <<"RUB">>,
-        <<"numericCode">> => <<"643">>,
+        <<"name">> => <<"United States Dollar">>,
+        <<"sign">> => <<"$">>,
+        <<"id">> => <<"USD">>,
+        <<"numericCode">> => <<"840">>,
         <<"exponent">> => 2
       }
     },
     <<"CurrencyID">> => #{
       <<"type">> => <<"string">>,
       <<"pattern">> => <<"^[A-Z]{3}$">>,
-      <<"description">> => <<"Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
-      <<"example">> => <<"RUB">>
+      <<"description">> => <<"Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
+      <<"example">> => <<"USD">>
     },
     <<"Deposit">> => #{
       <<"allOf">> => [ #{
@@ -2967,24 +2967,24 @@ get_raw() ->
           <<"id">> => #{
             <<"type">> => <<"string">>,
             <<"example">> => <<"tZ0jUmlsV0">>,
-            <<"description">> => <<"Идентификатор поступления денежных средств">>,
+            <<"description">> => <<"Deposit identifier">>,
             <<"readOnly">> => true
           },
           <<"createdAt">> => #{
             <<"type">> => <<"string">>,
             <<"format">> => <<"date-time">>,
-            <<"description">> => <<"Дата и время запуска пополнения">>,
+            <<"description">> => <<"Deposit start date and time">>,
             <<"readOnly">> => true
           },
           <<"wallet">> => #{
             <<"type">> => <<"string">>,
             <<"example">> => <<"10068321">>,
-            <<"description">> => <<"Идентификатор кошелька">>
+            <<"description">> => <<"Identifier of the wallet">>
           },
           <<"source">> => #{
             <<"type">> => <<"string">>,
             <<"example">> => <<"107498">>,
-            <<"description">> => <<"Идентификатор источника денежных средств">>
+            <<"description">> => <<"Funds source identifier">>
           },
           <<"body">> => #{
             <<"$ref">> => <<"#/definitions/Deposit_body">>
@@ -2995,13 +2995,13 @@ get_raw() ->
           <<"externalID">> => #{
             <<"type">> => <<"string">>,
             <<"example">> => <<"10036274">>,
-            <<"description">> => <<"Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n">>
+            <<"description">> => <<"The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n">>
           }
         }
       }, #{
         <<"$ref">> => <<"#/definitions/DepositStatus">>
       } ],
-      <<"description">> => <<"Данные поступления денежных средств">>
+      <<"description">> => <<"Deposit data">>
     },
     <<"DepositAdjustment">> => #{
       <<"allOf">> => [ #{
@@ -3010,25 +3010,25 @@ get_raw() ->
           <<"id">> => #{
             <<"type">> => <<"string">>,
             <<"example">> => <<"tZ0jUmlsV0">>,
-            <<"description">> => <<"Идентификатор корректировки поступления денежных средств">>,
+            <<"description">> => <<"Deposit adjustment identifier">>,
             <<"readOnly">> => true
           },
           <<"createdAt">> => #{
             <<"type">> => <<"string">>,
             <<"format">> => <<"date-time">>,
-            <<"description">> => <<"Дата и время запуска корректировки">>,
+            <<"description">> => <<"Date and time the adjustment was started">>,
             <<"readOnly">> => true
           },
           <<"externalID">> => #{
             <<"type">> => <<"string">>,
             <<"example">> => <<"10036274">>,
-            <<"description">> => <<"Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n">>
+            <<"description">> => <<"The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n">>
           }
         }
       }, #{
         <<"$ref">> => <<"#/definitions/DepositAdjustmentStatus">>
       } ],
-      <<"description">> => <<"Данные корректировки поступления денежных средств">>
+      <<"description">> => <<"Deposit adjustment data">>
     },
     <<"DepositAdjustmentFailure">> => #{
       <<"type">> => <<"object">>,
@@ -3036,7 +3036,7 @@ get_raw() ->
       <<"properties">> => #{
         <<"code">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Код ошибки коррекции">>
+          <<"description">> => <<"Adjustment error code">>
         },
         <<"subError">> => #{
           <<"$ref">> => <<"#/definitions/SubFailure">>
@@ -3045,7 +3045,7 @@ get_raw() ->
     },
     <<"DepositAdjustmentID">> => #{
       <<"type">> => <<"string">>,
-      <<"description">> => <<"Идентификатор корректировки поступления денежных средств">>,
+      <<"description">> => <<"Deposit adjustment identifier">>,
       <<"example">> => <<"tZ0jUmlsV0">>
     },
     <<"DepositAdjustmentStatus">> => #{
@@ -3053,7 +3053,7 @@ get_raw() ->
       <<"properties">> => #{
         <<"status">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Статус корректировки поступления денежных средств.\n\n| Значение    | Пояснение                                               |\n| ----------- | ------------------------------------------------------- |\n| `Pending`   | Корректировка в процессе выполнения                     |\n| `Succeeded` | Корректировка произведёна успешно                       |\n| `Failed`    | Корректировка завершилась неудачей                      |\n">>,
+          <<"description">> => <<"Deposit adjustment status.\n\n| Meaning     | Explanation                                             |\n| ----------- | ------------------------------------------------------- |\n| `Pending`   | Adjustment in progress                                  |\n| `Succeeded` | Adjustment completed successfully                       |\n| `Failed`    | Adjustment failed                                       |\n">>,
           <<"readOnly">> => true,
           <<"enum">> => [ <<"Pending">>, <<"Succeeded">>, <<"Failed">> ]
         },
@@ -3068,7 +3068,7 @@ get_raw() ->
       <<"properties">> => #{
         <<"code">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Код ошибки поступления">>
+          <<"description">> => <<"Deposit error code">>
         },
         <<"subError">> => #{
           <<"$ref">> => <<"#/definitions/SubFailure">>
@@ -3077,7 +3077,7 @@ get_raw() ->
     },
     <<"DepositID">> => #{
       <<"type">> => <<"string">>,
-      <<"description">> => <<"Идентификатор поступления денежных средств">>,
+      <<"description">> => <<"Deposit identifier">>,
       <<"example">> => <<"tZ0jUmlsV0">>
     },
     <<"DepositRevert">> => #{
@@ -3088,24 +3088,24 @@ get_raw() ->
           <<"id">> => #{
             <<"type">> => <<"string">>,
             <<"example">> => <<"10068321">>,
-            <<"description">> => <<"Идентификатор отмены поступления денежных средств ">>,
+            <<"description">> => <<"Deposit revert identifier">>,
             <<"readOnly">> => true
           },
           <<"createdAt">> => #{
             <<"type">> => <<"string">>,
             <<"format">> => <<"date-time">>,
-            <<"description">> => <<"Дата и время запуска отмены">>,
+            <<"description">> => <<"Date and time of revert start">>,
             <<"readOnly">> => true
           },
           <<"wallet">> => #{
             <<"type">> => <<"string">>,
             <<"example">> => <<"10068321">>,
-            <<"description">> => <<"Идентификатор кошелька">>
+            <<"description">> => <<"Identifier of the wallet">>
           },
           <<"source">> => #{
             <<"type">> => <<"string">>,
             <<"example">> => <<"107498">>,
-            <<"description">> => <<"Идентификатор источника денежных средств">>
+            <<"description">> => <<"Funds source identifier">>
           },
           <<"body">> => #{
             <<"$ref">> => <<"#/definitions/DepositRevert_body">>
@@ -3116,13 +3116,13 @@ get_raw() ->
           <<"externalID">> => #{
             <<"type">> => <<"string">>,
             <<"example">> => <<"10036274">>,
-            <<"description">> => <<"Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n">>
+            <<"description">> => <<"The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n">>
           }
         }
       }, #{
         <<"$ref">> => <<"#/definitions/DepositRevertStatus">>
       } ],
-      <<"description">> => <<"Данные отмены поступления денежных средств">>
+      <<"description">> => <<"Deposit revert data">>
     },
     <<"DepositRevertFailure">> => #{
       <<"type">> => <<"object">>,
@@ -3130,7 +3130,7 @@ get_raw() ->
       <<"properties">> => #{
         <<"code">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Код ошибки отмены">>
+          <<"description">> => <<"Deposit revert error code">>
         },
         <<"subError">> => #{
           <<"$ref">> => <<"#/definitions/SubFailure">>
@@ -3139,7 +3139,7 @@ get_raw() ->
     },
     <<"DepositRevertID">> => #{
       <<"type">> => <<"string">>,
-      <<"description">> => <<"Идентификатор отмены поступления денежных средств ">>,
+      <<"description">> => <<"Deposit revert identifier">>,
       <<"example">> => <<"10068321">>
     },
     <<"DepositRevertStatus">> => #{
@@ -3147,7 +3147,7 @@ get_raw() ->
       <<"properties">> => #{
         <<"status">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Статус отмены поступления денежных средств.\n\n| Значение    | Пояснение                                               |\n| ----------- | ------------------------------------------------------- |\n| `Pending`   | Отмена в процессе выполнения                            |\n| `Succeeded` | Отмена поступления средств произведёна успешно          |\n| `Failed`    | Отмена поступления средств завершилась неудачей         |\n">>,
+          <<"description">> => <<"Deposit revert status.\n\n| Meaning     | Explanation                                             |\n| ----------- | ------------------------------------------------------- |\n| `Pending`   | Deposit revert in progress                              |\n| `Succeeded` | Deposit revert completed successfully                   |\n| `Failed`    | Deposit revert failed                                   |\n">>,
           <<"readOnly">> => true,
           <<"enum">> => [ <<"Pending">>, <<"Succeeded">>, <<"Failed">> ]
         },
@@ -3161,7 +3161,7 @@ get_raw() ->
       <<"properties">> => #{
         <<"status">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Статус поступления денежных средств.\n\n| Значение    | Пояснение                                        |\n| ----------- | ------------------------------------------------ |\n| `Pending`   | Поступление в процессе выполнения                |\n| `Succeeded` | Поступление средств произведён успешно           |\n| `Failed`    | Поступление средств завершился неудачей          |\n">>,
+          <<"description">> => <<"Status of deposit.\n\n| Meaning     | Explanation                                      |\n| ----------- | ------------------------------------------------ |\n| `Pending`   | Deposit in progress                              |\n| `Succeeded` | Deposit of funds made successfully               |\n| `Failed`    | Deposit of funds ended in failure                |\n">>,
           <<"readOnly">> => true,
           <<"enum">> => [ <<"Pending">>, <<"Succeeded">>, <<"Failed">> ]
         },
@@ -3178,35 +3178,35 @@ get_raw() ->
           <<"id">> => #{
             <<"type">> => <<"string">>,
             <<"example">> => <<"107498">>,
-            <<"description">> => <<"Идентификатор приёмника денежных средств">>,
+            <<"description">> => <<"Destination identifier">>,
             <<"readOnly">> => true
           },
           <<"name">> => #{
             <<"type">> => <<"string">>,
             <<"example">> => <<"Squarey plastic thingy">>,
-            <<"description">> => <<"Человекочитаемое название приёмника средств, по которому его легко узнать\n">>
+            <<"description">> => <<"A human-readable name for the destination by which it is easily recognizable\n">>
           },
           <<"createdAt">> => #{
             <<"type">> => <<"string">>,
             <<"format">> => <<"date-time">>,
-            <<"description">> => <<"Дата и время создания приёмника средств">>,
+            <<"description">> => <<"Date and time of creation of the destination of the funds">>,
             <<"readOnly">> => true
           },
           <<"isBlocked">> => #{
             <<"type">> => <<"boolean">>,
             <<"example">> => false,
-            <<"description">> => <<"Заблокирован ли приёмник средств?">>,
+            <<"description">> => <<"Is the destination blocked?">>,
             <<"readOnly">> => true
           },
           <<"identity">> => #{
             <<"type">> => <<"string">>,
             <<"example">> => <<"10036274">>,
-            <<"description">> => <<"Идентификатор личности владельца кошелька">>
+            <<"description">> => <<"Identifier of wallet owner">>
           },
           <<"currency">> => #{
             <<"type">> => <<"string">>,
-            <<"example">> => <<"RUB">>,
-            <<"description">> => <<"Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
+            <<"example">> => <<"USD">>,
+            <<"description">> => <<"Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
             <<"pattern">> => <<"^[A-Z]{3}$">>
           },
           <<"resource">> => #{
@@ -3217,19 +3217,19 @@ get_raw() ->
             <<"example">> => #{
               <<"color_hint">> => <<"olive-green">>
             },
-            <<"description">> => <<"Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с\nданным приёмником\n">>,
+            <<"description">> => <<"Some non-transparent for system set of data associated with this destination\n">>,
             <<"properties">> => #{ }
           },
           <<"externalID">> => #{
             <<"type">> => <<"string">>,
             <<"example">> => <<"10036274">>,
-            <<"description">> => <<"Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n">>
+            <<"description">> => <<"The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n">>
           }
         }
       }, #{
         <<"$ref">> => <<"#/definitions/DestinationStatus">>
       } ],
-      <<"description">> => <<"Данные приёмника денежных средств">>
+      <<"description">> => <<"Destination data">>
     },
     <<"DestinationGrantRequest">> => #{
       <<"type">> => <<"object">>,
@@ -3238,7 +3238,7 @@ get_raw() ->
         <<"token">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n">>,
-          <<"description">> => <<"Токен, дающий право управления выводами">>,
+          <<"description">> => <<"Token granting the permission to control the withdrawals">>,
           <<"readOnly">> => true,
           <<"minLength">> => 1,
           <<"maxLength">> => 4000
@@ -3246,10 +3246,10 @@ get_raw() ->
         <<"validUntil">> => #{
           <<"type">> => <<"string">>,
           <<"format">> => <<"date-time">>,
-          <<"description">> => <<"Дата и время, до наступления которых выданное право действительно\n">>
+          <<"description">> => <<"The date and time by which the granted right is valid\n">>
         }
       },
-      <<"description">> => <<"Запрос на право управления выводами на приёмник средств">>,
+      <<"description">> => <<"Request for the permission to control the withdrawals to the destination">>,
       <<"example">> => #{
         <<"validUntil">> => <<"2000-01-23T04:56:07.000+00:00">>,
         <<"token">> => <<"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n">>
@@ -3257,7 +3257,7 @@ get_raw() ->
     },
     <<"DestinationID">> => #{
       <<"type">> => <<"string">>,
-      <<"description">> => <<"Идентификатор приёмника денежных средств">>,
+      <<"description">> => <<"Destination identifier">>,
       <<"example">> => <<"107498">>
     },
     <<"DestinationResource">> => #{
@@ -3267,11 +3267,11 @@ get_raw() ->
       <<"properties">> => #{
         <<"type">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Тип ресурса приёмника средств.\n\nСм. [Vality Payment Resource API](?api/payres/swagger.yaml).\n">>,
+          <<"description">> => <<"The resource type of the destination.\n\nSee [Vality Withdrawal Resource API](?api/payres/swagger.yaml).\n">>,
           <<"enum">> => [ <<"BankCardDestinationResource">>, <<"CryptoWalletDestinationResource">>, <<"DigitalWalletDestinationResource">> ]
         }
       },
-      <<"description">> => <<"Ресурс приёмника денежных средств, используемый для осуществления выводов">>,
+      <<"description">> => <<"Destination resource used to make withdrawals">>,
       <<"x-discriminator-is-enum">> => true
     },
     <<"DestinationStatus">> => #{
@@ -3280,14 +3280,14 @@ get_raw() ->
         <<"status">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"Authorized">>,
-          <<"description">> => <<"Статус приёмника денежных средств.\n\n| Значение       | Пояснение                                  |\n| -------------- | ------------------------------------------ |\n| `Unauthorized` | Не авторизован владельцем на вывод средств |\n| `Authorized`   | Авторизован владельцем на вывод средств    |\n">>,
+          <<"description">> => <<"The status of the destination.\n\n| Meaning        | Explanation                                   |\n| -------------- | --------------------------------------------- |\n| `Unauthorized` | Not authorized by the owner to withdraw funds |\n| `Authorized`   | Authorized by the owner to withdraw funds     |\n">>,
           <<"readOnly">> => true,
           <<"enum">> => [ <<"Unauthorized">>, <<"Authorized">> ]
         },
         <<"validUntil">> => #{
           <<"type">> => <<"string">>,
           <<"format">> => <<"date-time">>,
-          <<"description">> => <<"> Если `status` == `Authorized`\n\nДата и время, до наступления которых авторизация действительна\n">>,
+          <<"description">> => <<"> If `status` == `Authorized`\n\nDate and time until which authorization is valid\n">>,
           <<"readOnly">> => true
         }
       }
@@ -3301,7 +3301,7 @@ get_raw() ->
         <<"properties">> => #{
           <<"eventTypes">> => #{
             <<"type">> => <<"array">>,
-            <<"description">> => <<"Набор типов событий приёмника денежных средств, о которых следует оповещать">>,
+            <<"description">> => <<"Set of event types of the destination, which should be notified">>,
             <<"items">> => #{
               <<"type">> => <<"string">>,
               <<"enum">> => [ <<"DestinationCreated">>, <<"DestinationUnauthorized">>, <<"DestinationAuthorized">> ]
@@ -3309,7 +3309,7 @@ get_raw() ->
           }
         }
       } ],
-      <<"description">> => <<"Область охвата, включающая события по приёмникам денежных средств\nв рамках определённого кошелька\n">>
+      <<"description">> => <<"A coverage area that includes events by asset destinations within a particular wallet\n">>
     },
     <<"DigitalWallet">> => #{
       <<"type">> => <<"object">>,
@@ -3318,24 +3318,24 @@ get_raw() ->
         <<"id">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQ">>,
-          <<"description">> => <<"Идентификатор цифрового кошелька">>,
+          <<"description">> => <<"Digital wallet ID">>,
           <<"minLength">> => 1,
           <<"maxLength">> => 100
         },
         <<"provider">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"Paypal">>,
-          <<"description">> => <<"Провайдер электронных денежных средств.\n\nНабор провайдеров, доступных для проведения выплат, можно узнать, вызвав\nсоответствующую [операцию](#operation/getWithdrawalMethods).\n">>
+          <<"description">> => <<"Digital wallet provider.\n\nThe set of providers available for making withdrawals can be found by calling\ncorresponding [operation](#operation/getWithdrawalMethods).\n">>
         },
         <<"token">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<" eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c">>,
-          <<"description">> => <<"Строка, содержащая данные для авторизации операций над этим кошельком">>,
+          <<"description">> => <<"A string containing authorization data for transactions on this digital wallet">>,
           <<"minLength">> => 1,
           <<"maxLength">> => 4000
         }
       },
-      <<"description">> => <<"Данные цифрового кошелька">>
+      <<"description">> => <<"Digital wallet data">>
     },
     <<"DigitalWalletDestinationResource">> => #{
       <<"allOf">> => [ #{
@@ -3343,11 +3343,11 @@ get_raw() ->
       }, #{
         <<"$ref">> => <<"#/definitions/DigitalWallet">>
       } ],
-      <<"description">> => <<"Цифровой кошелек">>
+      <<"description">> => <<"Digital wallet">>
     },
     <<"DigitalWalletProvider">> => #{
       <<"type">> => <<"string">>,
-      <<"description">> => <<"Провайдер электронных денежных средств.\n\nНабор провайдеров, доступных для проведения выплат, можно узнать, вызвав\nсоответствующую [операцию](#operation/getWithdrawalMethods).\n">>,
+      <<"description">> => <<"Digital wallet provider.\n\nThe set of providers available for making withdrawals can be found by calling\ncorresponding [operation](#operation/getWithdrawalMethods).\n">>,
       <<"example">> => <<"Paypal">>
     },
     <<"InvalidOperationParameters">> => #{
@@ -3358,11 +3358,11 @@ get_raw() ->
           <<"example">> => <<"No such identity challenge type: fms.\n">>
         }
       },
-      <<"description">> => <<"Неверные входные данные для операции">>
+      <<"description">> => <<"Invalid input data for operation">>
     },
     <<"ExternalID">> => #{
       <<"type">> => <<"string">>,
-      <<"description">> => <<"Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n">>,
+      <<"description">> => <<"The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n">>,
       <<"example">> => <<"10036274">>
     },
     <<"FileDownload">> => #{
@@ -3371,12 +3371,12 @@ get_raw() ->
       <<"properties">> => #{
         <<"url">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"URL файла">>
+          <<"description">> => <<"URL of the file">>
         },
         <<"expiresAt">> => #{
           <<"type">> => <<"string">>,
           <<"format">> => <<"date-time">>,
-          <<"description">> => <<"Время до которого ссылка будет считаться действительной">>
+          <<"description">> => <<"The date and time by which the link will be valid">>
         }
       },
       <<"example">> => #{
@@ -3386,7 +3386,7 @@ get_raw() ->
     },
     <<"GenericProvider">> => #{
       <<"type">> => <<"string">>,
-      <<"description">> => <<"Провайдер сервисов выплат.\n\nНабор провайдеров, доступных для проведения выплат, можно узнать, вызвав\nсоответствующую [операцию](#operation/getWithdrawalMethods).\n">>,
+      <<"description">> => <<"Withdrawal service provider.\n\nThe set of providers available for making withdrawals can be found by calling\ncorresponding [operation](#operation/getWithdrawalMethods).\n">>,
       <<"example">> => <<"YourBankName">>
     },
     <<"GrantToken">> => #{
@@ -3402,56 +3402,56 @@ get_raw() ->
         <<"id">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"10036274">>,
-          <<"description">> => <<"Идентификатор личности владельца кошелька">>,
+          <<"description">> => <<"Identifier of wallet owner">>,
           <<"readOnly">> => true
         },
         <<"name">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"Keyn Fawkes">>,
-          <<"description">> => <<"Человекочитаемое имя личности владельца, по которому его легко опознать\n">>
+          <<"description">> => <<"Human-readable name of the owner's identity, by which he can be easily identified\n">>
         },
         <<"createdAt">> => #{
           <<"type">> => <<"string">>,
           <<"format">> => <<"date-time">>,
-          <<"description">> => <<"Дата и время создания личности владельца">>,
+          <<"description">> => <<"Date and time the owner identity was created">>,
           <<"readOnly">> => true
         },
         <<"provider">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"serviceprovider">>,
-          <<"description">> => <<"Идентификатор провайдера услуг">>
+          <<"description">> => <<"Identifier of the service provider">>
         },
         <<"isBlocked">> => #{
           <<"type">> => <<"boolean">>,
           <<"example">> => false,
-          <<"description">> => <<"Заблокирована ли личность владельца?">>,
+          <<"description">> => <<"Is the owner's identity blocked?">>,
           <<"readOnly">> => true
         },
         <<"metadata">> => #{
           <<"type">> => <<"object">>,
           <<"example">> => #{
-            <<"lkDisplayName">> => <<"Сергей Иванович">>
+            <<"lkDisplayName">> => <<"James Smith">>
           },
-          <<"description">> => <<"Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с\nданной личностью владельца\n">>,
+          <<"description">> => <<"Some non-transparent for system set of data associated with this identity\n">>,
           <<"properties">> => #{ }
         },
         <<"externalID">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"10036274">>,
-          <<"description">> => <<"Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n">>
+          <<"description">> => <<"The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n">>
         },
         <<"partyID">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Уникальный в рамках системы идентификатор участника.">>,
+          <<"description">> => <<"The participant's unique identifier within the system.">>,
           <<"minLength">> => 1,
           <<"maxLength">> => 40
         }
       },
-      <<"description">> => <<"Данные личности владельца кошельков">>,
+      <<"description">> => <<"Data of the wallet owner">>,
       <<"example">> => #{
         <<"createdAt">> => <<"2000-01-23T04:56:07.000+00:00">>,
         <<"metadata">> => #{
-          <<"lkDisplayName">> => <<"Сергей Иванович">>
+          <<"lkDisplayName">> => <<"James Smith">>
         },
         <<"provider">> => <<"serviceprovider">>,
         <<"name">> => <<"Keyn Fawkes">>,
@@ -3463,7 +3463,7 @@ get_raw() ->
     },
     <<"IdentityID">> => #{
       <<"type">> => <<"string">>,
-      <<"description">> => <<"Идентификатор личности владельца кошелька">>,
+      <<"description">> => <<"Identifier of wallet owner">>,
       <<"example">> => <<"10036274">>
     },
     <<"BadRequest">> => #{
@@ -3473,18 +3473,18 @@ get_raw() ->
         <<"errorType">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"NotFound">>,
-          <<"description">> => <<"Тип ошибки в данных">>,
+          <<"description">> => <<"Error type">>,
           <<"enum">> => [ <<"SchemaViolated">>, <<"NotFound">>, <<"WrongType">>, <<"NotInRange">>, <<"WrongSize">>, <<"WrongLength">>, <<"WrongArray">>, <<"NoMatch">>, <<"InvalidResourceToken">>, <<"InvalidToken">> ]
         },
         <<"name">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"X-Request-ID">>,
-          <<"description">> => <<"Имя или идентификатор элемента сообщения, содержащего недопустимые данные">>
+          <<"description">> => <<"Name or identifier of message element containing invalid data">>
         },
         <<"description">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"Required parameter was not sent">>,
-          <<"description">> => <<"Пояснение, почему данные считаются недопустимыми">>
+          <<"description">> => <<"Explanation of why the data is invalid">>
         }
       }
     },
@@ -3494,21 +3494,21 @@ get_raw() ->
         <<"externalID">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"10036274">>,
-          <<"description">> => <<"Переданное значение `externalID`, для которого обнаружен конфликт параметров запроса">>
+          <<"description">> => <<"The passed value of `externalID` for which a request parameter conflict was detected">>
         },
         <<"id">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Идентификатор сущности, созданной предыдущим запросом с указанным `externalID`">>
+          <<"description">> => <<"Identifier of the entity, created by a previous query with the specified `externalID'">>
         },
         <<"message">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Человекочитаемое описание ошибки">>
+          <<"description">> => <<"Human-readable description of the error">>
         }
       }
     },
     <<"BankCardPaymentSystem">> => #{
       <<"type">> => <<"string">>,
-      <<"description">> => <<"Платежная система.\n\nНабор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getWithdrawalMethods).\n">>
+      <<"description">> => <<"Payment system.\n\nThe set of systems available for making withdrawals can be found by calling the corresponding [operation](#operation/getWithdrawalMethods).\n">>
     },
     <<"SecuredBankCard">> => #{
       <<"type">> => <<"object">>,
@@ -3517,32 +3517,32 @@ get_raw() ->
         <<"token">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQg9xMkh">>,
-          <<"description">> => <<"Токен, идентифицирующий исходные данные карты">>,
+          <<"description">> => <<"Token identifying the original card data">>,
           <<"minLength">> => 1,
           <<"maxLength">> => 1000
         },
         <<"bin">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"424242">>,
-          <<"description">> => <<"[Идентификационный номер][1] банка-эмитента карты\n\n[1]: https://en.wikipedia.org/wiki/Payment_card_number#Issuer_identification_number_(IIN)\n">>,
+          <<"description">> => <<"[Identification number][1] of the card issuing bank\n\n[1]: https://en.wikipedia.org/wiki/Payment_card_number#Issuer_identification_number_(IIN)\n">>,
           <<"readOnly">> => true,
           <<"pattern">> => <<"^\\d{6,8}$">>
         },
         <<"lastDigits">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"4242">>,
-          <<"description">> => <<"Последние цифры номера карты">>,
+          <<"description">> => <<"Card last digits">>,
           <<"readOnly">> => true,
           <<"pattern">> => <<"^\\d{2,4}$">>
         }
       },
-      <<"description">> => <<"Безопасные данные банковской карты">>
+      <<"description">> => <<"Secure bank card details">>
     },
     <<"PartyID">> => #{
       <<"type">> => <<"string">>,
       <<"minLength">> => 1,
       <<"maxLength">> => 40,
-      <<"description">> => <<"Уникальный в рамках системы идентификатор участника.">>
+      <<"description">> => <<"The participant's unique identifier within the system.">>
     },
     <<"Provider">> => #{
       <<"type">> => <<"object">>,
@@ -3551,34 +3551,34 @@ get_raw() ->
         <<"id">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"serviceprovider">>,
-          <<"description">> => <<"Идентификатор провайдера услуг">>
+          <<"description">> => <<"Identifier of the service provider">>
         },
         <<"name">> => #{
           <<"type">> => <<"string">>,
-          <<"example">> => <<"ООО «СЕРВИС ПРОВАЙДЕР»">>,
-          <<"description">> => <<"Человекочитаемое наименование провайдера услуг\n">>
+          <<"example">> => <<"SERVICE PROVIDER LLC">>,
+          <<"description">> => <<"Human-readable name of the service provider\n">>
         },
         <<"residences">> => #{
           <<"type">> => <<"array">>,
-          <<"description">> => <<"Резиденции, в которых провайдер предоставляет услуги\n">>,
+          <<"description">> => <<"Residences in which the provider can service\n">>,
           <<"items">> => #{
             <<"type">> => <<"string">>,
             <<"example">> => <<"RUS">>,
-            <<"description">> => <<"Резиденция, символьный код по стандарту [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)\n">>,
+            <<"description">> => <<"Residence symbol code by standard [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)\n">>,
             <<"pattern">> => <<"^[A-Z]{3}$">>
           }
         }
       },
-      <<"description">> => <<"Данные провайдера услуг">>,
+      <<"description">> => <<"Service provider data">>,
       <<"example">> => #{
-        <<"name">> => <<"ООО «СЕРВИС ПРОВАЙДЕР»">>,
+        <<"name">> => <<"SERVICE PROVIDER LLC">>,
         <<"id">> => <<"serviceprovider">>,
         <<"residences">> => [ <<"RUS">>, <<"RUS">> ]
       }
     },
     <<"ProviderID">> => #{
       <<"type">> => <<"string">>,
-      <<"description">> => <<"Идентификатор провайдера услуг">>,
+      <<"description">> => <<"Identifier of the service provider">>,
       <<"example">> => <<"serviceprovider">>
     },
     <<"QuoteParameters">> => #{
@@ -3594,13 +3594,13 @@ get_raw() ->
         <<"identityID">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"10036274">>,
-          <<"description">> => <<"Идентификатор личности владельца кошелька">>
+          <<"description">> => <<"Identifier of wallet owner">>
         },
         <<"body">> => #{
           <<"$ref">> => <<"#/definitions/QuoteParameters_body">>
         }
       },
-      <<"description">> => <<"Параметры запроса комиссий">>
+      <<"description">> => <<"Quote request parameters">>
     },
     <<"ReceiverResource">> => #{
       <<"type">> => <<"object">>,
@@ -3609,11 +3609,11 @@ get_raw() ->
       <<"properties">> => #{
         <<"type">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Тип ресурса получателя средств.\n\nСм. [Vality Payment Resource API](?api/payres/swagger.yaml).\n">>,
+          <<"description">> => <<"The resource type of the receiver of the funds.\n\nSee [Vality Withdrawal Resource API](?api/payres/swagger.yaml).\n">>,
           <<"enum">> => [ <<"BankCardReceiverResource">> ]
         }
       },
-      <<"description">> => <<"Ресурс получателя денежных средств, используемый для осуществления переводов">>,
+      <<"description">> => <<"The beneficiary's resource used to make the transfers">>,
       <<"x-discriminator-is-enum">> => true
     },
     <<"ReceiverResourceParams">> => #{
@@ -3623,11 +3623,11 @@ get_raw() ->
       <<"properties">> => #{
         <<"type">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Тип ресурса получателя средств.\n\nСм. [Vality Payment Resource API](?api/payres/swagger.yaml).\n">>,
+          <<"description">> => <<"The resource type of the payee.\n\nSee [Vality Withdrawal Resource API](?api/payres/swagger.yaml).\n">>,
           <<"enum">> => [ <<"BankCardReceiverResourceParams">> ]
         }
       },
-      <<"description">> => <<"Параметры ресурса получателя денежных средств">>,
+      <<"description">> => <<"Recipient resource parameters">>,
       <<"x-discriminator-is-enum">> => true
     },
     <<"Redirect">> => #{
@@ -3650,31 +3650,31 @@ get_raw() ->
         <<"id">> => #{
           <<"type">> => <<"integer">>,
           <<"format">> => <<"int64">>,
-          <<"description">> => <<"Идентификатор отчета">>
+          <<"description">> => <<"Report identifier">>
         },
         <<"createdAt">> => #{
           <<"type">> => <<"string">>,
           <<"format">> => <<"date-time">>,
-          <<"description">> => <<"Дата и время создания">>
+          <<"description">> => <<"Date and time of creation">>
         },
         <<"fromTime">> => #{
           <<"type">> => <<"string">>,
           <<"format">> => <<"date-time">>,
-          <<"description">> => <<"Дата и время начала периода">>
+          <<"description">> => <<"Date and time of the start of the period">>
         },
         <<"toTime">> => #{
           <<"type">> => <<"string">>,
           <<"format">> => <<"date-time">>,
-          <<"description">> => <<"Дата и время конца периода">>
+          <<"description">> => <<"Date and time of the end of period">>
         },
         <<"status">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Статус формирования отчета">>,
+          <<"description">> => <<"Report generation status">>,
           <<"enum">> => [ <<"pending">>, <<"created">>, <<"canceled">> ]
         },
         <<"type">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Тип отчета">>,
+          <<"description">> => <<"Report type">>,
           <<"enum">> => [ <<"withdrawalRegistry">> ]
         },
         <<"files">> => #{
@@ -3704,18 +3704,18 @@ get_raw() ->
       <<"properties">> => #{
         <<"reportType">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Тип отчета">>,
+          <<"description">> => <<"Type of report">>,
           <<"enum">> => [ <<"withdrawalRegistry">> ]
         },
         <<"fromTime">> => #{
           <<"type">> => <<"string">>,
           <<"format">> => <<"date-time">>,
-          <<"description">> => <<"Начало временного отрезка">>
+          <<"description">> => <<"Start of the time period">>
         },
         <<"toTime">> => #{
           <<"type">> => <<"string">>,
           <<"format">> => <<"date-time">>,
-          <<"description">> => <<"Конец временного отрезка">>
+          <<"description">> => <<"End of the time period">>
         }
       },
       <<"example">> => #{
@@ -3731,31 +3731,31 @@ get_raw() ->
         <<"id">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"RUS">>,
-          <<"description">> => <<"Резиденция, символьный код по стандарту [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)\n">>,
+          <<"description">> => <<"Residence symbol code by standard [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)\n">>,
           <<"pattern">> => <<"^[A-Z]{3}$">>
         },
         <<"name">> => #{
           <<"type">> => <<"string">>,
-          <<"example">> => <<"Российская федерация">>,
-          <<"description">> => <<"Человекочитаемое название региона резиденции\n">>
+          <<"example">> => <<"The United States of America">>,
+          <<"description">> => <<"Human-readable name of the region of residence\n">>
         },
         <<"flag">> => #{
           <<"type">> => <<"string">>,
-          <<"example">> => <<"🇷🇺">>,
-          <<"description">> => <<"Флаг региона резиденции\n">>
+          <<"example">> => <<"🇺🇸">>,
+          <<"description">> => <<"Residence region flag\n">>
         }
       },
-      <<"description">> => <<"Описание региона резиденции">>,
+      <<"description">> => <<"Description of the region of residence">>,
       <<"example">> => #{
-        <<"flag">> => <<"🇷🇺">>,
-        <<"name">> => <<"Российская федерация">>,
+        <<"flag">> => <<"🇺🇸">>,
+        <<"name">> => <<"The United States of America">>,
         <<"id">> => <<"RUS">>
       }
     },
     <<"ResidenceID">> => #{
       <<"type">> => <<"string">>,
       <<"pattern">> => <<"^[A-Z]{3}$">>,
-      <<"description">> => <<"Резиденция, символьный код по стандарту [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)\n">>,
+      <<"description">> => <<"Residence symbol code by standard [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)\n">>,
       <<"example">> => <<"RUS">>
     },
     <<"SenderResource">> => #{
@@ -3765,11 +3765,11 @@ get_raw() ->
       <<"properties">> => #{
         <<"type">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Тип ресурса отправителя средств.\n\nСм. [Vality Payment Resource API](?api/payres/swagger.yaml).\n">>,
+          <<"description">> => <<"The resource type of the sender of the funds.\n\nSee [Vality Withdrawal Resource API](?api/payres/swagger.yaml).\n">>,
           <<"enum">> => [ <<"BankCardSenderResource">> ]
         }
       },
-      <<"description">> => <<"Ресурс отправителя денежных средств, используемый для осуществления переводов">>,
+      <<"description">> => <<"The sender resource used to make transfers">>,
       <<"x-discriminator-is-enum">> => true
     },
     <<"SenderResourceParams">> => #{
@@ -3779,16 +3779,16 @@ get_raw() ->
       <<"properties">> => #{
         <<"type">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Тип ресурса отправителя средств.\n\nСм. [Vality Payment Resource API](?api/payres/swagger.yaml).\n">>,
+          <<"description">> => <<"The resource type of the sender of the funds.\n\nSee [Vality Withdrawal Resource API](?api/payres/swagger.yaml).\n">>,
           <<"enum">> => [ <<"BankCardSenderResourceParams">> ]
         }
       },
-      <<"description">> => <<"Параметры ресурса отправителя денежных средств">>,
+      <<"description">> => <<"Fund sender resource settings">>,
       <<"x-discriminator-is-enum">> => true
     },
     <<"SourceID">> => #{
       <<"type">> => <<"string">>,
-      <<"description">> => <<"Идентификатор источника денежных средств">>,
+      <<"description">> => <<"Funds source identifier">>,
       <<"example">> => <<"107498">>
     },
     <<"SubFailure">> => #{
@@ -3797,21 +3797,16 @@ get_raw() ->
       <<"properties">> => #{
         <<"code">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Детализация кода ошибки">>
+          <<"description">> => <<"Details of the error code">>
         },
         <<"subError">> => #{
           <<"$ref">> => <<"#/definitions/SubFailure">>
         }
       },
-      <<"description">> => <<"Детализация описания ошибки\n">>,
+      <<"description">> => <<"Detailed description of the error\n">>,
       <<"example">> => #{
         <<"code">> => <<"code">>
       }
-    },
-    <<"USDT">> => #{
-      <<"allOf">> => [ #{
-        <<"$ref">> => <<"#/definitions/CryptoWallet">>
-      }, #{ } ]
     },
     <<"UserInteraction">> => #{
       <<"type">> => <<"object">>,
@@ -3820,7 +3815,7 @@ get_raw() ->
       <<"properties">> => #{
         <<"interactionType">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Тип взаимодействия с пользователем">>
+          <<"description">> => <<"Type of interaction with the user">>
         }
       }
     },
@@ -3831,7 +3826,7 @@ get_raw() ->
       <<"properties">> => #{
         <<"changeType">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Вид изменения взаимодействию с пользователем.">>,
+          <<"description">> => <<"Type of change in user interaction.">>,
           <<"enum">> => [ <<"UserInteractionCreated">>, <<"UserInteractionFinished">> ]
         }
       },
@@ -3857,7 +3852,7 @@ get_raw() ->
     },
     <<"UserInteractionForm">> => #{
       <<"type">> => <<"array">>,
-      <<"description">> => <<"Форма для отправки средствами браузера">>,
+      <<"description">> => <<"Browser submission form">>,
       <<"items">> => #{
         <<"$ref">> => <<"#/definitions/UserInteractionForm_inner">>
       }
@@ -3869,14 +3864,14 @@ get_raw() ->
         <<"id">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"10a0b68D3E21">>,
-          <<"description">> => <<"Идентификатор перевода">>,
+          <<"description">> => <<"Transfer identifier">>,
           <<"minLength">> => 1,
           <<"maxLength">> => 40
         },
         <<"createdAt">> => #{
           <<"type">> => <<"string">>,
           <<"format">> => <<"date-time">>,
-          <<"description">> => <<"Дата и время создания">>
+          <<"description">> => <<"Date and time of creation">>
         },
         <<"body">> => #{
           <<"$ref">> => <<"#/definitions/QuoteParameters_body">>
@@ -3893,10 +3888,10 @@ get_raw() ->
         <<"externalID">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"10036274">>,
-          <<"description">> => <<"Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n">>
+          <<"description">> => <<"The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n">>
         }
       },
-      <<"description">> => <<"Данные перевода">>,
+      <<"description">> => <<"Transfer data">>,
       <<"example">> => #{
         <<"createdAt">> => <<"2000-01-23T04:56:07.000+00:00">>,
         <<"receiver">> => <<"10068321">>,
@@ -3905,7 +3900,7 @@ get_raw() ->
         <<"id">> => <<"10a0b68D3E21">>,
         <<"body">> => #{
           <<"amount">> => 1430000,
-          <<"currency">> => <<"RUB">>
+          <<"currency">> => <<"USD">>
         },
         <<"status">> => #{
           <<"failure">> => #{
@@ -3924,19 +3919,19 @@ get_raw() ->
       <<"properties">> => #{
         <<"code">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Основной код ошибки">>
+          <<"description">> => <<"Main error code">>
         },
         <<"subError">> => #{
           <<"$ref">> => <<"#/definitions/SubFailure">>
         }
       },
-      <<"description">> => <<"[Ошибка, возникшая в процессе проведения перевода](#tag/Error-Codes)\n">>
+      <<"description">> => <<"[Error occurred during the transfer process](#tag/Error-Codes)\n">>
     },
     <<"W2WTransferID">> => #{
       <<"type">> => <<"string">>,
       <<"minLength">> => 1,
       <<"maxLength">> => 40,
-      <<"description">> => <<"Идентификатор перевода">>,
+      <<"description">> => <<"Transfer identifier">>,
       <<"example">> => <<"10a0b68D3E21">>
     },
     <<"W2WTransferParameters">> => #{
@@ -3955,17 +3950,17 @@ get_raw() ->
         <<"externalID">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"10036274">>,
-          <<"description">> => <<"Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n">>
+          <<"description">> => <<"The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n">>
         }
       },
-      <<"description">> => <<"Параметры создания перевода">>,
+      <<"description">> => <<"Transfer creation options">>,
       <<"example">> => #{
         <<"receiver">> => <<"10068321">>,
         <<"sender">> => <<"10068321">>,
         <<"externalID">> => <<"10036274">>,
         <<"body">> => #{
           <<"amount">> => 1430000,
-          <<"currency">> => <<"RUB">>
+          <<"currency">> => <<"USD">>
         }
       }
     },
@@ -3975,7 +3970,7 @@ get_raw() ->
       <<"properties">> => #{
         <<"status">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Статус перевода денежных средств.\n\n| Значение    | Пояснение                                  |\n| ----------- | ------------------------------------------ |\n| `Pending`   | Перевод в процессе выполнения                |\n| `Succeeded` | Перевод средств произведён успешно           |\n| `Failed`    | Перевод средств завершился неудачей          |\n">>,
+          <<"description">> => <<"The status of the money transfer.\n\n| Meaning     | Explanation                          |\n| ----------- | ------------------------------------ |\n| `Pending`   | Transfer in progress              |\n| `Succeeded` | Fund transfer completed successfully |\n| `Failed`    | Fund transfer failed                 |\n">>,
           <<"enum">> => [ <<"Pending">>, <<"Succeeded">>, <<"Failed">> ]
         },
         <<"failure">> => #{
@@ -3999,62 +3994,62 @@ get_raw() ->
         <<"id">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"10068321">>,
-          <<"description">> => <<"Идентификатор кошелька">>,
+          <<"description">> => <<"Identifier of the wallet">>,
           <<"readOnly">> => true
         },
         <<"name">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"Worldwide PHP Awareness Initiative">>,
-          <<"description">> => <<"Человекочитаемое название кошелька, по которому его легко узнать">>
+          <<"description">> => <<"Human-readable name of the wallet, by which it is easy to recognize">>
         },
         <<"createdAt">> => #{
           <<"type">> => <<"string">>,
           <<"format">> => <<"date-time">>,
-          <<"description">> => <<"Дата и время создания кошелька">>,
+          <<"description">> => <<"Date and time of wallet creation">>,
           <<"readOnly">> => true
         },
         <<"isBlocked">> => #{
           <<"type">> => <<"boolean">>,
           <<"example">> => false,
-          <<"description">> => <<"Заблокирован ли кошелёк?">>,
+          <<"description">> => <<"Is the wallet blocked?">>,
           <<"readOnly">> => true
         },
         <<"identity">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"10036274">>,
-          <<"description">> => <<"Идентификатор личности владельца кошелька">>
+          <<"description">> => <<"Identifier of wallet owner">>
         },
         <<"currency">> => #{
           <<"type">> => <<"string">>,
-          <<"example">> => <<"RUB">>,
-          <<"description">> => <<"Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
+          <<"example">> => <<"USD">>,
+          <<"description">> => <<"Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
           <<"pattern">> => <<"^[A-Z]{3}$">>
         },
         <<"metadata">> => #{
           <<"type">> => <<"object">>,
           <<"example">> => #{
-            <<"client_locale">> => <<"RU_ru">>
+            <<"client_locale">> => <<"en_US">>
           },
-          <<"description">> => <<"Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с\nданным кошельком\n">>,
+          <<"description">> => <<"Some non-transparent for system set of data associated with this wallet\n">>,
           <<"properties">> => #{ }
         },
         <<"externalID">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"10036274">>,
-          <<"description">> => <<"Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n">>
+          <<"description">> => <<"The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n">>
         }
       },
-      <<"description">> => <<"Данные кошелька">>,
+      <<"description">> => <<"Wallet details">>,
       <<"example">> => #{
         <<"createdAt">> => <<"2000-01-23T04:56:07.000+00:00">>,
         <<"metadata">> => #{
-          <<"client_locale">> => <<"RU_ru">>
+          <<"client_locale">> => <<"en_US">>
         },
         <<"identity">> => <<"10036274">>,
         <<"name">> => <<"Worldwide PHP Awareness Initiative">>,
         <<"isBlocked">> => false,
         <<"externalID">> => <<"10036274">>,
-        <<"currency">> => <<"RUB">>,
+        <<"currency">> => <<"USD">>,
         <<"id">> => <<"10068321">>
       }
     },
@@ -4069,13 +4064,13 @@ get_raw() ->
           <<"$ref">> => <<"#/definitions/WalletAccount_available">>
         }
       },
-      <<"description">> => <<"Состояние счёта кошелька">>,
+      <<"description">> => <<"Wallet account status">>,
       <<"example">> => #{
         <<"own">> => #{
           <<"amount">> => 1430000,
-          <<"currency">> => <<"RUB">>
+          <<"currency">> => <<"USD">>
         },
-        <<"available">> => <<"{\"amount\":1200000,\"currency\":\"RUB\"}">>
+        <<"available">> => <<"{\"amount\":1200000,\"currency\":\"USD\"}">>
       }
     },
     <<"WalletGrantRequest">> => #{
@@ -4085,7 +4080,7 @@ get_raw() ->
         <<"token">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n">>,
-          <<"description">> => <<"Токен, дающий право единоразового управления средствами на кошельке">>,
+          <<"description">> => <<"A token that gives the permission to one-time management of funds on the wallet">>,
           <<"readOnly">> => true,
           <<"minLength">> => 1,
           <<"maxLength">> => 4000
@@ -4096,27 +4091,27 @@ get_raw() ->
         <<"validUntil">> => #{
           <<"type">> => <<"string">>,
           <<"format">> => <<"date-time">>,
-          <<"description">> => <<"Дата и время, до наступления которых выданное право действительно\n">>
+          <<"description">> => <<"Date and time until which the granted right is valid\n">>
         }
       },
-      <<"description">> => <<"Запрос на единоразовое право управления средствами на кошельке">>,
+      <<"description">> => <<"Request for a one-time permission to manage funds on the wallet">>,
       <<"example">> => #{
         <<"validUntil">> => <<"2000-01-23T04:56:07.000+00:00">>,
         <<"asset">> => #{
           <<"amount">> => 1430000,
-          <<"currency">> => <<"RUB">>
+          <<"currency">> => <<"USD">>
         },
         <<"token">> => <<"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n">>
       }
     },
     <<"WalletID">> => #{
       <<"type">> => <<"string">>,
-      <<"description">> => <<"Идентификатор кошелька">>,
+      <<"description">> => <<"Identifier of the wallet">>,
       <<"example">> => <<"10068321">>
     },
     <<"WalletName">> => #{
       <<"type">> => <<"string">>,
-      <<"description">> => <<"Человекочитаемое название кошелька, по которому его легко узнать">>,
+      <<"description">> => <<"Human-readable name of the wallet, by which it is easy to recognize">>,
       <<"example">> => <<"Worldwide PHP Awareness Initiative">>
     },
     <<"Webhook">> => #{
@@ -4125,17 +4120,17 @@ get_raw() ->
       <<"properties">> => #{
         <<"id">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Идентификатор webhook'а\n">>,
+          <<"description">> => <<"Identifier of the webhook\n">>,
           <<"readOnly">> => true
         },
         <<"identityID">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"10036274">>,
-          <<"description">> => <<"Идентификатор личности владельца кошелька">>
+          <<"description">> => <<"Identifier of wallet owner">>
         },
         <<"active">> => #{
           <<"type">> => <<"boolean">>,
-          <<"description">> => <<"Включена ли в данный момент доставка оповещений?\n">>,
+          <<"description">> => <<"Is notification delivery currently enabled?\n">>,
           <<"readOnly">> => true
         },
         <<"scope">> => #{
@@ -4144,14 +4139,14 @@ get_raw() ->
         <<"url">> => #{
           <<"type">> => <<"string">>,
           <<"format">> => <<"uri">>,
-          <<"description">> => <<"URL, на который будут поступать оповещения о произошедших событиях\n">>,
+          <<"description">> => <<"The URL that will receive notifications of events that have occurred\n">>,
           <<"maxLength">> => 1000
         },
         <<"publicKey">> => #{
           <<"type">> => <<"string">>,
           <<"format">> => <<"hexadecimal">>,
           <<"example">> => <<"MIGJAoGBAM1fmNUvezts3yglTdhXuqG7OhHxQtDFA+Ss//YuUGjw5ossDbEMoS+SIFuYZ/UL9Xg0rEHNRSbmf48OK+mz0FobEtbji8MADayzGfFopXsfRFa7MVy3Uhu5jBDpLsN3DyJapAkK0TAYINlZXxVjDwxRNheTvC+xub5WNdiwc28fAgMBAAE=">>,
-          <<"description">> => <<"Содержимое публичного ключа, служащего для проверки авторитативности\nприходящих на `url` оповещений\n">>,
+          <<"description">> => <<"The content of the public key used to check the authoritativeness of\nnotifications coming to `url`\n">>,
           <<"readOnly">> => true
         }
       },
@@ -4173,11 +4168,11 @@ get_raw() ->
       <<"properties">> => #{
         <<"topic">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Предмет оповещений">>,
+          <<"description">> => <<"Subject of notifications">>,
           <<"enum">> => [ <<"WithdrawalsTopic">>, <<"DestinationsTopic">> ]
         }
       },
-      <<"description">> => <<"Область охвата webhook'а, ограничивающая набор типов событий, по которым\nследует отправлять оповещения\n">>,
+      <<"description">> => <<"The scope of a webhook, limiting the set of event types,\nfor which the notifications should be sent\n">>,
       <<"example">> => #{
         <<"topic">> => <<"WithdrawalsTopic">>
       },
@@ -4191,24 +4186,24 @@ get_raw() ->
           <<"id">> => #{
             <<"type">> => <<"string">>,
             <<"example">> => <<"tZ0jUmlsV0">>,
-            <<"description">> => <<"Идентификатор вывода денежных средств">>,
+            <<"description">> => <<"Identifier of funds withdrawal">>,
             <<"readOnly">> => true
           },
           <<"createdAt">> => #{
             <<"type">> => <<"string">>,
             <<"format">> => <<"date-time">>,
-            <<"description">> => <<"Дата и время запуска вывода">>,
+            <<"description">> => <<"Date and time the withdrawal started">>,
             <<"readOnly">> => true
           },
           <<"wallet">> => #{
             <<"type">> => <<"string">>,
             <<"example">> => <<"10068321">>,
-            <<"description">> => <<"Идентификатор кошелька">>
+            <<"description">> => <<"Identifier of the wallet">>
           },
           <<"destination">> => #{
             <<"type">> => <<"string">>,
             <<"example">> => <<"107498">>,
-            <<"description">> => <<"Идентификатор приёмника денежных средств">>
+            <<"description">> => <<"Destination identifier">>
           },
           <<"body">> => #{
             <<"$ref">> => <<"#/definitions/Withdrawal_body">>
@@ -4221,19 +4216,19 @@ get_raw() ->
             <<"example">> => #{
               <<"notify_email">> => <<"iliketrains@example.com">>
             },
-            <<"description">> => <<"Произвольный, специфичный для клиента API и непрозрачный для системы набор данных, ассоциированных с\nданным выводом\n">>,
+            <<"description">> => <<"Some non-transparent for system set of data associated with this withdrawal\n">>,
             <<"properties">> => #{ }
           },
           <<"externalID">> => #{
             <<"type">> => <<"string">>,
             <<"example">> => <<"10036274">>,
-            <<"description">> => <<"Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n">>
+            <<"description">> => <<"The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n">>
           }
         }
       }, #{
         <<"$ref">> => <<"#/definitions/WithdrawalStatus">>
       } ],
-      <<"description">> => <<"Данные вывода денежных средств">>
+      <<"description">> => <<"Funds withdrawal data">>
     },
     <<"WithdrawalEvent">> => #{
       <<"type">> => <<"object">>,
@@ -4243,12 +4238,12 @@ get_raw() ->
           <<"type">> => <<"integer">>,
           <<"format">> => <<"int32">>,
           <<"example">> => 42,
-          <<"description">> => <<"Идентификатор события вывода средств">>
+          <<"description">> => <<"Identifier of the funds withdrawal event">>
         },
         <<"occuredAt">> => #{
           <<"type">> => <<"string">>,
           <<"format">> => <<"date-time">>,
-          <<"description">> => <<"Дата и время возникновения события">>
+          <<"description">> => <<"Date and time the event occurrence">>
         },
         <<"changes">> => #{
           <<"type">> => <<"array">>,
@@ -4257,7 +4252,7 @@ get_raw() ->
           }
         }
       },
-      <<"description">> => <<"Событие, возникшее в процессе вывода средств\n">>,
+      <<"description">> => <<"An event that occurred during the funds withdrawal process\n">>,
       <<"example">> => #{
         <<"eventID">> => 42,
         <<"occuredAt">> => <<"2000-01-23T04:56:07.000+00:00">>,
@@ -4275,11 +4270,11 @@ get_raw() ->
       <<"properties">> => #{
         <<"type">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Тип произошедшего изменения">>,
+          <<"description">> => <<"The type of change that occurred">>,
           <<"enum">> => [ <<"WithdrawalStatusChanged">> ]
         }
       },
-      <<"description">> => <<"Изменение, возникшее в процессе вывода средств\n">>,
+      <<"description">> => <<"Change that occurred in the funds withdrawal process\n">>,
       <<"example">> => #{
         <<"type">> => <<"WithdrawalStatusChanged">>
       },
@@ -4291,7 +4286,7 @@ get_raw() ->
       <<"properties">> => #{
         <<"code">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Код ошибки вывода">>
+          <<"description">> => <<"Withdrawal error code">>
         },
         <<"subError">> => #{
           <<"$ref">> => <<"#/definitions/SubFailure">>
@@ -4300,7 +4295,7 @@ get_raw() ->
     },
     <<"WithdrawalID">> => #{
       <<"type">> => <<"string">>,
-      <<"description">> => <<"Идентификатор вывода денежных средств">>,
+      <<"description">> => <<"Identifier of funds withdrawal">>,
       <<"example">> => <<"tZ0jUmlsV0">>
     },
     <<"WithdrawalMethod">> => #{
@@ -4310,7 +4305,7 @@ get_raw() ->
       <<"properties">> => #{
         <<"method">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Метод для проведения выплаты">>,
+          <<"description">> => <<"Withdrawal method">>,
           <<"enum">> => [ <<"WithdrawalMethodBankCard">>, <<"WithdrawalMethodDigitalWallet">>, <<"WithdrawalMethodGeneric">> ]
         }
       },
@@ -4328,10 +4323,10 @@ get_raw() ->
         <<"properties">> => #{
           <<"paymentSystems">> => #{
             <<"type">> => <<"array">>,
-            <<"description">> => <<"Список платежных систем">>,
+            <<"description">> => <<"List of payment systems">>,
             <<"items">> => #{
               <<"type">> => <<"string">>,
-              <<"description">> => <<"Платежная система.\n\nНабор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getWithdrawalMethods).\n">>
+              <<"description">> => <<"Payment system.\n\nThe set of systems available for making withdrawals can be found by calling the corresponding [operation](#operation/getWithdrawalMethods).\n">>
             }
           }
         }
@@ -4346,11 +4341,11 @@ get_raw() ->
         <<"properties">> => #{
           <<"providers">> => #{
             <<"type">> => <<"array">>,
-            <<"description">> => <<"Список провайдеров электронных денежных средств">>,
+            <<"description">> => <<"List of digital wallet providers">>,
             <<"items">> => #{
               <<"type">> => <<"string">>,
               <<"example">> => <<"Paypal">>,
-              <<"description">> => <<"Провайдер электронных денежных средств.\n\nНабор провайдеров, доступных для проведения выплат, можно узнать, вызвав\nсоответствующую [операцию](#operation/getWithdrawalMethods).\n">>
+              <<"description">> => <<"Digital wallet provider.\n\nThe set of providers available for making withdrawals can be found by calling\ncorresponding [operation](#operation/getWithdrawalMethods).\n">>
             }
           }
         }
@@ -4365,11 +4360,11 @@ get_raw() ->
         <<"properties">> => #{
           <<"providers">> => #{
             <<"type">> => <<"array">>,
-            <<"description">> => <<"Список провайдеров сервисов выплат">>,
+            <<"description">> => <<"List of withdrawal service providers">>,
             <<"items">> => #{
               <<"type">> => <<"string">>,
               <<"example">> => <<"YourBankName">>,
-              <<"description">> => <<"Провайдер сервисов выплат.\n\nНабор провайдеров, доступных для проведения выплат, можно узнать, вызвав\nсоответствующую [операцию](#operation/getWithdrawalMethods).\n">>
+              <<"description">> => <<"Withdrawal service provider.\n\nThe set of providers available for making withdrawals can be found by calling\ncorresponding [operation](#operation/getWithdrawalMethods).\n">>
             }
           }
         }
@@ -4384,27 +4379,27 @@ get_raw() ->
           <<"walletGrant">> => #{
             <<"type">> => <<"string">>,
             <<"example">> => <<"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n">>,
-            <<"description">> => <<"Токен, дающий право на списание с кошелька для оплаты вывода.\n\nНеобходимо предоставить в том случае, если оплата производится засчёт средств _чужого_\nкошелька. Владелец указанного кошелька может\n[выдать на это право](#operation/issueWalletGrant).\n">>,
+            <<"description">> => <<"A token that gives the right to withdraw from the wallet to pay for the withdrawal.\n\nMust be provided if withdrawal is made at the expense of _foreign_\nwallet. The owner of said wallet can\n[issue this right](#operation/issueWalletGrant).\n">>,
             <<"minLength">> => 1,
             <<"maxLength">> => 4000
           },
           <<"destinationGrant">> => #{
             <<"type">> => <<"string">>,
             <<"example">> => <<"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n">>,
-            <<"description">> => <<"Токен, дающий право вывода.\n\nНеобходимо предоставить в том случае, если вывод производится посредством _чужого_ приёмника\nсредств. Владелец указанного приёмника может\n[выдать на это право](#operation/issueDestinationGrant).\n">>,
+            <<"description">> => <<"A token that gives the right to withdraw.\n\nMust be provided if the withdrawal is made through a _foreign_ recipient of\nfunds. The owner of the specified recipient can\n[issue this right](#operation/issueDestinationGrant).\n">>,
             <<"minLength">> => 1,
             <<"maxLength">> => 4000
           },
           <<"quoteToken">> => #{
             <<"type">> => <<"string">>,
             <<"example">> => <<"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n">>,
-            <<"description">> => <<"Котировка, по которой следует проводить вывод средств.\n\nДолжна быть [получена](#operation/createQuote)\nзаранее для каждой отдельной операции вывода с конвертацией.\n">>,
+            <<"description">> => <<"Quote at which funds should be withdrawn.\n\nMust be [obtained](#operation/createQuote)\nin advance for each individual withdrawal operation with conversion.\n">>,
             <<"minLength">> => 1,
             <<"maxLength">> => 4000
           }
         }
       } ],
-      <<"description">> => <<"Параметры создаваемого вывода">>
+      <<"description">> => <<"Options of generated withdrawal">>
     },
     <<"WithdrawalQuote">> => #{
       <<"type">> => <<"object">>,
@@ -4419,33 +4414,33 @@ get_raw() ->
         <<"createdAt">> => #{
           <<"type">> => <<"string">>,
           <<"format">> => <<"date-time">>,
-          <<"description">> => <<"Дата и время получения котировки">>,
+          <<"description">> => <<"Date and time the quote was received">>,
           <<"readOnly">> => true
         },
         <<"expiresOn">> => #{
           <<"type">> => <<"string">>,
           <<"format">> => <<"date-time">>,
-          <<"description">> => <<"Дата и время окончания действия котировки">>,
+          <<"description">> => <<"Quote expiration date and time">>,
           <<"readOnly">> => true
         },
         <<"quoteToken">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n">>,
-          <<"description">> => <<"Котировка, по которой следует проводить вывод средств.\nНеобходимо предоставить при создании вывода с конвертацией\n">>,
+          <<"description">> => <<"Quote at which funds should be withdrawn. Must be provided when creating withdrawal with conversion\n">>,
           <<"minLength">> => 1,
           <<"maxLength">> => 4000
         }
       },
-      <<"description">> => <<"Данные котировки для вывода">>,
+      <<"description">> => <<"Quote data for withdrawal">>,
       <<"example">> => #{
         <<"createdAt">> => <<"2000-01-23T04:56:07.000+00:00">>,
         <<"cashTo">> => #{
           <<"amount">> => 1430000,
-          <<"currency">> => <<"RUB">>
+          <<"currency">> => <<"USD">>
         },
         <<"cashFrom">> => #{
           <<"amount">> => 1430000,
-          <<"currency">> => <<"RUB">>
+          <<"currency">> => <<"USD">>
         },
         <<"quoteToken">> => <<"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n">>,
         <<"expiresOn">> => <<"2000-01-23T04:56:07.000+00:00">>
@@ -4458,28 +4453,28 @@ get_raw() ->
         <<"externalID">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"10036274">>,
-          <<"description">> => <<"Уникальный идентификатор сущности на вашей стороне.\n\nПри указании будет использован для того, чтобы гарантировать идемпотентную обработку операции.\n">>
+          <<"description">> => <<"The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n">>
         },
         <<"walletID">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"10068321">>,
-          <<"description">> => <<"Идентификатор кошелька">>
+          <<"description">> => <<"Identifier of the wallet">>
         },
         <<"destinationID">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"107498">>,
-          <<"description">> => <<"Идентификатор приёмника денежных средств">>
+          <<"description">> => <<"Destination identifier">>
         },
         <<"currencyFrom">> => #{
           <<"type">> => <<"string">>,
-          <<"example">> => <<"RUB">>,
-          <<"description">> => <<"Код исходной валюты">>,
+          <<"example">> => <<"USD">>,
+          <<"description">> => <<"Source currency code">>,
           <<"pattern">> => <<"^[A-Z]{3}$">>
         },
         <<"currencyTo">> => #{
           <<"type">> => <<"string">>,
-          <<"example">> => <<"RUB">>,
-          <<"description">> => <<"Код конечной валюты">>,
+          <<"example">> => <<"USD">>,
+          <<"description">> => <<"Target currency code">>,
           <<"pattern">> => <<"^[A-Z]{3}$">>
         },
         <<"cash">> => #{
@@ -4488,31 +4483,31 @@ get_raw() ->
         <<"walletGrant">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n">>,
-          <<"description">> => <<"Токен, дающий право на списание с кошелька для оплаты вывода.\nНеобходимо предоставить в том случае, если оплата производится засчёт средств _чужого_ кошелька. Владелец указанного кошелька может [выдать на это право](#operation/issueWalletGrant)\n">>,
+          <<"description">> => <<"A token that gives the right to withdraw from the wallet to pay for the withdrawal. It is necessary to provide if the withdrawal is made at the expense of the funds of a _foreign_ wallet. The owner of the specified wallet can [issue this right](#operation/issueWalletGrant)\n">>,
           <<"minLength">> => 1,
           <<"maxLength">> => 4000
         },
         <<"destinationGrant">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n">>,
-          <<"description">> => <<"Токен, дающий право вывода.\nНеобходимо предоставить в том случае, если вывод производится посредством _чужого_ приёмника средств. Владелец указанного приёмника может [выдать на это право](#operation/issueDestinationGrant)\n">>,
+          <<"description">> => <<"A token that gives the right to withdraw. Must be provided if the withdrawal is made through a _foreign_ fund recipient. The owner of the specified recipient can [grant this right](#operation/issueDestinationGrant)\n">>,
           <<"minLength">> => 1,
           <<"maxLength">> => 4000
         }
       },
-      <<"description">> => <<"Параметры котировки для вывода">>,
+      <<"description">> => <<"Quote parameters for withdrawal">>,
       <<"example">> => #{
         <<"walletID">> => <<"10068321">>,
         <<"walletGrant">> => <<"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n">>,
         <<"externalID">> => <<"10036274">>,
         <<"destinationGrant">> => <<"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n">>,
         <<"destinationID">> => <<"107498">>,
-        <<"currencyTo">> => <<"RUB">>,
+        <<"currencyTo">> => <<"USD">>,
         <<"cash">> => #{
           <<"amount">> => 1430000,
-          <<"currency">> => <<"RUB">>
+          <<"currency">> => <<"USD">>
         },
-        <<"currencyFrom">> => <<"RUB">>
+        <<"currencyFrom">> => <<"USD">>
       }
     },
     <<"WithdrawalStatus">> => #{
@@ -4520,7 +4515,7 @@ get_raw() ->
       <<"properties">> => #{
         <<"status">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Статус вывода денежных средств.\n\n| Значение    | Пояснение                                  |\n| ----------- | ------------------------------------------ |\n| `Pending`   | Вывод в процессе выполнения                |\n| `Succeeded` | Вывод средств произведён успешно           |\n| `Failed`    | Вывод средств завершился неудачей          |\n">>,
+          <<"description">> => <<"Withdrawal status.\n\n| Meaning     | Explanation                          |\n| ----------- | ------------------------------------ |\n| `Pending`   | Withdrawal in progress               |\n| `Succeeded` | Withdrawal completed successfully    |\n| `Failed`    | Withdrawal failed                    |\n">>,
           <<"readOnly">> => true,
           <<"enum">> => [ <<"Pending">>, <<"Succeeded">>, <<"Failed">> ]
         },
@@ -4535,7 +4530,7 @@ get_raw() ->
       }, #{
         <<"$ref">> => <<"#/definitions/WithdrawalStatus">>
       } ],
-      <<"description">> => <<"Изменение статуса вывода средств">>
+      <<"description">> => <<"Change of withdrawal status">>
     },
     <<"WithdrawalsTopic">> => #{
       <<"allOf">> => [ #{
@@ -4547,11 +4542,11 @@ get_raw() ->
           <<"walletID">> => #{
             <<"type">> => <<"string">>,
             <<"example">> => <<"10068321">>,
-            <<"description">> => <<"Идентификатор кошелька">>
+            <<"description">> => <<"Identifier of the wallet">>
           },
           <<"eventTypes">> => #{
             <<"type">> => <<"array">>,
-            <<"description">> => <<"Набор типов событий выплаты, о которых следует оповещать">>,
+            <<"description">> => <<"Set of withdrawal event types to be notified about">>,
             <<"items">> => #{
               <<"type">> => <<"string">>,
               <<"enum">> => [ <<"WithdrawalStarted">>, <<"WithdrawalSucceeded">>, <<"WithdrawalFailed">> ]
@@ -4559,23 +4554,18 @@ get_raw() ->
           }
         }
       } ],
-      <<"description">> => <<"Область охвата, включающая события по выплатам в рамках определённого кошелька\n">>
-    },
-    <<"Zcash">> => #{
-      <<"allOf">> => [ #{
-        <<"$ref">> => <<"#/definitions/CryptoWallet">>
-      }, #{ } ]
+      <<"description">> => <<"Scope that includes withdrawal events within a specific wallet\n">>
     },
     <<"inline_response_200">> => #{
       <<"type">> => <<"object">>,
       <<"properties">> => #{
         <<"continuationToken">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n">>
+          <<"description">> => <<"A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n">>
         },
         <<"result">> => #{
           <<"type">> => <<"array">>,
-          <<"description">> => <<"Найденные корректировки">>,
+          <<"description">> => <<"Found adjustments">>,
           <<"items">> => #{
             <<"$ref">> => <<"#/definitions/DepositAdjustment">>
           }
@@ -4591,11 +4581,11 @@ get_raw() ->
       <<"properties">> => #{
         <<"continuationToken">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n">>
+          <<"description">> => <<"A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n">>
         },
         <<"result">> => #{
           <<"type">> => <<"array">>,
-          <<"description">> => <<"Найденные отмены">>,
+          <<"description">> => <<"Found reverts">>,
           <<"items">> => #{
             <<"$ref">> => <<"#/definitions/DepositRevert">>
           }
@@ -4611,11 +4601,11 @@ get_raw() ->
       <<"properties">> => #{
         <<"continuationToken">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n">>
+          <<"description">> => <<"A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n">>
         },
         <<"result">> => #{
           <<"type">> => <<"array">>,
-          <<"description">> => <<"Найденные пополнения">>,
+          <<"description">> => <<"Found deposits">>,
           <<"items">> => #{
             <<"$ref">> => <<"#/definitions/Deposit">>
           }
@@ -4631,11 +4621,11 @@ get_raw() ->
       <<"properties">> => #{
         <<"continuationToken">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n">>
+          <<"description">> => <<"A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n">>
         },
         <<"result">> => #{
           <<"type">> => <<"array">>,
-          <<"description">> => <<"Найденные приёмники средств">>,
+          <<"description">> => <<"Destinations found">>,
           <<"items">> => #{
             <<"$ref">> => <<"#/definitions/Destination">>
           }
@@ -4651,11 +4641,11 @@ get_raw() ->
       <<"properties">> => #{
         <<"continuationToken">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n">>
+          <<"description">> => <<"A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n">>
         },
         <<"result">> => #{
           <<"type">> => <<"array">>,
-          <<"description">> => <<"Найденные личности">>,
+          <<"description">> => <<"Identities found">>,
           <<"items">> => #{
             <<"$ref">> => <<"#/definitions/Identity">>
           }
@@ -4665,7 +4655,7 @@ get_raw() ->
         <<"result">> => [ #{
           <<"createdAt">> => <<"2000-01-23T04:56:07.000+00:00">>,
           <<"metadata">> => #{
-            <<"lkDisplayName">> => <<"Сергей Иванович">>
+            <<"lkDisplayName">> => <<"James Smith">>
           },
           <<"provider">> => <<"serviceprovider">>,
           <<"name">> => <<"Keyn Fawkes">>,
@@ -4676,7 +4666,7 @@ get_raw() ->
         }, #{
           <<"createdAt">> => <<"2000-01-23T04:56:07.000+00:00">>,
           <<"metadata">> => #{
-            <<"lkDisplayName">> => <<"Сергей Иванович">>
+            <<"lkDisplayName">> => <<"James Smith">>
           },
           <<"provider">> => <<"serviceprovider">>,
           <<"name">> => <<"Keyn Fawkes">>,
@@ -4711,11 +4701,11 @@ get_raw() ->
       <<"properties">> => #{
         <<"continuationToken">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n">>
+          <<"description">> => <<"A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n">>
         },
         <<"result">> => #{
           <<"type">> => <<"array">>,
-          <<"description">> => <<"Найденные кошельки">>,
+          <<"description">> => <<"Wallets found">>,
           <<"items">> => #{
             <<"$ref">> => <<"#/definitions/Wallet">>
           }
@@ -4725,24 +4715,24 @@ get_raw() ->
         <<"result">> => [ #{
           <<"createdAt">> => <<"2000-01-23T04:56:07.000+00:00">>,
           <<"metadata">> => #{
-            <<"client_locale">> => <<"RU_ru">>
+            <<"client_locale">> => <<"en_US">>
           },
           <<"identity">> => <<"10036274">>,
           <<"name">> => <<"Worldwide PHP Awareness Initiative">>,
           <<"isBlocked">> => false,
           <<"externalID">> => <<"10036274">>,
-          <<"currency">> => <<"RUB">>,
+          <<"currency">> => <<"USD">>,
           <<"id">> => <<"10068321">>
         }, #{
           <<"createdAt">> => <<"2000-01-23T04:56:07.000+00:00">>,
           <<"metadata">> => #{
-            <<"client_locale">> => <<"RU_ru">>
+            <<"client_locale">> => <<"en_US">>
           },
           <<"identity">> => <<"10036274">>,
           <<"name">> => <<"Worldwide PHP Awareness Initiative">>,
           <<"isBlocked">> => false,
           <<"externalID">> => <<"10036274">>,
-          <<"currency">> => <<"RUB">>,
+          <<"currency">> => <<"USD">>,
           <<"id">> => <<"10068321">>
         } ],
         <<"continuationToken">> => <<"continuationToken">>
@@ -4753,11 +4743,11 @@ get_raw() ->
       <<"properties">> => #{
         <<"continuationToken">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Токен, сигнализирующий о том, что в ответе передана только часть данных.\nДля получения следующей части нужно повторно обратиться к сервису, указав тот же набор условий и полученый токен.\nЕсли токена нет, получена последняя часть данных.\n">>
+          <<"description">> => <<"A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n">>
         },
         <<"result">> => #{
           <<"type">> => <<"array">>,
-          <<"description">> => <<"Найденные выводы">>,
+          <<"description">> => <<"Withdrawals found">>,
           <<"items">> => #{
             <<"$ref">> => <<"#/definitions/Withdrawal">>
           }
@@ -4776,16 +4766,16 @@ get_raw() ->
           <<"type">> => <<"integer">>,
           <<"format">> => <<"int64">>,
           <<"example">> => 1430000,
-          <<"description">> => <<"Сумма денежных средств в минорных единицах, например, в копейках\n">>
+          <<"description">> => <<"The amount of money in minor units, for example, in cents\n">>
         },
         <<"currency">> => #{
           <<"type">> => <<"string">>,
-          <<"example">> => <<"RUB">>,
-          <<"description">> => <<"Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
+          <<"example">> => <<"USD">>,
+          <<"description">> => <<"Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
           <<"pattern">> => <<"^[A-Z]{3}$">>
         }
       },
-      <<"description">> => <<"Объём поступивших средств">>
+      <<"description">> => <<"The amount of funds received">>
     },
     <<"Deposit_fee">> => #{
       <<"type">> => <<"object">>,
@@ -4795,16 +4785,16 @@ get_raw() ->
           <<"type">> => <<"integer">>,
           <<"format">> => <<"int64">>,
           <<"example">> => 1430000,
-          <<"description">> => <<"Сумма денежных средств в минорных единицах, например, в копейках\n">>
+          <<"description">> => <<"The amount of money in minor units, for example, in cents\n">>
         },
         <<"currency">> => #{
           <<"type">> => <<"string">>,
-          <<"example">> => <<"RUB">>,
-          <<"description">> => <<"Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
+          <<"example">> => <<"USD">>,
+          <<"description">> => <<"Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
           <<"pattern">> => <<"^[A-Z]{3}$">>
         }
       },
-      <<"description">> => <<"Сумма коммисии">>
+      <<"description">> => <<"Fee amount">>
     },
     <<"DepositAdjustmentStatus_failure">> => #{
       <<"type">> => <<"object">>,
@@ -4812,13 +4802,13 @@ get_raw() ->
       <<"properties">> => #{
         <<"code">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Код ошибки коррекции">>
+          <<"description">> => <<"Adjustment error code">>
         },
         <<"subError">> => #{
           <<"$ref">> => <<"#/definitions/SubFailure">>
         }
       },
-      <<"description">> => <<"> Если `status` == `Failed`\n\nПояснение причины неудачи\n">>
+      <<"description">> => <<"> If `status` == `Failed`\n\nExplanation of the reason for failure\n">>
     },
     <<"DepositRevert_body">> => #{
       <<"type">> => <<"object">>,
@@ -4828,16 +4818,16 @@ get_raw() ->
           <<"type">> => <<"integer">>,
           <<"format">> => <<"int64">>,
           <<"example">> => 1430000,
-          <<"description">> => <<"Сумма денежных средств в минорных единицах, например, в копейках\n">>
+          <<"description">> => <<"The amount of money in minor units, for example, in cents\n">>
         },
         <<"currency">> => #{
           <<"type">> => <<"string">>,
-          <<"example">> => <<"RUB">>,
-          <<"description">> => <<"Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
+          <<"example">> => <<"USD">>,
+          <<"description">> => <<"Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
           <<"pattern">> => <<"^[A-Z]{3}$">>
         }
       },
-      <<"description">> => <<"Объем денежных средств">>
+      <<"description">> => <<"Amount of funds">>
     },
     <<"DepositRevertStatus_failure">> => #{
       <<"type">> => <<"object">>,
@@ -4845,13 +4835,13 @@ get_raw() ->
       <<"properties">> => #{
         <<"code">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Код ошибки отмены">>
+          <<"description">> => <<"Deposit revert error code">>
         },
         <<"subError">> => #{
           <<"$ref">> => <<"#/definitions/SubFailure">>
         }
       },
-      <<"description">> => <<"> Если `status` == `Failed`\n\nПояснение причины неудачи\n">>
+      <<"description">> => <<"> If `status` == `Failed`\n\nExplanation of the reason for failure\n">>
     },
     <<"DepositStatus_failure">> => #{
       <<"type">> => <<"object">>,
@@ -4859,13 +4849,13 @@ get_raw() ->
       <<"properties">> => #{
         <<"code">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Код ошибки поступления">>
+          <<"description">> => <<"Deposit error code">>
         },
         <<"subError">> => #{
           <<"$ref">> => <<"#/definitions/SubFailure">>
         }
       },
-      <<"description">> => <<"> Если `status` == `Failed`\n\nПояснение причины неудачи\n">>
+      <<"description">> => <<"> If `status` == `Failed`\n\nExplanation of the reason for failure\n">>
     },
     <<"QuoteParameters_body">> => #{
       <<"type">> => <<"object">>,
@@ -4875,19 +4865,19 @@ get_raw() ->
           <<"type">> => <<"integer">>,
           <<"format">> => <<"int64">>,
           <<"example">> => 1430000,
-          <<"description">> => <<"Сумма денежных средств в минорных единицах, например, в копейках\n">>
+          <<"description">> => <<"The amount of money in minor units, for example, in cents\n">>
         },
         <<"currency">> => #{
           <<"type">> => <<"string">>,
-          <<"example">> => <<"RUB">>,
-          <<"description">> => <<"Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
+          <<"example">> => <<"USD">>,
+          <<"description">> => <<"Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
           <<"pattern">> => <<"^[A-Z]{3}$">>
         }
       },
-      <<"description">> => <<"Сумма операции">>,
+      <<"description">> => <<"Transaction amount">>,
       <<"example">> => #{
         <<"amount">> => 1430000,
-        <<"currency">> => <<"RUB">>
+        <<"currency">> => <<"USD">>
       }
     },
     <<"Report_files">> => #{
@@ -4896,7 +4886,7 @@ get_raw() ->
       <<"properties">> => #{
         <<"id">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Идентификатор файла">>,
+          <<"description">> => <<"File identifier">>,
           <<"minLength">> => 1,
           <<"maxLength">> => 40
         }
@@ -4911,11 +4901,11 @@ get_raw() ->
       <<"properties">> => #{
         <<"key">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Значение ключа элемента формы, которую необходимо отправить средствами\nбраузера\n">>
+          <<"description">> => <<"The value of the key of the form element to be send by means of browser\n">>
         },
         <<"template">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Шаблон значения элемента формы\nШаблон представлен согласно стандарту\n[RFC6570](https://tools.ietf.org/html/rfc6570).\n">>
+          <<"description">> => <<"The template for the form element value\nThe template is presented according to the standard\n[RFC6570](https://tools.ietf.org/html/rfc6570).\n">>
         }
       }
     },
@@ -4927,19 +4917,19 @@ get_raw() ->
           <<"type">> => <<"integer">>,
           <<"format">> => <<"int64">>,
           <<"example">> => 1430000,
-          <<"description">> => <<"Сумма денежных средств в минорных единицах, например, в копейках\n">>
+          <<"description">> => <<"The amount of money in minor units, for example, in cents\n">>
         },
         <<"currency">> => #{
           <<"type">> => <<"string">>,
-          <<"example">> => <<"RUB">>,
-          <<"description">> => <<"Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
+          <<"example">> => <<"USD">>,
+          <<"description">> => <<"Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
           <<"pattern">> => <<"^[A-Z]{3}$">>
         }
       },
-      <<"description">> => <<"Сумма перевода">>,
+      <<"description">> => <<"Transfer amount">>,
       <<"example">> => #{
         <<"amount">> => 1430000,
-        <<"currency">> => <<"RUB">>
+        <<"currency">> => <<"USD">>
       }
     },
     <<"W2WTransferStatus_failure">> => #{
@@ -4948,13 +4938,13 @@ get_raw() ->
       <<"properties">> => #{
         <<"code">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Основной код ошибки">>
+          <<"description">> => <<"Main error code">>
         },
         <<"subError">> => #{
           <<"$ref">> => <<"#/definitions/SubFailure">>
         }
       },
-      <<"description">> => <<"[Ошибка, возникшая в процессе проведения перевода](#tag/Error-Codes)\n">>,
+      <<"description">> => <<"[Error occurred during the transfer process](#tag/Error-Codes)\n">>,
       <<"example">> => #{
         <<"code">> => <<"code">>,
         <<"subError">> => #{
@@ -4970,19 +4960,19 @@ get_raw() ->
           <<"type">> => <<"integer">>,
           <<"format">> => <<"int64">>,
           <<"example">> => 1430000,
-          <<"description">> => <<"Сумма денежных средств в минорных единицах, например, в копейках\n">>
+          <<"description">> => <<"The amount of money in minor units, for example, in cents\n">>
         },
         <<"currency">> => #{
           <<"type">> => <<"string">>,
-          <<"example">> => <<"RUB">>,
-          <<"description">> => <<"Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
+          <<"example">> => <<"USD">>,
+          <<"description">> => <<"Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
           <<"pattern">> => <<"^[A-Z]{3}$">>
         }
       },
-      <<"description">> => <<"Собственные средства\n">>,
+      <<"description">> => <<"Own funds\n">>,
       <<"example">> => #{
         <<"amount">> => 1430000,
-        <<"currency">> => <<"RUB">>
+        <<"currency">> => <<"USD">>
       }
     },
     <<"WalletAccount_available">> => #{
@@ -4993,17 +4983,17 @@ get_raw() ->
           <<"type">> => <<"integer">>,
           <<"format">> => <<"int64">>,
           <<"example">> => 1430000,
-          <<"description">> => <<"Сумма денежных средств в минорных единицах, например, в копейках\n">>
+          <<"description">> => <<"The amount of money in minor units, for example, in cents\n">>
         },
         <<"currency">> => #{
           <<"type">> => <<"string">>,
-          <<"example">> => <<"RUB">>,
-          <<"description">> => <<"Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
+          <<"example">> => <<"USD">>,
+          <<"description">> => <<"Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
           <<"pattern">> => <<"^[A-Z]{3}$">>
         }
       },
-      <<"description">> => <<"Доступные к использованию средства, обычно равны собственным средствам\nза вычетом сумм всех незавершённых операций\n">>,
-      <<"example">> => <<"{\"amount\":1200000,\"currency\":\"RUB\"}">>
+      <<"description">> => <<"Funds available for use. Usually equal to own funds\nminus the sum of all pending transactions\n">>,
+      <<"example">> => <<"{\"amount\":1200000,\"currency\":\"USD\"}">>
     },
     <<"WalletGrantRequest_asset">> => #{
       <<"type">> => <<"object">>,
@@ -5013,19 +5003,19 @@ get_raw() ->
           <<"type">> => <<"integer">>,
           <<"format">> => <<"int64">>,
           <<"example">> => 1430000,
-          <<"description">> => <<"Сумма денежных средств в минорных единицах, например, в копейках\n">>
+          <<"description">> => <<"The amount of money in minor units, for example, in cents\n">>
         },
         <<"currency">> => #{
           <<"type">> => <<"string">>,
-          <<"example">> => <<"RUB">>,
-          <<"description">> => <<"Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
+          <<"example">> => <<"USD">>,
+          <<"description">> => <<"Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
           <<"pattern">> => <<"^[A-Z]{3}$">>
         }
       },
-      <<"description">> => <<"Допустимый к использованию объём средств">>,
+      <<"description">> => <<"Amount of funds allowed for use">>,
       <<"example">> => #{
         <<"amount">> => 1430000,
-        <<"currency">> => <<"RUB">>
+        <<"currency">> => <<"USD">>
       }
     },
     <<"Withdrawal_body">> => #{
@@ -5036,16 +5026,16 @@ get_raw() ->
           <<"type">> => <<"integer">>,
           <<"format">> => <<"int64">>,
           <<"example">> => 1430000,
-          <<"description">> => <<"Сумма денежных средств в минорных единицах, например, в копейках\n">>
+          <<"description">> => <<"The amount of money in minor units, for example, in cents\n">>
         },
         <<"currency">> => #{
           <<"type">> => <<"string">>,
-          <<"example">> => <<"RUB">>,
-          <<"description">> => <<"Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
+          <<"example">> => <<"USD">>,
+          <<"description">> => <<"Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
           <<"pattern">> => <<"^[A-Z]{3}$">>
         }
       },
-      <<"description">> => <<"Объём средств, которые необходимо вывести">>
+      <<"description">> => <<"Amount of funds to be withdrawn">>
     },
     <<"WithdrawalQuote_cashFrom">> => #{
       <<"type">> => <<"object">>,
@@ -5055,19 +5045,19 @@ get_raw() ->
           <<"type">> => <<"integer">>,
           <<"format">> => <<"int64">>,
           <<"example">> => 1430000,
-          <<"description">> => <<"Сумма денежных средств в минорных единицах, например, в копейках\n">>
+          <<"description">> => <<"The amount of money in minor units, for example, in cents\n">>
         },
         <<"currency">> => #{
           <<"type">> => <<"string">>,
-          <<"example">> => <<"RUB">>,
-          <<"description">> => <<"Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
+          <<"example">> => <<"USD">>,
+          <<"description">> => <<"Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
           <<"pattern">> => <<"^[A-Z]{3}$">>
         }
       },
-      <<"description">> => <<"Объём средств в исходной валюте">>,
+      <<"description">> => <<"Amount of funds in source currency">>,
       <<"example">> => #{
         <<"amount">> => 1430000,
-        <<"currency">> => <<"RUB">>
+        <<"currency">> => <<"USD">>
       }
     },
     <<"WithdrawalQuote_cashTo">> => #{
@@ -5078,19 +5068,19 @@ get_raw() ->
           <<"type">> => <<"integer">>,
           <<"format">> => <<"int64">>,
           <<"example">> => 1430000,
-          <<"description">> => <<"Сумма денежных средств в минорных единицах, например, в копейках\n">>
+          <<"description">> => <<"The amount of money in minor units, for example, in cents\n">>
         },
         <<"currency">> => #{
           <<"type">> => <<"string">>,
-          <<"example">> => <<"RUB">>,
-          <<"description">> => <<"Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
+          <<"example">> => <<"USD">>,
+          <<"description">> => <<"Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
           <<"pattern">> => <<"^[A-Z]{3}$">>
         }
       },
-      <<"description">> => <<"Объём средств в конечной валюте">>,
+      <<"description">> => <<"Amount of funds in target currency">>,
       <<"example">> => #{
         <<"amount">> => 1430000,
-        <<"currency">> => <<"RUB">>
+        <<"currency">> => <<"USD">>
       }
     },
     <<"WithdrawalQuoteParams_cash">> => #{
@@ -5101,19 +5091,19 @@ get_raw() ->
           <<"type">> => <<"integer">>,
           <<"format">> => <<"int64">>,
           <<"example">> => 1430000,
-          <<"description">> => <<"Сумма денежных средств в минорных единицах, например, в копейках\n">>
+          <<"description">> => <<"The amount of money in minor units, for example, in cents\n">>
         },
         <<"currency">> => #{
           <<"type">> => <<"string">>,
-          <<"example">> => <<"RUB">>,
-          <<"description">> => <<"Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
+          <<"example">> => <<"USD">>,
+          <<"description">> => <<"Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
           <<"pattern">> => <<"^[A-Z]{3}$">>
         }
       },
-      <<"description">> => <<"Объём средств для получения котировки в одной из валют обмена">>,
+      <<"description">> => <<"The amount of funds for receiving a quote in one of the exchange currencies">>,
       <<"example">> => #{
         <<"amount">> => 1430000,
-        <<"currency">> => <<"RUB">>
+        <<"currency">> => <<"USD">>
       }
     },
     <<"WithdrawalStatus_failure">> => #{
@@ -5122,20 +5112,20 @@ get_raw() ->
       <<"properties">> => #{
         <<"code">> => #{
           <<"type">> => <<"string">>,
-          <<"description">> => <<"Код ошибки вывода">>
+          <<"description">> => <<"Withdrawal error code">>
         },
         <<"subError">> => #{
           <<"$ref">> => <<"#/definitions/SubFailure">>
         }
       },
-      <<"description">> => <<"> Если `status` == `Failed`\n\nПояснение причины неудачи\n">>
+      <<"description">> => <<"> If `status` == `Failed`\n\nExplaining the reason for failure\n">>
     }
   },
   <<"parameters">> => #{
     <<"requestID">> => #{
       <<"name">> => <<"X-Request-ID">>,
       <<"in">> => <<"header">>,
-      <<"description">> => <<"Уникальный идентификатор запроса к системе">>,
+      <<"description">> => <<"Unique identifier of the request to the system">>,
       <<"required">> => true,
       <<"type">> => <<"string">>,
       <<"maxLength">> => 32,
@@ -5144,7 +5134,7 @@ get_raw() ->
     <<"providerID">> => #{
       <<"name">> => <<"providerID">>,
       <<"in">> => <<"path">>,
-      <<"description">> => <<"Идентификатор провайдера">>,
+      <<"description">> => <<"Identifier of the provider">>,
       <<"required">> => true,
       <<"type">> => <<"string">>,
       <<"maxLength">> => 40,
@@ -5153,7 +5143,7 @@ get_raw() ->
     <<"identityID">> => #{
       <<"name">> => <<"identityID">>,
       <<"in">> => <<"path">>,
-      <<"description">> => <<"Идентификатор личности владельца">>,
+      <<"description">> => <<"Identifier of the owner's identity">>,
       <<"required">> => true,
       <<"type">> => <<"string">>,
       <<"maxLength">> => 40,
@@ -5162,7 +5152,7 @@ get_raw() ->
     <<"walletID">> => #{
       <<"name">> => <<"walletID">>,
       <<"in">> => <<"path">>,
-      <<"description">> => <<"Идентификатор кошелька">>,
+      <<"description">> => <<"Identifier of the wallet">>,
       <<"required">> => true,
       <<"type">> => <<"string">>,
       <<"maxLength">> => 40,
@@ -5171,7 +5161,7 @@ get_raw() ->
     <<"destinationID">> => #{
       <<"name">> => <<"destinationID">>,
       <<"in">> => <<"path">>,
-      <<"description">> => <<"Идентификатор приёмника средств">>,
+      <<"description">> => <<"Identifier of the destination">>,
       <<"required">> => true,
       <<"type">> => <<"string">>,
       <<"maxLength">> => 40,
@@ -5180,7 +5170,7 @@ get_raw() ->
     <<"withdrawalID">> => #{
       <<"name">> => <<"withdrawalID">>,
       <<"in">> => <<"path">>,
-      <<"description">> => <<"Идентификатор вывода денежных средств">>,
+      <<"description">> => <<"Identifier of the withdrawal">>,
       <<"required">> => true,
       <<"type">> => <<"string">>,
       <<"maxLength">> => 40,
@@ -5189,14 +5179,14 @@ get_raw() ->
     <<"externalID">> => #{
       <<"name">> => <<"externalID">>,
       <<"in">> => <<"path">>,
-      <<"description">> => <<"Внешний идентификатор">>,
+      <<"description">> => <<"External identifier">>,
       <<"required">> => true,
       <<"type">> => <<"string">>
     },
     <<"residence">> => #{
       <<"name">> => <<"residence">>,
       <<"in">> => <<"query">>,
-      <<"description">> => <<"Резиденция, в рамках которой производится оказание услуг,\nкод страны или региона по стандарту [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)\n">>,
+      <<"description">> => <<"The residence within which the services are provided,\n[ISO 3166-1] country or region code (https://en.wikipedia.org/wiki/ISO_3166-1)\n">>,
       <<"required">> => false,
       <<"type">> => <<"string">>,
       <<"pattern">> => <<"^[A-Za-z]{3}$">>
@@ -5204,7 +5194,7 @@ get_raw() ->
     <<"amountFrom">> => #{
       <<"name">> => <<"amountFrom">>,
       <<"in">> => <<"query">>,
-      <<"description">> => <<"Сумма денежных средств в минорных единицах">>,
+      <<"description">> => <<"Amount of monetary funds in minor units">>,
       <<"required">> => false,
       <<"type">> => <<"integer">>,
       <<"format">> => <<"int64">>
@@ -5212,7 +5202,7 @@ get_raw() ->
     <<"amountTo">> => #{
       <<"name">> => <<"amountTo">>,
       <<"in">> => <<"query">>,
-      <<"description">> => <<"Сумма денежных средств в минорных единицах">>,
+      <<"description">> => <<"Amount of monetary funds in minor units">>,
       <<"required">> => false,
       <<"type">> => <<"integer">>,
       <<"format">> => <<"int64">>
@@ -5220,7 +5210,7 @@ get_raw() ->
     <<"currencyID">> => #{
       <<"name">> => <<"currencyID">>,
       <<"in">> => <<"query">>,
-      <<"description">> => <<"Валюта, символьный код согласно [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
+      <<"description">> => <<"Currency, character code according to [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
       <<"required">> => false,
       <<"type">> => <<"string">>,
       <<"pattern">> => <<"^[A-Z]{3}$">>
@@ -5228,7 +5218,7 @@ get_raw() ->
     <<"limit">> => #{
       <<"name">> => <<"limit">>,
       <<"in">> => <<"query">>,
-      <<"description">> => <<"Лимит выборки">>,
+      <<"description">> => <<"Selection limit">>,
       <<"required">> => true,
       <<"type">> => <<"integer">>,
       <<"maximum">> => 1000,
@@ -5238,7 +5228,7 @@ get_raw() ->
     <<"eventCursor">> => #{
       <<"name">> => <<"eventCursor">>,
       <<"in">> => <<"query">>,
-      <<"description">> => <<"Идентификатор последнего известного события.\n\nВсе события, произошедшие _после_ указанного, попадут в выборку.\nЕсли этот параметр не указан, в выборку попадут события, начиная с самого первого.\n">>,
+      <<"description">> => <<"The identifier of the last known event.\n\nAll events that occurred _after_ the specified one will be included in the selection.\nIf this parameter is not specified, the selection will include events starting from the very first one.\n">>,
       <<"required">> => false,
       <<"type">> => <<"integer">>,
       <<"format">> => <<"int32">>
@@ -5246,7 +5236,7 @@ get_raw() ->
     <<"eventID">> => #{
       <<"name">> => <<"eventID">>,
       <<"in">> => <<"path">>,
-      <<"description">> => <<"Идентификатор события процедуры идентификации.\n">>,
+      <<"description">> => <<"Identifier of the identification procedure event.\n">>,
       <<"required">> => true,
       <<"type">> => <<"integer">>,
       <<"format">> => <<"int32">>
@@ -5254,7 +5244,7 @@ get_raw() ->
     <<"reportID">> => #{
       <<"name">> => <<"reportID">>,
       <<"in">> => <<"path">>,
-      <<"description">> => <<"Идентификатор отчета">>,
+      <<"description">> => <<"The report identifier">>,
       <<"required">> => true,
       <<"type">> => <<"integer">>,
       <<"format">> => <<"int64">>
@@ -5262,7 +5252,7 @@ get_raw() ->
     <<"fileID">> => #{
       <<"name">> => <<"fileID">>,
       <<"in">> => <<"path">>,
-      <<"description">> => <<"Идентификатор файла">>,
+      <<"description">> => <<"The file identifier">>,
       <<"required">> => true,
       <<"type">> => <<"string">>,
       <<"maxLength">> => 40,
@@ -5271,7 +5261,7 @@ get_raw() ->
     <<"fromTime">> => #{
       <<"name">> => <<"fromTime">>,
       <<"in">> => <<"query">>,
-      <<"description">> => <<"Начало временного отрезка">>,
+      <<"description">> => <<"Start of the time period">>,
       <<"required">> => true,
       <<"type">> => <<"string">>,
       <<"format">> => <<"date-time">>
@@ -5279,7 +5269,7 @@ get_raw() ->
     <<"toTime">> => #{
       <<"name">> => <<"toTime">>,
       <<"in">> => <<"query">>,
-      <<"description">> => <<"Конец временного отрезка">>,
+      <<"description">> => <<"End of the time period">>,
       <<"required">> => true,
       <<"type">> => <<"string">>,
       <<"format">> => <<"date-time">>
@@ -5287,7 +5277,7 @@ get_raw() ->
     <<"deadline">> => #{
       <<"name">> => <<"X-Request-Deadline">>,
       <<"in">> => <<"header">>,
-      <<"description">> => <<"Максимальное время обработки запроса">>,
+      <<"description">> => <<"Maximum request processing time">>,
       <<"required">> => false,
       <<"type">> => <<"string">>,
       <<"maxLength">> => 40,
@@ -5296,7 +5286,7 @@ get_raw() ->
     <<"webhookID">> => #{
       <<"name">> => <<"webhookID">>,
       <<"in">> => <<"path">>,
-      <<"description">> => <<"Идентификатор webhook'а">>,
+      <<"description">> => <<"Webhook identifier">>,
       <<"required">> => true,
       <<"type">> => <<"string">>,
       <<"maxLength">> => 40,
@@ -5305,7 +5295,7 @@ get_raw() ->
     <<"queryIdentityID">> => #{
       <<"name">> => <<"identityID">>,
       <<"in">> => <<"query">>,
-      <<"description">> => <<"Идентификатор личности владельца">>,
+      <<"description">> => <<"Identifier of the owner's identity">>,
       <<"required">> => true,
       <<"type">> => <<"string">>,
       <<"maxLength">> => 40,
@@ -5314,7 +5304,7 @@ get_raw() ->
     <<"w2wTransferID">> => #{
       <<"name">> => <<"w2wTransferID">>,
       <<"in">> => <<"path">>,
-      <<"description">> => <<"Идентификатор перевода">>,
+      <<"description">> => <<"Identifier of transfer">>,
       <<"required">> => true,
       <<"type">> => <<"string">>,
       <<"maxLength">> => 40,
@@ -5323,22 +5313,22 @@ get_raw() ->
   },
   <<"responses">> => #{
     <<"BadRequest">> => #{
-      <<"description">> => <<"Недопустимые для операции входные данные">>,
+      <<"description">> => <<"Invalid input data for operation">>,
       <<"schema">> => #{
         <<"$ref">> => <<"#/definitions/BadRequest">>
       }
     },
     <<"ConflictRequest">> => #{
-      <<"description">> => <<"Переданное значение `externalID` уже использовалось вами ранее с другими параметрами запроса">>,
+      <<"description">> => <<"The passed value `externalID` has already been used by you with other query parameters">>,
       <<"schema">> => #{
         <<"$ref">> => <<"#/definitions/ConflictRequest">>
       }
     },
     <<"NotFound">> => #{
-      <<"description">> => <<"Искомая сущность не найдена">>
+      <<"description">> => <<"The content you are looking for was not found">>
     },
     <<"Unauthorized">> => #{
-      <<"description">> => <<"Ошибка авторизации">>
+      <<"description">> => <<"Authorization error">>
     }
   }
 }.
