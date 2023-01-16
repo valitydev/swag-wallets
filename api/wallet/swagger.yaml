@@ -24,10 +24,17 @@ info:
     ```
     After the specified time has elapsed, the system stops processing the request. It is recommended to specify a value of no more than one minute, but no less than three seconds.
     `X-Request-Deadline` can:
-    * set in `date-time` format according to [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339);  * specified in relative terms: in milliseconds (`150000ms`), seconds (`540s`) or minutes (`3.5m`).
+    * set in `date-time` format according to [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339);
+    * specified in relative terms: in milliseconds (`150000ms`), seconds (`540s`) or minutes (`3.5m`).
     ## Request processing errors
     During the processing of requests by our system, various unforeseen situations may occur. The system signals about their appearance via the HTTP protocol with the corresponding [statuses][5xx], indicating server errors.
-    | Code    | Description                                                                                                                                                                                                                      | | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | | **500** | An unexpected situation occurred while the system was processing the request. If you receive such a response code, we recommend that you contact technical support.                                                              | | **503** | The system is temporarily unavailable and not ready to serve this request. The request is guaranteed to fail, if you receive a response code like this, try to implement it later when the system is restored to availability.   | | **504** | The system has exceeded the allowable request processing time, the result of the request is undefined. Try to resubmit the request or find out the result of the original request, if you do not want to re-execute the request. |
+
+     | Code    | Description                                                                                                                                                                                                                      |
+     | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+     | **500** | An unexpected situation occurred while the system was processing the request. If you receive such a response code, we recommend that you contact technical support.                                                              |
+     | **503** | The system is temporarily unavailable and not ready to serve this request. The request is guaranteed to fail, if you receive a response code like this, try to implement it later when the system is restored to availability.   |
+     | **504** | The system has exceeded the allowable request processing time, the result of the request is undefined. Try to resubmit the request or find out the result of the original request, if you do not want to re-execute the request. |
+
     [5xx]: https://tools.ietf.org/html/rfc7231#section-6.6
   termsOfService: 'https://vality.dev/'
   contact:
