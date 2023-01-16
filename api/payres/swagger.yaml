@@ -4,10 +4,10 @@ info:
   title: Vality Payment Resource API
   description: |
 
-    Vality Payment Resource API служит для токенизации чувствительных данных платёжных ресурсов пользователей.
+    The Vality Payment Resource API is used to tokenize sensitive data of users' payment resources.
   termsOfService: 'https://vality.dev/'
   contact:
-    name: Команда техподдержки
+    name: Support Team
     email: support@vality.dev
     url: 'https://vality.dev/'
 host: api.vality.dev
@@ -24,7 +24,7 @@ securityDefinitions:
     name: Authorization
     in: header
     description: |
-      Для аутентификации вызовов мы используем [JWT](https://jwt.io). Cоответствующий ключ передается в заголовке.
+      Use [JWT](https://jwt.io) for call authentication. The corresponding key is passed in the header.
       ```shell
        Authorization: Bearer {TOKENIZATION|PRIVATE_JWT}
       ```
@@ -32,44 +32,44 @@ security:
   - bearer: []
 responses:
   NotFound:
-    description: Искомая сущность не найдена
+    description: The content you are looking for was not found
   BadRequest:
-    description: Недопустимые для операции входные данные
+    description: Invalid input data for operation
     schema:
       $ref: '#/definitions/BadRequest'
   Unauthorized:
-    description: Ошибка авторизации
+    description: Authorization Error
 parameters:
   requestID:
     name: X-Request-ID
     in: header
-    description: Уникальный идентификатор запроса к системе
+    description: Unique identifier of the request to the system
     required: true
     type: string
     maxLength: 32
     minLength: 1
 tags:
   - name: Payment Resources
-    x-displayName: Платёжные ресурсы
+    x-displayName: Payment resources
     description: ''
 paths:
   /bank-cards:
     post:
       operationId: storeBankCard
-      summary: Сохранить банковскую карту
+      summary: Save card
       tags:
-        - Payment Resources
+        - Withdrawal Resources
       parameters:
         - $ref: '#/parameters/requestID'
         - name: bankCard
-          description: Данные банковской карты
+          description: Сard details
           in: body
           required: true
           schema:
             $ref: '#/definitions/BankCard'
       responses:
         '201':
-          description: Карта сохранена
+          description: Card saved
           schema:
             $ref: '#/definitions/StoreBankCardResponse'
         '400':
@@ -77,19 +77,19 @@ paths:
         '401':
           $ref: '#/responses/Unauthorized'
         '422':
-          description: Непригодные данные банковской карты
+          description: Invalid сard details
           schema:
             $ref: '#/definitions/InvalidBankCard'
   '/bank-cards/{token}':
     get:
       operationId: getBankCard
-      summary: Получить данные банковской карты
+      summary: Receive bank card details
       tags:
-        - Payment Resources
+        - Withdrawal Resources
       parameters:
         - $ref: '#/parameters/requestID'
         - name: token
-          description: Данные банковской карты
+          description: Bank card details
           in: path
           required: true
           type: string
@@ -97,7 +97,7 @@ paths:
           maxLength: 1000
       responses:
         '200':
-          description: Данные карты найдены
+          description: Card data found
           schema:
             $ref: '#/definitions/SecuredBankCard'
         '400':
@@ -111,49 +111,49 @@ definitions:
     type: object
     properties:
       authData:
-        description: Данные для авторизации платежа по карте
+        description: Data for card withdrawal authorization
         type: string
         minLength: 1
         maxLength: 1000
         example: GVpEyibo60jJwyoJqriv1nAjiwfvzC9KVqFFjhhUA
   BankCard:
-    description: Данные банковской карты
+    description: Bank card details
     type: object
     required:
       - cardNumber
     properties:
       type:
-        description: Банковская карта
+        description: Card
         type: string
         enum:
           - BankCard
       cardNumber:
-        description: Номер банковской карты
+        description: Card number
         type: string
         pattern: '^\d{12,19}$'
         example: '4242424242424242'
       expDate:
-        description: Срок действия банковской карты
+        description: Сard expiration date
         type: string
         pattern: '^\d{2}\/(\d{2}|\d{4})$'
         example: 12/21
       cardHolder:
-        description: Имя держателя карты
+        description: Cardholder name
         type: string
         pattern: '^[[:alpha:][:space:][:punct:]]+$'
         minLength: 1
         maxLength: 100
-        example: LEXA SVOTIN
+        example: LEEROY JENKINS
       cvv:
-        description: Код верификации
+        description: Verification code
         type: string
         pattern: '^\d{3,4}$'
         example: '321'
   BankCardPaymentSystem:
     description: |
-      Платежная система.
+      Payment system.
 
-      Набор систем, доступных для проведения выплат, можно узнать, вызвав соответствующую [операцию](#operation/getWithdrawalMethods).
+      The set of systems available for making withdrawals can be found by calling the corresponding [operation](#operation/getWithdrawalMethods).
     type: string
   InvalidBankCard:
     type: object
@@ -168,7 +168,7 @@ definitions:
       - errorType
     properties:
       errorType:
-        description: Тип ошибки в данных
+        description: Error type
         type: string
         enum:
           - SchemaViolated
@@ -183,28 +183,28 @@ definitions:
           - InvalidToken
         example: NotFound
       name:
-        description: 'Имя или идентификатор элемента сообщения, содержащего недопустимые данные'
+        description: Name or identifier of message element containing invalid data
         type: string
         example: X-Request-ID
       description:
-        description: 'Пояснение, почему данные считаются недопустимыми'
+        description: Explanation of why the data is invalid
         type: string
         example: Required parameter was not sent
   SecuredBankCard:
-    description: Безопасные данные банковской карты
+    description: Secure bank card details
     type: object
     required:
       - token
     properties:
       token:
-        description: 'Токен, идентифицирующий исходные данные карты'
+        description: Token identifying the original card data
         type: string
         minLength: 1
         maxLength: 1000
         example: zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQg9xMkh
       bin:
         description: |
-          [Идентификационный номер][1] банка-эмитента карты
+          [Identification number][1] of the card issuing bank
 
           [1]: https://en.wikipedia.org/wiki/Payment_card_number#Issuer_identification_number_(IIN)
         type: string
@@ -212,7 +212,7 @@ definitions:
         example: '424242'
         readOnly: true
       lastDigits:
-        description: Последние цифры номера карты
+        description: Card last digits
         type: string
         pattern: '^\d{2,4}$'
         example: '4242'
@@ -226,7 +226,7 @@ definitions:
     type: object
     properties:
       validUntil:
-        description: 'Дата и время, до наступления которых токен платёжного ресурса остается действительным'
+        description: The date and time by which the withdrawal resource token remains valid
         type: string
         format: date-time
         readOnly: true
