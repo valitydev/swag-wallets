@@ -7,6 +7,7 @@ get:
   parameters:
     - $ref: "#/parameters/requestID"
     - $ref: "#/parameters/deadline"
+    - $ref: "#/parameters/partyID"
     - name: providerID
       description: Service provider's identifier
       in: query

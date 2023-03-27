@@ -269,6 +269,14 @@ parameters:
     type: string
     maxLength: 40
     minLength: 1
+  partyID:
+    name: partyID
+    description: The participant's unique identifier within the system.
+    in: query
+    required: false
+    type: string
+    maxLength: 40
+    minLength: 1
 tags:
   - name: Providers
     x-displayName: Service providers
