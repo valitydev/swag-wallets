@@ -7,6 +7,7 @@ get:
   parameters:
     - $ref: "#/parameters/requestID"
     - $ref: "#/parameters/deadline"
+    - $ref: "#/parameters/partyID"
     - name: identityID
       description: Identifier of the owner's idenity
       in: query
