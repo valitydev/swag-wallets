@@ -1,6 +1,8 @@
 name: release
 on:
-  - workflow_dispatch
+  push:
+    branches: [v0]
+  workflow_dispatch:
 
 env:
   NODEJS_VERSION: '16'
