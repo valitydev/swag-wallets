@@ -922,6 +922,11 @@ get_request_spec('ListDestinations') ->
             rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
 , {required, false}]
         }},
+        {'partyID', #{
+            source => qs_val,
+            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
+, {required, false}]
+        }},
         {'identityID', #{
             source => qs_val,
             rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
@@ -952,6 +957,11 @@ get_request_spec('ListWithdrawals') ->
         }},
         {'X-Request-Deadline', #{
             source => header,
+            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
+, {required, false}]
+        }},
+        {'partyID', #{
+            source => qs_val,
             rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
 , {required, false}]
         }},

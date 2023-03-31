@@ -349,6 +349,11 @@ get_request_spec('ListDepositAdjustments') ->
             rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
 , {required, false}]
         }},
+        {'partyID', #{
+            source => qs_val,
+            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
+, {required, false}]
+        }},
         {'walletID', #{
             source => qs_val,
             rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
@@ -422,6 +427,11 @@ get_request_spec('ListDepositReverts') ->
             rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
 , {required, false}]
         }},
+        {'partyID', #{
+            source => qs_val,
+            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
+, {required, false}]
+        }},
         {'walletID', #{
             source => qs_val,
             rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
@@ -492,6 +502,11 @@ get_request_spec('ListDeposits') ->
         }},
         {'X-Request-Deadline', #{
             source => header,
+            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
+, {required, false}]
+        }},
+        {'partyID', #{
+            source => qs_val,
             rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
 , {required, false}]
         }},
