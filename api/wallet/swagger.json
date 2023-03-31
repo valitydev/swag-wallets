@@ -242,6 +242,15 @@
       "type": "string",
       "maxLength": 40,
       "minLength": 1
+    },
+    "partyID": {
+      "name": "partyID",
+      "description": "The participant's unique identifier within the system.",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "maxLength": 40,
+      "minLength": 1
     }
   },
   "tags": [
@@ -362,6 +371,9 @@
           },
           {
             "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/partyID"
           },
           {
             "name": "walletID",
@@ -490,6 +502,9 @@
             "$ref": "#/parameters/deadline"
           },
           {
+            "$ref": "#/parameters/partyID"
+          },
+          {
             "name": "walletID",
             "in": "query",
             "description": "Identifier of the wallet",
@@ -614,6 +629,9 @@
           },
           {
             "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/partyID"
           },
           {
             "name": "walletID",
@@ -751,6 +769,9 @@
           },
           {
             "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/partyID"
           },
           {
             "name": "identityID",
@@ -1114,6 +1135,9 @@
           },
           {
             "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/partyID"
           },
           {
             "name": "providerID",
@@ -1651,6 +1675,9 @@
             "$ref": "#/parameters/deadline"
           },
           {
+            "$ref": "#/parameters/partyID"
+          },
+          {
             "name": "identityID",
             "description": "Identifier of owner's identity",
             "in": "query",
@@ -2119,6 +2146,9 @@
           },
           {
             "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/partyID"
           },
           {
             "name": "walletID",
