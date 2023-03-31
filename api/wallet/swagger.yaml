@@ -249,6 +249,14 @@ parameters:
     type: string
     maxLength: 40
     minLength: 1
+  partyID:
+    name: partyID
+    description: The participant's unique identifier within the system.
+    in: query
+    required: false
+    type: string
+    maxLength: 40
+    minLength: 1
 tags:
   - name: Providers
     x-displayName: Service providers
@@ -331,6 +339,7 @@ paths:
       parameters:
         - $ref: '#/parameters/requestID'
         - $ref: '#/parameters/deadline'
+        - $ref: '#/parameters/partyID'
         - name: walletID
           in: query
           description: Wallet identifier
@@ -421,6 +430,7 @@ paths:
       parameters:
         - $ref: '#/parameters/requestID'
         - $ref: '#/parameters/deadline'
+        - $ref: '#/parameters/partyID'
         - name: walletID
           in: query
           description: Identifier of the wallet
@@ -511,6 +521,7 @@ paths:
       parameters:
         - $ref: '#/parameters/requestID'
         - $ref: '#/parameters/deadline'
+        - $ref: '#/parameters/partyID'
         - name: walletID
           in: query
           description: Identifier of the wallet
@@ -609,6 +620,7 @@ paths:
       parameters:
         - $ref: '#/parameters/requestID'
         - $ref: '#/parameters/deadline'
+        - $ref: '#/parameters/partyID'
         - name: identityID
           description: Identifier of the owner's idenity
           in: query
@@ -832,6 +844,7 @@ paths:
       parameters:
         - $ref: '#/parameters/requestID'
         - $ref: '#/parameters/deadline'
+        - $ref: '#/parameters/partyID'
         - name: providerID
           description: Service provider's identifier
           in: query
@@ -1157,6 +1170,7 @@ paths:
       parameters:
         - $ref: '#/parameters/requestID'
         - $ref: '#/parameters/deadline'
+        - $ref: '#/parameters/partyID'
         - name: identityID
           description: Identifier of owner's identity
           in: query
@@ -1443,6 +1457,7 @@ paths:
       parameters:
         - $ref: '#/parameters/requestID'
         - $ref: '#/parameters/deadline'
+        - $ref: '#/parameters/partyID'
         - name: walletID
           in: query
           description: Identifier of the wallet
