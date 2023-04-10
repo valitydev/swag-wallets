@@ -2,7 +2,6 @@
 -module(swag_server_wallet_handler_api).
 
 -export([authorize_api_key/6]).
--export([determine_peer/1]).
 -export([populate_request/5]).
 -export([validate_response/4]).
 -export([encode_response/1]).
@@ -64,14 +63,6 @@ authorize_api_key(LogicHandler, OperationID, From, KeyParam, Req0, Context) ->
                     {false, AuthHeader, Req}
             end
     end.
-
--spec determine_peer(Req :: cowboy_req:req()) ->
-        {ok, Peer :: swag_server_wallet:client_peer()} | {error, Reason :: malformed | einval}.
-
-determine_peer(Req) ->
-    Peer  = cowboy_req:peer(Req),
-    Value = cowboy_req:header(<<"x-forwarded-for">>, Req),
-    determine_peer_from_header(Value, Peer).
 
 -spec populate_request(
     LogicHandler :: module(),
@@ -158,26 +149,6 @@ populate_request_param(LogicHandler, OperationID, {Name, #{rules := Rules, sourc
                 description => Message
             },
             {error, swag_server_wallet_logic_handler:map_error(LogicHandler, {validation_error, Error}), Req}
-    end.
-
-determine_peer_from_header(undefined, {IP, Port}) ->
-    % undefined, assuming no proxies were involved
-    {ok, #{ip_address => IP, port_number => Port}};
-determine_peer_from_header(Value, _Peer) when is_binary(Value) ->
-    ClientPeer = string:strip(binary_to_list(Value)),
-    case string:tokens(ClientPeer, ", ") of
-        [ClientIP | _Proxies] ->
-            case inet:parse_strict_address(ClientIP) of
-                {ok, IP} ->
-                    % ok
-                    {ok, #{ip_address => IP}};
-                Error ->
-                    % unparseable ip address
-                    Error
-            end;
-        _ ->
-            % empty or malformed value
-            {error, malformed}
     end.
 
 -spec get_value(

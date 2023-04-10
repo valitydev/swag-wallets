@@ -150,17 +150,8 @@ charsets_provided(Req, State) ->
 -spec malformed_request(Req :: cowboy_req:req(), State :: state()) ->
     {Value :: boolean(), Req :: cowboy_req:req(), State :: state()}.
 
-malformed_request(Req, State = #state{context = Context}) ->
-    PeerResult = swag_server_wallet_handler_api:determine_peer(Req),
-    case PeerResult of
-        {ok, Peer} ->
-            Context1 = Context#{peer => Peer},
-            State1   = State#state{context = Context1},
-            {false, Req, State1};
-        {error, Reason} ->
-            error_logger:error_msg("Unable to determine client peer: ~p", [Reason]),
-            {true, Req, State}
-    end.
+malformed_request(Req, State) ->
+    {false, Req, State}.
 
 -spec allow_missing_post(Req :: cowboy_req:req(), State :: state()) ->
     {Value :: false, Req :: cowboy_req:req(), State :: state()}.
