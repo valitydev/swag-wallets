@@ -1,6 +1,6 @@
 {
   "name": "@vality/swag-wallet",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "scripts": {
     "build": "node ./scripts/build.js",
     "swagger": "swagger-repo",
@@ -19,6 +19,6 @@
     "portfinder": "1.0.32",
     "shelljs": "0.8.5",
     "swagger-repo": "1.5.1",
-    "swagger-ui": "4.15.5"
+    "swagger-ui": "5.3.1"
   }
 }
