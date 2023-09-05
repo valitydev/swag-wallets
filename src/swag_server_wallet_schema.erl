@@ -3378,6 +3378,12 @@ get_raw() ->
           <<"minLength">> => 1,
           <<"maxLength">> => 100
         },
+        <<"accountName">> => #{
+          <<"type">> => <<"string">>,
+          <<"description">> => <<"Name of the owner of the personal account to which the withdrawal will be made">>,
+          <<"minLength">> => 1,
+          <<"maxLength">> => 1000
+        },
         <<"provider">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"Paypal">>,
