@@ -3237,6 +3237,12 @@
           "maxLength": 100,
           "example": "zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQ"
         },
+        "accountName": {
+          "description": "Name of the owner of the personal account to which the withdrawal will be made",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
         "provider": {
           "description": "Digital wallet provider.\n\nThe set of providers available for making withdrawals can be found by calling\ncorresponding [operation](#operation/getWithdrawalMethods).\n",
           "type": "string",
