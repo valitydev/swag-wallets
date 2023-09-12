@@ -6,7 +6,7 @@ on:
 
 jobs:
   configured:
-    uses: valitydev/action-frontend/.github/workflows/configured.yml@v0.1
+    uses: valitydev/action-frontend/.github/workflows/configured.yml@v1.0
   check:
     name: Check
     runs-on: ubuntu-latest
@@ -14,7 +14,7 @@ jobs:
     if: needs.configured.outputs.exists == 'true'
     steps:
       - uses: actions/checkout@v3
-      - uses: valitydev/action-frontend/setup@v0.1
+      - uses: valitydev/action-frontend/setup@v1.0
       - run: npm ci
       - name: Build
         run: npm run build
