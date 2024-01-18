@@ -343,6 +343,11 @@ get_request_spec('CreateReport') ->
             source => header,
             rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
 , {required, false}]
+        }},
+        {'partyID', #{
+            source => qs_val,
+            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
+, {required, false}]
         }}
     ];
 get_request_spec('GetReport') ->
@@ -364,6 +369,11 @@ get_request_spec('GetReport') ->
         }},
         {'X-Request-Deadline', #{
             source => header,
+            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
+, {required, false}]
+        }},
+        {'partyID', #{
+            source => qs_val,
             rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
 , {required, false}]
         }}
@@ -392,6 +402,11 @@ get_request_spec('GetReports') ->
         }},
         {'X-Request-Deadline', #{
             source => header,
+            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
+, {required, false}]
+        }},
+        {'partyID', #{
+            source => qs_val,
             rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
 , {required, false}]
         }},
