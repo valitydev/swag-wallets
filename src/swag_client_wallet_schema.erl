@@ -1287,6 +1287,14 @@ get_raw() ->
           <<"maxLength">> => 40,
           <<"minLength">> => 1
         }, #{
+          <<"name">> => <<"partyID">>,
+          <<"in">> => <<"query">>,
+          <<"description">> => <<"The participant's unique identifier within the system.">>,
+          <<"required">> => false,
+          <<"type">> => <<"string">>,
+          <<"maxLength">> => 40,
+          <<"minLength">> => 1
+        }, #{
           <<"name">> => <<"identityID">>,
           <<"in">> => <<"path">>,
           <<"description">> => <<"Identifier of the owner's identity">>,
@@ -1358,6 +1366,14 @@ get_raw() ->
           <<"maxLength">> => 40,
           <<"minLength">> => 1
         }, #{
+          <<"name">> => <<"partyID">>,
+          <<"in">> => <<"query">>,
+          <<"description">> => <<"The participant's unique identifier within the system.">>,
+          <<"required">> => false,
+          <<"type">> => <<"string">>,
+          <<"maxLength">> => 40,
+          <<"minLength">> => 1
+        }, #{
           <<"name">> => <<"identityID">>,
           <<"in">> => <<"path">>,
           <<"description">> => <<"Identifier of the owner's identity">>,
@@ -1410,6 +1426,14 @@ get_raw() ->
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
           <<"description">> => <<"Maximum request processing time">>,
+          <<"required">> => false,
+          <<"type">> => <<"string">>,
+          <<"maxLength">> => 40,
+          <<"minLength">> => 1
+        }, #{
+          <<"name">> => <<"partyID">>,
+          <<"in">> => <<"query">>,
+          <<"description">> => <<"The participant's unique identifier within the system.">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
