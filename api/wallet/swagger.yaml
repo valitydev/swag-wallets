@@ -952,6 +952,7 @@ paths:
       parameters:
         - $ref: '#/parameters/requestID'
         - $ref: '#/parameters/deadline'
+        - $ref: '#/parameters/partyID'
         - $ref: '#/parameters/identityID'
         - name: ReportParams
           in: body
@@ -976,6 +977,7 @@ paths:
       parameters:
         - $ref: '#/parameters/requestID'
         - $ref: '#/parameters/deadline'
+        - $ref: '#/parameters/partyID'
         - $ref: '#/parameters/identityID'
         - $ref: '#/parameters/fromTime'
         - $ref: '#/parameters/toTime'
@@ -1006,6 +1008,7 @@ paths:
       parameters:
         - $ref: '#/parameters/requestID'
         - $ref: '#/parameters/deadline'
+        - $ref: '#/parameters/partyID'
         - $ref: '#/parameters/identityID'
         - $ref: '#/parameters/reportID'
       responses:
