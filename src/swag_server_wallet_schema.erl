@@ -3076,6 +3076,10 @@ get_raw() ->
             <<"type">> => <<"string">>,
             <<"example">> => <<"10036274">>,
             <<"description">> => <<"The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n">>
+          },
+          <<"desc">> => #{
+            <<"type">> => <<"string">>,
+            <<"description">> => <<"Deposit information">>
           }
         }
       }, #{
