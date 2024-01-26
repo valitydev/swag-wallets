@@ -34,4 +34,7 @@ allOf:
       externalID:
         x-rebillyMerge:
           - $ref: "#/definitions/ExternalID"
+      desc:
+        description: Deposit information
+        type: string
   - $ref: "#/definitions/DepositStatus"
