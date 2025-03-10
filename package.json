@@ -11,7 +11,7 @@
     "bundle:payres:json": "npx swagger-repo bundle --basedir ./api/payres/spec/ -o ./web_deploy/payres/swagger.json",
     "bundle:wallet": "mkdir -p ./web_deploy && npm run bundle:wallet:yaml && npm run bundle:wallet:json",
     "bundle:payres": "mkdir -p ./web_deploy/payres && npm run bundle:payres:yaml && npm run bundle:payres:json",
-    "build": "npm run bundle:wallet && npm run bundle:payres && redocly build wallet",
+    "build": "npm run bundle:wallet && npm run bundle:payres",
     "build-docs": "redocly build-docs -o web_deploy/index.html && redocly build-docs payres -o web_deploy/payres/index.html",
     "build-web": "npm run build && npm run build-docs",
     "build-ng-lib": "vality-openapi generate ./web_deploy/swagger.json",
