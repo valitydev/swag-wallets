@@ -1,7 +1,7 @@
 # See https://redocly.com/docs/cli/configuration/ for more information.
 apis:
   wallet:
-    root: web_deploy/wallet/swagger.yaml
+    root: web_deploy/swagger.yaml
   payres:
     root: web_deploy/payres/swagger.yaml
 

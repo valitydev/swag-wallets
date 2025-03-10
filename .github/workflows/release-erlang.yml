@@ -29,11 +29,11 @@ jobs:
         run: |
           mkdir -p out
           echo "Generate wallet stubs"
-          swagger-codegen generate -l vality-erlang-client -i web_deploy/api/wallet/swagger.json -o out/erlang-client-wallet --additional-properties packageName=swag_client_wallet
-          swagger-codegen generate -l vality-erlang-server -i web_deploy/api/wallet/swagger.json -o out/erlang-server-wallet --additional-properties packageName=swag_server_wallet
+          swagger-codegen generate -l vality-erlang-client -i web_deploy/swagger.json -o out/erlang-client-wallet --additional-properties packageName=swag_client_wallet
+          swagger-codegen generate -l vality-erlang-server -i web_deploy/swagger.json -o out/erlang-server-wallet --additional-properties packageName=swag_server_wallet
           echo "Generate payres stubs"
-          swagger-codegen generate -l vality-erlang-client -i web_deploy/api/payres/swagger.json -o out/erlang-client-payres --additional-properties packageName=swag_client_payres
-          swagger-codegen generate -l vality-erlang-server -i web_deploy/api/payres/swagger.json -o out/erlang-server-payres --additional-properties packageName=swag_server_payres
+          swagger-codegen generate -l vality-erlang-client -i web_deploy/payres/swagger.json -o out/erlang-client-payres --additional-properties packageName=swag_client_payres
+          swagger-codegen generate -l vality-erlang-server -i web_deploy/payres/swagger.json -o out/erlang-server-payres --additional-properties packageName=swag_server_payres
 
       #
 
