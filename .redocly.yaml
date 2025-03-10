@@ -2,6 +2,9 @@
 apis:
   wallet:
     root: web_deploy/swagger.yaml
+    lint:
+      rules:
+        operation-summary: warn
   payres:
     root: web_deploy/payres/swagger.yaml
 
