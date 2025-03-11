@@ -12,6 +12,6 @@
     {env, [
     ]},
     {modules, []},
-    {licenses, []},
+    {licenses, ["Apache 2.0"]},
     {links, ["https://vality.dev/"]}
 ]}.
