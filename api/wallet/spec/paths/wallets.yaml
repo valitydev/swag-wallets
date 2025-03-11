@@ -7,7 +7,9 @@ get:
   parameters:
     - $ref: "#/parameters/requestID"
     - $ref: "#/parameters/deadline"
-    - $ref: "#/parameters/partyID"
+    - x-rebillyMerge:
+        - required: true
+        - $ref: "#/parameters/partyID"
     - name: identityID
       description: Identifier of owner's identity
       in: query
