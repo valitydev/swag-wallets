@@ -1,0 +1,11 @@
+# See https://redocly.com/docs/cli/configuration/ for more information.
+apis:
+  wallet:
+    root: web_deploy/swagger.yaml
+    rules:
+      operation-summary: warn
+  payres:
+    root: web_deploy/payres/swagger.yaml
+
+extends:
+  - ./node_modules/@vality/redocly-utils/lib/config.yaml

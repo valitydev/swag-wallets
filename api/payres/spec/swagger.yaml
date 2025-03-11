@@ -11,6 +11,9 @@ info:
     name: Support Team
     email: support@vality.dev
     url: https://vality.dev/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
 host: api.vality.dev
 basePath: /payres/v0
 schemes:

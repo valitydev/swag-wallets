@@ -1,24 +1,26 @@
 {
-  "name": "@vality/swag-wallet",
-  "version": "0.1.2",
+  "name": "@vality/swag-wallets",
+  "version": "0.1.3",
+  "license": "Apache-2.0",
   "scripts": {
-    "build": "node ./scripts/build.js",
-    "swagger": "swagger-repo",
-    "test": "swagger-repo validate --basedir api/wallet/spec/ && swagger-repo validate --basedir api/payres/spec/",
-    "start": "gulp serve",
-    "codegen": "vality-openapi generate ./dist/api/wallet/swagger.json"
+    "start": "redocly preview-docs",
+    "validate": "redocly lint",
+    "bundle:wallet:yaml": "npm run bundle:wallet:json -- --yaml -o ./web_deploy/swagger.yaml",
+    "bundle:wallet:json": "npx swagger-repo bundle --basedir ./api/wallet/spec/ -o ./web_deploy/swagger.json",
+    "bundle:payres:yaml": "npm run bundle:payres:json -- --yaml -o ./web_deploy/payres/swagger.yaml",
+    "bundle:payres:json": "npx swagger-repo bundle --basedir ./api/payres/spec/ -o ./web_deploy/payres/swagger.json",
+    "bundle:wallet": "mkdir -p ./web_deploy && npm run bundle:wallet:yaml && npm run bundle:wallet:json",
+    "bundle:payres": "mkdir -p ./web_deploy/payres && npm run bundle:payres:yaml && npm run bundle:payres:json",
+    "build": "npm run bundle:wallet && npm run bundle:payres",
+    "build-docs": "redocly build-docs -o web_deploy/index.html && redocly build-docs payres -o web_deploy/payres/index.html",
+    "build-web": "npm run build && npm run build-docs",
+    "build-ng-lib": "vality-openapi generate ./web_deploy/swagger.json",
+    "postinstall": "mkdir -p ./scripts && cp -a ./node_modules/@vality/redocly-utils/lib/swagger-plugins ./scripts/plugins"
   },
   "devDependencies": {
-    "@vality/openapi-generator-cli": "^2.0.0",
-    "connect": "3.7.0",
-    "cors": "2.8.5",
-    "gulp": "github:gulpjs/gulp",
-    "gulp-connect": "5.7.0",
-    "gulp-util": "3.0.8",
-    "json-merge-patch": "1.0.2",
-    "portfinder": "1.0.32",
-    "shelljs": "0.8.5",
-    "swagger-repo": "1.5.1",
-    "swagger-ui": "5.17.1"
+    "@redocly/cli": "^1.33.0",
+    "@vality/openapi-generator-cli": "^3.0.2",
+    "@vality/redocly-utils": "^0.3.0",
+    "swagger-repo": "1.5.1"
   }
 }

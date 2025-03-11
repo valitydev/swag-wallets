@@ -1,0 +1,20 @@
+name: "Frontend: Check"
+
+on:
+  pull_request:
+    branches: ["*"]
+
+jobs:
+  check:
+    name: Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - run: npm install
+      - name: Bundle OpenAPI & Build Redocly Docs
+        run: npm run build-web
+      - name: Lint OpenAPI
+        run: npm run validate
+      - name: Check Angular OpenAPI Library
+        run: npm run build-ng-lib
