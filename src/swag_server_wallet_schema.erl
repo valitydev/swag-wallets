@@ -2158,7 +2158,7 @@ get_raw() ->
     },
     <<"Destination">> => #{
       <<"type">> => <<"object">>,
-      <<"required">> => [ <<"currency">>, <<"name">>, <<"party">>, <<"resource">> ],
+      <<"required">> => [ <<"currency">>, <<"name">>, <<"party">>, <<"realm">>, <<"resource">> ],
       <<"properties">> => #{
         <<"id">> => #{
           <<"type">> => <<"string">>,
@@ -2170,6 +2170,11 @@ get_raw() ->
           <<"type">> => <<"string">>,
           <<"example">> => <<"Squarey plastic thingy">>,
           <<"description">> => <<"A human-readable name for the destination by which it is easily recognizable\n">>
+        },
+        <<"realm">> => #{
+          <<"type">> => <<"string">>,
+          <<"description">> => <<"Realm of destination.\n">>,
+          <<"enum">> => [ <<"Live">>, <<"Test">> ]
         },
         <<"createdAt">> => #{
           <<"type">> => <<"string">>,
@@ -2227,6 +2232,7 @@ get_raw() ->
         <<"name">> => <<"Squarey plastic thingy">>,
         <<"isBlocked">> => false,
         <<"externalID">> => <<"10036274">>,
+        <<"realm">> => <<"Live">>,
         <<"currency">> => <<"USD">>,
         <<"id">> => <<"107498">>,
         <<"party">> => <<"party">>,
@@ -3347,6 +3353,7 @@ get_raw() ->
           <<"name">> => <<"Squarey plastic thingy">>,
           <<"isBlocked">> => false,
           <<"externalID">> => <<"10036274">>,
+          <<"realm">> => <<"Live">>,
           <<"currency">> => <<"USD">>,
           <<"id">> => <<"107498">>,
           <<"party">> => <<"party">>,
@@ -3364,6 +3371,7 @@ get_raw() ->
           <<"name">> => <<"Squarey plastic thingy">>,
           <<"isBlocked">> => false,
           <<"externalID">> => <<"10036274">>,
+          <<"realm">> => <<"Live">>,
           <<"currency">> => <<"USD">>,
           <<"id">> => <<"107498">>,
           <<"party">> => <<"party">>,
