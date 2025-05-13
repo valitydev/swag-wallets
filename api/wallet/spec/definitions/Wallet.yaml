@@ -3,7 +3,7 @@ description: Wallet details
 type: object
 required:
   - name
-  - identity
+  - party
   - currency
 properties:
   id:
@@ -23,18 +23,9 @@ properties:
     type: boolean
     readOnly: true
     example: false
-  identity:
+  party:
     x-rebillyMerge:
-      - $ref: "#/definitions/IdentityID"
+      - $ref: "#/definitions/PartyID"
   currency:
     x-rebillyMerge:
       - $ref: "#/definitions/CurrencyID"
-  metadata:
-    description: |
-      Some non-transparent for system set of data associated with this wallet
-    type: object
-    example:
-      client_locale: en_US
-  externalID:
-    x-rebillyMerge:
-      - $ref: "#/definitions/ExternalID"

@@ -106,22 +106,6 @@ parameters:
     type: string
     maxLength: 32
     minLength: 1
-  providerID:
-    name: providerID
-    in: path
-    description: Identifier of the provider
-    required: true
-    type: string
-    maxLength: 40
-    minLength: 1
-  identityID:
-    name: identityID
-    in: path
-    description: Identifier of the owner's identity
-    required: true
-    type: string
-    maxLength: 40
-    minLength: 1
   walletID:
     name: walletID
     in: path
@@ -256,22 +240,6 @@ parameters:
     type: string
     maxLength: 40
     minLength: 1
-  queryIdentityID:
-    name: identityID
-    in: query
-    description: Identifier of the owner's identity
-    required: true
-    type: string
-    maxLength: 40
-    minLength: 1
-  w2wTransferID:
-    name: w2wTransferID
-    in: path
-    description: Identifier of transfer
-    required: true
-    type: string
-    maxLength: 40
-    minLength: 1
   partyID:
     name: partyID
     description: The participant's unique identifier within the system.
@@ -281,12 +249,6 @@ parameters:
     maxLength: 40
     minLength: 1
 tags:
-  - name: Providers
-    x-displayName: Service providers
-    description: ""
-  - name: Identities
-    x-displayName: Identities
-    description: ""
   - name: Wallets
     x-displayName: Wallets
     description: ""
@@ -308,9 +270,6 @@ tags:
   - name: Downloads
     x-displayName: File upload
     description: ""
-  - name: W2W
-    x-displayName: Transfers within the system
-    description: "Transfers of funds between wallets within the system"
   - name: Webhooks
     x-displayName: Webhooks
     description: >

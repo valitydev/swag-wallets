@@ -1,13 +1,14 @@
 ---
 get:
-  summary: Get withdrawal methods available by owner identity
+  summary: Get withdrawal methods available for wallet
   tags:
-    - Identities
+    - Wallets
   operationId: getWithdrawalMethods
   parameters:
     - $ref: "#/parameters/requestID"
     - $ref: "#/parameters/deadline"
-    - $ref: "#/parameters/identityID"
+    - $ref: "#/parameters/partyID"
+    - $ref: "#/parameters/walletID"
   responses:
     "200":
       description: Methods found
@@ -22,3 +23,5 @@ get:
       $ref: "#/responses/BadRequest"
     "401":
       $ref: "#/responses/Unauthorized"
+    "404":
+      $ref: "#/responses/NotFound"

@@ -4,6 +4,7 @@ allOf:
   - type: object
     required:
       - wallet
+      - party
       - destination
       - body
     properties:
@@ -19,6 +20,9 @@ allOf:
       wallet:
         x-rebillyMerge:
           - $ref: "#/definitions/WalletID"
+      party:
+        x-rebillyMerge:
+          - $ref: "#/definitions/PartyID"
       destination:
         x-rebillyMerge:
           - $ref: "#/definitions/DestinationID"

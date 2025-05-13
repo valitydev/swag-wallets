@@ -1,7 +1,7 @@
 ---
 type: object
 required:
-  - identityID
+  - partyID
   - scope
   - url
 properties:
@@ -10,9 +10,9 @@ properties:
       Identifier of the webhook
     type: string
     readOnly: true
-  identityID:
+  partyID:
     x-rebillyMerge:
-      - $ref: "#/definitions/IdentityID"
+      - $ref: "#/definitions/PartyID"
   active:
     description: |
       Is notification delivery currently enabled?
