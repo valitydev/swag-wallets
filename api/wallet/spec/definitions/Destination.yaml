@@ -6,6 +6,7 @@ required:
   - party
   - currency
   - resource
+  - realm
 properties:
   id:
     x-rebillyMerge:
@@ -16,6 +17,13 @@ properties:
       A human-readable name for the destination by which it is easily recognizable
     type: string
     example: Squarey plastic thingy
+  realm:
+    description: |
+      Realm of destination.
+    type: string
+    enum:
+      - Live
+      - Test
   createdAt:
     description: Date and time of creation of the destination of the funds
     type: string
