@@ -27,9 +27,6 @@
 -export([get_withdrawal_events/2]).
 -export([get_withdrawal_events/3]).
 
--export([issue_destination_grant/2]).
--export([issue_destination_grant/3]).
-
 -export([list_destinations/2]).
 -export([list_destinations/3]).
 
@@ -183,24 +180,6 @@ get_withdrawal_events(Endpoint, Params, Opts) ->
         get_request_spec(get_withdrawal_events),
         Opts
     ), get_withdrawal_events).
-
--spec issue_destination_grant(Endpoint :: swag_client_wallet:endpoint(), Params :: map()) ->
-    {ok, Code :: integer(), RespHeaders :: list(), Response :: map()} |
-    {error, _Reason}.
-issue_destination_grant(Endpoint, Params) ->
-    issue_destination_grant(Endpoint, Params, []).
-
--spec issue_destination_grant(Endpoint :: swag_client_wallet:endpoint(), Params :: map(), Opts :: swag_client_wallet:transport_opts()) ->
-    {ok, Code :: integer(), RespHeaders :: list(), Response :: map()} |
-    {error, _Reason}.
-issue_destination_grant(Endpoint, Params, Opts) ->
-    process_response(swag_client_wallet_procession:process_request(
-        post,
-        swag_client_wallet_utils:get_url(Endpoint, "/wallet/v0/destinations/:destinationID/grants"),
-        Params,
-        get_request_spec(issue_destination_grant),
-        Opts
-    ), issue_destination_grant).
 
 -spec list_destinations(Endpoint :: swag_client_wallet:endpoint(), Params :: map()) ->
     {ok, Code :: integer(), RespHeaders :: list(), Response :: map()} |
@@ -423,28 +402,6 @@ get_request_spec('get_withdrawal_events') ->
 , {required, false}]
         }}
     ];
-get_request_spec('issue_destination_grant') ->
-    [
-        {'X-Request-ID', #{
-            source => header,
-            rules  => [{type, 'binary'}, {max_length, 32}, {min_length, 1}, true
-, {required, true}]
-        }},
-        {'destinationID', #{
-            source => binding,
-            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
-, {required, true}]
-        }},
-        {'DestinationGrantRequest', #{
-            source => body,
-            rules  => [schema, {required, true}]
-        }},
-        {'X-Request-Deadline', #{
-            source => header,
-            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
-, {required, false}]
-        }}
-    ];
 get_request_spec('list_destinations') ->
     [
         {'X-Request-ID', #{
@@ -463,11 +420,6 @@ get_request_spec('list_destinations') ->
 , {required, false}]
         }},
         {'partyID', #{
-            source => qs_val,
-            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
-, {required, false}]
-        }},
-        {'identityID', #{
             source => qs_val,
             rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
 , {required, false}]
@@ -506,11 +458,6 @@ get_request_spec('list_withdrawals') ->
 , {required, false}]
         }},
         {'walletID', #{
-            source => qs_val,
-            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
-, {required, false}]
-        }},
-        {'identityID', #{
             source => qs_val,
             rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
 , {required, false}]
@@ -704,23 +651,8 @@ get_response_spec('get_withdrawal_events', 401) ->
 get_response_spec('get_withdrawal_events', 404) ->
     undefined;
 
-get_response_spec('issue_destination_grant', 201) ->
-    {'DestinationGrantRequest', 'DestinationGrantRequest'};
-
-get_response_spec('issue_destination_grant', 400) ->
-    {'BadRequest', 'BadRequest'};
-
-get_response_spec('issue_destination_grant', 401) ->
-    undefined;
-
-get_response_spec('issue_destination_grant', 404) ->
-    undefined;
-
-get_response_spec('issue_destination_grant', 422) ->
-    {'InvalidOperationParameters', 'InvalidOperationParameters'};
-
 get_response_spec('list_destinations', 200) ->
-    {'inline_response_200_3', 'inline_response_200_3'};
+    {'inline_response_200_1', 'inline_response_200_1'};
 
 get_response_spec('list_destinations', 400) ->
     {'BadRequest', 'BadRequest'};
@@ -729,7 +661,7 @@ get_response_spec('list_destinations', 401) ->
     undefined;
 
 get_response_spec('list_withdrawals', 200) ->
-    {'inline_response_200_7', 'inline_response_200_7'};
+    {'inline_response_200_4', 'inline_response_200_4'};
 
 get_response_spec('list_withdrawals', 400) ->
     {'BadRequest', 'BadRequest'};

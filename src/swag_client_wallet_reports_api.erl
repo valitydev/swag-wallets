@@ -25,7 +25,7 @@ create_report(Endpoint, Params) ->
 create_report(Endpoint, Params, Opts) ->
     process_response(swag_client_wallet_procession:process_request(
         post,
-        swag_client_wallet_utils:get_url(Endpoint, "/wallet/v0/identities/:identityID/reports"),
+        swag_client_wallet_utils:get_url(Endpoint, "/wallet/v0/reports"),
         Params,
         get_request_spec(create_report),
         Opts
@@ -43,7 +43,7 @@ get_report(Endpoint, Params) ->
 get_report(Endpoint, Params, Opts) ->
     process_response(swag_client_wallet_procession:process_request(
         get,
-        swag_client_wallet_utils:get_url(Endpoint, "/wallet/v0/identities/:identityID/reports/:reportID"),
+        swag_client_wallet_utils:get_url(Endpoint, "/wallet/v0/reports/:reportID"),
         Params,
         get_request_spec(get_report),
         Opts
@@ -61,7 +61,7 @@ get_reports(Endpoint, Params) ->
 get_reports(Endpoint, Params, Opts) ->
     process_response(swag_client_wallet_procession:process_request(
         get,
-        swag_client_wallet_utils:get_url(Endpoint, "/wallet/v0/identities/:identityID/reports"),
+        swag_client_wallet_utils:get_url(Endpoint, "/wallet/v0/reports"),
         Params,
         get_request_spec(get_reports),
         Opts
@@ -95,11 +95,6 @@ get_request_spec('create_report') ->
             rules  => [{type, 'binary'}, {max_length, 32}, {min_length, 1}, true
 , {required, true}]
         }},
-        {'identityID', #{
-            source => binding,
-            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
-, {required, true}]
-        }},
         {'ReportParams', #{
             source => body,
             rules  => [schema, {required, true}]
@@ -120,11 +115,6 @@ get_request_spec('get_report') ->
         {'X-Request-ID', #{
             source => header,
             rules  => [{type, 'binary'}, {max_length, 32}, {min_length, 1}, true
-, {required, true}]
-        }},
-        {'identityID', #{
-            source => binding,
-            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
 , {required, true}]
         }},
         {'reportID', #{
@@ -148,11 +138,6 @@ get_request_spec('get_reports') ->
         {'X-Request-ID', #{
             source => header,
             rules  => [{type, 'binary'}, {max_length, 32}, {min_length, 1}, true
-, {required, true}]
-        }},
-        {'identityID', #{
-            source => binding,
-            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
 , {required, true}]
         }},
         {'fromTime', #{

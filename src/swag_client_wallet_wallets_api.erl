@@ -3,42 +3,18 @@
 
 %% generated methods
 
--export([create_wallet/2]).
--export([create_wallet/3]).
-
 -export([get_wallet/2]).
 -export([get_wallet/3]).
 
 -export([get_wallet_account/2]).
 -export([get_wallet_account/3]).
 
--export([get_wallet_by_external_id/2]).
--export([get_wallet_by_external_id/3]).
-
--export([issue_wallet_grant/2]).
--export([issue_wallet_grant/3]).
+-export([get_withdrawal_methods/2]).
+-export([get_withdrawal_methods/3]).
 
 -export([list_wallets/2]).
 -export([list_wallets/3]).
 
-
--spec create_wallet(Endpoint :: swag_client_wallet:endpoint(), Params :: map()) ->
-    {ok, Code :: integer(), RespHeaders :: list(), Response :: map()} |
-    {error, _Reason}.
-create_wallet(Endpoint, Params) ->
-    create_wallet(Endpoint, Params, []).
-
--spec create_wallet(Endpoint :: swag_client_wallet:endpoint(), Params :: map(), Opts :: swag_client_wallet:transport_opts()) ->
-    {ok, Code :: integer(), RespHeaders :: list(), Response :: map()} |
-    {error, _Reason}.
-create_wallet(Endpoint, Params, Opts) ->
-    process_response(swag_client_wallet_procession:process_request(
-        post,
-        swag_client_wallet_utils:get_url(Endpoint, "/wallet/v0/wallets"),
-        Params,
-        get_request_spec(create_wallet),
-        Opts
-    ), create_wallet).
 
 -spec get_wallet(Endpoint :: swag_client_wallet:endpoint(), Params :: map()) ->
     {ok, Code :: integer(), RespHeaders :: list(), Response :: map()} |
@@ -76,41 +52,23 @@ get_wallet_account(Endpoint, Params, Opts) ->
         Opts
     ), get_wallet_account).
 
--spec get_wallet_by_external_id(Endpoint :: swag_client_wallet:endpoint(), Params :: map()) ->
+-spec get_withdrawal_methods(Endpoint :: swag_client_wallet:endpoint(), Params :: map()) ->
     {ok, Code :: integer(), RespHeaders :: list(), Response :: map()} |
     {error, _Reason}.
-get_wallet_by_external_id(Endpoint, Params) ->
-    get_wallet_by_external_id(Endpoint, Params, []).
+get_withdrawal_methods(Endpoint, Params) ->
+    get_withdrawal_methods(Endpoint, Params, []).
 
--spec get_wallet_by_external_id(Endpoint :: swag_client_wallet:endpoint(), Params :: map(), Opts :: swag_client_wallet:transport_opts()) ->
+-spec get_withdrawal_methods(Endpoint :: swag_client_wallet:endpoint(), Params :: map(), Opts :: swag_client_wallet:transport_opts()) ->
     {ok, Code :: integer(), RespHeaders :: list(), Response :: map()} |
     {error, _Reason}.
-get_wallet_by_external_id(Endpoint, Params, Opts) ->
+get_withdrawal_methods(Endpoint, Params, Opts) ->
     process_response(swag_client_wallet_procession:process_request(
         get,
-        swag_client_wallet_utils:get_url(Endpoint, "/wallet/v0/external/wallets"),
+        swag_client_wallet_utils:get_url(Endpoint, "/wallet/v0/wallets/:walletID/withdrawal-methods"),
         Params,
-        get_request_spec(get_wallet_by_external_id),
+        get_request_spec(get_withdrawal_methods),
         Opts
-    ), get_wallet_by_external_id).
-
--spec issue_wallet_grant(Endpoint :: swag_client_wallet:endpoint(), Params :: map()) ->
-    {ok, Code :: integer(), RespHeaders :: list(), Response :: map()} |
-    {error, _Reason}.
-issue_wallet_grant(Endpoint, Params) ->
-    issue_wallet_grant(Endpoint, Params, []).
-
--spec issue_wallet_grant(Endpoint :: swag_client_wallet:endpoint(), Params :: map(), Opts :: swag_client_wallet:transport_opts()) ->
-    {ok, Code :: integer(), RespHeaders :: list(), Response :: map()} |
-    {error, _Reason}.
-issue_wallet_grant(Endpoint, Params, Opts) ->
-    process_response(swag_client_wallet_procession:process_request(
-        post,
-        swag_client_wallet_utils:get_url(Endpoint, "/wallet/v0/wallets/:walletID/grants"),
-        Params,
-        get_request_spec(issue_wallet_grant),
-        Opts
-    ), issue_wallet_grant).
+    ), get_withdrawal_methods).
 
 -spec list_wallets(Endpoint :: swag_client_wallet:endpoint(), Params :: map()) ->
     {ok, Code :: integer(), RespHeaders :: list(), Response :: map()} |
@@ -151,23 +109,6 @@ process_response(Error, _) ->
     Spec :: swag_client_wallet_procession:request_spec() | no_return().
 
 
-get_request_spec('create_wallet') ->
-    [
-        {'X-Request-ID', #{
-            source => header,
-            rules  => [{type, 'binary'}, {max_length, 32}, {min_length, 1}, true
-, {required, true}]
-        }},
-        {'Wallet', #{
-            source => body,
-            rules  => [schema, {required, true}]
-        }},
-        {'X-Request-Deadline', #{
-            source => header,
-            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
-, {required, false}]
-        }}
-    ];
 get_request_spec('get_wallet') ->
     [
         {'X-Request-ID', #{
@@ -182,6 +123,11 @@ get_request_spec('get_wallet') ->
         }},
         {'X-Request-Deadline', #{
             source => header,
+            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
+, {required, false}]
+        }},
+        {'partyID', #{
+            source => qs_val,
             rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
 , {required, false}]
         }}
@@ -202,27 +148,14 @@ get_request_spec('get_wallet_account') ->
             source => header,
             rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
 , {required, false}]
-        }}
-    ];
-get_request_spec('get_wallet_by_external_id') ->
-    [
-        {'X-Request-ID', #{
-            source => header,
-            rules  => [{type, 'binary'}, {max_length, 32}, {min_length, 1}, true
-, {required, true}]
         }},
-        {'externalID', #{
+        {'partyID', #{
             source => qs_val,
-            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
-, {required, true}]
-        }},
-        {'X-Request-Deadline', #{
-            source => header,
             rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
 , {required, false}]
         }}
     ];
-get_request_spec('issue_wallet_grant') ->
+get_request_spec('get_withdrawal_methods') ->
     [
         {'X-Request-ID', #{
             source => header,
@@ -234,12 +167,13 @@ get_request_spec('issue_wallet_grant') ->
             rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
 , {required, true}]
         }},
-        {'WalletGrantRequest', #{
-            source => body,
-            rules  => [schema, {required, true}]
-        }},
         {'X-Request-Deadline', #{
             source => header,
+            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
+, {required, false}]
+        }},
+        {'partyID', #{
+            source => qs_val,
             rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
 , {required, false}]
         }}
@@ -266,11 +200,6 @@ get_request_spec('list_wallets') ->
             rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
 , {required, false}]
         }},
-        {'identityID', #{
-            source => qs_val,
-            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
-, {required, false}]
-        }},
         {'currencyID', #{
             source => qs_val,
             rules  => [{type, 'binary'}, {pattern, "^[A-Z]{3}$"}, true
@@ -286,21 +215,6 @@ get_request_spec('list_wallets') ->
 -spec get_response_spec(OperationID :: swag_client_wallet:operation_id(), Code :: swag_client_wallet_procession:code()) ->
     Spec :: swag_client_wallet_procession:response_spec() | no_return().
 
-
-get_response_spec('create_wallet', 201) ->
-    {'Wallet', 'Wallet'};
-
-get_response_spec('create_wallet', 400) ->
-    {'BadRequest', 'BadRequest'};
-
-get_response_spec('create_wallet', 401) ->
-    undefined;
-
-get_response_spec('create_wallet', 409) ->
-    {'ConflictRequest', 'ConflictRequest'};
-
-get_response_spec('create_wallet', 422) ->
-    {'InvalidOperationParameters', 'InvalidOperationParameters'};
 
 get_response_spec('get_wallet', 200) ->
     {'Wallet', 'Wallet'};
@@ -326,35 +240,20 @@ get_response_spec('get_wallet_account', 401) ->
 get_response_spec('get_wallet_account', 404) ->
     undefined;
 
-get_response_spec('get_wallet_by_external_id', 200) ->
-    {'Wallet', 'Wallet'};
+get_response_spec('get_withdrawal_methods', 200) ->
+    {'inline_response_200_3', 'inline_response_200_3'};
 
-get_response_spec('get_wallet_by_external_id', 400) ->
+get_response_spec('get_withdrawal_methods', 400) ->
     {'BadRequest', 'BadRequest'};
 
-get_response_spec('get_wallet_by_external_id', 401) ->
+get_response_spec('get_withdrawal_methods', 401) ->
     undefined;
 
-get_response_spec('get_wallet_by_external_id', 404) ->
+get_response_spec('get_withdrawal_methods', 404) ->
     undefined;
-
-get_response_spec('issue_wallet_grant', 201) ->
-    {'WalletGrantRequest', 'WalletGrantRequest'};
-
-get_response_spec('issue_wallet_grant', 400) ->
-    {'BadRequest', 'BadRequest'};
-
-get_response_spec('issue_wallet_grant', 401) ->
-    undefined;
-
-get_response_spec('issue_wallet_grant', 404) ->
-    undefined;
-
-get_response_spec('issue_wallet_grant', 422) ->
-    {'InvalidOperationParameters', 'InvalidOperationParameters'};
 
 get_response_spec('list_wallets', 200) ->
-    {'inline_response_200_6', 'inline_response_200_6'};
+    {'inline_response_200_2', 'inline_response_200_2'};
 
 get_response_spec('list_wallets', 400) ->
     {'BadRequest', 'BadRequest'};
