@@ -95,16 +95,6 @@ get_operations() ->
             method => <<"GET">>,
             handler => 'swag_server_wallet_currencies_handler'
         },
-        'ListDepositAdjustments' => #{
-            path => "/wallet/v0/deposit-adjustments",
-            method => <<"GET">>,
-            handler => 'swag_server_wallet_deposits_handler'
-        },
-        'ListDepositReverts' => #{
-            path => "/wallet/v0/deposit-reverts",
-            method => <<"GET">>,
-            handler => 'swag_server_wallet_deposits_handler'
-        },
         'ListDeposits' => #{
             path => "/wallet/v0/deposits",
             method => <<"GET">>,
@@ -115,48 +105,18 @@ get_operations() ->
             method => <<"POST">>,
             handler => 'swag_server_wallet_downloads_handler'
         },
-        'CreateIdentity' => #{
-            path => "/wallet/v0/identities",
-            method => <<"POST">>,
-            handler => 'swag_server_wallet_identities_handler'
-        },
-        'GetIdentity' => #{
-            path => "/wallet/v0/identities/:identityID",
-            method => <<"GET">>,
-            handler => 'swag_server_wallet_identities_handler'
-        },
-        'GetWithdrawalMethods' => #{
-            path => "/wallet/v0/identities/:identityID/withdrawal-methods",
-            method => <<"GET">>,
-            handler => 'swag_server_wallet_identities_handler'
-        },
-        'ListIdentities' => #{
-            path => "/wallet/v0/identities",
-            method => <<"GET">>,
-            handler => 'swag_server_wallet_identities_handler'
-        },
-        'GetProvider' => #{
-            path => "/wallet/v0/providers/:providerID",
-            method => <<"GET">>,
-            handler => 'swag_server_wallet_providers_handler'
-        },
-        'ListProviders' => #{
-            path => "/wallet/v0/providers",
-            method => <<"GET">>,
-            handler => 'swag_server_wallet_providers_handler'
-        },
         'CreateReport' => #{
-            path => "/wallet/v0/identities/:identityID/reports",
+            path => "/wallet/v0/reports",
             method => <<"POST">>,
             handler => 'swag_server_wallet_reports_handler'
         },
         'GetReport' => #{
-            path => "/wallet/v0/identities/:identityID/reports/:reportID",
+            path => "/wallet/v0/reports/:reportID",
             method => <<"GET">>,
             handler => 'swag_server_wallet_reports_handler'
         },
         'GetReports' => #{
-            path => "/wallet/v0/identities/:identityID/reports",
+            path => "/wallet/v0/reports",
             method => <<"GET">>,
             handler => 'swag_server_wallet_reports_handler'
         },
@@ -164,21 +124,6 @@ get_operations() ->
             path => "/wallet/v0/residences/:residence",
             method => <<"GET">>,
             handler => 'swag_server_wallet_residences_handler'
-        },
-        'CreateW2WTransfer' => #{
-            path => "/wallet/v0/w2w/transfers",
-            method => <<"POST">>,
-            handler => 'swag_server_wallet_w2_w_handler'
-        },
-        'GetW2WTransfer' => #{
-            path => "/wallet/v0/w2w/transfers/:w2wTransferID",
-            method => <<"GET">>,
-            handler => 'swag_server_wallet_w2_w_handler'
-        },
-        'CreateWallet' => #{
-            path => "/wallet/v0/wallets",
-            method => <<"POST">>,
-            handler => 'swag_server_wallet_wallets_handler'
         },
         'GetWallet' => #{
             path => "/wallet/v0/wallets/:walletID",
@@ -190,14 +135,9 @@ get_operations() ->
             method => <<"GET">>,
             handler => 'swag_server_wallet_wallets_handler'
         },
-        'GetWalletByExternalID' => #{
-            path => "/wallet/v0/external/wallets",
+        'GetWithdrawalMethods' => #{
+            path => "/wallet/v0/wallets/:walletID/withdrawal-methods",
             method => <<"GET">>,
-            handler => 'swag_server_wallet_wallets_handler'
-        },
-        'IssueWalletGrant' => #{
-            path => "/wallet/v0/wallets/:walletID/grants",
-            method => <<"POST">>,
             handler => 'swag_server_wallet_wallets_handler'
         },
         'ListWallets' => #{
@@ -263,11 +203,6 @@ get_operations() ->
         'GetWithdrawalEvents' => #{
             path => "/wallet/v0/withdrawals/:withdrawalID/events/:eventID",
             method => <<"GET">>,
-            handler => 'swag_server_wallet_withdrawals_handler'
-        },
-        'IssueDestinationGrant' => #{
-            path => "/wallet/v0/destinations/:destinationID/grants",
-            method => <<"POST">>,
             handler => 'swag_server_wallet_withdrawals_handler'
         },
         'ListDestinations' => #{

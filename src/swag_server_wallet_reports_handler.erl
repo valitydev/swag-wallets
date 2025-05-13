@@ -330,11 +330,6 @@ get_request_spec('CreateReport') ->
             rules  => [{type, 'binary'}, {max_length, 32}, {min_length, 1}, true
 , {required, true}]
         }},
-        {'identityID', #{
-            source => binding,
-            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
-, {required, true}]
-        }},
         {'ReportParams', #{
             source => body,
             rules  => [schema, {required, true}]
@@ -355,11 +350,6 @@ get_request_spec('GetReport') ->
         {'X-Request-ID', #{
             source => header,
             rules  => [{type, 'binary'}, {max_length, 32}, {min_length, 1}, true
-, {required, true}]
-        }},
-        {'identityID', #{
-            source => binding,
-            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
 , {required, true}]
         }},
         {'reportID', #{
@@ -383,11 +373,6 @@ get_request_spec('GetReports') ->
         {'X-Request-ID', #{
             source => header,
             rules  => [{type, 'binary'}, {max_length, 32}, {min_length, 1}, true
-, {required, true}]
-        }},
-        {'identityID', #{
-            source => binding,
-            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
 , {required, true}]
         }},
         {'fromTime', #{

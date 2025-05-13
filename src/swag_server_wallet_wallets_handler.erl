@@ -56,14 +56,6 @@ init(Req, {_Operations, LogicHandler, SwaggerHandlerOpts} = InitOpts) ->
 allowed_methods(
     Req,
     State = #state{
-        operation_id = 'CreateWallet'
-    }
-) ->
-    {[<<"POST">>], Req, State};
-
-allowed_methods(
-    Req,
-    State = #state{
         operation_id = 'GetWallet'
     }
 ) ->
@@ -80,18 +72,10 @@ allowed_methods(
 allowed_methods(
     Req,
     State = #state{
-        operation_id = 'GetWalletByExternalID'
+        operation_id = 'GetWithdrawalMethods'
     }
 ) ->
     {[<<"GET">>], Req, State};
-
-allowed_methods(
-    Req,
-    State = #state{
-        operation_id = 'IssueWalletGrant'
-    }
-) ->
-    {[<<"POST">>], Req, State};
 
 allowed_methods(
     Req,
@@ -110,33 +94,6 @@ allowed_methods(Req, State) ->
         Req   :: cowboy_req:req(),
         State :: state()
     }.
-
-is_authorized(
-    Req0,
-    State = #state{
-        operation_id  = 'CreateWallet' = OperationID,
-        logic_handler = LogicHandler,
-        context       = Context
-    }
-) ->
-    From = header,
-    Result = swag_server_wallet_handler_api:authorize_api_key(
-        LogicHandler,
-        OperationID,
-        From,
-        'Authorization',
-        Req0,
-        Context
-    ),
-    case Result of
-        {true, AuthContext, Req} ->
-            NewContext = Context#{
-                auth_context => AuthContext
-            },
-            {true, Req, State#state{context = NewContext}};
-        {false, AuthHeader, Req} ->
-            {{false, AuthHeader}, Req, State}
-    end;
 
 is_authorized(
     Req0,
@@ -195,34 +152,7 @@ is_authorized(
 is_authorized(
     Req0,
     State = #state{
-        operation_id  = 'GetWalletByExternalID' = OperationID,
-        logic_handler = LogicHandler,
-        context       = Context
-    }
-) ->
-    From = header,
-    Result = swag_server_wallet_handler_api:authorize_api_key(
-        LogicHandler,
-        OperationID,
-        From,
-        'Authorization',
-        Req0,
-        Context
-    ),
-    case Result of
-        {true, AuthContext, Req} ->
-            NewContext = Context#{
-                auth_context => AuthContext
-            },
-            {true, Req, State#state{context = NewContext}};
-        {false, AuthHeader, Req} ->
-            {{false, AuthHeader}, Req, State}
-    end;
-
-is_authorized(
-    Req0,
-    State = #state{
-        operation_id  = 'IssueWalletGrant' = OperationID,
+        operation_id  = 'GetWithdrawalMethods' = OperationID,
         logic_handler = LogicHandler,
         context       = Context
     }
@@ -294,16 +224,6 @@ content_types_accepted(Req, State) ->
 valid_content_headers(
     Req0,
     State = #state{
-        operation_id = 'CreateWallet'
-    }
-) ->
-    Headers = ["X-Request-ID","X-Request-Deadline"],
-    {Result, Req} = validate_headers(Headers, Req0),
-    {Result, Req, State};
-
-valid_content_headers(
-    Req0,
-    State = #state{
         operation_id = 'GetWallet'
     }
 ) ->
@@ -324,17 +244,7 @@ valid_content_headers(
 valid_content_headers(
     Req0,
     State = #state{
-        operation_id = 'GetWalletByExternalID'
-    }
-) ->
-    Headers = ["X-Request-ID","X-Request-Deadline"],
-    {Result, Req} = validate_headers(Headers, Req0),
-    {Result, Req, State};
-
-valid_content_headers(
-    Req0,
-    State = #state{
-        operation_id = 'IssueWalletGrant'
+        operation_id = 'GetWithdrawalMethods'
     }
 ) ->
     Headers = ["X-Request-ID","X-Request-Deadline"],
@@ -458,23 +368,6 @@ validate_headers(_, Req) ->
     Spec :: swag_server_wallet_handler_api:request_spec() | no_return().
 
 
-get_request_spec('CreateWallet') ->
-    [
-        {'X-Request-ID', #{
-            source => header,
-            rules  => [{type, 'binary'}, {max_length, 32}, {min_length, 1}, true
-, {required, true}]
-        }},
-        {'Wallet', #{
-            source => body,
-            rules  => [schema, {required, true}]
-        }},
-        {'X-Request-Deadline', #{
-            source => header,
-            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
-, {required, false}]
-        }}
-    ];
 get_request_spec('GetWallet') ->
     [
         {'X-Request-ID', #{
@@ -489,6 +382,11 @@ get_request_spec('GetWallet') ->
         }},
         {'X-Request-Deadline', #{
             source => header,
+            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
+, {required, false}]
+        }},
+        {'partyID', #{
+            source => qs_val,
             rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
 , {required, false}]
         }}
@@ -509,27 +407,14 @@ get_request_spec('GetWalletAccount') ->
             source => header,
             rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
 , {required, false}]
-        }}
-    ];
-get_request_spec('GetWalletByExternalID') ->
-    [
-        {'X-Request-ID', #{
-            source => header,
-            rules  => [{type, 'binary'}, {max_length, 32}, {min_length, 1}, true
-, {required, true}]
         }},
-        {'externalID', #{
+        {'partyID', #{
             source => qs_val,
-            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
-, {required, true}]
-        }},
-        {'X-Request-Deadline', #{
-            source => header,
             rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
 , {required, false}]
         }}
     ];
-get_request_spec('IssueWalletGrant') ->
+get_request_spec('GetWithdrawalMethods') ->
     [
         {'X-Request-ID', #{
             source => header,
@@ -541,12 +426,13 @@ get_request_spec('IssueWalletGrant') ->
             rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
 , {required, true}]
         }},
-        {'WalletGrantRequest', #{
-            source => body,
-            rules  => [schema, {required, true}]
-        }},
         {'X-Request-Deadline', #{
             source => header,
+            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
+, {required, false}]
+        }},
+        {'partyID', #{
+            source => qs_val,
             rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
 , {required, false}]
         }}
@@ -573,11 +459,6 @@ get_request_spec('ListWallets') ->
             rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
 , {required, false}]
         }},
-        {'identityID', #{
-            source => qs_val,
-            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
-, {required, false}]
-        }},
         {'currencyID', #{
             source => qs_val,
             rules  => [{type, 'binary'}, {pattern, "^[A-Z]{3}$"}, true
@@ -593,21 +474,6 @@ get_request_spec('ListWallets') ->
 -spec get_response_spec(OperationID :: swag_server_wallet:operation_id(), Code :: cowboy:http_status()) ->
     Spec :: swag_server_wallet_handler_api:response_spec() | no_return().
 
-
-get_response_spec('CreateWallet', 201) ->
-    {'Wallet', 'Wallet'};
-
-get_response_spec('CreateWallet', 400) ->
-    {'BadRequest', 'BadRequest'};
-
-get_response_spec('CreateWallet', 401) ->
-    undefined;
-
-get_response_spec('CreateWallet', 409) ->
-    {'ConflictRequest', 'ConflictRequest'};
-
-get_response_spec('CreateWallet', 422) ->
-    {'InvalidOperationParameters', 'InvalidOperationParameters'};
 
 get_response_spec('GetWallet', 200) ->
     {'Wallet', 'Wallet'};
@@ -633,35 +499,20 @@ get_response_spec('GetWalletAccount', 401) ->
 get_response_spec('GetWalletAccount', 404) ->
     undefined;
 
-get_response_spec('GetWalletByExternalID', 200) ->
-    {'Wallet', 'Wallet'};
+get_response_spec('GetWithdrawalMethods', 200) ->
+    {'inline_response_200_3', 'inline_response_200_3'};
 
-get_response_spec('GetWalletByExternalID', 400) ->
+get_response_spec('GetWithdrawalMethods', 400) ->
     {'BadRequest', 'BadRequest'};
 
-get_response_spec('GetWalletByExternalID', 401) ->
+get_response_spec('GetWithdrawalMethods', 401) ->
     undefined;
 
-get_response_spec('GetWalletByExternalID', 404) ->
+get_response_spec('GetWithdrawalMethods', 404) ->
     undefined;
-
-get_response_spec('IssueWalletGrant', 201) ->
-    {'WalletGrantRequest', 'WalletGrantRequest'};
-
-get_response_spec('IssueWalletGrant', 400) ->
-    {'BadRequest', 'BadRequest'};
-
-get_response_spec('IssueWalletGrant', 401) ->
-    undefined;
-
-get_response_spec('IssueWalletGrant', 404) ->
-    undefined;
-
-get_response_spec('IssueWalletGrant', 422) ->
-    {'InvalidOperationParameters', 'InvalidOperationParameters'};
 
 get_response_spec('ListWallets', 200) ->
-    {'inline_response_200_6', 'inline_response_200_6'};
+    {'inline_response_200_2', 'inline_response_200_2'};
 
 get_response_spec('ListWallets', 400) ->
     {'BadRequest', 'BadRequest'};

@@ -56,22 +56,6 @@ init(Req, {_Operations, LogicHandler, SwaggerHandlerOpts} = InitOpts) ->
 allowed_methods(
     Req,
     State = #state{
-        operation_id = 'ListDepositAdjustments'
-    }
-) ->
-    {[<<"GET">>], Req, State};
-
-allowed_methods(
-    Req,
-    State = #state{
-        operation_id = 'ListDepositReverts'
-    }
-) ->
-    {[<<"GET">>], Req, State};
-
-allowed_methods(
-    Req,
-    State = #state{
         operation_id = 'ListDeposits'
     }
 ) ->
@@ -86,60 +70,6 @@ allowed_methods(Req, State) ->
         Req   :: cowboy_req:req(),
         State :: state()
     }.
-
-is_authorized(
-    Req0,
-    State = #state{
-        operation_id  = 'ListDepositAdjustments' = OperationID,
-        logic_handler = LogicHandler,
-        context       = Context
-    }
-) ->
-    From = header,
-    Result = swag_server_wallet_handler_api:authorize_api_key(
-        LogicHandler,
-        OperationID,
-        From,
-        'Authorization',
-        Req0,
-        Context
-    ),
-    case Result of
-        {true, AuthContext, Req} ->
-            NewContext = Context#{
-                auth_context => AuthContext
-            },
-            {true, Req, State#state{context = NewContext}};
-        {false, AuthHeader, Req} ->
-            {{false, AuthHeader}, Req, State}
-    end;
-
-is_authorized(
-    Req0,
-    State = #state{
-        operation_id  = 'ListDepositReverts' = OperationID,
-        logic_handler = LogicHandler,
-        context       = Context
-    }
-) ->
-    From = header,
-    Result = swag_server_wallet_handler_api:authorize_api_key(
-        LogicHandler,
-        OperationID,
-        From,
-        'Authorization',
-        Req0,
-        Context
-    ),
-    case Result of
-        {true, AuthContext, Req} ->
-            NewContext = Context#{
-                auth_context => AuthContext
-            },
-            {true, Req, State#state{context = NewContext}};
-        {false, AuthHeader, Req} ->
-            {{false, AuthHeader}, Req, State}
-    end;
 
 is_authorized(
     Req0,
@@ -185,26 +115,6 @@ content_types_accepted(Req, State) ->
 
 -spec valid_content_headers(Req :: cowboy_req:req(), State :: state()) ->
     {Value :: boolean(), Req :: cowboy_req:req(), State :: state()}.
-
-valid_content_headers(
-    Req0,
-    State = #state{
-        operation_id = 'ListDepositAdjustments'
-    }
-) ->
-    Headers = ["X-Request-ID","X-Request-Deadline"],
-    {Result, Req} = validate_headers(Headers, Req0),
-    {Result, Req, State};
-
-valid_content_headers(
-    Req0,
-    State = #state{
-        operation_id = 'ListDepositReverts'
-    }
-) ->
-    Headers = ["X-Request-ID","X-Request-Deadline"],
-    {Result, Req} = validate_headers(Headers, Req0),
-    {Result, Req, State};
 
 valid_content_headers(
     Req0,
@@ -323,162 +233,6 @@ validate_headers(_, Req) ->
     Spec :: swag_server_wallet_handler_api:request_spec() | no_return().
 
 
-get_request_spec('ListDepositAdjustments') ->
-    [
-        {'X-Request-ID', #{
-            source => header,
-            rules  => [{type, 'binary'}, {max_length, 32}, {min_length, 1}, true
-, {required, true}]
-        }},
-        {'limit', #{
-            source => qs_val,
-            rules  => [{type, 'integer'}, {format, 'int32'}, {max, 1000, inclusive}, {min, 1, inclusive}, true
-, {required, true}]
-        }},
-        {'X-Request-Deadline', #{
-            source => header,
-            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
-, {required, false}]
-        }},
-        {'partyID', #{
-            source => qs_val,
-            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
-, {required, false}]
-        }},
-        {'walletID', #{
-            source => qs_val,
-            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
-, {required, false}]
-        }},
-        {'identityID', #{
-            source => qs_val,
-            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
-, {required, false}]
-        }},
-        {'depositID', #{
-            source => qs_val,
-            rules  => [{type, 'binary'}, {max_length, 50}, {min_length, 1}, true
-, {required, false}]
-        }},
-        {'sourceID', #{
-            source => qs_val,
-            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
-, {required, false}]
-        }},
-        {'status', #{
-            source => qs_val,
-            rules  => [{type, 'binary'}, {enum, ['Pending', 'Succeeded', 'Failed']}, true
-, {required, false}]
-        }},
-        {'createdAtFrom', #{
-            source => qs_val,
-            rules  => [{type, 'binary'}, {format, 'date-time'}, true
-, {required, false}]
-        }},
-        {'createdAtTo', #{
-            source => qs_val,
-            rules  => [{type, 'binary'}, {format, 'date-time'}, true
-, {required, false}]
-        }},
-        {'amountFrom', #{
-            source => qs_val,
-            rules  => [{type, 'integer'}, {format, 'int64'}, true
-, {required, false}]
-        }},
-        {'amountTo', #{
-            source => qs_val,
-            rules  => [{type, 'integer'}, {format, 'int64'}, true
-, {required, false}]
-        }},
-        {'currencyID', #{
-            source => qs_val,
-            rules  => [{type, 'binary'}, {pattern, "^[A-Z]{3}$"}, true
-, {required, false}]
-        }},
-        {'continuationToken', #{
-            source => qs_val,
-            rules  => [{type, 'binary'}, true
-, {required, false}]
-        }}
-    ];
-get_request_spec('ListDepositReverts') ->
-    [
-        {'X-Request-ID', #{
-            source => header,
-            rules  => [{type, 'binary'}, {max_length, 32}, {min_length, 1}, true
-, {required, true}]
-        }},
-        {'limit', #{
-            source => qs_val,
-            rules  => [{type, 'integer'}, {format, 'int32'}, {max, 1000, inclusive}, {min, 1, inclusive}, true
-, {required, true}]
-        }},
-        {'X-Request-Deadline', #{
-            source => header,
-            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
-, {required, false}]
-        }},
-        {'partyID', #{
-            source => qs_val,
-            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
-, {required, false}]
-        }},
-        {'walletID', #{
-            source => qs_val,
-            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
-, {required, false}]
-        }},
-        {'identityID', #{
-            source => qs_val,
-            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
-, {required, false}]
-        }},
-        {'depositID', #{
-            source => qs_val,
-            rules  => [{type, 'binary'}, {max_length, 50}, {min_length, 1}, true
-, {required, false}]
-        }},
-        {'sourceID', #{
-            source => qs_val,
-            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
-, {required, false}]
-        }},
-        {'status', #{
-            source => qs_val,
-            rules  => [{type, 'binary'}, {enum, ['Pending', 'Succeeded', 'Failed']}, true
-, {required, false}]
-        }},
-        {'createdAtFrom', #{
-            source => qs_val,
-            rules  => [{type, 'binary'}, {format, 'date-time'}, true
-, {required, false}]
-        }},
-        {'createdAtTo', #{
-            source => qs_val,
-            rules  => [{type, 'binary'}, {format, 'date-time'}, true
-, {required, false}]
-        }},
-        {'amountFrom', #{
-            source => qs_val,
-            rules  => [{type, 'integer'}, {format, 'int64'}, true
-, {required, false}]
-        }},
-        {'amountTo', #{
-            source => qs_val,
-            rules  => [{type, 'integer'}, {format, 'int64'}, true
-, {required, false}]
-        }},
-        {'currencyID', #{
-            source => qs_val,
-            rules  => [{type, 'binary'}, {pattern, "^[A-Z]{3}$"}, true
-, {required, false}]
-        }},
-        {'continuationToken', #{
-            source => qs_val,
-            rules  => [{type, 'binary'}, true
-, {required, false}]
-        }}
-    ];
 get_request_spec('ListDeposits') ->
     [
         {'X-Request-ID', #{
@@ -506,11 +260,6 @@ get_request_spec('ListDeposits') ->
             rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
 , {required, false}]
         }},
-        {'identityID', #{
-            source => qs_val,
-            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
-, {required, false}]
-        }},
         {'depositID', #{
             source => qs_val,
             rules  => [{type, 'binary'}, {max_length, 50}, {min_length, 1}, true
@@ -534,11 +283,6 @@ get_request_spec('ListDeposits') ->
         {'createdAtTo', #{
             source => qs_val,
             rules  => [{type, 'binary'}, {format, 'date-time'}, true
-, {required, false}]
-        }},
-        {'revertStatus', #{
-            source => qs_val,
-            rules  => [{type, 'binary'}, {enum, ['None', 'Partial', 'Full']}, true
 , {required, false}]
         }},
         {'amountFrom', #{
@@ -567,26 +311,8 @@ get_request_spec('ListDeposits') ->
     Spec :: swag_server_wallet_handler_api:response_spec() | no_return().
 
 
-get_response_spec('ListDepositAdjustments', 200) ->
-    {'inline_response_200', 'inline_response_200'};
-
-get_response_spec('ListDepositAdjustments', 400) ->
-    {'BadRequest', 'BadRequest'};
-
-get_response_spec('ListDepositAdjustments', 401) ->
-    undefined;
-
-get_response_spec('ListDepositReverts', 200) ->
-    {'inline_response_200_1', 'inline_response_200_1'};
-
-get_response_spec('ListDepositReverts', 400) ->
-    {'BadRequest', 'BadRequest'};
-
-get_response_spec('ListDepositReverts', 401) ->
-    undefined;
-
 get_response_spec('ListDeposits', 200) ->
-    {'inline_response_200_2', 'inline_response_200_2'};
+    {'inline_response_200', 'inline_response_200'};
 
 get_response_spec('ListDeposits', 400) ->
     {'BadRequest', 'BadRequest'};

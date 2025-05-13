@@ -98,14 +98,6 @@ get_raw() ->
   <<"host">> => <<"api.vality.dev">>,
   <<"basePath">> => <<"/wallet/v0">>,
   <<"tags">> => [ #{
-    <<"name">> => <<"Providers">>,
-    <<"description">> => <<"">>,
-    <<"x-displayName">> => <<"Service providers">>
-  }, #{
-    <<"name">> => <<"Identities">>,
-    <<"description">> => <<"">>,
-    <<"x-displayName">> => <<"Identities">>
-  }, #{
     <<"name">> => <<"Wallets">>,
     <<"description">> => <<"">>,
     <<"x-displayName">> => <<"Wallets">>
@@ -133,10 +125,6 @@ get_raw() ->
     <<"name">> => <<"Downloads">>,
     <<"description">> => <<"">>,
     <<"x-displayName">> => <<"File upload">>
-  }, #{
-    <<"name">> => <<"W2W">>,
-    <<"description">> => <<"Transfers of funds between wallets within the system">>,
-    <<"x-displayName">> => <<"Transfers within the system">>
   }, #{
     <<"name">> => <<"Webhooks">>,
     <<"description">> => <<"## Vality Webhooks Management API\nThis section describes methods that allow you to manage Webhooks, or tools for receiving asynchronous notifications via HTTP requests when one or a group of events of interest to you occurs, for example, that a withdrawal within the created wallet was successfully completed.\n## Vality Webhooks Events API\nAttention! Only the Webhooks Management API is part of the Vality system and hence this specification. To implement the notification handler, you will need to read the OpenAPI specification [Vality Wallets Webhook Events API](https://vality.github.io/swag-wallets-webhook-events/).\n">>,
@@ -204,11 +192,11 @@ get_raw() ->
         }
       }
     },
-    <<"/deposit-adjustments">> => #{
+    <<"/deposits">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Deposits">> ],
-        <<"summary">> => <<"Finding adjustments">>,
-        <<"operationId">> => <<"listDepositAdjustments">>,
+        <<"summary">> => <<"Search for deposits">>,
+        <<"operationId">> => <<"listDeposits">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
@@ -236,15 +224,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"walletID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Wallet identifier">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"identityID">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"Identifier of the owner's identity">>,
+          <<"description">> => <<"Identifier of the wallet">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -252,7 +232,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"depositID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Identifier of the input of funds">>,
+          <<"description">> => <<"Identifier of the deposit">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 50,
@@ -260,7 +240,7 @@ get_raw() ->
         }, #{
           <<"name">> => <<"sourceID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Identifier of the fund source">>,
+          <<"description">> => <<"Identifier of the funds source">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -341,286 +321,6 @@ get_raw() ->
         }
       }
     },
-    <<"/deposit-reverts">> => #{
-      <<"get">> => #{
-        <<"tags">> => [ <<"Deposits">> ],
-        <<"summary">> => <<"Search for reverts">>,
-        <<"operationId">> => <<"listDepositReverts">>,
-        <<"parameters">> => [ #{
-          <<"name">> => <<"X-Request-ID">>,
-          <<"in">> => <<"header">>,
-          <<"description">> => <<"Unique identifier of the request to the system">>,
-          <<"required">> => true,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 32,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"X-Request-Deadline">>,
-          <<"in">> => <<"header">>,
-          <<"description">> => <<"Maximum request processing time">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"partyID">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"The participant's unique identifier within the system.">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"walletID">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"Identifier of the wallet">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"identityID">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"Identifier of the owner's identity">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"depositID">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"Identifier of the input of funds">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 50,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"sourceID">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"Identifier of the source of funds">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"status">>,
-          <<"in">> => <<"query">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"enum">> => [ <<"Pending">>, <<"Succeeded">>, <<"Failed">> ]
-        }, #{
-          <<"name">> => <<"createdAtFrom">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"Creation date from">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"format">> => <<"date-time">>
-        }, #{
-          <<"name">> => <<"createdAtTo">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"Creation date to">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"format">> => <<"date-time">>
-        }, #{
-          <<"name">> => <<"amountFrom">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"Amount of monetary funds in minor units">>,
-          <<"required">> => false,
-          <<"type">> => <<"integer">>,
-          <<"format">> => <<"int64">>
-        }, #{
-          <<"name">> => <<"amountTo">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"Amount of monetary funds in minor units">>,
-          <<"required">> => false,
-          <<"type">> => <<"integer">>,
-          <<"format">> => <<"int64">>
-        }, #{
-          <<"name">> => <<"currencyID">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"Currency, character code according to [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"pattern">> => <<"^[A-Z]{3}$">>
-        }, #{
-          <<"name">> => <<"limit">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"Selection limit">>,
-          <<"required">> => true,
-          <<"type">> => <<"integer">>,
-          <<"maximum">> => 1000,
-          <<"minimum">> => 1,
-          <<"format">> => <<"int32">>
-        }, #{
-          <<"name">> => <<"continuationToken">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>
-        } ],
-        <<"responses">> => #{
-          <<"200">> => #{
-            <<"description">> => <<"Search result">>,
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/inline_response_200_1">>
-            }
-          },
-          <<"400">> => #{
-            <<"description">> => <<"Invalid input data for operation">>,
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/BadRequest">>
-            }
-          },
-          <<"401">> => #{
-            <<"description">> => <<"Authorization error">>
-          }
-        }
-      }
-    },
-    <<"/deposits">> => #{
-      <<"get">> => #{
-        <<"tags">> => [ <<"Deposits">> ],
-        <<"summary">> => <<"Search for deposits">>,
-        <<"operationId">> => <<"listDeposits">>,
-        <<"parameters">> => [ #{
-          <<"name">> => <<"X-Request-ID">>,
-          <<"in">> => <<"header">>,
-          <<"description">> => <<"Unique identifier of the request to the system">>,
-          <<"required">> => true,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 32,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"X-Request-Deadline">>,
-          <<"in">> => <<"header">>,
-          <<"description">> => <<"Maximum request processing time">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"partyID">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"The participant's unique identifier within the system.">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"walletID">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"Identifier of the wallet">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"identityID">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"Identifier of the owner's identity">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"depositID">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"Identifier of the deposit">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 50,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"sourceID">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"Identifier of the funds source">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"status">>,
-          <<"in">> => <<"query">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"enum">> => [ <<"Pending">>, <<"Succeeded">>, <<"Failed">> ]
-        }, #{
-          <<"name">> => <<"createdAtFrom">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"Creation date from">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"format">> => <<"date-time">>
-        }, #{
-          <<"name">> => <<"createdAtTo">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"Creation date to">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"format">> => <<"date-time">>
-        }, #{
-          <<"name">> => <<"revertStatus">>,
-          <<"in">> => <<"query">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"enum">> => [ <<"None">>, <<"Partial">>, <<"Full">> ]
-        }, #{
-          <<"name">> => <<"amountFrom">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"Amount of monetary funds in minor units">>,
-          <<"required">> => false,
-          <<"type">> => <<"integer">>,
-          <<"format">> => <<"int64">>
-        }, #{
-          <<"name">> => <<"amountTo">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"Amount of monetary funds in minor units">>,
-          <<"required">> => false,
-          <<"type">> => <<"integer">>,
-          <<"format">> => <<"int64">>
-        }, #{
-          <<"name">> => <<"currencyID">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"Currency, character code according to [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"pattern">> => <<"^[A-Z]{3}$">>
-        }, #{
-          <<"name">> => <<"limit">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"Selection limit">>,
-          <<"required">> => true,
-          <<"type">> => <<"integer">>,
-          <<"maximum">> => 1000,
-          <<"minimum">> => 1,
-          <<"format">> => <<"int32">>
-        }, #{
-          <<"name">> => <<"continuationToken">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>
-        } ],
-        <<"responses">> => #{
-          <<"200">> => #{
-            <<"description">> => <<"Search results">>,
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/inline_response_200_2">>
-            }
-          },
-          <<"400">> => #{
-            <<"description">> => <<"Invalid input data for operation">>,
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/BadRequest">>
-            }
-          },
-          <<"401">> => #{
-            <<"description">> => <<"Authorization error">>
-          }
-        }
-      }
-    },
     <<"/destinations">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Withdrawals">> ],
@@ -651,14 +351,6 @@ get_raw() ->
           <<"maxLength">> => 40,
           <<"minLength">> => 1
         }, #{
-          <<"name">> => <<"identityID">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"Identifier of the owner's idenity">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        }, #{
           <<"name">> => <<"currencyID">>,
           <<"in">> => <<"query">>,
           <<"description">> => <<"Currency, character code according to [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
@@ -685,7 +377,7 @@ get_raw() ->
           <<"200">> => #{
             <<"description">> => <<"Search result">>,
             <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/inline_response_200_3">>
+              <<"$ref">> => <<"#/definitions/inline_response_200_1">>
             }
           },
           <<"400">> => #{
@@ -818,72 +510,6 @@ get_raw() ->
         }
       }
     },
-    <<"/destinations/{destinationID}/grants">> => #{
-      <<"post">> => #{
-        <<"tags">> => [ <<"Withdrawals">> ],
-        <<"summary">> => <<"Grant the right to manage the destinations">>,
-        <<"operationId">> => <<"issueDestinationGrant">>,
-        <<"parameters">> => [ #{
-          <<"name">> => <<"X-Request-ID">>,
-          <<"in">> => <<"header">>,
-          <<"description">> => <<"Unique identifier of the request to the system">>,
-          <<"required">> => true,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 32,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"X-Request-Deadline">>,
-          <<"in">> => <<"header">>,
-          <<"description">> => <<"Maximum request processing time">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"destinationID">>,
-          <<"in">> => <<"path">>,
-          <<"description">> => <<"Identifier of the destination">>,
-          <<"required">> => true,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        }, #{
-          <<"in">> => <<"body">>,
-          <<"name">> => <<"request">>,
-          <<"description">> => <<"Request for the right to manage the destinations">>,
-          <<"required">> => true,
-          <<"schema">> => #{
-            <<"$ref">> => <<"#/definitions/DestinationGrantRequest">>
-          }
-        } ],
-        <<"responses">> => #{
-          <<"201">> => #{
-            <<"description">> => <<"The right is granted">>,
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/DestinationGrantRequest">>
-            }
-          },
-          <<"400">> => #{
-            <<"description">> => <<"Invalid input data for operation">>,
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/BadRequest">>
-            }
-          },
-          <<"401">> => #{
-            <<"description">> => <<"Authorization error">>
-          },
-          <<"404">> => #{
-            <<"description">> => <<"The content you are looking for was not found">>
-          },
-          <<"422">> => #{
-            <<"description">> => <<"Invalid data for issuance">>,
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/InvalidOperationParameters">>
-            }
-          }
-        }
-      }
-    },
     <<"/external-ids/destinations/{externalID}">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Withdrawals">> ],
@@ -984,58 +610,6 @@ get_raw() ->
         }
       }
     },
-    <<"/external/wallets">> => #{
-      <<"get">> => #{
-        <<"tags">> => [ <<"Wallets">> ],
-        <<"summary">> => <<"Get wallet by specified external identifier">>,
-        <<"operationId">> => <<"getWalletByExternalID">>,
-        <<"parameters">> => [ #{
-          <<"name">> => <<"X-Request-ID">>,
-          <<"in">> => <<"header">>,
-          <<"description">> => <<"Unique identifier of the request to the system">>,
-          <<"required">> => true,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 32,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"X-Request-Deadline">>,
-          <<"in">> => <<"header">>,
-          <<"description">> => <<"Maximum request processing time">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"externalID">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"External wallet identifier">>,
-          <<"required">> => true,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        } ],
-        <<"responses">> => #{
-          <<"200">> => #{
-            <<"description">> => <<"Wallet details">>,
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/Wallet">>
-            }
-          },
-          <<"400">> => #{
-            <<"description">> => <<"Invalid input data for operation">>,
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/BadRequest">>
-            }
-          },
-          <<"401">> => #{
-            <<"description">> => <<"Authorization error">>
-          },
-          <<"404">> => #{
-            <<"description">> => <<"The content you are looking for was not found">>
-          }
-        }
-      }
-    },
     <<"/files/{fileID}/download">> => #{
       <<"post">> => #{
         <<"tags">> => [ <<"Downloads">> ],
@@ -1088,188 +662,7 @@ get_raw() ->
         }
       }
     },
-    <<"/identities">> => #{
-      <<"get">> => #{
-        <<"tags">> => [ <<"Identities">> ],
-        <<"summary">> => <<"List the identities of the owners">>,
-        <<"operationId">> => <<"listIdentities">>,
-        <<"parameters">> => [ #{
-          <<"name">> => <<"X-Request-ID">>,
-          <<"in">> => <<"header">>,
-          <<"description">> => <<"Unique identifier of the request to the system">>,
-          <<"required">> => true,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 32,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"X-Request-Deadline">>,
-          <<"in">> => <<"header">>,
-          <<"description">> => <<"Maximum request processing time">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"partyID">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"The participant's unique identifier within the system.">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"providerID">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"Service provider's identifier">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"continuationToken">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>
-        } ],
-        <<"responses">> => #{
-          <<"200">> => #{
-            <<"description">> => <<"Search result">>,
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/inline_response_200_4">>
-            }
-          },
-          <<"400">> => #{
-            <<"description">> => <<"Invalid input data for operation">>,
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/BadRequest">>
-            }
-          },
-          <<"401">> => #{
-            <<"description">> => <<"Authorization error">>
-          }
-        }
-      },
-      <<"post">> => #{
-        <<"tags">> => [ <<"Identities">> ],
-        <<"summary">> => <<"Create owner identity">>,
-        <<"operationId">> => <<"createIdentity">>,
-        <<"parameters">> => [ #{
-          <<"name">> => <<"X-Request-ID">>,
-          <<"in">> => <<"header">>,
-          <<"description">> => <<"Unique identifier of the request to the system">>,
-          <<"required">> => true,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 32,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"X-Request-Deadline">>,
-          <<"in">> => <<"header">>,
-          <<"description">> => <<"Maximum request processing time">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        }, #{
-          <<"in">> => <<"body">>,
-          <<"name">> => <<"identity">>,
-          <<"description">> => <<"Data of the identity created">>,
-          <<"required">> => true,
-          <<"schema">> => #{
-            <<"$ref">> => <<"#/definitions/Identity">>
-          }
-        } ],
-        <<"responses">> => #{
-          <<"201">> => #{
-            <<"description">> => <<"Owner identity created">>,
-            <<"headers">> => #{
-              <<"Location">> => #{
-                <<"type">> => <<"string">>,
-                <<"format">> => <<"uri">>,
-                <<"description">> => <<"Created identity URI">>
-              }
-            },
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/Identity">>
-            }
-          },
-          <<"400">> => #{
-            <<"description">> => <<"Invalid input data for operation">>,
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/BadRequest">>
-            }
-          },
-          <<"401">> => #{
-            <<"description">> => <<"Authorization error">>
-          },
-          <<"409">> => #{
-            <<"description">> => <<"The passed value `externalID` has already been used by you with other query parameters">>,
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/ConflictRequest">>
-            }
-          },
-          <<"422">> => #{
-            <<"description">> => <<"Invalid owner identity data">>,
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/InvalidOperationParameters">>
-            }
-          }
-        }
-      }
-    },
-    <<"/identities/{identityID}">> => #{
-      <<"get">> => #{
-        <<"tags">> => [ <<"Identities">> ],
-        <<"summary">> => <<"Get the owner's identity">>,
-        <<"operationId">> => <<"getIdentity">>,
-        <<"parameters">> => [ #{
-          <<"name">> => <<"X-Request-ID">>,
-          <<"in">> => <<"header">>,
-          <<"description">> => <<"Unique identifier of the request to the system">>,
-          <<"required">> => true,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 32,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"X-Request-Deadline">>,
-          <<"in">> => <<"header">>,
-          <<"description">> => <<"Maximum request processing time">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"identityID">>,
-          <<"in">> => <<"path">>,
-          <<"description">> => <<"Identifier of the owner's identity">>,
-          <<"required">> => true,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        } ],
-        <<"responses">> => #{
-          <<"200">> => #{
-            <<"description">> => <<"Owner's identity found">>,
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/Identity">>
-            }
-          },
-          <<"400">> => #{
-            <<"description">> => <<"Invalid input data for operation">>,
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/BadRequest">>
-            }
-          },
-          <<"401">> => #{
-            <<"description">> => <<"Authorization error">>
-          },
-          <<"404">> => #{
-            <<"description">> => <<"The content you are looking for was not found">>
-          }
-        }
-      }
-    },
-    <<"/identities/{identityID}/reports">> => #{
+    <<"/reports">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Reports">> ],
         <<"description">> => <<"Get a list of owner identity reports for a period">>,
@@ -1295,14 +688,6 @@ get_raw() ->
           <<"in">> => <<"query">>,
           <<"description">> => <<"The participant's unique identifier within the system.">>,
           <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"identityID">>,
-          <<"in">> => <<"path">>,
-          <<"description">> => <<"Identifier of the owner's identity">>,
-          <<"required">> => true,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
           <<"minLength">> => 1
@@ -1378,14 +763,6 @@ get_raw() ->
           <<"maxLength">> => 40,
           <<"minLength">> => 1
         }, #{
-          <<"name">> => <<"identityID">>,
-          <<"in">> => <<"path">>,
-          <<"description">> => <<"Identifier of the owner's identity">>,
-          <<"required">> => true,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        }, #{
           <<"in">> => <<"body">>,
           <<"name">> => <<"ReportParams">>,
           <<"description">> => <<"Report generation options">>,
@@ -1413,7 +790,7 @@ get_raw() ->
         }
       }
     },
-    <<"/identities/{identityID}/reports/{reportID}">> => #{
+    <<"/reports/{reportID}">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Reports">> ],
         <<"description">> => <<"Get a report for a given identifier">>,
@@ -1443,14 +820,6 @@ get_raw() ->
           <<"maxLength">> => 40,
           <<"minLength">> => 1
         }, #{
-          <<"name">> => <<"identityID">>,
-          <<"in">> => <<"path">>,
-          <<"description">> => <<"Identifier of the owner's identity">>,
-          <<"required">> => true,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        }, #{
           <<"name">> => <<"reportID">>,
           <<"in">> => <<"path">>,
           <<"description">> => <<"The report identifier">>,
@@ -1463,158 +832,6 @@ get_raw() ->
             <<"description">> => <<"Report found">>,
             <<"schema">> => #{
               <<"$ref">> => <<"#/definitions/Report">>
-            }
-          },
-          <<"400">> => #{
-            <<"description">> => <<"Invalid input data for operation">>,
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/BadRequest">>
-            }
-          },
-          <<"401">> => #{
-            <<"description">> => <<"Authorization error">>
-          },
-          <<"404">> => #{
-            <<"description">> => <<"The content you are looking for was not found">>
-          }
-        }
-      }
-    },
-    <<"/identities/{identityID}/withdrawal-methods">> => #{
-      <<"get">> => #{
-        <<"tags">> => [ <<"Identities">> ],
-        <<"summary">> => <<"Get withdrawal methods available by owner identity">>,
-        <<"operationId">> => <<"getWithdrawalMethods">>,
-        <<"parameters">> => [ #{
-          <<"name">> => <<"X-Request-ID">>,
-          <<"in">> => <<"header">>,
-          <<"description">> => <<"Unique identifier of the request to the system">>,
-          <<"required">> => true,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 32,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"X-Request-Deadline">>,
-          <<"in">> => <<"header">>,
-          <<"description">> => <<"Maximum request processing time">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"identityID">>,
-          <<"in">> => <<"path">>,
-          <<"description">> => <<"Identifier of the owner's identity">>,
-          <<"required">> => true,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        } ],
-        <<"responses">> => #{
-          <<"200">> => #{
-            <<"description">> => <<"Methods found">>,
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/inline_response_200_5">>
-            }
-          },
-          <<"400">> => #{
-            <<"description">> => <<"Invalid input data for operation">>,
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/BadRequest">>
-            }
-          },
-          <<"401">> => #{
-            <<"description">> => <<"Authorization error">>
-          }
-        }
-      }
-    },
-    <<"/providers">> => #{
-      <<"get">> => #{
-        <<"tags">> => [ <<"Providers">> ],
-        <<"summary">> => <<"List available providers">>,
-        <<"operationId">> => <<"listProviders">>,
-        <<"parameters">> => [ #{
-          <<"name">> => <<"X-Request-ID">>,
-          <<"in">> => <<"header">>,
-          <<"description">> => <<"Unique identifier of the request to the system">>,
-          <<"required">> => true,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 32,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"X-Request-Deadline">>,
-          <<"in">> => <<"header">>,
-          <<"description">> => <<"Maximum request processing time">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"residence">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"The residence within which the services are provided,\n[ISO 3166-1] country or region code (https://en.wikipedia.org/wiki/ISO_3166-1)\n">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"pattern">> => <<"^[A-Za-z]{3}$">>
-        } ],
-        <<"responses">> => #{
-          <<"200">> => #{
-            <<"description">> => <<"Providers found">>,
-            <<"schema">> => #{
-              <<"type">> => <<"array">>,
-              <<"items">> => #{
-                <<"$ref">> => <<"#/definitions/Provider">>
-              }
-            }
-          },
-          <<"400">> => #{
-            <<"description">> => <<"Invalid input data for operation">>,
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/BadRequest">>
-            }
-          },
-          <<"401">> => #{
-            <<"description">> => <<"Authorization error">>
-          }
-        }
-      }
-    },
-    <<"/providers/{providerID}">> => #{
-      <<"get">> => #{
-        <<"tags">> => [ <<"Providers">> ],
-        <<"summary">> => <<"Get provider details">>,
-        <<"operationId">> => <<"getProvider">>,
-        <<"parameters">> => [ #{
-          <<"name">> => <<"X-Request-ID">>,
-          <<"in">> => <<"header">>,
-          <<"description">> => <<"Unique identifier of the request to the system">>,
-          <<"required">> => true,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 32,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"X-Request-Deadline">>,
-          <<"in">> => <<"header">>,
-          <<"description">> => <<"Maximum request processing time">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"providerID">>,
-          <<"in">> => <<"path">>,
-          <<"description">> => <<"Identifier of the provider">>,
-          <<"required">> => true,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        } ],
-        <<"responses">> => #{
-          <<"200">> => #{
-            <<"description">> => <<"Provider found">>,
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/Provider">>
             }
           },
           <<"400">> => #{
@@ -1683,126 +900,6 @@ get_raw() ->
         }
       }
     },
-    <<"/w2w/transfers">> => #{
-      <<"post">> => #{
-        <<"tags">> => [ <<"W2W">> ],
-        <<"description">> => <<"Create a transfer">>,
-        <<"operationId">> => <<"createW2WTransfer">>,
-        <<"parameters">> => [ #{
-          <<"name">> => <<"X-Request-ID">>,
-          <<"in">> => <<"header">>,
-          <<"description">> => <<"Unique identifier of the request to the system">>,
-          <<"required">> => true,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 32,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"X-Request-Deadline">>,
-          <<"in">> => <<"header">>,
-          <<"description">> => <<"Maximum request processing time">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        }, #{
-          <<"in">> => <<"body">>,
-          <<"name">> => <<"transferParams">>,
-          <<"description">> => <<"Transfer creation options">>,
-          <<"required">> => false,
-          <<"schema">> => #{
-            <<"$ref">> => <<"#/definitions/W2WTransferParameters">>
-          }
-        } ],
-        <<"responses">> => #{
-          <<"202">> => #{
-            <<"description">> => <<"Transfer started">>,
-            <<"headers">> => #{
-              <<"Location">> => #{
-                <<"type">> => <<"string">>,
-                <<"format">> => <<"uri">>,
-                <<"description">> => <<"URI of the transfer started">>
-              }
-            },
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/W2WTransfer">>
-            }
-          },
-          <<"400">> => #{
-            <<"description">> => <<"Invalid input data for operation">>,
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/BadRequest">>
-            }
-          },
-          <<"401">> => #{
-            <<"description">> => <<"Authorization error">>
-          },
-          <<"409">> => #{
-            <<"description">> => <<"The passed value `externalID` has already been used by you with other query parameters">>,
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/ConflictRequest">>
-            }
-          },
-          <<"422">> => #{
-            <<"description">> => <<"Invalid transfer input data">>,
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/InvalidOperationParameters">>
-            }
-          }
-        }
-      }
-    },
-    <<"/w2w/transfers/{w2wTransferID}">> => #{
-      <<"get">> => #{
-        <<"tags">> => [ <<"W2W">> ],
-        <<"description">> => <<"Get the transfer status.">>,
-        <<"operationId">> => <<"getW2WTransfer">>,
-        <<"parameters">> => [ #{
-          <<"name">> => <<"X-Request-ID">>,
-          <<"in">> => <<"header">>,
-          <<"description">> => <<"Unique identifier of the request to the system">>,
-          <<"required">> => true,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 32,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"X-Request-Deadline">>,
-          <<"in">> => <<"header">>,
-          <<"description">> => <<"Maximum request processing time">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"w2wTransferID">>,
-          <<"in">> => <<"path">>,
-          <<"description">> => <<"Identifier of transfer">>,
-          <<"required">> => true,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        } ],
-        <<"responses">> => #{
-          <<"200">> => #{
-            <<"description">> => <<"Transfer found">>,
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/W2WTransfer">>
-            }
-          },
-          <<"400">> => #{
-            <<"description">> => <<"Invalid input data for operation">>,
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/BadRequest">>
-            }
-          },
-          <<"401">> => #{
-            <<"description">> => <<"Authorization error">>
-          },
-          <<"404">> => #{
-            <<"description">> => <<"The content you are looking for was not found">>
-          }
-        }
-      }
-    },
     <<"/wallets">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Wallets">> ],
@@ -1828,14 +925,6 @@ get_raw() ->
           <<"name">> => <<"partyID">>,
           <<"in">> => <<"query">>,
           <<"description">> => <<"The participant's unique identifier within the system.">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"identityID">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"Identifier of owner's identity">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -1867,7 +956,7 @@ get_raw() ->
           <<"200">> => #{
             <<"description">> => <<"Search result">>,
             <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/inline_response_200_6">>
+              <<"$ref">> => <<"#/definitions/inline_response_200_2">>
             }
           },
           <<"400">> => #{
@@ -1878,72 +967,6 @@ get_raw() ->
           },
           <<"401">> => #{
             <<"description">> => <<"Authorization error">>
-          }
-        }
-      },
-      <<"post">> => #{
-        <<"tags">> => [ <<"Wallets">> ],
-        <<"summary">> => <<"Create a new wallet">>,
-        <<"operationId">> => <<"createWallet">>,
-        <<"parameters">> => [ #{
-          <<"name">> => <<"X-Request-ID">>,
-          <<"in">> => <<"header">>,
-          <<"description">> => <<"Unique identifier of the request to the system">>,
-          <<"required">> => true,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 32,
-          <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"X-Request-Deadline">>,
-          <<"in">> => <<"header">>,
-          <<"description">> => <<"Maximum request processing time">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        }, #{
-          <<"in">> => <<"body">>,
-          <<"name">> => <<"wallet">>,
-          <<"description">> => <<"Data of the created wallet">>,
-          <<"required">> => true,
-          <<"schema">> => #{
-            <<"$ref">> => <<"#/definitions/Wallet">>
-          }
-        } ],
-        <<"responses">> => #{
-          <<"201">> => #{
-            <<"description">> => <<"Wallet created">>,
-            <<"headers">> => #{
-              <<"Location">> => #{
-                <<"type">> => <<"string">>,
-                <<"format">> => <<"uri">>,
-                <<"description">> => <<"URI of the wallet created">>
-              }
-            },
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/Wallet">>
-            }
-          },
-          <<"400">> => #{
-            <<"description">> => <<"Invalid input data for operation">>,
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/BadRequest">>
-            }
-          },
-          <<"401">> => #{
-            <<"description">> => <<"Authorization error">>
-          },
-          <<"409">> => #{
-            <<"description">> => <<"The passed value `externalID` has already been used by you with other query parameters">>,
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/ConflictRequest">>
-            }
-          },
-          <<"422">> => #{
-            <<"description">> => <<"Invalid data of the wallet">>,
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/InvalidOperationParameters">>
-            }
           }
         }
       }
@@ -1965,6 +988,14 @@ get_raw() ->
           <<"name">> => <<"X-Request-Deadline">>,
           <<"in">> => <<"header">>,
           <<"description">> => <<"Maximum request processing time">>,
+          <<"required">> => false,
+          <<"type">> => <<"string">>,
+          <<"maxLength">> => 40,
+          <<"minLength">> => 1
+        }, #{
+          <<"name">> => <<"partyID">>,
+          <<"in">> => <<"query">>,
+          <<"description">> => <<"The participant's unique identifier within the system.">>,
           <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
@@ -2022,6 +1053,14 @@ get_raw() ->
           <<"maxLength">> => 40,
           <<"minLength">> => 1
         }, #{
+          <<"name">> => <<"partyID">>,
+          <<"in">> => <<"query">>,
+          <<"description">> => <<"The participant's unique identifier within the system.">>,
+          <<"required">> => false,
+          <<"type">> => <<"string">>,
+          <<"maxLength">> => 40,
+          <<"minLength">> => 1
+        }, #{
           <<"name">> => <<"walletID">>,
           <<"in">> => <<"path">>,
           <<"description">> => <<"Identifier of the wallet">>,
@@ -2052,11 +1091,11 @@ get_raw() ->
         }
       }
     },
-    <<"/wallets/{walletID}/grants">> => #{
-      <<"post">> => #{
+    <<"/wallets/{walletID}/withdrawal-methods">> => #{
+      <<"get">> => #{
         <<"tags">> => [ <<"Wallets">> ],
-        <<"summary">> => <<"Grant the right to manage funds">>,
-        <<"operationId">> => <<"issueWalletGrant">>,
+        <<"summary">> => <<"Get withdrawal methods available for wallet">>,
+        <<"operationId">> => <<"getWithdrawalMethods">>,
         <<"parameters">> => [ #{
           <<"name">> => <<"X-Request-ID">>,
           <<"in">> => <<"header">>,
@@ -2074,6 +1113,14 @@ get_raw() ->
           <<"maxLength">> => 40,
           <<"minLength">> => 1
         }, #{
+          <<"name">> => <<"partyID">>,
+          <<"in">> => <<"query">>,
+          <<"description">> => <<"The participant's unique identifier within the system.">>,
+          <<"required">> => false,
+          <<"type">> => <<"string">>,
+          <<"maxLength">> => 40,
+          <<"minLength">> => 1
+        }, #{
           <<"name">> => <<"walletID">>,
           <<"in">> => <<"path">>,
           <<"description">> => <<"Identifier of the wallet">>,
@@ -2081,20 +1128,12 @@ get_raw() ->
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
           <<"minLength">> => 1
-        }, #{
-          <<"in">> => <<"body">>,
-          <<"name">> => <<"request">>,
-          <<"description">> => <<"Request for the right to manage funds on the wallet">>,
-          <<"required">> => true,
-          <<"schema">> => #{
-            <<"$ref">> => <<"#/definitions/WalletGrantRequest">>
-          }
         } ],
         <<"responses">> => #{
-          <<"201">> => #{
-            <<"description">> => <<"Single right granted">>,
+          <<"200">> => #{
+            <<"description">> => <<"Methods found">>,
             <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/WalletGrantRequest">>
+              <<"$ref">> => <<"#/definitions/inline_response_200_3">>
             }
           },
           <<"400">> => #{
@@ -2108,12 +1147,6 @@ get_raw() ->
           },
           <<"404">> => #{
             <<"description">> => <<"The content you are looking for was not found">>
-          },
-          <<"422">> => #{
-            <<"description">> => <<"Invalid data for issuance">>,
-            <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/InvalidOperationParameters">>
-            }
           }
         }
       }
@@ -2140,10 +1173,10 @@ get_raw() ->
           <<"maxLength">> => 40,
           <<"minLength">> => 1
         }, #{
-          <<"name">> => <<"identityID">>,
+          <<"name">> => <<"partyID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Identifier of the owner's identity">>,
-          <<"required">> => true,
+          <<"description">> => <<"The participant's unique identifier within the system.">>,
+          <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
           <<"minLength">> => 1
@@ -2259,10 +1292,10 @@ get_raw() ->
           <<"maxLength">> => 40,
           <<"minLength">> => 1
         }, #{
-          <<"name">> => <<"identityID">>,
+          <<"name">> => <<"partyID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Identifier of the owner's identity">>,
-          <<"required">> => true,
+          <<"description">> => <<"The participant's unique identifier within the system.">>,
+          <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
           <<"minLength">> => 1
@@ -2323,10 +1356,10 @@ get_raw() ->
           <<"maxLength">> => 40,
           <<"minLength">> => 1
         }, #{
-          <<"name">> => <<"identityID">>,
+          <<"name">> => <<"partyID">>,
           <<"in">> => <<"query">>,
-          <<"description">> => <<"Identifier of the owner's identity">>,
-          <<"required">> => true,
+          <<"description">> => <<"The participant's unique identifier within the system.">>,
+          <<"required">> => false,
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
           <<"minLength">> => 1
@@ -2456,14 +1489,6 @@ get_raw() ->
           <<"maxLength">> => 40,
           <<"minLength">> => 1
         }, #{
-          <<"name">> => <<"identityID">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"Identifier of the owner's identity">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
-        }, #{
           <<"name">> => <<"withdrawalID">>,
           <<"in">> => <<"query">>,
           <<"description">> => <<"Identifier of the funds withdrawal">>,
@@ -2548,7 +1573,7 @@ get_raw() ->
           <<"200">> => #{
             <<"description">> => <<"Search result">>,
             <<"schema">> => #{
-              <<"$ref">> => <<"#/definitions/inline_response_200_7">>
+              <<"$ref">> => <<"#/definitions/inline_response_200_4">>
             }
           },
           <<"400">> => #{
@@ -3099,65 +2124,6 @@ get_raw() ->
       } ],
       <<"description">> => <<"Deposit data">>
     },
-    <<"DepositAdjustment">> => #{
-      <<"allOf">> => [ #{
-        <<"type">> => <<"object">>,
-        <<"properties">> => #{
-          <<"id">> => #{
-            <<"type">> => <<"string">>,
-            <<"example">> => <<"tZ0jUmlsV0">>,
-            <<"description">> => <<"Deposit adjustment identifier">>,
-            <<"readOnly">> => true
-          },
-          <<"createdAt">> => #{
-            <<"type">> => <<"string">>,
-            <<"format">> => <<"date-time">>,
-            <<"description">> => <<"Date and time the adjustment was started">>,
-            <<"readOnly">> => true
-          },
-          <<"externalID">> => #{
-            <<"type">> => <<"string">>,
-            <<"example">> => <<"10036274">>,
-            <<"description">> => <<"The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n">>
-          }
-        }
-      }, #{
-        <<"$ref">> => <<"#/definitions/DepositAdjustmentStatus">>
-      } ],
-      <<"description">> => <<"Deposit adjustment data">>
-    },
-    <<"DepositAdjustmentFailure">> => #{
-      <<"type">> => <<"object">>,
-      <<"required">> => [ <<"code">> ],
-      <<"properties">> => #{
-        <<"code">> => #{
-          <<"type">> => <<"string">>,
-          <<"description">> => <<"Adjustment error code">>
-        },
-        <<"subError">> => #{
-          <<"$ref">> => <<"#/definitions/SubFailure">>
-        }
-      }
-    },
-    <<"DepositAdjustmentID">> => #{
-      <<"type">> => <<"string">>,
-      <<"description">> => <<"Deposit adjustment identifier">>,
-      <<"example">> => <<"tZ0jUmlsV0">>
-    },
-    <<"DepositAdjustmentStatus">> => #{
-      <<"type">> => <<"object">>,
-      <<"properties">> => #{
-        <<"status">> => #{
-          <<"type">> => <<"string">>,
-          <<"description">> => <<"Deposit adjustment status.\n\n| Meaning     | Explanation                                             |\n| ----------- | ------------------------------------------------------- |\n| `Pending`   | Adjustment in progress                                  |\n| `Succeeded` | Adjustment completed successfully                       |\n| `Failed`    | Adjustment failed                                       |\n">>,
-          <<"readOnly">> => true,
-          <<"enum">> => [ <<"Pending">>, <<"Succeeded">>, <<"Failed">> ]
-        },
-        <<"failure">> => #{
-          <<"$ref">> => <<"#/definitions/DepositAdjustmentStatus_failure">>
-        }
-      }
-    },
     <<"DepositFailure">> => #{
       <<"type">> => <<"object">>,
       <<"required">> => [ <<"code">> ],
@@ -3176,82 +2142,6 @@ get_raw() ->
       <<"description">> => <<"Deposit identifier">>,
       <<"example">> => <<"tZ0jUmlsV0">>
     },
-    <<"DepositRevert">> => #{
-      <<"allOf">> => [ #{
-        <<"type">> => <<"object">>,
-        <<"required">> => [ <<"body">>, <<"source">>, <<"wallet">> ],
-        <<"properties">> => #{
-          <<"id">> => #{
-            <<"type">> => <<"string">>,
-            <<"example">> => <<"10068321">>,
-            <<"description">> => <<"Deposit revert identifier">>,
-            <<"readOnly">> => true
-          },
-          <<"createdAt">> => #{
-            <<"type">> => <<"string">>,
-            <<"format">> => <<"date-time">>,
-            <<"description">> => <<"Date and time of revert start">>,
-            <<"readOnly">> => true
-          },
-          <<"wallet">> => #{
-            <<"type">> => <<"string">>,
-            <<"example">> => <<"10068321">>,
-            <<"description">> => <<"Identifier of the wallet">>
-          },
-          <<"source">> => #{
-            <<"type">> => <<"string">>,
-            <<"example">> => <<"107498">>,
-            <<"description">> => <<"Funds source identifier">>
-          },
-          <<"body">> => #{
-            <<"$ref">> => <<"#/definitions/DepositRevert_body">>
-          },
-          <<"reason">> => #{
-            <<"type">> => <<"string">>
-          },
-          <<"externalID">> => #{
-            <<"type">> => <<"string">>,
-            <<"example">> => <<"10036274">>,
-            <<"description">> => <<"The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n">>
-          }
-        }
-      }, #{
-        <<"$ref">> => <<"#/definitions/DepositRevertStatus">>
-      } ],
-      <<"description">> => <<"Deposit revert data">>
-    },
-    <<"DepositRevertFailure">> => #{
-      <<"type">> => <<"object">>,
-      <<"required">> => [ <<"code">> ],
-      <<"properties">> => #{
-        <<"code">> => #{
-          <<"type">> => <<"string">>,
-          <<"description">> => <<"Deposit revert error code">>
-        },
-        <<"subError">> => #{
-          <<"$ref">> => <<"#/definitions/SubFailure">>
-        }
-      }
-    },
-    <<"DepositRevertID">> => #{
-      <<"type">> => <<"string">>,
-      <<"description">> => <<"Deposit revert identifier">>,
-      <<"example">> => <<"10068321">>
-    },
-    <<"DepositRevertStatus">> => #{
-      <<"type">> => <<"object">>,
-      <<"properties">> => #{
-        <<"status">> => #{
-          <<"type">> => <<"string">>,
-          <<"description">> => <<"Deposit revert status.\n\n| Meaning     | Explanation                                             |\n| ----------- | ------------------------------------------------------- |\n| `Pending`   | Deposit revert in progress                              |\n| `Succeeded` | Deposit revert completed successfully                   |\n| `Failed`    | Deposit revert failed                                   |\n">>,
-          <<"readOnly">> => true,
-          <<"enum">> => [ <<"Pending">>, <<"Succeeded">>, <<"Failed">> ]
-        },
-        <<"failure">> => #{
-          <<"$ref">> => <<"#/definitions/DepositRevertStatus_failure">>
-        }
-      }
-    },
     <<"DepositStatus">> => #{
       <<"type">> => <<"object">>,
       <<"properties">> => #{
@@ -3267,68 +2157,83 @@ get_raw() ->
       }
     },
     <<"Destination">> => #{
-      <<"allOf">> => [ #{
-        <<"type">> => <<"object">>,
-        <<"required">> => [ <<"currency">>, <<"identity">>, <<"name">>, <<"resource">> ],
-        <<"properties">> => #{
-          <<"id">> => #{
-            <<"type">> => <<"string">>,
-            <<"example">> => <<"107498">>,
-            <<"description">> => <<"Destination identifier">>,
-            <<"readOnly">> => true
+      <<"type">> => <<"object">>,
+      <<"required">> => [ <<"currency">>, <<"name">>, <<"party">>, <<"resource">> ],
+      <<"properties">> => #{
+        <<"id">> => #{
+          <<"type">> => <<"string">>,
+          <<"example">> => <<"107498">>,
+          <<"description">> => <<"Destination identifier">>,
+          <<"readOnly">> => true
+        },
+        <<"name">> => #{
+          <<"type">> => <<"string">>,
+          <<"example">> => <<"Squarey plastic thingy">>,
+          <<"description">> => <<"A human-readable name for the destination by which it is easily recognizable\n">>
+        },
+        <<"createdAt">> => #{
+          <<"type">> => <<"string">>,
+          <<"format">> => <<"date-time">>,
+          <<"description">> => <<"Date and time of creation of the destination of the funds">>,
+          <<"readOnly">> => true
+        },
+        <<"isBlocked">> => #{
+          <<"type">> => <<"boolean">>,
+          <<"example">> => false,
+          <<"description">> => <<"Is the destination blocked?">>,
+          <<"readOnly">> => true
+        },
+        <<"party">> => #{
+          <<"type">> => <<"string">>,
+          <<"description">> => <<"The participant's unique identifier within the system.">>,
+          <<"minLength">> => 1,
+          <<"maxLength">> => 40
+        },
+        <<"currency">> => #{
+          <<"type">> => <<"string">>,
+          <<"example">> => <<"USD">>,
+          <<"description">> => <<"Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
+          <<"pattern">> => <<"^[A-Z]{3}$">>
+        },
+        <<"resource">> => #{
+          <<"$ref">> => <<"#/definitions/DestinationResource">>
+        },
+        <<"additionalAuthData">> => #{
+          <<"$ref">> => <<"#/definitions/DestinationAuthData">>
+        },
+        <<"metadata">> => #{
+          <<"type">> => <<"object">>,
+          <<"example">> => #{
+            <<"color_hint">> => <<"olive-green">>
           },
-          <<"name">> => #{
-            <<"type">> => <<"string">>,
-            <<"example">> => <<"Squarey plastic thingy">>,
-            <<"description">> => <<"A human-readable name for the destination by which it is easily recognizable\n">>
-          },
-          <<"createdAt">> => #{
-            <<"type">> => <<"string">>,
-            <<"format">> => <<"date-time">>,
-            <<"description">> => <<"Date and time of creation of the destination of the funds">>,
-            <<"readOnly">> => true
-          },
-          <<"isBlocked">> => #{
-            <<"type">> => <<"boolean">>,
-            <<"example">> => false,
-            <<"description">> => <<"Is the destination blocked?">>,
-            <<"readOnly">> => true
-          },
-          <<"identity">> => #{
-            <<"type">> => <<"string">>,
-            <<"example">> => <<"10036274">>,
-            <<"description">> => <<"Identifier of wallet owner">>
-          },
-          <<"currency">> => #{
-            <<"type">> => <<"string">>,
-            <<"example">> => <<"USD">>,
-            <<"description">> => <<"Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
-            <<"pattern">> => <<"^[A-Z]{3}$">>
-          },
-          <<"resource">> => #{
-            <<"$ref">> => <<"#/definitions/DestinationResource">>
-          },
-          <<"additionalAuthData">> => #{
-            <<"$ref">> => <<"#/definitions/DestinationAuthData">>
-          },
-          <<"metadata">> => #{
-            <<"type">> => <<"object">>,
-            <<"example">> => #{
-              <<"color_hint">> => <<"olive-green">>
-            },
-            <<"description">> => <<"Some non-transparent for system set of data associated with this destination\n">>,
-            <<"properties">> => #{ }
-          },
-          <<"externalID">> => #{
-            <<"type">> => <<"string">>,
-            <<"example">> => <<"10036274">>,
-            <<"description">> => <<"The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n">>
-          }
+          <<"description">> => <<"Some non-transparent for system set of data associated with this destination\n">>,
+          <<"properties">> => #{ }
+        },
+        <<"externalID">> => #{
+          <<"type">> => <<"string">>,
+          <<"example">> => <<"10036274">>,
+          <<"description">> => <<"The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n">>
         }
-      }, #{
-        <<"$ref">> => <<"#/definitions/DestinationStatus">>
-      } ],
-      <<"description">> => <<"Destination data">>
+      },
+      <<"description">> => <<"Destination data">>,
+      <<"example">> => #{
+        <<"createdAt">> => <<"2000-01-23T04:56:07.000+00:00">>,
+        <<"metadata">> => #{
+          <<"color_hint">> => <<"olive-green">>
+        },
+        <<"resource">> => #{
+          <<"type">> => <<"BankCardDestinationResource">>
+        },
+        <<"name">> => <<"Squarey plastic thingy">>,
+        <<"isBlocked">> => false,
+        <<"externalID">> => <<"10036274">>,
+        <<"currency">> => <<"USD">>,
+        <<"id">> => <<"107498">>,
+        <<"party">> => <<"party">>,
+        <<"additionalAuthData">> => #{
+          <<"type">> => <<"SenderReceiverDestinationAuthData">>
+        }
+      }
     },
     <<"DestinationAuthData">> => #{
       <<"type">> => <<"object">>,
@@ -3342,31 +2247,10 @@ get_raw() ->
         }
       },
       <<"description">> => <<"Destination auth data to make withdrawals">>,
-      <<"x-discriminator-is-enum">> => true
-    },
-    <<"DestinationGrantRequest">> => #{
-      <<"type">> => <<"object">>,
-      <<"required">> => [ <<"validUntil">> ],
-      <<"properties">> => #{
-        <<"token">> => #{
-          <<"type">> => <<"string">>,
-          <<"example">> => <<"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n">>,
-          <<"description">> => <<"Token granting the permission to control the withdrawals">>,
-          <<"readOnly">> => true,
-          <<"minLength">> => 1,
-          <<"maxLength">> => 4000
-        },
-        <<"validUntil">> => #{
-          <<"type">> => <<"string">>,
-          <<"format">> => <<"date-time">>,
-          <<"description">> => <<"The date and time by which the granted right is valid\n">>
-        }
-      },
-      <<"description">> => <<"Request for the permission to control the withdrawals to the destination">>,
       <<"example">> => #{
-        <<"validUntil">> => <<"2000-01-23T04:56:07.000+00:00">>,
-        <<"token">> => <<"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n">>
-      }
+        <<"type">> => <<"SenderReceiverDestinationAuthData">>
+      },
+      <<"x-discriminator-is-enum">> => true
     },
     <<"DestinationID">> => #{
       <<"type">> => <<"string">>,
@@ -3385,25 +2269,10 @@ get_raw() ->
         }
       },
       <<"description">> => <<"Destination resource used to make withdrawals">>,
+      <<"example">> => #{
+        <<"type">> => <<"BankCardDestinationResource">>
+      },
       <<"x-discriminator-is-enum">> => true
-    },
-    <<"DestinationStatus">> => #{
-      <<"type">> => <<"object">>,
-      <<"properties">> => #{
-        <<"status">> => #{
-          <<"type">> => <<"string">>,
-          <<"example">> => <<"Authorized">>,
-          <<"description">> => <<"The status of the destination.\n\n| Meaning        | Explanation                                   |\n| -------------- | --------------------------------------------- |\n| `Unauthorized` | Not authorized by the owner to withdraw funds |\n| `Authorized`   | Authorized by the owner to withdraw funds     |\n">>,
-          <<"readOnly">> => true,
-          <<"enum">> => [ <<"Unauthorized">>, <<"Authorized">> ]
-        },
-        <<"validUntil">> => #{
-          <<"type">> => <<"string">>,
-          <<"format">> => <<"date-time">>,
-          <<"description">> => <<"> If `status` == `Authorized`\n\nDate and time until which authorization is valid\n">>,
-          <<"readOnly">> => true
-        }
-      }
     },
     <<"DestinationsTopic">> => #{
       <<"allOf">> => [ #{
@@ -3520,77 +2389,6 @@ get_raw() ->
       <<"maxLength">> => 4000,
       <<"example">> => <<"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n">>
     },
-    <<"Identity">> => #{
-      <<"type">> => <<"object">>,
-      <<"required">> => [ <<"name">>, <<"provider">> ],
-      <<"properties">> => #{
-        <<"id">> => #{
-          <<"type">> => <<"string">>,
-          <<"example">> => <<"10036274">>,
-          <<"description">> => <<"Identifier of wallet owner">>,
-          <<"readOnly">> => true
-        },
-        <<"name">> => #{
-          <<"type">> => <<"string">>,
-          <<"example">> => <<"Keyn Fawkes">>,
-          <<"description">> => <<"Human-readable name of the owner's identity, by which he can be easily identified\n">>
-        },
-        <<"createdAt">> => #{
-          <<"type">> => <<"string">>,
-          <<"format">> => <<"date-time">>,
-          <<"description">> => <<"Date and time the owner identity was created">>,
-          <<"readOnly">> => true
-        },
-        <<"provider">> => #{
-          <<"type">> => <<"string">>,
-          <<"example">> => <<"serviceprovider">>,
-          <<"description">> => <<"Identifier of the service provider">>
-        },
-        <<"isBlocked">> => #{
-          <<"type">> => <<"boolean">>,
-          <<"example">> => false,
-          <<"description">> => <<"Is the owner's identity blocked?">>,
-          <<"readOnly">> => true
-        },
-        <<"metadata">> => #{
-          <<"type">> => <<"object">>,
-          <<"example">> => #{
-            <<"lkDisplayName">> => <<"James Smith">>
-          },
-          <<"description">> => <<"Some non-transparent for system set of data associated with this identity\n">>,
-          <<"properties">> => #{ }
-        },
-        <<"externalID">> => #{
-          <<"type">> => <<"string">>,
-          <<"example">> => <<"10036274">>,
-          <<"description">> => <<"The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n">>
-        },
-        <<"partyID">> => #{
-          <<"type">> => <<"string">>,
-          <<"description">> => <<"The participant's unique identifier within the system.">>,
-          <<"minLength">> => 1,
-          <<"maxLength">> => 40
-        }
-      },
-      <<"description">> => <<"Data of the wallet owner">>,
-      <<"example">> => #{
-        <<"createdAt">> => <<"2000-01-23T04:56:07.000+00:00">>,
-        <<"metadata">> => #{
-          <<"lkDisplayName">> => <<"James Smith">>
-        },
-        <<"provider">> => <<"serviceprovider">>,
-        <<"name">> => <<"Keyn Fawkes">>,
-        <<"isBlocked">> => false,
-        <<"externalID">> => <<"10036274">>,
-        <<"id">> => <<"10036274">>,
-        <<"partyID">> => <<"partyID">>
-      }
-    },
-    <<"IdentityID">> => #{
-      <<"type">> => <<"string">>,
-      <<"description">> => <<"Identifier of wallet owner">>,
-      <<"example">> => <<"10036274">>
-    },
     <<"BadRequest">> => #{
       <<"type">> => <<"object">>,
       <<"required">> => [ <<"errorType">> ],
@@ -3669,46 +2467,9 @@ get_raw() ->
       <<"maxLength">> => 40,
       <<"description">> => <<"The participant's unique identifier within the system.">>
     },
-    <<"Provider">> => #{
-      <<"type">> => <<"object">>,
-      <<"required">> => [ <<"id">>, <<"name">>, <<"residences">> ],
-      <<"properties">> => #{
-        <<"id">> => #{
-          <<"type">> => <<"string">>,
-          <<"example">> => <<"serviceprovider">>,
-          <<"description">> => <<"Identifier of the service provider">>
-        },
-        <<"name">> => #{
-          <<"type">> => <<"string">>,
-          <<"example">> => <<"SERVICE PROVIDER LLC">>,
-          <<"description">> => <<"Human-readable name of the service provider\n">>
-        },
-        <<"residences">> => #{
-          <<"type">> => <<"array">>,
-          <<"description">> => <<"Residences in which the provider can service\n">>,
-          <<"items">> => #{
-            <<"type">> => <<"string">>,
-            <<"example">> => <<"RUS">>,
-            <<"description">> => <<"Residence symbol code by standard [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)\n">>,
-            <<"pattern">> => <<"^[A-Z]{3}$">>
-          }
-        }
-      },
-      <<"description">> => <<"Service provider data">>,
-      <<"example">> => #{
-        <<"name">> => <<"SERVICE PROVIDER LLC">>,
-        <<"id">> => <<"serviceprovider">>,
-        <<"residences">> => [ <<"RUS">>, <<"RUS">> ]
-      }
-    },
-    <<"ProviderID">> => #{
-      <<"type">> => <<"string">>,
-      <<"description">> => <<"Identifier of the service provider">>,
-      <<"example">> => <<"serviceprovider">>
-    },
     <<"QuoteParameters">> => #{
       <<"type">> => <<"object">>,
-      <<"required">> => [ <<"body">>, <<"identityID">>, <<"receiver">>, <<"sender">> ],
+      <<"required">> => [ <<"body">>, <<"partyID">>, <<"receiver">>, <<"sender">> ],
       <<"properties">> => #{
         <<"sender">> => #{
           <<"$ref">> => <<"#/definitions/SenderResource">>
@@ -3716,10 +2477,11 @@ get_raw() ->
         <<"receiver">> => #{
           <<"$ref">> => <<"#/definitions/ReceiverResource">>
         },
-        <<"identityID">> => #{
+        <<"partyID">> => #{
           <<"type">> => <<"string">>,
-          <<"example">> => <<"10036274">>,
-          <<"description">> => <<"Identifier of wallet owner">>
+          <<"description">> => <<"The participant's unique identifier within the system.">>,
+          <<"minLength">> => 1,
+          <<"maxLength">> => 40
         },
         <<"body">> => #{
           <<"$ref">> => <<"#/definitions/QuoteParameters_body">>
@@ -3953,10 +2715,7 @@ get_raw() ->
           <<"$ref">> => <<"#/definitions/SubFailure">>
         }
       },
-      <<"description">> => <<"Detailed description of the error\n">>,
-      <<"example">> => #{
-        <<"code">> => <<"code">>
-      }
+      <<"description">> => <<"Detailed description of the error\n">>
     },
     <<"UserInteraction">> => #{
       <<"type">> => <<"object">>,
@@ -4007,139 +2766,9 @@ get_raw() ->
         <<"$ref">> => <<"#/definitions/UserInteractionForm_inner">>
       }
     },
-    <<"W2WTransfer">> => #{
-      <<"type">> => <<"object">>,
-      <<"required">> => [ <<"body">>, <<"createdAt">>, <<"id">>, <<"receiver">>, <<"sender">>, <<"status">> ],
-      <<"properties">> => #{
-        <<"id">> => #{
-          <<"type">> => <<"string">>,
-          <<"example">> => <<"10a0b68D3E21">>,
-          <<"description">> => <<"Transfer identifier">>,
-          <<"minLength">> => 1,
-          <<"maxLength">> => 40
-        },
-        <<"createdAt">> => #{
-          <<"type">> => <<"string">>,
-          <<"format">> => <<"date-time">>,
-          <<"description">> => <<"Date and time of creation">>
-        },
-        <<"body">> => #{
-          <<"$ref">> => <<"#/definitions/QuoteParameters_body">>
-        },
-        <<"sender">> => #{
-          <<"$ref">> => <<"#/definitions/WalletID">>
-        },
-        <<"receiver">> => #{
-          <<"$ref">> => <<"#/definitions/WalletID">>
-        },
-        <<"status">> => #{
-          <<"$ref">> => <<"#/definitions/W2WTransferStatus">>
-        },
-        <<"externalID">> => #{
-          <<"type">> => <<"string">>,
-          <<"example">> => <<"10036274">>,
-          <<"description">> => <<"The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n">>
-        }
-      },
-      <<"description">> => <<"Transfer data">>,
-      <<"example">> => #{
-        <<"createdAt">> => <<"2000-01-23T04:56:07.000+00:00">>,
-        <<"receiver">> => <<"10068321">>,
-        <<"sender">> => <<"10068321">>,
-        <<"externalID">> => <<"10036274">>,
-        <<"id">> => <<"10a0b68D3E21">>,
-        <<"body">> => #{
-          <<"amount">> => 1430000,
-          <<"currency">> => <<"USD">>
-        },
-        <<"status">> => #{
-          <<"failure">> => #{
-            <<"code">> => <<"code">>,
-            <<"subError">> => #{
-              <<"code">> => <<"code">>
-            }
-          },
-          <<"status">> => <<"Pending">>
-        }
-      }
-    },
-    <<"W2WTransferFailure">> => #{
-      <<"type">> => <<"object">>,
-      <<"required">> => [ <<"code">> ],
-      <<"properties">> => #{
-        <<"code">> => #{
-          <<"type">> => <<"string">>,
-          <<"description">> => <<"Main error code">>
-        },
-        <<"subError">> => #{
-          <<"$ref">> => <<"#/definitions/SubFailure">>
-        }
-      },
-      <<"description">> => <<"[Error occurred during the transfer process](#tag/Error-Codes)\n">>
-    },
-    <<"W2WTransferID">> => #{
-      <<"type">> => <<"string">>,
-      <<"minLength">> => 1,
-      <<"maxLength">> => 40,
-      <<"description">> => <<"Transfer identifier">>,
-      <<"example">> => <<"10a0b68D3E21">>
-    },
-    <<"W2WTransferParameters">> => #{
-      <<"type">> => <<"object">>,
-      <<"required">> => [ <<"body">>, <<"receiver">>, <<"sender">> ],
-      <<"properties">> => #{
-        <<"sender">> => #{
-          <<"$ref">> => <<"#/definitions/WalletID">>
-        },
-        <<"receiver">> => #{
-          <<"$ref">> => <<"#/definitions/WalletID">>
-        },
-        <<"body">> => #{
-          <<"$ref">> => <<"#/definitions/W2WTransferParameters_body">>
-        },
-        <<"externalID">> => #{
-          <<"type">> => <<"string">>,
-          <<"example">> => <<"10036274">>,
-          <<"description">> => <<"The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n">>
-        }
-      },
-      <<"description">> => <<"Transfer creation options">>,
-      <<"example">> => #{
-        <<"receiver">> => <<"10068321">>,
-        <<"sender">> => <<"10068321">>,
-        <<"externalID">> => <<"10036274">>,
-        <<"body">> => #{
-          <<"amount">> => 1430000,
-          <<"currency">> => <<"USD">>
-        }
-      }
-    },
-    <<"W2WTransferStatus">> => #{
-      <<"type">> => <<"object">>,
-      <<"required">> => [ <<"status">> ],
-      <<"properties">> => #{
-        <<"status">> => #{
-          <<"type">> => <<"string">>,
-          <<"description">> => <<"The status of the money transfer.\n\n| Meaning     | Explanation                          |\n| ----------- | ------------------------------------ |\n| `Pending`   | Transfer in progress              |\n| `Succeeded` | Fund transfer completed successfully |\n| `Failed`    | Fund transfer failed                 |\n">>,
-          <<"enum">> => [ <<"Pending">>, <<"Succeeded">>, <<"Failed">> ]
-        },
-        <<"failure">> => #{
-          <<"$ref">> => <<"#/definitions/W2WTransferStatus_failure">>
-        }
-      },
-      <<"example">> => #{
-        <<"failure">> => #{
-          <<"code">> => <<"code">>,
-          <<"subError">> => #{
-            <<"code">> => <<"code">>
-          }
-        },
-        <<"status">> => <<"Pending">>
-      }
-    },
     <<"Wallet">> => #{
       <<"type">> => <<"object">>,
-      <<"required">> => [ <<"currency">>, <<"identity">>, <<"name">> ],
+      <<"required">> => [ <<"currency">>, <<"name">>, <<"party">> ],
       <<"properties">> => #{
         <<"id">> => #{
           <<"type">> => <<"string">>,
@@ -4164,43 +2793,27 @@ get_raw() ->
           <<"description">> => <<"Is the wallet blocked?">>,
           <<"readOnly">> => true
         },
-        <<"identity">> => #{
+        <<"party">> => #{
           <<"type">> => <<"string">>,
-          <<"example">> => <<"10036274">>,
-          <<"description">> => <<"Identifier of wallet owner">>
+          <<"description">> => <<"The participant's unique identifier within the system.">>,
+          <<"minLength">> => 1,
+          <<"maxLength">> => 40
         },
         <<"currency">> => #{
           <<"type">> => <<"string">>,
           <<"example">> => <<"USD">>,
           <<"description">> => <<"Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
           <<"pattern">> => <<"^[A-Z]{3}$">>
-        },
-        <<"metadata">> => #{
-          <<"type">> => <<"object">>,
-          <<"example">> => #{
-            <<"client_locale">> => <<"en_US">>
-          },
-          <<"description">> => <<"Some non-transparent for system set of data associated with this wallet\n">>,
-          <<"properties">> => #{ }
-        },
-        <<"externalID">> => #{
-          <<"type">> => <<"string">>,
-          <<"example">> => <<"10036274">>,
-          <<"description">> => <<"The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n">>
         }
       },
       <<"description">> => <<"Wallet details">>,
       <<"example">> => #{
         <<"createdAt">> => <<"2000-01-23T04:56:07.000+00:00">>,
-        <<"metadata">> => #{
-          <<"client_locale">> => <<"en_US">>
-        },
-        <<"identity">> => <<"10036274">>,
         <<"name">> => <<"Worldwide PHP Awareness Initiative">>,
         <<"isBlocked">> => false,
-        <<"externalID">> => <<"10036274">>,
         <<"currency">> => <<"USD">>,
-        <<"id">> => <<"10068321">>
+        <<"id">> => <<"10068321">>,
+        <<"party">> => <<"party">>
       }
     },
     <<"WalletAccount">> => #{
@@ -4223,37 +2836,6 @@ get_raw() ->
         <<"available">> => <<"{\"amount\":1200000,\"currency\":\"USD\"}">>
       }
     },
-    <<"WalletGrantRequest">> => #{
-      <<"type">> => <<"object">>,
-      <<"required">> => [ <<"asset">>, <<"validUntil">> ],
-      <<"properties">> => #{
-        <<"token">> => #{
-          <<"type">> => <<"string">>,
-          <<"example">> => <<"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n">>,
-          <<"description">> => <<"A token that gives the permission to one-time management of funds on the wallet">>,
-          <<"readOnly">> => true,
-          <<"minLength">> => 1,
-          <<"maxLength">> => 4000
-        },
-        <<"asset">> => #{
-          <<"$ref">> => <<"#/definitions/WalletGrantRequest_asset">>
-        },
-        <<"validUntil">> => #{
-          <<"type">> => <<"string">>,
-          <<"format">> => <<"date-time">>,
-          <<"description">> => <<"Date and time until which the granted right is valid\n">>
-        }
-      },
-      <<"description">> => <<"Request for a one-time permission to manage funds on the wallet">>,
-      <<"example">> => #{
-        <<"validUntil">> => <<"2000-01-23T04:56:07.000+00:00">>,
-        <<"asset">> => #{
-          <<"amount">> => 1430000,
-          <<"currency">> => <<"USD">>
-        },
-        <<"token">> => <<"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n">>
-      }
-    },
     <<"WalletID">> => #{
       <<"type">> => <<"string">>,
       <<"description">> => <<"Identifier of the wallet">>,
@@ -4266,17 +2848,18 @@ get_raw() ->
     },
     <<"Webhook">> => #{
       <<"type">> => <<"object">>,
-      <<"required">> => [ <<"identityID">>, <<"scope">>, <<"url">> ],
+      <<"required">> => [ <<"partyID">>, <<"scope">>, <<"url">> ],
       <<"properties">> => #{
         <<"id">> => #{
           <<"type">> => <<"string">>,
           <<"description">> => <<"Identifier of the webhook\n">>,
           <<"readOnly">> => true
         },
-        <<"identityID">> => #{
+        <<"partyID">> => #{
           <<"type">> => <<"string">>,
-          <<"example">> => <<"10036274">>,
-          <<"description">> => <<"Identifier of wallet owner">>
+          <<"description">> => <<"The participant's unique identifier within the system.">>,
+          <<"minLength">> => 1,
+          <<"maxLength">> => 40
         },
         <<"active">> => #{
           <<"type">> => <<"boolean">>,
@@ -4301,13 +2884,13 @@ get_raw() ->
         }
       },
       <<"example">> => #{
-        <<"identityID">> => <<"10036274">>,
         <<"scope">> => #{
           <<"topic">> => <<"WithdrawalsTopic">>
         },
         <<"active">> => true,
         <<"id">> => <<"id">>,
         <<"publicKey">> => <<"MIGJAoGBAM1fmNUvezts3yglTdhXuqG7OhHxQtDFA+Ss//YuUGjw5ossDbEMoS+SIFuYZ/UL9Xg0rEHNRSbmf48OK+mz0FobEtbji8MADayzGfFopXsfRFa7MVy3Uhu5jBDpLsN3DyJapAkK0TAYINlZXxVjDwxRNheTvC+xub5WNdiwc28fAgMBAAE=">>,
+        <<"partyID">> => <<"partyID">>,
         <<"url">> => <<"http://example.com/aeiou">>
       }
     },
@@ -4331,7 +2914,7 @@ get_raw() ->
     <<"Withdrawal">> => #{
       <<"allOf">> => [ #{
         <<"type">> => <<"object">>,
-        <<"required">> => [ <<"body">>, <<"destination">>, <<"wallet">> ],
+        <<"required">> => [ <<"body">>, <<"destination">>, <<"party">>, <<"wallet">> ],
         <<"properties">> => #{
           <<"id">> => #{
             <<"type">> => <<"string">>,
@@ -4349,6 +2932,12 @@ get_raw() ->
             <<"type">> => <<"string">>,
             <<"example">> => <<"10068321">>,
             <<"description">> => <<"Identifier of the wallet">>
+          },
+          <<"party">> => #{
+            <<"type">> => <<"string">>,
+            <<"description">> => <<"The participant's unique identifier within the system.">>,
+            <<"minLength">> => 1,
+            <<"maxLength">> => 40
           },
           <<"destination">> => #{
             <<"type">> => <<"string">>,
@@ -4529,20 +3118,6 @@ get_raw() ->
       }, #{
         <<"type">> => <<"object">>,
         <<"properties">> => #{
-          <<"walletGrant">> => #{
-            <<"type">> => <<"string">>,
-            <<"example">> => <<"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n">>,
-            <<"description">> => <<"A token that gives the right to withdraw from the wallet to pay for the withdrawal.\n\nMust be provided if withdrawal is made at the expense of _foreign_\nwallet. The owner of said wallet can\n[issue this right](#operation/issueWalletGrant).\n">>,
-            <<"minLength">> => 1,
-            <<"maxLength">> => 4000
-          },
-          <<"destinationGrant">> => #{
-            <<"type">> => <<"string">>,
-            <<"example">> => <<"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n">>,
-            <<"description">> => <<"A token that gives the right to withdraw.\n\nMust be provided if the withdrawal is made through a _foreign_ recipient of\nfunds. The owner of the specified recipient can\n[issue this right](#operation/issueDestinationGrant).\n">>,
-            <<"minLength">> => 1,
-            <<"maxLength">> => 4000
-          },
           <<"quoteToken">> => #{
             <<"type">> => <<"string">>,
             <<"example">> => <<"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n">>,
@@ -4601,7 +3176,7 @@ get_raw() ->
     },
     <<"WithdrawalQuoteParams">> => #{
       <<"type">> => <<"object">>,
-      <<"required">> => [ <<"cash">>, <<"currencyFrom">>, <<"currencyTo">>, <<"walletID">> ],
+      <<"required">> => [ <<"cash">>, <<"currencyFrom">>, <<"currencyTo">>, <<"partyID">>, <<"walletID">> ],
       <<"properties">> => #{
         <<"externalID">> => #{
           <<"type">> => <<"string">>,
@@ -4612,6 +3187,12 @@ get_raw() ->
           <<"type">> => <<"string">>,
           <<"example">> => <<"10068321">>,
           <<"description">> => <<"Identifier of the wallet">>
+        },
+        <<"partyID">> => #{
+          <<"type">> => <<"string">>,
+          <<"description">> => <<"The participant's unique identifier within the system.">>,
+          <<"minLength">> => 1,
+          <<"maxLength">> => 40
         },
         <<"destinationID">> => #{
           <<"type">> => <<"string">>,
@@ -4632,28 +3213,13 @@ get_raw() ->
         },
         <<"cash">> => #{
           <<"$ref">> => <<"#/definitions/WithdrawalQuoteParams_cash">>
-        },
-        <<"walletGrant">> => #{
-          <<"type">> => <<"string">>,
-          <<"example">> => <<"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n">>,
-          <<"description">> => <<"A token that gives the right to withdraw from the wallet to pay for the withdrawal. It is necessary to provide if the withdrawal is made at the expense of the funds of a _foreign_ wallet. The owner of the specified wallet can [issue this right](#operation/issueWalletGrant)\n">>,
-          <<"minLength">> => 1,
-          <<"maxLength">> => 4000
-        },
-        <<"destinationGrant">> => #{
-          <<"type">> => <<"string">>,
-          <<"example">> => <<"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n">>,
-          <<"description">> => <<"A token that gives the right to withdraw. Must be provided if the withdrawal is made through a _foreign_ fund recipient. The owner of the specified recipient can [grant this right](#operation/issueDestinationGrant)\n">>,
-          <<"minLength">> => 1,
-          <<"maxLength">> => 4000
         }
       },
       <<"description">> => <<"Quote parameters for withdrawal">>,
       <<"example">> => #{
         <<"walletID">> => <<"10068321">>,
-        <<"walletGrant">> => <<"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n">>,
         <<"externalID">> => <<"10036274">>,
-        <<"destinationGrant">> => <<"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n">>,
+        <<"partyID">> => <<"partyID">>,
         <<"destinationID">> => <<"107498">>,
         <<"currencyTo">> => <<"USD">>,
         <<"cash">> => #{
@@ -4743,9 +3309,9 @@ get_raw() ->
         },
         <<"result">> => #{
           <<"type">> => <<"array">>,
-          <<"description">> => <<"Found adjustments">>,
+          <<"description">> => <<"Found deposits">>,
           <<"items">> => #{
-            <<"$ref">> => <<"#/definitions/DepositAdjustment">>
+            <<"$ref">> => <<"#/definitions/Deposit">>
           }
         }
       },
@@ -4763,46 +3329,6 @@ get_raw() ->
         },
         <<"result">> => #{
           <<"type">> => <<"array">>,
-          <<"description">> => <<"Found reverts">>,
-          <<"items">> => #{
-            <<"$ref">> => <<"#/definitions/DepositRevert">>
-          }
-        }
-      },
-      <<"example">> => #{
-        <<"result">> => [ <<"">>, <<"">> ],
-        <<"continuationToken">> => <<"continuationToken">>
-      }
-    },
-    <<"inline_response_200_2">> => #{
-      <<"type">> => <<"object">>,
-      <<"properties">> => #{
-        <<"continuationToken">> => #{
-          <<"type">> => <<"string">>,
-          <<"description">> => <<"A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n">>
-        },
-        <<"result">> => #{
-          <<"type">> => <<"array">>,
-          <<"description">> => <<"Found deposits">>,
-          <<"items">> => #{
-            <<"$ref">> => <<"#/definitions/Deposit">>
-          }
-        }
-      },
-      <<"example">> => #{
-        <<"result">> => [ <<"">>, <<"">> ],
-        <<"continuationToken">> => <<"continuationToken">>
-      }
-    },
-    <<"inline_response_200_3">> => #{
-      <<"type">> => <<"object">>,
-      <<"properties">> => #{
-        <<"continuationToken">> => #{
-          <<"type">> => <<"string">>,
-          <<"description">> => <<"A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n">>
-        },
-        <<"result">> => #{
-          <<"type">> => <<"array">>,
           <<"description">> => <<"Destinations found">>,
           <<"items">> => #{
             <<"$ref">> => <<"#/definitions/Destination">>
@@ -4810,71 +3336,45 @@ get_raw() ->
         }
       },
       <<"example">> => #{
-        <<"result">> => [ <<"">>, <<"">> ],
-        <<"continuationToken">> => <<"continuationToken">>
-      }
-    },
-    <<"inline_response_200_4">> => #{
-      <<"type">> => <<"object">>,
-      <<"properties">> => #{
-        <<"continuationToken">> => #{
-          <<"type">> => <<"string">>,
-          <<"description">> => <<"A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n">>
-        },
-        <<"result">> => #{
-          <<"type">> => <<"array">>,
-          <<"description">> => <<"Identities found">>,
-          <<"items">> => #{
-            <<"$ref">> => <<"#/definitions/Identity">>
-          }
-        }
-      },
-      <<"example">> => #{
         <<"result">> => [ #{
           <<"createdAt">> => <<"2000-01-23T04:56:07.000+00:00">>,
           <<"metadata">> => #{
-            <<"lkDisplayName">> => <<"James Smith">>
+            <<"color_hint">> => <<"olive-green">>
           },
-          <<"provider">> => <<"serviceprovider">>,
-          <<"name">> => <<"Keyn Fawkes">>,
+          <<"resource">> => #{
+            <<"type">> => <<"BankCardDestinationResource">>
+          },
+          <<"name">> => <<"Squarey plastic thingy">>,
           <<"isBlocked">> => false,
           <<"externalID">> => <<"10036274">>,
-          <<"id">> => <<"10036274">>,
-          <<"partyID">> => <<"partyID">>
+          <<"currency">> => <<"USD">>,
+          <<"id">> => <<"107498">>,
+          <<"party">> => <<"party">>,
+          <<"additionalAuthData">> => #{
+            <<"type">> => <<"SenderReceiverDestinationAuthData">>
+          }
         }, #{
           <<"createdAt">> => <<"2000-01-23T04:56:07.000+00:00">>,
           <<"metadata">> => #{
-            <<"lkDisplayName">> => <<"James Smith">>
+            <<"color_hint">> => <<"olive-green">>
           },
-          <<"provider">> => <<"serviceprovider">>,
-          <<"name">> => <<"Keyn Fawkes">>,
+          <<"resource">> => #{
+            <<"type">> => <<"BankCardDestinationResource">>
+          },
+          <<"name">> => <<"Squarey plastic thingy">>,
           <<"isBlocked">> => false,
           <<"externalID">> => <<"10036274">>,
-          <<"id">> => <<"10036274">>,
-          <<"partyID">> => <<"partyID">>
+          <<"currency">> => <<"USD">>,
+          <<"id">> => <<"107498">>,
+          <<"party">> => <<"party">>,
+          <<"additionalAuthData">> => #{
+            <<"type">> => <<"SenderReceiverDestinationAuthData">>
+          }
         } ],
         <<"continuationToken">> => <<"continuationToken">>
       }
     },
-    <<"inline_response_200_5">> => #{
-      <<"type">> => <<"object">>,
-      <<"properties">> => #{
-        <<"methods">> => #{
-          <<"type">> => <<"array">>,
-          <<"items">> => #{
-            <<"$ref">> => <<"#/definitions/WithdrawalMethod">>
-          }
-        }
-      },
-      <<"example">> => #{
-        <<"methods">> => [ #{
-          <<"method">> => <<"WithdrawalMethodBankCard">>
-        }, #{
-          <<"method">> => <<"WithdrawalMethodBankCard">>
-        } ]
-      }
-    },
-    <<"inline_response_200_6">> => #{
+    <<"inline_response_200_2">> => #{
       <<"type">> => <<"object">>,
       <<"properties">> => #{
         <<"continuationToken">> => #{
@@ -4892,31 +3392,41 @@ get_raw() ->
       <<"example">> => #{
         <<"result">> => [ #{
           <<"createdAt">> => <<"2000-01-23T04:56:07.000+00:00">>,
-          <<"metadata">> => #{
-            <<"client_locale">> => <<"en_US">>
-          },
-          <<"identity">> => <<"10036274">>,
           <<"name">> => <<"Worldwide PHP Awareness Initiative">>,
           <<"isBlocked">> => false,
-          <<"externalID">> => <<"10036274">>,
           <<"currency">> => <<"USD">>,
-          <<"id">> => <<"10068321">>
+          <<"id">> => <<"10068321">>,
+          <<"party">> => <<"party">>
         }, #{
           <<"createdAt">> => <<"2000-01-23T04:56:07.000+00:00">>,
-          <<"metadata">> => #{
-            <<"client_locale">> => <<"en_US">>
-          },
-          <<"identity">> => <<"10036274">>,
           <<"name">> => <<"Worldwide PHP Awareness Initiative">>,
           <<"isBlocked">> => false,
-          <<"externalID">> => <<"10036274">>,
           <<"currency">> => <<"USD">>,
-          <<"id">> => <<"10068321">>
+          <<"id">> => <<"10068321">>,
+          <<"party">> => <<"party">>
         } ],
         <<"continuationToken">> => <<"continuationToken">>
       }
     },
-    <<"inline_response_200_7">> => #{
+    <<"inline_response_200_3">> => #{
+      <<"type">> => <<"object">>,
+      <<"properties">> => #{
+        <<"methods">> => #{
+          <<"type">> => <<"array">>,
+          <<"items">> => #{
+            <<"$ref">> => <<"#/definitions/WithdrawalMethod">>
+          }
+        }
+      },
+      <<"example">> => #{
+        <<"methods">> => [ #{
+          <<"method">> => <<"WithdrawalMethodBankCard">>
+        }, #{
+          <<"method">> => <<"WithdrawalMethodBankCard">>
+        } ]
+      }
+    },
+    <<"inline_response_200_4">> => #{
       <<"type">> => <<"object">>,
       <<"properties">> => #{
         <<"continuationToken">> => #{
@@ -4974,53 +3484,6 @@ get_raw() ->
       },
       <<"description">> => <<"Fee amount">>
     },
-    <<"DepositAdjustmentStatus_failure">> => #{
-      <<"type">> => <<"object">>,
-      <<"required">> => [ <<"code">> ],
-      <<"properties">> => #{
-        <<"code">> => #{
-          <<"type">> => <<"string">>,
-          <<"description">> => <<"Adjustment error code">>
-        },
-        <<"subError">> => #{
-          <<"$ref">> => <<"#/definitions/SubFailure">>
-        }
-      },
-      <<"description">> => <<"> If `status` == `Failed`\n\nExplanation of the reason for failure\n">>
-    },
-    <<"DepositRevert_body">> => #{
-      <<"type">> => <<"object">>,
-      <<"required">> => [ <<"amount">>, <<"currency">> ],
-      <<"properties">> => #{
-        <<"amount">> => #{
-          <<"type">> => <<"integer">>,
-          <<"format">> => <<"int64">>,
-          <<"example">> => 1430000,
-          <<"description">> => <<"The amount of money in minor units, for example, in cents\n">>
-        },
-        <<"currency">> => #{
-          <<"type">> => <<"string">>,
-          <<"example">> => <<"USD">>,
-          <<"description">> => <<"Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
-          <<"pattern">> => <<"^[A-Z]{3}$">>
-        }
-      },
-      <<"description">> => <<"Amount of funds">>
-    },
-    <<"DepositRevertStatus_failure">> => #{
-      <<"type">> => <<"object">>,
-      <<"required">> => [ <<"code">> ],
-      <<"properties">> => #{
-        <<"code">> => #{
-          <<"type">> => <<"string">>,
-          <<"description">> => <<"Deposit revert error code">>
-        },
-        <<"subError">> => #{
-          <<"$ref">> => <<"#/definitions/SubFailure">>
-        }
-      },
-      <<"description">> => <<"> If `status` == `Failed`\n\nExplanation of the reason for failure\n">>
-    },
     <<"DepositStatus_failure">> => #{
       <<"type">> => <<"object">>,
       <<"required">> => [ <<"code">> ],
@@ -5052,11 +3515,7 @@ get_raw() ->
           <<"pattern">> => <<"^[A-Z]{3}$">>
         }
       },
-      <<"description">> => <<"Transaction amount">>,
-      <<"example">> => #{
-        <<"amount">> => 1430000,
-        <<"currency">> => <<"USD">>
-      }
+      <<"description">> => <<"Transaction amount">>
     },
     <<"Report_files">> => #{
       <<"type">> => <<"object">>,
@@ -5084,49 +3543,6 @@ get_raw() ->
         <<"template">> => #{
           <<"type">> => <<"string">>,
           <<"description">> => <<"The template for the form element value\nThe template is presented according to the standard\n[RFC6570](https://tools.ietf.org/html/rfc6570).\n">>
-        }
-      }
-    },
-    <<"W2WTransferParameters_body">> => #{
-      <<"type">> => <<"object">>,
-      <<"required">> => [ <<"amount">>, <<"currency">> ],
-      <<"properties">> => #{
-        <<"amount">> => #{
-          <<"type">> => <<"integer">>,
-          <<"format">> => <<"int64">>,
-          <<"example">> => 1430000,
-          <<"description">> => <<"The amount of money in minor units, for example, in cents\n">>
-        },
-        <<"currency">> => #{
-          <<"type">> => <<"string">>,
-          <<"example">> => <<"USD">>,
-          <<"description">> => <<"Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
-          <<"pattern">> => <<"^[A-Z]{3}$">>
-        }
-      },
-      <<"description">> => <<"Transfer amount">>,
-      <<"example">> => #{
-        <<"amount">> => 1430000,
-        <<"currency">> => <<"USD">>
-      }
-    },
-    <<"W2WTransferStatus_failure">> => #{
-      <<"type">> => <<"object">>,
-      <<"required">> => [ <<"code">> ],
-      <<"properties">> => #{
-        <<"code">> => #{
-          <<"type">> => <<"string">>,
-          <<"description">> => <<"Main error code">>
-        },
-        <<"subError">> => #{
-          <<"$ref">> => <<"#/definitions/SubFailure">>
-        }
-      },
-      <<"description">> => <<"[Error occurred during the transfer process](#tag/Error-Codes)\n">>,
-      <<"example">> => #{
-        <<"code">> => <<"code">>,
-        <<"subError">> => #{
-          <<"code">> => <<"code">>
         }
       }
     },
@@ -5172,29 +3588,6 @@ get_raw() ->
       },
       <<"description">> => <<"Funds available for use. Usually equal to own funds\nminus the sum of all pending transactions\n">>,
       <<"example">> => <<"{\"amount\":1200000,\"currency\":\"USD\"}">>
-    },
-    <<"WalletGrantRequest_asset">> => #{
-      <<"type">> => <<"object">>,
-      <<"required">> => [ <<"amount">>, <<"currency">> ],
-      <<"properties">> => #{
-        <<"amount">> => #{
-          <<"type">> => <<"integer">>,
-          <<"format">> => <<"int64">>,
-          <<"example">> => 1430000,
-          <<"description">> => <<"The amount of money in minor units, for example, in cents\n">>
-        },
-        <<"currency">> => #{
-          <<"type">> => <<"string">>,
-          <<"example">> => <<"USD">>,
-          <<"description">> => <<"Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n">>,
-          <<"pattern">> => <<"^[A-Z]{3}$">>
-        }
-      },
-      <<"description">> => <<"Amount of funds allowed for use">>,
-      <<"example">> => #{
-        <<"amount">> => 1430000,
-        <<"currency">> => <<"USD">>
-      }
     },
     <<"Withdrawal_body">> => #{
       <<"type">> => <<"object">>,
@@ -5346,24 +3739,6 @@ get_raw() ->
       <<"maxLength">> => 32,
       <<"minLength">> => 1
     },
-    <<"providerID">> => #{
-      <<"name">> => <<"providerID">>,
-      <<"in">> => <<"path">>,
-      <<"description">> => <<"Identifier of the provider">>,
-      <<"required">> => true,
-      <<"type">> => <<"string">>,
-      <<"maxLength">> => 40,
-      <<"minLength">> => 1
-    },
-    <<"identityID">> => #{
-      <<"name">> => <<"identityID">>,
-      <<"in">> => <<"path">>,
-      <<"description">> => <<"Identifier of the owner's identity">>,
-      <<"required">> => true,
-      <<"type">> => <<"string">>,
-      <<"maxLength">> => 40,
-      <<"minLength">> => 1
-    },
     <<"walletID">> => #{
       <<"name">> => <<"walletID">>,
       <<"in">> => <<"path">>,
@@ -5502,24 +3877,6 @@ get_raw() ->
       <<"name">> => <<"webhookID">>,
       <<"in">> => <<"path">>,
       <<"description">> => <<"Webhook identifier">>,
-      <<"required">> => true,
-      <<"type">> => <<"string">>,
-      <<"maxLength">> => 40,
-      <<"minLength">> => 1
-    },
-    <<"queryIdentityID">> => #{
-      <<"name">> => <<"identityID">>,
-      <<"in">> => <<"query">>,
-      <<"description">> => <<"Identifier of the owner's identity">>,
-      <<"required">> => true,
-      <<"type">> => <<"string">>,
-      <<"maxLength">> => 40,
-      <<"minLength">> => 1
-    },
-    <<"w2wTransferID">> => #{
-      <<"name">> => <<"w2wTransferID">>,
-      <<"in">> => <<"path">>,
-      <<"description">> => <<"Identifier of transfer">>,
       <<"required">> => true,
       <<"type">> => <<"string">>,
       <<"maxLength">> => 40,

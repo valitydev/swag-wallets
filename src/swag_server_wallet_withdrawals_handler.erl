@@ -120,14 +120,6 @@ allowed_methods(
 allowed_methods(
     Req,
     State = #state{
-        operation_id = 'IssueDestinationGrant'
-    }
-) ->
-    {[<<"POST">>], Req, State};
-
-allowed_methods(
-    Req,
-    State = #state{
         operation_id = 'ListDestinations'
     }
 ) ->
@@ -378,33 +370,6 @@ is_authorized(
 is_authorized(
     Req0,
     State = #state{
-        operation_id  = 'IssueDestinationGrant' = OperationID,
-        logic_handler = LogicHandler,
-        context       = Context
-    }
-) ->
-    From = header,
-    Result = swag_server_wallet_handler_api:authorize_api_key(
-        LogicHandler,
-        OperationID,
-        From,
-        'Authorization',
-        Req0,
-        Context
-    ),
-    case Result of
-        {true, AuthContext, Req} ->
-            NewContext = Context#{
-                auth_context => AuthContext
-            },
-            {true, Req, State#state{context = NewContext}};
-        {false, AuthHeader, Req} ->
-            {{false, AuthHeader}, Req, State}
-    end;
-
-is_authorized(
-    Req0,
-    State = #state{
         operation_id  = 'ListDestinations' = OperationID,
         logic_handler = LogicHandler,
         context       = Context
@@ -575,16 +540,6 @@ valid_content_headers(
     Req0,
     State = #state{
         operation_id = 'GetWithdrawalEvents'
-    }
-) ->
-    Headers = ["X-Request-ID","X-Request-Deadline"],
-    {Result, Req} = validate_headers(Headers, Req0),
-    {Result, Req, State};
-
-valid_content_headers(
-    Req0,
-    State = #state{
-        operation_id = 'IssueDestinationGrant'
     }
 ) ->
     Headers = ["X-Request-ID","X-Request-Deadline"],
@@ -874,28 +829,6 @@ get_request_spec('GetWithdrawalEvents') ->
 , {required, false}]
         }}
     ];
-get_request_spec('IssueDestinationGrant') ->
-    [
-        {'X-Request-ID', #{
-            source => header,
-            rules  => [{type, 'binary'}, {max_length, 32}, {min_length, 1}, true
-, {required, true}]
-        }},
-        {'destinationID', #{
-            source => binding,
-            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
-, {required, true}]
-        }},
-        {'DestinationGrantRequest', #{
-            source => body,
-            rules  => [schema, {required, true}]
-        }},
-        {'X-Request-Deadline', #{
-            source => header,
-            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
-, {required, false}]
-        }}
-    ];
 get_request_spec('ListDestinations') ->
     [
         {'X-Request-ID', #{
@@ -914,11 +847,6 @@ get_request_spec('ListDestinations') ->
 , {required, false}]
         }},
         {'partyID', #{
-            source => qs_val,
-            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
-, {required, false}]
-        }},
-        {'identityID', #{
             source => qs_val,
             rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
 , {required, false}]
@@ -957,11 +885,6 @@ get_request_spec('ListWithdrawals') ->
 , {required, false}]
         }},
         {'walletID', #{
-            source => qs_val,
-            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
-, {required, false}]
-        }},
-        {'identityID', #{
             source => qs_val,
             rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
 , {required, false}]
@@ -1155,23 +1078,8 @@ get_response_spec('GetWithdrawalEvents', 401) ->
 get_response_spec('GetWithdrawalEvents', 404) ->
     undefined;
 
-get_response_spec('IssueDestinationGrant', 201) ->
-    {'DestinationGrantRequest', 'DestinationGrantRequest'};
-
-get_response_spec('IssueDestinationGrant', 400) ->
-    {'BadRequest', 'BadRequest'};
-
-get_response_spec('IssueDestinationGrant', 401) ->
-    undefined;
-
-get_response_spec('IssueDestinationGrant', 404) ->
-    undefined;
-
-get_response_spec('IssueDestinationGrant', 422) ->
-    {'InvalidOperationParameters', 'InvalidOperationParameters'};
-
 get_response_spec('ListDestinations', 200) ->
-    {'inline_response_200_3', 'inline_response_200_3'};
+    {'inline_response_200_1', 'inline_response_200_1'};
 
 get_response_spec('ListDestinations', 400) ->
     {'BadRequest', 'BadRequest'};
@@ -1180,7 +1088,7 @@ get_response_spec('ListDestinations', 401) ->
     undefined;
 
 get_response_spec('ListWithdrawals', 200) ->
-    {'inline_response_200_7', 'inline_response_200_7'};
+    {'inline_response_200_4', 'inline_response_200_4'};
 
 get_response_spec('ListWithdrawals', 400) ->
     {'BadRequest', 'BadRequest'};
