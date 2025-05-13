@@ -1,7 +1,10 @@
 name: Release Erlang Libraries
+
 on:
   push:
-    branches: [v0]
+    branches:
+      - 'v0'
+      - 'epic/**'
   pull_request:
     branches: ["**"]
 
@@ -35,13 +38,22 @@ jobs:
           swagger-codegen generate -l vality-erlang-client -i web_deploy/payres/swagger.json -o out/erlang-client-payres --additional-properties packageName=swag_client_payres
           swagger-codegen generate -l vality-erlang-server -i web_deploy/payres/swagger.json -o out/erlang-server-payres --additional-properties packageName=swag_server_payres
 
-      #
+      - name: Set release suffix
+        id: vars
+        run: |
+          BRANCH_NAME="${GITHUB_REF##*/}"
+          if [[ "$GITHUB_REF" == refs/heads/epic/* ]]; then
+            RELEASE_SUFFIX="epic-${BRANCH_NAME}"
+          else
+            RELEASE_SUFFIX="v0"
+          fi
+          echo "release_suffix=${RELEASE_SUFFIX}" >> $GITHUB_OUTPUT
 
       - name: Deploy erlang-client-wallet artifact to release branch
         if: ${{ github.event_name == 'push' }}
         uses: JamesIves/github-pages-deploy-action@v4.4.1
         with:
-          branch: release/erlang/wallet-client/v0
+          branch: release/erlang/wallet-client/${{ steps.vars.outputs.release_suffix }}
           folder: out/erlang-client-wallet
           commit-message: Release ${{ github.repository }}@${{ github.sha }}
 
@@ -49,17 +61,15 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         uses: JamesIves/github-pages-deploy-action@v4.4.1
         with:
-          branch: release/erlang/wallet-server/v0
+          branch: release/erlang/wallet-server/${{ steps.vars.outputs.release_suffix }}
           folder: out/erlang-server-wallet
           commit-message: Release ${{ github.repository }}@${{ github.sha }}
-
-      #
 
       - name: Deploy erlang-client-payres artifact to release branch
         if: ${{ github.event_name == 'push' }}
         uses: JamesIves/github-pages-deploy-action@v4.4.1
         with:
-          branch: release/erlang/payres-client/v0
+          branch: release/erlang/payres-client/${{ steps.vars.outputs.release_suffix }}
           folder: out/erlang-client-payres
           commit-message: Release ${{ github.repository }}@${{ github.sha }}
 
@@ -67,6 +77,6 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         uses: JamesIves/github-pages-deploy-action@v4.4.1
         with:
-          branch: release/erlang/payres-server/v0
+          branch: release/erlang/payres-server/${{ steps.vars.outputs.release_suffix }}
           folder: out/erlang-server-payres
           commit-message: Release ${{ github.repository }}@${{ github.sha }}
