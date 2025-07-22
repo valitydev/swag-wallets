@@ -13,11 +13,6 @@ properties:
   name:
     x-rebillyMerge:
       - $ref: "#/definitions/WalletName"
-  createdAt:
-    description: Date and time of wallet creation
-    type: string
-    format: date-time
-    readOnly: true
   isBlocked:
     description: Is the wallet blocked?
     type: boolean
