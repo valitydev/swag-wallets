@@ -2787,12 +2787,6 @@ get_raw() ->
           <<"example">> => <<"Worldwide PHP Awareness Initiative">>,
           <<"description">> => <<"Human-readable name of the wallet, by which it is easy to recognize">>
         },
-        <<"createdAt">> => #{
-          <<"type">> => <<"string">>,
-          <<"format">> => <<"date-time">>,
-          <<"description">> => <<"Date and time of wallet creation">>,
-          <<"readOnly">> => true
-        },
         <<"isBlocked">> => #{
           <<"type">> => <<"boolean">>,
           <<"example">> => false,
@@ -2814,7 +2808,6 @@ get_raw() ->
       },
       <<"description">> => <<"Wallet details">>,
       <<"example">> => #{
-        <<"createdAt">> => <<"2000-01-23T04:56:07.000+00:00">>,
         <<"name">> => <<"Worldwide PHP Awareness Initiative">>,
         <<"isBlocked">> => false,
         <<"currency">> => <<"USD">>,
@@ -3399,14 +3392,12 @@ get_raw() ->
       },
       <<"example">> => #{
         <<"result">> => [ #{
-          <<"createdAt">> => <<"2000-01-23T04:56:07.000+00:00">>,
           <<"name">> => <<"Worldwide PHP Awareness Initiative">>,
           <<"isBlocked">> => false,
           <<"currency">> => <<"USD">>,
           <<"id">> => <<"10068321">>,
           <<"party">> => <<"party">>
         }, #{
-          <<"createdAt">> => <<"2000-01-23T04:56:07.000+00:00">>,
           <<"name">> => <<"Worldwide PHP Awareness Initiative">>,
           <<"isBlocked">> => false,
           <<"currency">> => <<"USD">>,
