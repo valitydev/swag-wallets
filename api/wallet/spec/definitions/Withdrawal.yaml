@@ -43,6 +43,9 @@ allOf:
       externalID:
         x-rebillyMerge:
           - $ref: "#/definitions/ExternalID"
+      contactInfo:
+        x-rebillyMerge:
+          - $ref: "#/definitions/ContactInfo"
       quote:
         x-rebillyMerge:
           - $ref: "#/definitions/WithdrawalReadQuote"
