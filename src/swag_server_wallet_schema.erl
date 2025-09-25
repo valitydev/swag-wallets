@@ -2962,6 +2962,9 @@ get_raw() ->
             <<"example">> => <<"10036274">>,
             <<"description">> => <<"The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n">>
           },
+          <<"contactInfo">> => #{
+            <<"$ref">> => <<"#/definitions/Withdrawal_contactInfo">>
+          },
           <<"quote">> => #{
             <<"$ref">> => <<"#/definitions/Withdrawal_quote">>
           }
@@ -3606,6 +3609,23 @@ get_raw() ->
         }
       },
       <<"description">> => <<"Amount of funds to be withdrawn">>
+    },
+    <<"Withdrawal_contactInfo">> => #{
+      <<"type">> => <<"object">>,
+      <<"properties">> => #{
+        <<"email">> => #{
+          <<"type">> => <<"string">>,
+          <<"format">> => <<"email">>,
+          <<"description">> => <<"Email address">>,
+          <<"maxLength">> => 100
+        },
+        <<"phoneNumber">> => #{
+          <<"type">> => <<"string">>,
+          <<"format">> => <<"^\\+\\d{4,15}$">>,
+          <<"description">> => <<"Mobile phone number with international prefix according to\n[E.164](https://en.wikipedia.org/wiki/E.164).\n">>
+        }
+      },
+      <<"description">> => <<"Contact details">>
     },
     <<"Withdrawal_quote">> => #{
       <<"type">> => <<"object">>,
