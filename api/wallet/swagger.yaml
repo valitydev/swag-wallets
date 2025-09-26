@@ -2030,11 +2030,6 @@ definitions:
         description: 'Human-readable name of the wallet, by which it is easy to recognize'
         type: string
         example: Worldwide PHP Awareness Initiative
-      createdAt:
-        description: Date and time of wallet creation
-        type: string
-        format: date-time
-        readOnly: true
       isBlocked:
         description: Is the wallet blocked?
         type: boolean
@@ -2252,6 +2247,21 @@ definitions:
               When specified, will be used to ensure idempotent processing of the operation.
             type: string
             example: '10036274'
+          contactInfo:
+            description: Contact details
+            type: object
+            properties:
+              email:
+                description: Email address
+                type: string
+                format: email
+                maxLength: 100
+              phoneNumber:
+                description: |
+                  Mobile phone number with international prefix according to
+                  [E.164](https://en.wikipedia.org/wiki/E.164).
+                type: string
+                format: '^\+\d{4,15}$'
           quote:
             description: Quote data for withdrawal
             type: object
