@@ -9,6 +9,10 @@
       "name": "Technical support team",
       "email": "support@vality.dev",
       "url": "https://api.vality.dev"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
   "host": "api.vality.dev",
@@ -63,24 +67,6 @@
       "required": true,
       "type": "string",
       "maxLength": 32,
-      "minLength": 1
-    },
-    "providerID": {
-      "name": "providerID",
-      "in": "path",
-      "description": "Identifier of the provider",
-      "required": true,
-      "type": "string",
-      "maxLength": 40,
-      "minLength": 1
-    },
-    "identityID": {
-      "name": "identityID",
-      "in": "path",
-      "description": "Identifier of the owner's identity",
-      "required": true,
-      "type": "string",
-      "maxLength": 40,
       "minLength": 1
     },
     "walletID": {
@@ -225,24 +211,6 @@
       "maxLength": 40,
       "minLength": 1
     },
-    "queryIdentityID": {
-      "name": "identityID",
-      "in": "query",
-      "description": "Identifier of the owner's identity",
-      "required": true,
-      "type": "string",
-      "maxLength": 40,
-      "minLength": 1
-    },
-    "w2wTransferID": {
-      "name": "w2wTransferID",
-      "in": "path",
-      "description": "Identifier of transfer",
-      "required": true,
-      "type": "string",
-      "maxLength": 40,
-      "minLength": 1
-    },
     "partyID": {
       "name": "partyID",
       "description": "The participant's unique identifier within the system.",
@@ -254,16 +222,6 @@
     }
   },
   "tags": [
-    {
-      "name": "Providers",
-      "x-displayName": "Service providers",
-      "description": ""
-    },
-    {
-      "name": "Identities",
-      "x-displayName": "Identities",
-      "description": ""
-    },
     {
       "name": "Wallets",
       "x-displayName": "Wallets",
@@ -298,11 +256,6 @@
       "name": "Downloads",
       "x-displayName": "File upload",
       "description": ""
-    },
-    {
-      "name": "W2W",
-      "x-displayName": "Transfers within the system",
-      "description": "Transfers of funds between wallets within the system"
     },
     {
       "name": "Webhooks",
@@ -358,264 +311,6 @@
         }
       }
     },
-    "/deposit-adjustments": {
-      "get": {
-        "operationId": "listDepositAdjustments",
-        "summary": "Finding adjustments",
-        "tags": [
-          "Deposits"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/parameters/requestID"
-          },
-          {
-            "$ref": "#/parameters/deadline"
-          },
-          {
-            "$ref": "#/parameters/partyID"
-          },
-          {
-            "name": "walletID",
-            "in": "query",
-            "description": "Wallet identifier",
-            "type": "string",
-            "maxLength": 40,
-            "minLength": 1,
-            "required": false
-          },
-          {
-            "name": "identityID",
-            "in": "query",
-            "description": "Identifier of the owner's identity",
-            "type": "string",
-            "maxLength": 40,
-            "minLength": 1,
-            "required": false
-          },
-          {
-            "name": "depositID",
-            "in": "query",
-            "description": "Identifier of the input of funds",
-            "type": "string",
-            "required": false,
-            "maxLength": 50,
-            "minLength": 1
-          },
-          {
-            "name": "sourceID",
-            "in": "query",
-            "description": "Identifier of the fund source",
-            "type": "string",
-            "maxLength": 40,
-            "minLength": 1,
-            "required": false
-          },
-          {
-            "name": "status",
-            "in": "query",
-            "type": "string",
-            "enum": [
-              "Pending",
-              "Succeeded",
-              "Failed"
-            ],
-            "required": false
-          },
-          {
-            "name": "createdAtFrom",
-            "in": "query",
-            "description": "Creation date from",
-            "type": "string",
-            "format": "date-time",
-            "required": false
-          },
-          {
-            "name": "createdAtTo",
-            "in": "query",
-            "description": "Creation date to",
-            "type": "string",
-            "format": "date-time",
-            "required": false
-          },
-          {
-            "$ref": "#/parameters/amountFrom"
-          },
-          {
-            "$ref": "#/parameters/amountTo"
-          },
-          {
-            "$ref": "#/parameters/currencyID"
-          },
-          {
-            "$ref": "#/parameters/limit"
-          },
-          {
-            "name": "continuationToken",
-            "in": "query",
-            "required": false,
-            "description": "A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Search results",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "continuationToken": {
-                  "description": "A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n",
-                  "type": "string"
-                },
-                "result": {
-                  "description": "Found adjustments",
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/DepositAdjustment"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/responses/Unauthorized"
-          }
-        }
-      }
-    },
-    "/deposit-reverts": {
-      "get": {
-        "operationId": "listDepositReverts",
-        "summary": "Search for reverts",
-        "tags": [
-          "Deposits"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/parameters/requestID"
-          },
-          {
-            "$ref": "#/parameters/deadline"
-          },
-          {
-            "$ref": "#/parameters/partyID"
-          },
-          {
-            "name": "walletID",
-            "in": "query",
-            "description": "Identifier of the wallet",
-            "type": "string",
-            "maxLength": 40,
-            "minLength": 1,
-            "required": false
-          },
-          {
-            "name": "identityID",
-            "in": "query",
-            "description": "Identifier of the owner's identity",
-            "type": "string",
-            "maxLength": 40,
-            "minLength": 1,
-            "required": false
-          },
-          {
-            "name": "depositID",
-            "in": "query",
-            "description": "Identifier of the input of funds",
-            "type": "string",
-            "required": false,
-            "maxLength": 50,
-            "minLength": 1
-          },
-          {
-            "name": "sourceID",
-            "in": "query",
-            "description": "Identifier of the source of funds",
-            "type": "string",
-            "maxLength": 40,
-            "minLength": 1,
-            "required": false
-          },
-          {
-            "name": "status",
-            "in": "query",
-            "type": "string",
-            "enum": [
-              "Pending",
-              "Succeeded",
-              "Failed"
-            ],
-            "required": false
-          },
-          {
-            "name": "createdAtFrom",
-            "in": "query",
-            "description": "Creation date from",
-            "type": "string",
-            "format": "date-time",
-            "required": false
-          },
-          {
-            "name": "createdAtTo",
-            "in": "query",
-            "description": "Creation date to",
-            "type": "string",
-            "format": "date-time",
-            "required": false
-          },
-          {
-            "$ref": "#/parameters/amountFrom"
-          },
-          {
-            "$ref": "#/parameters/amountTo"
-          },
-          {
-            "$ref": "#/parameters/currencyID"
-          },
-          {
-            "$ref": "#/parameters/limit"
-          },
-          {
-            "name": "continuationToken",
-            "in": "query",
-            "required": false,
-            "description": "A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Search result",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "continuationToken": {
-                  "description": "A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n",
-                  "type": "string"
-                },
-                "result": {
-                  "description": "Found reverts",
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/DepositRevert"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/responses/Unauthorized"
-          }
-        }
-      }
-    },
     "/deposits": {
       "get": {
         "operationId": "listDeposits",
@@ -637,15 +332,6 @@
             "name": "walletID",
             "in": "query",
             "description": "Identifier of the wallet",
-            "type": "string",
-            "maxLength": 40,
-            "minLength": 1,
-            "required": false
-          },
-          {
-            "name": "identityID",
-            "in": "query",
-            "description": "Identifier of the owner's identity",
             "type": "string",
             "maxLength": 40,
             "minLength": 1,
@@ -694,17 +380,6 @@
             "description": "Creation date to",
             "type": "string",
             "format": "date-time",
-            "required": false
-          },
-          {
-            "name": "revertStatus",
-            "in": "query",
-            "type": "string",
-            "enum": [
-              "None",
-              "Partial",
-              "Full"
-            ],
             "required": false
           },
           {
@@ -772,15 +447,6 @@
           },
           {
             "$ref": "#/parameters/partyID"
-          },
-          {
-            "name": "identityID",
-            "description": "Identifier of the owner's idenity",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "maxLength": 40,
-            "minLength": 1
           },
           {
             "$ref": "#/parameters/currencyID"
@@ -916,58 +582,6 @@
         }
       }
     },
-    "/destinations/{destinationID}/grants": {
-      "post": {
-        "operationId": "issueDestinationGrant",
-        "summary": "Grant the right to manage the destinations",
-        "tags": [
-          "Withdrawals"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/parameters/requestID"
-          },
-          {
-            "$ref": "#/parameters/deadline"
-          },
-          {
-            "$ref": "#/parameters/destinationID"
-          },
-          {
-            "name": "request",
-            "description": "Request for the right to manage the destinations",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/DestinationGrantRequest"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "The right is granted",
-            "schema": {
-              "$ref": "#/definitions/DestinationGrantRequest"
-            }
-          },
-          "400": {
-            "$ref": "#/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/responses/Unauthorized"
-          },
-          "404": {
-            "$ref": "#/responses/NotFound"
-          },
-          "422": {
-            "description": "Invalid data for issuance",
-            "schema": {
-              "$ref": "#/definitions/InvalidOperationParameters"
-            }
-          }
-        }
-      }
-    },
     "/external-ids/destinations/{externalID}": {
       "get": {
         "operationId": "getDestinationByExternalID",
@@ -1042,49 +656,6 @@
         }
       }
     },
-    "/external/wallets": {
-      "get": {
-        "summary": "Get wallet by specified external identifier",
-        "operationId": "getWalletByExternalID",
-        "tags": [
-          "Wallets"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/parameters/requestID"
-          },
-          {
-            "$ref": "#/parameters/deadline"
-          },
-          {
-            "name": "externalID",
-            "description": "External wallet identifier",
-            "in": "query",
-            "required": true,
-            "type": "string",
-            "maxLength": 40,
-            "minLength": 1
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Wallet details",
-            "schema": {
-              "$ref": "#/definitions/Wallet"
-            }
-          },
-          "400": {
-            "$ref": "#/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/responses/Unauthorized"
-          },
-          "404": {
-            "$ref": "#/responses/NotFound"
-          }
-        }
-      }
-    },
     "/files/{fileID}/download": {
       "post": {
         "description": "Get a link to download a file",
@@ -1122,161 +693,7 @@
         }
       }
     },
-    "/identities": {
-      "get": {
-        "operationId": "listIdentities",
-        "summary": "List the identities of the owners",
-        "tags": [
-          "Identities"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/parameters/requestID"
-          },
-          {
-            "$ref": "#/parameters/deadline"
-          },
-          {
-            "$ref": "#/parameters/partyID"
-          },
-          {
-            "name": "providerID",
-            "description": "Service provider's identifier",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "maxLength": 40,
-            "minLength": 1
-          },
-          {
-            "name": "continuationToken",
-            "in": "query",
-            "required": false,
-            "description": "A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Search result",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "continuationToken": {
-                  "description": "A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n",
-                  "type": "string"
-                },
-                "result": {
-                  "description": "Identities found",
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/Identity"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/responses/Unauthorized"
-          }
-        }
-      },
-      "post": {
-        "operationId": "createIdentity",
-        "summary": "Create owner identity",
-        "tags": [
-          "Identities"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/parameters/requestID"
-          },
-          {
-            "$ref": "#/parameters/deadline"
-          },
-          {
-            "name": "identity",
-            "description": "Data of the identity created",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Identity"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Owner identity created",
-            "headers": {
-              "Location": {
-                "description": "Created identity URI",
-                "type": "string",
-                "format": "uri"
-              }
-            },
-            "schema": {
-              "$ref": "#/definitions/Identity"
-            }
-          },
-          "400": {
-            "$ref": "#/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/responses/Unauthorized"
-          },
-          "409": {
-            "$ref": "#/responses/ConflictRequest"
-          },
-          "422": {
-            "description": "Invalid owner identity data",
-            "schema": {
-              "$ref": "#/definitions/InvalidOperationParameters"
-            }
-          }
-        }
-      }
-    },
-    "/identities/{identityID}": {
-      "get": {
-        "operationId": "getIdentity",
-        "summary": "Get the owner's identity",
-        "tags": [
-          "Identities"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/parameters/requestID"
-          },
-          {
-            "$ref": "#/parameters/deadline"
-          },
-          {
-            "$ref": "#/parameters/identityID"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Owner's identity found",
-            "schema": {
-              "$ref": "#/definitions/Identity"
-            }
-          },
-          "400": {
-            "$ref": "#/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/responses/Unauthorized"
-          },
-          "404": {
-            "$ref": "#/responses/NotFound"
-          }
-        }
-      }
-    },
-    "/identities/{identityID}/reports": {
+    "/reports": {
       "post": {
         "description": "Generate a report with the specified type on the identity of the owner for the specified period of time",
         "tags": [
@@ -1292,9 +709,6 @@
           },
           {
             "$ref": "#/parameters/partyID"
-          },
-          {
-            "$ref": "#/parameters/identityID"
           },
           {
             "name": "ReportParams",
@@ -1338,9 +752,6 @@
             "$ref": "#/parameters/partyID"
           },
           {
-            "$ref": "#/parameters/identityID"
-          },
-          {
             "$ref": "#/parameters/fromTime"
           },
           {
@@ -1376,7 +787,7 @@
         }
       }
     },
-    "/identities/{identityID}/reports/{reportID}": {
+    "/reports/{reportID}": {
       "get": {
         "description": "Get a report for a given identifier",
         "tags": [
@@ -1394,9 +805,6 @@
             "$ref": "#/parameters/partyID"
           },
           {
-            "$ref": "#/parameters/identityID"
-          },
-          {
             "$ref": "#/parameters/reportID"
           }
         ],
@@ -1405,122 +813,6 @@
             "description": "Report found",
             "schema": {
               "$ref": "#/definitions/Report"
-            }
-          },
-          "400": {
-            "$ref": "#/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/responses/Unauthorized"
-          },
-          "404": {
-            "$ref": "#/responses/NotFound"
-          }
-        }
-      }
-    },
-    "/identities/{identityID}/withdrawal-methods": {
-      "get": {
-        "summary": "Get withdrawal methods available by owner identity",
-        "tags": [
-          "Identities"
-        ],
-        "operationId": "getWithdrawalMethods",
-        "parameters": [
-          {
-            "$ref": "#/parameters/requestID"
-          },
-          {
-            "$ref": "#/parameters/deadline"
-          },
-          {
-            "$ref": "#/parameters/identityID"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Methods found",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "methods": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/WithdrawalMethod"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/responses/Unauthorized"
-          }
-        }
-      }
-    },
-    "/providers": {
-      "get": {
-        "operationId": "listProviders",
-        "summary": "List available providers",
-        "tags": [
-          "Providers"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/parameters/requestID"
-          },
-          {
-            "$ref": "#/parameters/deadline"
-          },
-          {
-            "$ref": "#/parameters/residence"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Providers found",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Provider"
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/responses/Unauthorized"
-          }
-        }
-      }
-    },
-    "/providers/{providerID}": {
-      "get": {
-        "operationId": "getProvider",
-        "summary": "Get provider details",
-        "tags": [
-          "Providers"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/parameters/requestID"
-          },
-          {
-            "$ref": "#/parameters/deadline"
-          },
-          {
-            "$ref": "#/parameters/providerID"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Provider found",
-            "schema": {
-              "$ref": "#/definitions/Provider"
             }
           },
           "400": {
@@ -1577,98 +869,6 @@
         }
       }
     },
-    "/w2w/transfers": {
-      "post": {
-        "description": "Create a transfer",
-        "tags": [
-          "W2W"
-        ],
-        "operationId": "createW2WTransfer",
-        "parameters": [
-          {
-            "$ref": "#/parameters/requestID"
-          },
-          {
-            "$ref": "#/parameters/deadline"
-          },
-          {
-            "name": "transferParams",
-            "in": "body",
-            "description": "Transfer creation options",
-            "schema": {
-              "$ref": "#/definitions/W2WTransferParameters"
-            }
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Transfer started",
-            "headers": {
-              "Location": {
-                "description": "URI of the transfer started",
-                "type": "string",
-                "format": "uri"
-              }
-            },
-            "schema": {
-              "$ref": "#/definitions/W2WTransfer"
-            }
-          },
-          "400": {
-            "$ref": "#/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/responses/Unauthorized"
-          },
-          "409": {
-            "$ref": "#/responses/ConflictRequest"
-          },
-          "422": {
-            "description": "Invalid transfer input data",
-            "schema": {
-              "$ref": "#/definitions/InvalidOperationParameters"
-            }
-          }
-        }
-      }
-    },
-    "/w2w/transfers/{w2wTransferID}": {
-      "get": {
-        "description": "Get the transfer status.",
-        "tags": [
-          "W2W"
-        ],
-        "operationId": "getW2WTransfer",
-        "parameters": [
-          {
-            "$ref": "#/parameters/requestID"
-          },
-          {
-            "$ref": "#/parameters/deadline"
-          },
-          {
-            "$ref": "#/parameters/w2wTransferID"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Transfer found",
-            "schema": {
-              "$ref": "#/definitions/W2WTransfer"
-            }
-          },
-          "400": {
-            "$ref": "#/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/responses/Unauthorized"
-          },
-          "404": {
-            "$ref": "#/responses/NotFound"
-          }
-        }
-      }
-    },
     "/wallets": {
       "get": {
         "operationId": "listWallets",
@@ -1685,15 +885,6 @@
           },
           {
             "$ref": "#/parameters/partyID"
-          },
-          {
-            "name": "identityID",
-            "description": "Identifier of owner's identity",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "maxLength": 40,
-            "minLength": 1
           },
           {
             "$ref": "#/parameters/currencyID"
@@ -1736,60 +927,6 @@
             "$ref": "#/responses/Unauthorized"
           }
         }
-      },
-      "post": {
-        "operationId": "createWallet",
-        "summary": "Create a new wallet",
-        "tags": [
-          "Wallets"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/parameters/requestID"
-          },
-          {
-            "$ref": "#/parameters/deadline"
-          },
-          {
-            "name": "wallet",
-            "description": "Data of the created wallet",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Wallet"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Wallet created",
-            "headers": {
-              "Location": {
-                "description": "URI of the wallet created",
-                "type": "string",
-                "format": "uri"
-              }
-            },
-            "schema": {
-              "$ref": "#/definitions/Wallet"
-            }
-          },
-          "400": {
-            "$ref": "#/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/responses/Unauthorized"
-          },
-          "409": {
-            "$ref": "#/responses/ConflictRequest"
-          },
-          "422": {
-            "description": "Invalid data of the wallet",
-            "schema": {
-              "$ref": "#/definitions/InvalidOperationParameters"
-            }
-          }
-        }
       }
     },
     "/wallets/{walletID}": {
@@ -1805,6 +942,9 @@
           },
           {
             "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/partyID"
           },
           {
             "$ref": "#/parameters/walletID"
@@ -1844,6 +984,9 @@
             "$ref": "#/parameters/deadline"
           },
           {
+            "$ref": "#/parameters/partyID"
+          },
+          {
             "$ref": "#/parameters/walletID"
           }
         ],
@@ -1866,13 +1009,13 @@
         }
       }
     },
-    "/wallets/{walletID}/grants": {
-      "post": {
-        "operationId": "issueWalletGrant",
-        "summary": "Grant the right to manage funds",
+    "/wallets/{walletID}/withdrawal-methods": {
+      "get": {
+        "summary": "Get withdrawal methods available for wallet",
         "tags": [
           "Wallets"
         ],
+        "operationId": "getWithdrawalMethods",
         "parameters": [
           {
             "$ref": "#/parameters/requestID"
@@ -1881,23 +1024,25 @@
             "$ref": "#/parameters/deadline"
           },
           {
-            "$ref": "#/parameters/walletID"
+            "$ref": "#/parameters/partyID"
           },
           {
-            "name": "request",
-            "description": "Request for the right to manage funds on the wallet",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/WalletGrantRequest"
-            }
+            "$ref": "#/parameters/walletID"
           }
         ],
         "responses": {
-          "201": {
-            "description": "Single right granted",
+          "200": {
+            "description": "Methods found",
             "schema": {
-              "$ref": "#/definitions/WalletGrantRequest"
+              "type": "object",
+              "properties": {
+                "methods": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/WithdrawalMethod"
+                  }
+                }
+              }
             }
           },
           "400": {
@@ -1908,12 +1053,6 @@
           },
           "404": {
             "$ref": "#/responses/NotFound"
-          },
-          "422": {
-            "description": "Invalid data for issuance",
-            "schema": {
-              "$ref": "#/definitions/InvalidOperationParameters"
-            }
           }
         }
       }
@@ -1977,7 +1116,7 @@
             "$ref": "#/parameters/deadline"
           },
           {
-            "$ref": "#/parameters/queryIdentityID"
+            "$ref": "#/parameters/partyID"
           }
         ],
         "responses": {
@@ -2023,7 +1162,7 @@
             "$ref": "#/parameters/webhookID"
           },
           {
-            "$ref": "#/parameters/queryIdentityID"
+            "$ref": "#/parameters/partyID"
           }
         ],
         "responses": {
@@ -2067,7 +1206,7 @@
             "$ref": "#/parameters/webhookID"
           },
           {
-            "$ref": "#/parameters/queryIdentityID"
+            "$ref": "#/parameters/partyID"
           }
         ],
         "responses": {
@@ -2163,15 +1302,6 @@
             "name": "walletID",
             "in": "query",
             "description": "Identifier of the wallet",
-            "type": "string",
-            "maxLength": 40,
-            "minLength": 1,
-            "required": false
-          },
-          {
-            "name": "identityID",
-            "in": "query",
-            "description": "Identifier of the owner's identity",
             "type": "string",
             "maxLength": 40,
             "minLength": 1,
@@ -2825,88 +1955,6 @@
         }
       ]
     },
-    "DepositAdjustment": {
-      "description": "Deposit adjustment data",
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "id": {
-              "description": "Deposit adjustment identifier",
-              "type": "string",
-              "example": "tZ0jUmlsV0",
-              "readOnly": true
-            },
-            "createdAt": {
-              "description": "Date and time the adjustment was started",
-              "type": "string",
-              "format": "date-time",
-              "readOnly": true
-            },
-            "externalID": {
-              "description": "The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n",
-              "type": "string",
-              "example": "10036274"
-            }
-          }
-        },
-        {
-          "$ref": "#/definitions/DepositAdjustmentStatus"
-        }
-      ]
-    },
-    "DepositAdjustmentFailure": {
-      "type": "object",
-      "required": [
-        "code"
-      ],
-      "properties": {
-        "code": {
-          "description": "Adjustment error code",
-          "type": "string"
-        },
-        "subError": {
-          "$ref": "#/definitions/SubFailure"
-        }
-      }
-    },
-    "DepositAdjustmentID": {
-      "description": "Deposit adjustment identifier",
-      "type": "string",
-      "example": "tZ0jUmlsV0"
-    },
-    "DepositAdjustmentStatus": {
-      "type": "object",
-      "properties": {
-        "status": {
-          "description": "Deposit adjustment status.\n\n| Meaning     | Explanation                                             |\n| ----------- | ------------------------------------------------------- |\n| `Pending`   | Adjustment in progress                                  |\n| `Succeeded` | Adjustment completed successfully                       |\n| `Failed`    | Adjustment failed                                       |\n",
-          "type": "string",
-          "enum": [
-            "Pending",
-            "Succeeded",
-            "Failed"
-          ],
-          "readOnly": true
-        },
-        "failure": {
-          "description": "> If `status` == `Failed`\n\nExplanation of the reason for failure\n",
-          "readOnly": true,
-          "type": "object",
-          "required": [
-            "code"
-          ],
-          "properties": {
-            "code": {
-              "description": "Adjustment error code",
-              "type": "string"
-            },
-            "subError": {
-              "$ref": "#/definitions/SubFailure"
-            }
-          }
-        }
-      }
-    },
     "DepositFailure": {
       "type": "object",
       "required": [
@@ -2926,128 +1974,6 @@
       "description": "Deposit identifier",
       "type": "string",
       "example": "tZ0jUmlsV0"
-    },
-    "DepositRevert": {
-      "description": "Deposit revert data",
-      "allOf": [
-        {
-          "type": "object",
-          "required": [
-            "wallet",
-            "source",
-            "body"
-          ],
-          "properties": {
-            "id": {
-              "description": "Deposit revert identifier",
-              "type": "string",
-              "example": "10068321",
-              "readOnly": true
-            },
-            "createdAt": {
-              "description": "Date and time of revert start",
-              "type": "string",
-              "format": "date-time",
-              "readOnly": true
-            },
-            "wallet": {
-              "description": "Identifier of the wallet",
-              "type": "string",
-              "example": "10068321"
-            },
-            "source": {
-              "description": "Funds source identifier",
-              "type": "string",
-              "example": "107498"
-            },
-            "body": {
-              "description": "Amount of funds",
-              "type": "object",
-              "required": [
-                "amount",
-                "currency"
-              ],
-              "properties": {
-                "amount": {
-                  "description": "The amount of money in minor units, for example, in cents\n",
-                  "type": "integer",
-                  "format": "int64",
-                  "example": 1430000
-                },
-                "currency": {
-                  "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
-                  "type": "string",
-                  "pattern": "^[A-Z]{3}$",
-                  "example": "USD"
-                }
-              }
-            },
-            "reason": {
-              "type": "string"
-            },
-            "externalID": {
-              "description": "The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n",
-              "type": "string",
-              "example": "10036274"
-            }
-          }
-        },
-        {
-          "$ref": "#/definitions/DepositRevertStatus"
-        }
-      ]
-    },
-    "DepositRevertFailure": {
-      "type": "object",
-      "required": [
-        "code"
-      ],
-      "properties": {
-        "code": {
-          "description": "Deposit revert error code",
-          "type": "string"
-        },
-        "subError": {
-          "$ref": "#/definitions/SubFailure"
-        }
-      }
-    },
-    "DepositRevertID": {
-      "description": "Deposit revert identifier",
-      "type": "string",
-      "example": "10068321"
-    },
-    "DepositRevertStatus": {
-      "type": "object",
-      "properties": {
-        "status": {
-          "description": "Deposit revert status.\n\n| Meaning     | Explanation                                             |\n| ----------- | ------------------------------------------------------- |\n| `Pending`   | Deposit revert in progress                              |\n| `Succeeded` | Deposit revert completed successfully                   |\n| `Failed`    | Deposit revert failed                                   |\n",
-          "type": "string",
-          "enum": [
-            "Pending",
-            "Succeeded",
-            "Failed"
-          ],
-          "readOnly": true
-        },
-        "failure": {
-          "description": "> If `status` == `Failed`\n\nExplanation of the reason for failure\n",
-          "readOnly": true,
-          "type": "object",
-          "required": [
-            "code"
-          ],
-          "properties": {
-            "code": {
-              "description": "Deposit revert error code",
-              "type": "string"
-            },
-            "subError": {
-              "$ref": "#/definitions/SubFailure"
-            }
-          }
-        }
-      }
     },
     "DepositStatus": {
       "type": "object",
@@ -3083,74 +2009,77 @@
     },
     "Destination": {
       "description": "Destination data",
-      "allOf": [
-        {
+      "type": "object",
+      "required": [
+        "name",
+        "party",
+        "currency",
+        "resource",
+        "realm"
+      ],
+      "properties": {
+        "id": {
+          "description": "Destination identifier",
+          "type": "string",
+          "example": "107498",
+          "readOnly": true
+        },
+        "name": {
+          "description": "A human-readable name for the destination by which it is easily recognizable\n",
+          "type": "string",
+          "example": "Squarey plastic thingy"
+        },
+        "realm": {
+          "description": "Realm of destination.\n",
+          "type": "string",
+          "enum": [
+            "Live",
+            "Test"
+          ]
+        },
+        "createdAt": {
+          "description": "Date and time of creation of the destination of the funds",
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "isBlocked": {
+          "description": "Is the destination blocked?",
+          "type": "boolean",
+          "readOnly": true,
+          "example": false
+        },
+        "party": {
+          "description": "The participant's unique identifier within the system.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "currency": {
+          "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "example": "USD"
+        },
+        "resource": {
+          "$ref": "#/definitions/DestinationResource"
+        },
+        "additionalAuthData": {
+          "$ref": "#/definitions/DestinationAuthData"
+        },
+        "metadata": {
+          "description": "Some non-transparent for system set of data associated with this destination\n",
           "type": "object",
-          "required": [
-            "name",
-            "identity",
-            "currency",
-            "resource"
-          ],
-          "properties": {
-            "id": {
-              "description": "Destination identifier",
-              "type": "string",
-              "example": "107498",
-              "readOnly": true
-            },
-            "name": {
-              "description": "A human-readable name for the destination by which it is easily recognizable\n",
-              "type": "string",
-              "example": "Squarey plastic thingy"
-            },
-            "createdAt": {
-              "description": "Date and time of creation of the destination of the funds",
-              "type": "string",
-              "format": "date-time",
-              "readOnly": true
-            },
-            "isBlocked": {
-              "description": "Is the destination blocked?",
-              "type": "boolean",
-              "readOnly": true,
-              "example": false
-            },
-            "identity": {
-              "description": "Identifier of wallet owner",
-              "type": "string",
-              "example": "10036274"
-            },
-            "currency": {
-              "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
-              "type": "string",
-              "pattern": "^[A-Z]{3}$",
-              "example": "USD"
-            },
-            "resource": {
-              "$ref": "#/definitions/DestinationResource"
-            },
-            "additionalAuthData": {
-              "$ref": "#/definitions/DestinationAuthData"
-            },
-            "metadata": {
-              "description": "Some non-transparent for system set of data associated with this destination\n",
-              "type": "object",
-              "example": {
-                "color_hint": "olive-green"
-              }
-            },
-            "externalID": {
-              "description": "The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n",
-              "type": "string",
-              "example": "10036274"
-            }
+          "example": {
+            "color_hint": "olive-green"
           }
         },
-        {
-          "$ref": "#/definitions/DestinationStatus"
+        "externalID": {
+          "description": "The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n",
+          "type": "string",
+          "example": "10036274"
         }
-      ]
+      }
     },
     "DestinationAuthData": {
       "description": "Destination auth data to make withdrawals",
@@ -3166,28 +2095,6 @@
           "enum": [
             "SenderReceiverDestinationAuthData"
           ]
-        }
-      }
-    },
-    "DestinationGrantRequest": {
-      "description": "Request for the permission to control the withdrawals to the destination",
-      "type": "object",
-      "required": [
-        "validUntil"
-      ],
-      "properties": {
-        "token": {
-          "description": "Token granting the permission to control the withdrawals",
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 4000,
-          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n",
-          "readOnly": true
-        },
-        "validUntil": {
-          "description": "The date and time by which the granted right is valid\n",
-          "type": "string",
-          "format": "date-time"
         }
       }
     },
@@ -3212,27 +2119,6 @@
             "CryptoWalletDestinationResource",
             "DigitalWalletDestinationResource"
           ]
-        }
-      }
-    },
-    "DestinationStatus": {
-      "type": "object",
-      "properties": {
-        "status": {
-          "description": "The status of the destination.\n\n| Meaning        | Explanation                                   |\n| -------------- | --------------------------------------------- |\n| `Unauthorized` | Not authorized by the owner to withdraw funds |\n| `Authorized`   | Authorized by the owner to withdraw funds     |\n",
-          "type": "string",
-          "enum": [
-            "Unauthorized",
-            "Authorized"
-          ],
-          "readOnly": true,
-          "example": "Authorized"
-        },
-        "validUntil": {
-          "description": "> If `status` == `Authorized`\n\nDate and time until which authorization is valid\n",
-          "type": "string",
-          "format": "date-time",
-          "readOnly": true
         }
       }
     },
@@ -3365,67 +2251,6 @@
       "maxLength": 4000,
       "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n"
     },
-    "Identity": {
-      "description": "Data of the wallet owner",
-      "type": "object",
-      "required": [
-        "name",
-        "provider"
-      ],
-      "properties": {
-        "id": {
-          "description": "Identifier of wallet owner",
-          "type": "string",
-          "example": "10036274",
-          "readOnly": true
-        },
-        "name": {
-          "description": "Human-readable name of the owner's identity, by which he can be easily identified\n",
-          "type": "string",
-          "example": "Keyn Fawkes"
-        },
-        "createdAt": {
-          "description": "Date and time the owner identity was created",
-          "type": "string",
-          "format": "date-time",
-          "readOnly": true
-        },
-        "provider": {
-          "description": "Identifier of the service provider",
-          "type": "string",
-          "example": "serviceprovider"
-        },
-        "isBlocked": {
-          "description": "Is the owner's identity blocked?",
-          "type": "boolean",
-          "readOnly": true,
-          "example": false
-        },
-        "metadata": {
-          "description": "Some non-transparent for system set of data associated with this identity\n",
-          "type": "object",
-          "example": {
-            "lkDisplayName": "James Smith"
-          }
-        },
-        "externalID": {
-          "description": "The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n",
-          "type": "string",
-          "example": "10036274"
-        },
-        "partyID": {
-          "description": "The participant's unique identifier within the system.",
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 40
-        }
-      }
-    },
-    "IdentityID": {
-      "description": "Identifier of wallet owner",
-      "type": "string",
-      "example": "10036274"
-    },
     "BadRequest": {
       "type": "object",
       "required": [
@@ -3519,49 +2344,13 @@
       "minLength": 1,
       "maxLength": 40
     },
-    "Provider": {
-      "description": "Service provider data",
-      "type": "object",
-      "required": [
-        "id",
-        "name",
-        "residences"
-      ],
-      "properties": {
-        "id": {
-          "description": "Identifier of the service provider",
-          "type": "string",
-          "example": "serviceprovider"
-        },
-        "name": {
-          "description": "Human-readable name of the service provider\n",
-          "type": "string",
-          "example": "SERVICE PROVIDER LLC"
-        },
-        "residences": {
-          "type": "array",
-          "description": "Residences in which the provider can service\n",
-          "items": {
-            "description": "Residence symbol code by standard [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)\n",
-            "type": "string",
-            "pattern": "^[A-Z]{3}$",
-            "example": "RUS"
-          }
-        }
-      }
-    },
-    "ProviderID": {
-      "description": "Identifier of the service provider",
-      "type": "string",
-      "example": "serviceprovider"
-    },
     "QuoteParameters": {
       "description": "Quote request parameters",
       "type": "object",
       "required": [
         "sender",
         "receiver",
-        "identityID",
+        "partyID",
         "body"
       ],
       "properties": {
@@ -3571,10 +2360,11 @@
         "receiver": {
           "$ref": "#/definitions/ReceiverResource"
         },
-        "identityID": {
-          "description": "Identifier of wallet owner",
+        "partyID": {
+          "description": "The participant's unique identifier within the system.",
           "type": "string",
-          "example": "10036274"
+          "minLength": 1,
+          "maxLength": 40
         },
         "body": {
           "description": "Transaction amount",
@@ -3943,174 +2733,12 @@
         }
       }
     },
-    "W2WTransfer": {
-      "description": "Transfer data",
-      "type": "object",
-      "required": [
-        "id",
-        "createdAt",
-        "body",
-        "sender",
-        "receiver",
-        "status"
-      ],
-      "properties": {
-        "id": {
-          "description": "Transfer identifier",
-          "type": "string",
-          "example": "10a0b68D3E21",
-          "maxLength": 40,
-          "minLength": 1
-        },
-        "createdAt": {
-          "description": "Date and time of creation",
-          "type": "string",
-          "format": "date-time"
-        },
-        "body": {
-          "description": "Transaction amount",
-          "type": "object",
-          "required": [
-            "amount",
-            "currency"
-          ],
-          "properties": {
-            "amount": {
-              "description": "The amount of money in minor units, for example, in cents\n",
-              "type": "integer",
-              "format": "int64",
-              "example": 1430000
-            },
-            "currency": {
-              "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
-              "type": "string",
-              "pattern": "^[A-Z]{3}$",
-              "example": "USD"
-            }
-          }
-        },
-        "sender": {
-          "$ref": "#/definitions/WalletID"
-        },
-        "receiver": {
-          "$ref": "#/definitions/WalletID"
-        },
-        "status": {
-          "$ref": "#/definitions/W2WTransferStatus"
-        },
-        "externalID": {
-          "description": "The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n",
-          "type": "string",
-          "example": "10036274"
-        }
-      }
-    },
-    "W2WTransferFailure": {
-      "description": "[Error occurred during the transfer process](#tag/Error-Codes)\n",
-      "type": "object",
-      "required": [
-        "code"
-      ],
-      "properties": {
-        "code": {
-          "description": "Main error code",
-          "type": "string"
-        },
-        "subError": {
-          "$ref": "#/definitions/SubFailure"
-        }
-      }
-    },
-    "W2WTransferID": {
-      "description": "Transfer identifier",
-      "type": "string",
-      "example": "10a0b68D3E21",
-      "maxLength": 40,
-      "minLength": 1
-    },
-    "W2WTransferParameters": {
-      "description": "Transfer creation options",
-      "type": "object",
-      "required": [
-        "sender",
-        "receiver",
-        "body"
-      ],
-      "properties": {
-        "sender": {
-          "$ref": "#/definitions/WalletID"
-        },
-        "receiver": {
-          "$ref": "#/definitions/WalletID"
-        },
-        "body": {
-          "description": "Transfer amount",
-          "type": "object",
-          "required": [
-            "amount",
-            "currency"
-          ],
-          "properties": {
-            "amount": {
-              "description": "The amount of money in minor units, for example, in cents\n",
-              "type": "integer",
-              "format": "int64",
-              "example": 1430000
-            },
-            "currency": {
-              "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
-              "type": "string",
-              "pattern": "^[A-Z]{3}$",
-              "example": "USD"
-            }
-          }
-        },
-        "externalID": {
-          "description": "The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n",
-          "type": "string",
-          "example": "10036274"
-        }
-      }
-    },
-    "W2WTransferStatus": {
-      "type": "object",
-      "required": [
-        "status"
-      ],
-      "properties": {
-        "status": {
-          "description": "The status of the money transfer.\n\n| Meaning     | Explanation                          |\n| ----------- | ------------------------------------ |\n| `Pending`   | Transfer in progress              |\n| `Succeeded` | Fund transfer completed successfully |\n| `Failed`    | Fund transfer failed                 |\n",
-          "type": "string",
-          "enum": [
-            "Pending",
-            "Succeeded",
-            "Failed"
-          ]
-        },
-        "failure": {
-          "description": "[Error occurred during the transfer process](#tag/Error-Codes)\n",
-          "type": "object",
-          "required": [
-            "code"
-          ],
-          "properties": {
-            "code": {
-              "description": "Main error code",
-              "type": "string"
-            },
-            "subError": {
-              "$ref": "#/definitions/SubFailure"
-            }
-          }
-        }
-      }
-    },
     "Wallet": {
       "description": "Wallet details",
       "type": "object",
       "required": [
         "name",
-        "identity",
+        "party",
         "currency"
       ],
       "properties": {
@@ -4125,40 +2753,23 @@
           "type": "string",
           "example": "Worldwide PHP Awareness Initiative"
         },
-        "createdAt": {
-          "description": "Date and time of wallet creation",
-          "type": "string",
-          "format": "date-time",
-          "readOnly": true
-        },
         "isBlocked": {
           "description": "Is the wallet blocked?",
           "type": "boolean",
           "readOnly": true,
           "example": false
         },
-        "identity": {
-          "description": "Identifier of wallet owner",
+        "party": {
+          "description": "The participant's unique identifier within the system.",
           "type": "string",
-          "example": "10036274"
+          "minLength": 1,
+          "maxLength": 40
         },
         "currency": {
           "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
           "type": "string",
           "pattern": "^[A-Z]{3}$",
           "example": "USD"
-        },
-        "metadata": {
-          "description": "Some non-transparent for system set of data associated with this wallet\n",
-          "type": "object",
-          "example": {
-            "client_locale": "en_US"
-          }
-        },
-        "externalID": {
-          "description": "The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n",
-          "type": "string",
-          "example": "10036274"
         }
       }
     },
@@ -4220,51 +2831,6 @@
         }
       }
     },
-    "WalletGrantRequest": {
-      "description": "Request for a one-time permission to manage funds on the wallet",
-      "type": "object",
-      "required": [
-        "asset",
-        "validUntil"
-      ],
-      "properties": {
-        "token": {
-          "description": "A token that gives the permission to one-time management of funds on the wallet",
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 4000,
-          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n",
-          "readOnly": true
-        },
-        "asset": {
-          "description": "Amount of funds allowed for use",
-          "type": "object",
-          "required": [
-            "amount",
-            "currency"
-          ],
-          "properties": {
-            "amount": {
-              "description": "The amount of money in minor units, for example, in cents\n",
-              "type": "integer",
-              "format": "int64",
-              "example": 1430000
-            },
-            "currency": {
-              "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
-              "type": "string",
-              "pattern": "^[A-Z]{3}$",
-              "example": "USD"
-            }
-          }
-        },
-        "validUntil": {
-          "description": "Date and time until which the granted right is valid\n",
-          "type": "string",
-          "format": "date-time"
-        }
-      }
-    },
     "WalletID": {
       "description": "Identifier of the wallet",
       "type": "string",
@@ -4278,7 +2844,7 @@
     "Webhook": {
       "type": "object",
       "required": [
-        "identityID",
+        "partyID",
         "scope",
         "url"
       ],
@@ -4288,10 +2854,11 @@
           "type": "string",
           "readOnly": true
         },
-        "identityID": {
-          "description": "Identifier of wallet owner",
+        "partyID": {
+          "description": "The participant's unique identifier within the system.",
           "type": "string",
-          "example": "10036274"
+          "minLength": 1,
+          "maxLength": 40
         },
         "active": {
           "description": "Is notification delivery currently enabled?\n",
@@ -4341,6 +2908,7 @@
           "type": "object",
           "required": [
             "wallet",
+            "party",
             "destination",
             "body"
           ],
@@ -4361,6 +2929,12 @@
               "description": "Identifier of the wallet",
               "type": "string",
               "example": "10068321"
+            },
+            "party": {
+              "description": "The participant's unique identifier within the system.",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40
             },
             "destination": {
               "description": "Destination identifier",
@@ -4422,6 +2996,23 @@
               "description": "The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n",
               "type": "string",
               "example": "10036274"
+            },
+            "contactInfo": {
+              "description": "Contact details",
+              "type": "object",
+              "properties": {
+                "email": {
+                  "description": "Email address",
+                  "type": "string",
+                  "format": "email",
+                  "maxLength": 100
+                },
+                "phoneNumber": {
+                  "description": "Mobile phone number with international prefix according to\n[E.164](https://en.wikipedia.org/wiki/E.164).\n",
+                  "type": "string",
+                  "format": "^\\+\\d{4,15}$"
+                }
+              }
             },
             "quote": {
               "description": "Quote data for withdrawal",
@@ -4646,20 +3237,6 @@
         {
           "type": "object",
           "properties": {
-            "walletGrant": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 4000,
-              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n",
-              "description": "A token that gives the right to withdraw from the wallet to pay for the withdrawal.\n\nMust be provided if withdrawal is made at the expense of _foreign_\nwallet. The owner of said wallet can\n[issue this right](#operation/issueWalletGrant).\n"
-            },
-            "destinationGrant": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 4000,
-              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n",
-              "description": "A token that gives the right to withdraw.\n\nMust be provided if the withdrawal is made through a _foreign_ recipient of\nfunds. The owner of the specified recipient can\n[issue this right](#operation/issueDestinationGrant).\n"
-            },
             "quoteToken": {
               "type": "string",
               "minLength": 1,
@@ -4754,6 +3331,7 @@
       "type": "object",
       "required": [
         "walletID",
+        "partyID",
         "currencyFrom",
         "currencyTo",
         "cash"
@@ -4768,6 +3346,12 @@
           "description": "Identifier of the wallet",
           "type": "string",
           "example": "10068321"
+        },
+        "partyID": {
+          "description": "The participant's unique identifier within the system.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
         },
         "destinationID": {
           "description": "Destination identifier",
@@ -4807,20 +3391,6 @@
               "example": "USD"
             }
           }
-        },
-        "walletGrant": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 4000,
-          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n",
-          "description": "A token that gives the right to withdraw from the wallet to pay for the withdrawal. It is necessary to provide if the withdrawal is made at the expense of the funds of a _foreign_ wallet. The owner of the specified wallet can [issue this right](#operation/issueWalletGrant)\n"
-        },
-        "destinationGrant": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 4000,
-          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n",
-          "description": "A token that gives the right to withdraw. Must be provided if the withdrawal is made through a _foreign_ fund recipient. The owner of the specified recipient can [grant this right](#operation/issueDestinationGrant)\n"
         }
       }
     },
