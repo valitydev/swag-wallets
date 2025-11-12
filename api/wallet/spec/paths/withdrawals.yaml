@@ -15,13 +15,6 @@ get:
       maxLength: 40
       minLength: 1
       required: false
-    - name: identityID
-      in: query
-      description: Identifier of the owner's identity
-      type: string
-      maxLength: 40
-      minLength: 1
-      required: false
     - name: withdrawalID
       in: query
       description: Identifier of the funds withdrawal

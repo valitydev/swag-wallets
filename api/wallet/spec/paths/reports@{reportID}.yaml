@@ -1,18 +1,19 @@
 ---
 get:
-  operationId: getIdentity
-  summary: Get the owner's identity
+  description: Get a report for a given identifier
   tags:
-    - Identities
+    - Reports
+  operationId: getReport
   parameters:
     - $ref: "#/parameters/requestID"
     - $ref: "#/parameters/deadline"
-    - $ref: "#/parameters/identityID"
+    - $ref: "#/parameters/partyID"
+    - $ref: "#/parameters/reportID"
   responses:
     "200":
-      description: Owner's identity found
+      description: Report found
       schema:
-        $ref: "#/definitions/Identity"
+        $ref: "#/definitions/Report"
     "404":
       $ref: "#/responses/NotFound"
     "400":

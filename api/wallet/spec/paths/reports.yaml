@@ -8,7 +8,6 @@ post:
     - $ref: "#/parameters/requestID"
     - $ref: "#/parameters/deadline"
     - $ref: "#/parameters/partyID"
-    - $ref: "#/parameters/identityID"
     - name: ReportParams
       in: body
       description: Report generation options
@@ -33,7 +32,6 @@ get:
     - $ref: "#/parameters/requestID"
     - $ref: "#/parameters/deadline"
     - $ref: "#/parameters/partyID"
-    - $ref: "#/parameters/identityID"
     - $ref: "#/parameters/fromTime"
     - $ref: "#/parameters/toTime"
     - name: type
