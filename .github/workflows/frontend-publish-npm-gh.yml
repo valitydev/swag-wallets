@@ -2,7 +2,7 @@ name: "Frontend: Publish NPM & Github Pages"
 
 on:
   push:
-    branches: ["v0"]
+    branches: ["v1"]
 
 jobs:
   publish:

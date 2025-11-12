@@ -3,7 +3,7 @@ name: Release Erlang Libraries
 on:
   push:
     branches:
-      - 'v0'
+      - 'v1'
       - 'epic/**'
   pull_request:
     branches: ["**"]
@@ -32,11 +32,19 @@ jobs:
         run: |
           mkdir -p out
           echo "Generate wallet stubs"
-          swagger-codegen generate -l vality-erlang-client -i web_deploy/swagger.json -o out/erlang-client-wallet --additional-properties packageName=swag_client_wallet
-          swagger-codegen generate -l vality-erlang-server -i web_deploy/swagger.json -o out/erlang-server-wallet --additional-properties packageName=swag_server_wallet
+          swagger-codegen generate -l vality-erlang-client \
+            -i web_deploy/swagger.json -o out/erlang-client-wallet \
+            --additional-properties packageName=swag_client_wallet
+          swagger-codegen generate -l vality-erlang-server \
+            -i web_deploy/swagger.json -o out/erlang-server-wallet \
+            --additional-properties packageName=swag_server_wallet
           echo "Generate payres stubs"
-          swagger-codegen generate -l vality-erlang-client -i web_deploy/payres/swagger.json -o out/erlang-client-payres --additional-properties packageName=swag_client_payres
-          swagger-codegen generate -l vality-erlang-server -i web_deploy/payres/swagger.json -o out/erlang-server-payres --additional-properties packageName=swag_server_payres
+          swagger-codegen generate -l vality-erlang-client \
+            -i web_deploy/payres/swagger.json -o out/erlang-client-payres \
+            --additional-properties packageName=swag_client_payres
+          swagger-codegen generate -l vality-erlang-server \
+            -i web_deploy/payres/swagger.json -o out/erlang-server-payres \
+            --additional-properties packageName=swag_server_payres
 
       - name: Set release suffix
         id: vars
@@ -45,7 +53,7 @@ jobs:
           if [[ "$GITHUB_REF" == refs/heads/epic/* ]]; then
             RELEASE_SUFFIX="epic-${BRANCH_NAME}"
           else
-            RELEASE_SUFFIX="v0"
+            RELEASE_SUFFIX="v1"
           fi
           echo "release_suffix=${RELEASE_SUFFIX}" >> $GITHUB_OUTPUT
 
@@ -53,7 +61,8 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         uses: JamesIves/github-pages-deploy-action@v4.4.1
         with:
-          branch: release/erlang/wallet-client/${{ steps.vars.outputs.release_suffix }}
+          branch: >-
+            release/erlang/wallet-client/${{ steps.vars.outputs.release_suffix }}
           folder: out/erlang-client-wallet
           commit-message: Release ${{ github.repository }}@${{ github.sha }}
 
@@ -61,7 +70,8 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         uses: JamesIves/github-pages-deploy-action@v4.4.1
         with:
-          branch: release/erlang/wallet-server/${{ steps.vars.outputs.release_suffix }}
+          branch: >-
+            release/erlang/wallet-server/${{ steps.vars.outputs.release_suffix }}
           folder: out/erlang-server-wallet
           commit-message: Release ${{ github.repository }}@${{ github.sha }}
 
@@ -69,7 +79,8 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         uses: JamesIves/github-pages-deploy-action@v4.4.1
         with:
-          branch: release/erlang/payres-client/${{ steps.vars.outputs.release_suffix }}
+          branch: >-
+            release/erlang/payres-client/${{ steps.vars.outputs.release_suffix }}
           folder: out/erlang-client-payres
           commit-message: Release ${{ github.repository }}@${{ github.sha }}
 
@@ -77,6 +88,7 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         uses: JamesIves/github-pages-deploy-action@v4.4.1
         with:
-          branch: release/erlang/payres-server/${{ steps.vars.outputs.release_suffix }}
+          branch: >-
+            release/erlang/payres-server/${{ steps.vars.outputs.release_suffix }}
           folder: out/erlang-server-payres
           commit-message: Release ${{ github.repository }}@${{ github.sha }}
