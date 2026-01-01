@@ -18,7 +18,7 @@
     "postinstall": "mkdir -p ./scripts && cp -a ./node_modules/@vality/redocly-utils/lib/swagger-plugins ./scripts/plugins"
   },
   "devDependencies": {
-    "@redocly/cli": "^1.33.0",
+    "@redocly/cli": "^1.34.6",
     "@vality/openapi-generator-cli": "^3.0.2",
     "@vality/redocly-utils": "^0.3.0",
     "swagger-repo": "1.5.1"
