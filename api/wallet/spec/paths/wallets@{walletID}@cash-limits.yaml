@@ -1,7 +1,7 @@
 ---
 get:
   description: Get wallet cash limits
-  operationId: getWalletCashLimitsForParty
+  operationId: getWalletCashLimits
   tags:
     - Wallets
   parameters:
