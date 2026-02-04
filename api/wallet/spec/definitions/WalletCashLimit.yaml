@@ -1,0 +1,16 @@
+---
+type: object
+required:
+  - currency
+  - withdrawalMethod
+  - lowerBound
+  - upperBound
+properties:
+  currency:
+    $ref: "#/definitions/CurrencyID"
+  withdrawalMethod:
+    $ref: "#/definitions/WithdrawalMethod"
+  lowerBound:
+    $ref: "#/definitions/CashLimitBound"
+  upperBound:
+    $ref: "#/definitions/CashLimitBound"

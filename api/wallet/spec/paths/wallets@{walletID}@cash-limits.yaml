@@ -1,0 +1,26 @@
+---
+get:
+  description: Get wallet cash limits
+  operationId: getWalletCashLimitsForParty
+  tags:
+    - Wallets
+  parameters:
+    - $ref: "#/parameters/requestID"
+    - $ref: "#/parameters/deadline"
+    - $ref: "#/parameters/walletID"
+    - $ref: "#/parameters/partyID"
+  responses:
+    "200":
+      description: |
+        Cash limits found. Each item is scoped to a specific withdrawal method.
+        If a withdrawal method is absent in the list, that method is not allowed for the wallet.
+      schema:
+        type: array
+        items:
+          $ref: "#/definitions/WalletCashLimit"
+    "404":
+      $ref: "#/responses/NotFound"
+    "401":
+      $ref: "#/responses/Unauthorized"
+    "400":
+      $ref: "#/responses/BadRequest"
