@@ -1091,6 +1091,69 @@ get_raw() ->
         }
       }
     },
+    <<"/wallets/{walletID}/cash-limits">> => #{
+      <<"get">> => #{
+        <<"tags">> => [ <<"Wallets">> ],
+        <<"description">> => <<"Get wallet cash limits">>,
+        <<"operationId">> => <<"getWalletCashLimits">>,
+        <<"parameters">> => [ #{
+          <<"name">> => <<"X-Request-ID">>,
+          <<"in">> => <<"header">>,
+          <<"description">> => <<"Unique identifier of the request to the system">>,
+          <<"required">> => true,
+          <<"type">> => <<"string">>,
+          <<"maxLength">> => 32,
+          <<"minLength">> => 1
+        }, #{
+          <<"name">> => <<"X-Request-Deadline">>,
+          <<"in">> => <<"header">>,
+          <<"description">> => <<"Maximum request processing time">>,
+          <<"required">> => false,
+          <<"type">> => <<"string">>,
+          <<"maxLength">> => 40,
+          <<"minLength">> => 1
+        }, #{
+          <<"name">> => <<"walletID">>,
+          <<"in">> => <<"path">>,
+          <<"description">> => <<"Identifier of the wallet">>,
+          <<"required">> => true,
+          <<"type">> => <<"string">>,
+          <<"maxLength">> => 40,
+          <<"minLength">> => 1
+        }, #{
+          <<"name">> => <<"partyID">>,
+          <<"in">> => <<"query">>,
+          <<"description">> => <<"The participant's unique identifier within the system.">>,
+          <<"required">> => false,
+          <<"type">> => <<"string">>,
+          <<"maxLength">> => 40,
+          <<"minLength">> => 1
+        } ],
+        <<"responses">> => #{
+          <<"200">> => #{
+            <<"description">> => <<"Cash limits found. Each item is scoped to a specific withdrawal method.\nIf a withdrawal method is absent in the list, that method is not allowed for the wallet.\n">>,
+            <<"schema">> => #{
+              <<"type">> => <<"array">>,
+              <<"items">> => #{
+                <<"$ref">> => <<"#/definitions/WalletCashLimit">>
+              }
+            }
+          },
+          <<"400">> => #{
+            <<"description">> => <<"Invalid input data for operation">>,
+            <<"schema">> => #{
+              <<"$ref">> => <<"#/definitions/BadRequest">>
+            }
+          },
+          <<"401">> => #{
+            <<"description">> => <<"Authorization error">>
+          },
+          <<"404">> => #{
+            <<"description">> => <<"The content you are looking for was not found">>
+          }
+        }
+      }
+    },
     <<"/wallets/{walletID}/withdrawal-methods">> => #{
       <<"get">> => #{
         <<"tags">> => [ <<"Wallets">> ],
@@ -1975,6 +2038,25 @@ get_raw() ->
         }
       }
     },
+    <<"CashLimitBound">> => #{
+      <<"type">> => <<"object">>,
+      <<"required">> => [ <<"amount">>, <<"inclusive">> ],
+      <<"properties">> => #{
+        <<"amount">> => #{
+          <<"type">> => <<"integer">>,
+          <<"format">> => <<"int64">>,
+          <<"minimum">> => 0
+        },
+        <<"inclusive">> => #{
+          <<"type">> => <<"boolean">>
+        }
+      },
+      <<"description">> => <<"Cash limit bound.">>,
+      <<"example">> => #{
+        <<"inclusive">> => true,
+        <<"amount">> => 0
+      }
+    },
     <<"ContactInfo">> => #{
       <<"type">> => <<"object">>,
       <<"properties">> => #{
@@ -2833,6 +2915,38 @@ get_raw() ->
           <<"currency">> => <<"USD">>
         },
         <<"available">> => <<"{\"amount\":1200000,\"currency\":\"USD\"}">>
+      }
+    },
+    <<"WalletCashLimit">> => #{
+      <<"type">> => <<"object">>,
+      <<"required">> => [ <<"currency">>, <<"lowerBound">>, <<"upperBound">>, <<"withdrawalMethod">> ],
+      <<"properties">> => #{
+        <<"currency">> => #{
+          <<"$ref">> => <<"#/definitions/CurrencyID">>
+        },
+        <<"withdrawalMethod">> => #{
+          <<"$ref">> => <<"#/definitions/WithdrawalMethod">>
+        },
+        <<"lowerBound">> => #{
+          <<"$ref">> => <<"#/definitions/CashLimitBound">>
+        },
+        <<"upperBound">> => #{
+          <<"$ref">> => <<"#/definitions/CashLimitBound">>
+        }
+      },
+      <<"example">> => #{
+        <<"withdrawalMethod">> => #{
+          <<"method">> => <<"WithdrawalMethodBankCard">>
+        },
+        <<"upperBound">> => #{
+          <<"inclusive">> => true,
+          <<"amount">> => 0
+        },
+        <<"currency">> => <<"USD">>,
+        <<"lowerBound">> => #{
+          <<"inclusive">> => true,
+          <<"amount">> => 0
+        }
       }
     },
     <<"WalletID">> => #{

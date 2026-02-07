@@ -9,6 +9,9 @@
 -export([get_wallet_account/2]).
 -export([get_wallet_account/3]).
 
+-export([get_wallet_cash_limits/2]).
+-export([get_wallet_cash_limits/3]).
+
 -export([get_withdrawal_methods/2]).
 -export([get_withdrawal_methods/3]).
 
@@ -51,6 +54,24 @@ get_wallet_account(Endpoint, Params, Opts) ->
         get_request_spec(get_wallet_account),
         Opts
     ), get_wallet_account).
+
+-spec get_wallet_cash_limits(Endpoint :: swag_client_wallet:endpoint(), Params :: map()) ->
+    {ok, Code :: integer(), RespHeaders :: list(), Response :: map()} |
+    {error, _Reason}.
+get_wallet_cash_limits(Endpoint, Params) ->
+    get_wallet_cash_limits(Endpoint, Params, []).
+
+-spec get_wallet_cash_limits(Endpoint :: swag_client_wallet:endpoint(), Params :: map(), Opts :: swag_client_wallet:transport_opts()) ->
+    {ok, Code :: integer(), RespHeaders :: list(), Response :: map()} |
+    {error, _Reason}.
+get_wallet_cash_limits(Endpoint, Params, Opts) ->
+    process_response(swag_client_wallet_procession:process_request(
+        get,
+        swag_client_wallet_utils:get_url(Endpoint, "/wallet/v0/wallets/:walletID/cash-limits"),
+        Params,
+        get_request_spec(get_wallet_cash_limits),
+        Opts
+    ), get_wallet_cash_limits).
 
 -spec get_withdrawal_methods(Endpoint :: swag_client_wallet:endpoint(), Params :: map()) ->
     {ok, Code :: integer(), RespHeaders :: list(), Response :: map()} |
@@ -133,6 +154,29 @@ get_request_spec('get_wallet') ->
         }}
     ];
 get_request_spec('get_wallet_account') ->
+    [
+        {'X-Request-ID', #{
+            source => header,
+            rules  => [{type, 'binary'}, {max_length, 32}, {min_length, 1}, true
+, {required, true}]
+        }},
+        {'walletID', #{
+            source => binding,
+            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
+, {required, true}]
+        }},
+        {'X-Request-Deadline', #{
+            source => header,
+            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
+, {required, false}]
+        }},
+        {'partyID', #{
+            source => qs_val,
+            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
+, {required, false}]
+        }}
+    ];
+get_request_spec('get_wallet_cash_limits') ->
     [
         {'X-Request-ID', #{
             source => header,
@@ -238,6 +282,18 @@ get_response_spec('get_wallet_account', 401) ->
     undefined;
 
 get_response_spec('get_wallet_account', 404) ->
+    undefined;
+
+get_response_spec('get_wallet_cash_limits', 200) ->
+    {'list', 'WalletCashLimit'};
+
+get_response_spec('get_wallet_cash_limits', 400) ->
+    {'BadRequest', 'BadRequest'};
+
+get_response_spec('get_wallet_cash_limits', 401) ->
+    undefined;
+
+get_response_spec('get_wallet_cash_limits', 404) ->
     undefined;
 
 get_response_spec('get_withdrawal_methods', 200) ->
