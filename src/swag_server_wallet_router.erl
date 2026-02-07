@@ -135,6 +135,11 @@ get_operations() ->
             method => <<"GET">>,
             handler => 'swag_server_wallet_wallets_handler'
         },
+        'GetWalletCashLimits' => #{
+            path => "/wallet/v0/wallets/:walletID/cash-limits",
+            method => <<"GET">>,
+            handler => 'swag_server_wallet_wallets_handler'
+        },
         'GetWithdrawalMethods' => #{
             path => "/wallet/v0/wallets/:walletID/withdrawal-methods",
             method => <<"GET">>,

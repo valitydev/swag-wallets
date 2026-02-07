@@ -72,6 +72,14 @@ allowed_methods(
 allowed_methods(
     Req,
     State = #state{
+        operation_id = 'GetWalletCashLimits'
+    }
+) ->
+    {[<<"GET">>], Req, State};
+
+allowed_methods(
+    Req,
+    State = #state{
         operation_id = 'GetWithdrawalMethods'
     }
 ) ->
@@ -126,6 +134,33 @@ is_authorized(
     Req0,
     State = #state{
         operation_id  = 'GetWalletAccount' = OperationID,
+        logic_handler = LogicHandler,
+        context       = Context
+    }
+) ->
+    From = header,
+    Result = swag_server_wallet_handler_api:authorize_api_key(
+        LogicHandler,
+        OperationID,
+        From,
+        'Authorization',
+        Req0,
+        Context
+    ),
+    case Result of
+        {true, AuthContext, Req} ->
+            NewContext = Context#{
+                auth_context => AuthContext
+            },
+            {true, Req, State#state{context = NewContext}};
+        {false, AuthHeader, Req} ->
+            {{false, AuthHeader}, Req, State}
+    end;
+
+is_authorized(
+    Req0,
+    State = #state{
+        operation_id  = 'GetWalletCashLimits' = OperationID,
         logic_handler = LogicHandler,
         context       = Context
     }
@@ -235,6 +270,16 @@ valid_content_headers(
     Req0,
     State = #state{
         operation_id = 'GetWalletAccount'
+    }
+) ->
+    Headers = ["X-Request-ID","X-Request-Deadline"],
+    {Result, Req} = validate_headers(Headers, Req0),
+    {Result, Req, State};
+
+valid_content_headers(
+    Req0,
+    State = #state{
+        operation_id = 'GetWalletCashLimits'
     }
 ) ->
     Headers = ["X-Request-ID","X-Request-Deadline"],
@@ -414,6 +459,29 @@ get_request_spec('GetWalletAccount') ->
 , {required, false}]
         }}
     ];
+get_request_spec('GetWalletCashLimits') ->
+    [
+        {'X-Request-ID', #{
+            source => header,
+            rules  => [{type, 'binary'}, {max_length, 32}, {min_length, 1}, true
+, {required, true}]
+        }},
+        {'walletID', #{
+            source => binding,
+            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
+, {required, true}]
+        }},
+        {'X-Request-Deadline', #{
+            source => header,
+            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
+, {required, false}]
+        }},
+        {'partyID', #{
+            source => qs_val,
+            rules  => [{type, 'binary'}, {max_length, 40}, {min_length, 1}, true
+, {required, false}]
+        }}
+    ];
 get_request_spec('GetWithdrawalMethods') ->
     [
         {'X-Request-ID', #{
@@ -497,6 +565,18 @@ get_response_spec('GetWalletAccount', 401) ->
     undefined;
 
 get_response_spec('GetWalletAccount', 404) ->
+    undefined;
+
+get_response_spec('GetWalletCashLimits', 200) ->
+    {'list', 'WalletCashLimit'};
+
+get_response_spec('GetWalletCashLimits', 400) ->
+    {'BadRequest', 'BadRequest'};
+
+get_response_spec('GetWalletCashLimits', 401) ->
+    undefined;
+
+get_response_spec('GetWalletCashLimits', 404) ->
     undefined;
 
 get_response_spec('GetWithdrawalMethods', 200) ->
