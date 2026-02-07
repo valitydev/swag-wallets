@@ -731,6 +731,32 @@ paths:
           $ref: '#/responses/Unauthorized'
         '404':
           $ref: '#/responses/NotFound'
+  '/wallets/{walletID}/cash-limits':
+    get:
+      description: Get wallet cash limits
+      operationId: getWalletCashLimits
+      tags:
+        - Wallets
+      parameters:
+        - $ref: '#/parameters/requestID'
+        - $ref: '#/parameters/deadline'
+        - $ref: '#/parameters/walletID'
+        - $ref: '#/parameters/partyID'
+      responses:
+        '200':
+          description: |
+            Cash limits found. Each item is scoped to a specific withdrawal method.
+            If a withdrawal method is absent in the list, that method is not allowed for the wallet.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/WalletCashLimit'
+        '400':
+          $ref: '#/responses/BadRequest'
+        '401':
+          $ref: '#/responses/Unauthorized'
+        '404':
+          $ref: '#/responses/NotFound'
   '/wallets/{walletID}/withdrawal-methods':
     get:
       summary: Get withdrawal methods available for wallet
@@ -1198,6 +1224,19 @@ definitions:
       requestType:
         description: Type of browser operation
         type: string
+  CashLimitBound:
+    description: Cash limit bound.
+    type: object
+    required:
+      - amount
+      - inclusive
+    properties:
+      amount:
+        type: integer
+        format: int64
+        minimum: 0
+      inclusive:
+        type: boolean
   ContactInfo:
     description: Contact details
     type: object
@@ -2100,6 +2139,22 @@ definitions:
         example:
           amount: 1200000
           currency: USD
+  WalletCashLimit:
+    type: object
+    required:
+      - currency
+      - withdrawalMethod
+      - lowerBound
+      - upperBound
+    properties:
+      currency:
+        $ref: '#/definitions/CurrencyID'
+      withdrawalMethod:
+        $ref: '#/definitions/WithdrawalMethod'
+      lowerBound:
+        $ref: '#/definitions/CashLimitBound'
+      upperBound:
+        $ref: '#/definitions/CashLimitBound'
   WalletID:
     description: Identifier of the wallet
     type: string
