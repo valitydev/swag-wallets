@@ -19,7 +19,7 @@ jobs:
       - name: Build Angular OpenAPI Library
         run: npm run build-ng-lib
       - name: Publish Angular OpenAPI Library
-        uses: valitydev/action-frontend/publish@v1
+        uses: valitydev/action-frontend/publish@v2
         with:
           npm-token: ${{ secrets.NPM_TOKEN }}
           directory: ./lib
