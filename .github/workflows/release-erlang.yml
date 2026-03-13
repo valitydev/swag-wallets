@@ -59,7 +59,7 @@ jobs:
 
       - name: Deploy erlang-client-wallet artifact to release branch
         if: ${{ github.event_name == 'push' }}
-        uses: JamesIves/github-pages-deploy-action@v4.4.1
+        uses: JamesIves/github-pages-deploy-action@v4.8.0
         with:
           branch: >-
             release/erlang/wallet-client/${{ steps.vars.outputs.release_suffix }}
@@ -68,7 +68,7 @@ jobs:
 
       - name: Deploy erlang-server-wallet artifact to release branch
         if: ${{ github.event_name == 'push' }}
-        uses: JamesIves/github-pages-deploy-action@v4.4.1
+        uses: JamesIves/github-pages-deploy-action@v4.8.0
         with:
           branch: >-
             release/erlang/wallet-server/${{ steps.vars.outputs.release_suffix }}
@@ -77,7 +77,7 @@ jobs:
 
       - name: Deploy erlang-client-payres artifact to release branch
         if: ${{ github.event_name == 'push' }}
-        uses: JamesIves/github-pages-deploy-action@v4.4.1
+        uses: JamesIves/github-pages-deploy-action@v4.8.0
         with:
           branch: >-
             release/erlang/payres-client/${{ steps.vars.outputs.release_suffix }}
@@ -86,7 +86,7 @@ jobs:
 
       - name: Deploy erlang-server-payres artifact to release branch
         if: ${{ github.event_name == 'push' }}
-        uses: JamesIves/github-pages-deploy-action@v4.4.1
+        uses: JamesIves/github-pages-deploy-action@v4.8.0
         with:
           branch: >-
             release/erlang/payres-server/${{ steps.vars.outputs.release_suffix }}
