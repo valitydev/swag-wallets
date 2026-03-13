@@ -1025,9 +1025,6 @@
           },
           {
             "$ref": "#/parameters/walletID"
-          },
-          {
-            "$ref": "#/parameters/partyID"
           }
         ],
         "responses": {

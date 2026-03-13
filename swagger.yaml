@@ -741,7 +741,6 @@ paths:
         - $ref: '#/parameters/requestID'
         - $ref: '#/parameters/deadline'
         - $ref: '#/parameters/walletID'
-        - $ref: '#/parameters/partyID'
       responses:
         '200':
           description: |
