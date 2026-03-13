@@ -1,0 +1,3625 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.1.0",
+    "title": "Vality Wallet API",
+    "description": "\nThe Vality Wallet API is the base and only point of interaction with the wallet system. All system state changes are carried out by calling the corresponding API methods. Any third party applications, including our websites and other UIs, are external client applications.\nThe Vality API works on top of the HTTP protocol. We use REST architecture, the scheme is described according to [OpenAPI 2.0](https://spec.openapis.org/oas/v2.0). Return codes are described by the corresponding HTTP statuses. The system accepts and returns JSON values in the body of requests and responses.\n## Content Format\nAny API request must be encoded in UTF-8 and must contain JSON content.\n```\n  Content-Type: application/json; charset=utf-8\n```\n## Date format\nThe system accepts and returns timestamp values in the `date-time` format described in [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339):\n```\n  2017-01-01T00:00:00Z\n  2017-01-01T00:00:01+00:00\n```\n## Maximum request processing time\nIn any API call, you can pass a timeout parameter in the `X-Request-Deadline` header of the corresponding request, which determines the maximum time to wait for the operation to complete on the request:\n```\n X-Request-Deadline: 10s\n```\nAfter the specified time has elapsed, the system stops processing the request. It is recommended to specify a value of no more than one minute, but no less than three seconds.\n`X-Request-Deadline` can:\n* set in `date-time` format according to [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339);\n* specified in relative terms: in milliseconds (`150000ms`), seconds (`540s`) or minutes (`3.5m`).\n## Request processing errors\nDuring the processing of requests by our system, various unforeseen situations may occur. The system signals about their appearance via the HTTP protocol with the corresponding [statuses][5xx], indicating server errors.\n\n | Code    | Description                                                                                                                                                                                                                      |\n | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |\n | **500** | An unexpected situation occurred while the system was processing the request. If you receive such a response code, we recommend that you contact technical support.                                                              |\n | **503** | The system is temporarily unavailable and not ready to serve this request. The request is guaranteed to fail, if you receive a response code like this, try to implement it later when the system is restored to availability.   |\n | **504** | The system has exceeded the allowable request processing time, the result of the request is undefined. Try to resubmit the request or find out the result of the original request, if you do not want to re-execute the request. |\n\n[5xx]: https://tools.ietf.org/html/rfc7231#section-6.6\n",
+    "termsOfService": "https://vality.dev/",
+    "contact": {
+      "name": "Technical support team",
+      "email": "support@vality.dev",
+      "url": "https://api.vality.dev"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "api.vality.dev",
+  "basePath": "/wallet/v0",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json; charset=utf-8"
+  ],
+  "produces": [
+    "application/json; charset=utf-8"
+  ],
+  "securityDefinitions": {
+    "bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Use [JWT](https://jwt.io) for call authentication. The corresponding key is passed in the header.\n```shell\n Authorization: Bearer {YOUR_API_KEY_JWT}\n```\n"
+    }
+  },
+  "security": [
+    {
+      "bearer": []
+    }
+  ],
+  "responses": {
+    "BadRequest": {
+      "description": "Invalid input data for operation",
+      "schema": {
+        "$ref": "#/definitions/BadRequest"
+      }
+    },
+    "ConflictRequest": {
+      "description": "The passed value `externalID` has already been used by you with other query parameters",
+      "schema": {
+        "$ref": "#/definitions/ConflictRequest"
+      }
+    },
+    "NotFound": {
+      "description": "The content you are looking for was not found"
+    },
+    "Unauthorized": {
+      "description": "Authorization error"
+    }
+  },
+  "parameters": {
+    "requestID": {
+      "name": "X-Request-ID",
+      "in": "header",
+      "description": "Unique identifier of the request to the system",
+      "required": true,
+      "type": "string",
+      "maxLength": 32,
+      "minLength": 1
+    },
+    "walletID": {
+      "name": "walletID",
+      "in": "path",
+      "description": "Identifier of the wallet",
+      "required": true,
+      "type": "string",
+      "maxLength": 40,
+      "minLength": 1
+    },
+    "destinationID": {
+      "name": "destinationID",
+      "in": "path",
+      "description": "Identifier of the destination",
+      "required": true,
+      "type": "string",
+      "maxLength": 40,
+      "minLength": 1
+    },
+    "withdrawalID": {
+      "name": "withdrawalID",
+      "in": "path",
+      "description": "Identifier of the withdrawal",
+      "required": true,
+      "type": "string",
+      "maxLength": 40,
+      "minLength": 1
+    },
+    "externalID": {
+      "name": "externalID",
+      "in": "path",
+      "description": "External identifier",
+      "required": true,
+      "type": "string"
+    },
+    "residence": {
+      "name": "residence",
+      "in": "query",
+      "description": "The residence within which the services are provided,\n[ISO 3166-1] country or region code (https://en.wikipedia.org/wiki/ISO_3166-1)\n",
+      "type": "string",
+      "pattern": "^[A-Za-z]{3}$",
+      "required": false
+    },
+    "amountFrom": {
+      "name": "amountFrom",
+      "in": "query",
+      "description": "Amount of monetary funds in minor units",
+      "type": "integer",
+      "format": "int64",
+      "required": false
+    },
+    "amountTo": {
+      "name": "amountTo",
+      "in": "query",
+      "description": "Amount of monetary funds in minor units",
+      "type": "integer",
+      "format": "int64",
+      "required": false
+    },
+    "currencyID": {
+      "name": "currencyID",
+      "in": "query",
+      "description": "Currency, character code according to [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+      "type": "string",
+      "pattern": "^[A-Z]{3}$"
+    },
+    "limit": {
+      "name": "limit",
+      "in": "query",
+      "description": "Selection limit",
+      "required": true,
+      "type": "integer",
+      "format": "int32",
+      "minimum": 1,
+      "maximum": 1000
+    },
+    "eventCursor": {
+      "name": "eventCursor",
+      "in": "query",
+      "description": "The identifier of the last known event.\n\nAll events that occurred _after_ the specified one will be included in the selection.\nIf this parameter is not specified, the selection will include events starting from the very first one.\n",
+      "required": false,
+      "type": "integer",
+      "format": "int32"
+    },
+    "eventID": {
+      "name": "eventID",
+      "in": "path",
+      "description": "Identifier of the identification procedure event.\n",
+      "required": true,
+      "type": "integer",
+      "format": "int32"
+    },
+    "reportID": {
+      "name": "reportID",
+      "in": "path",
+      "description": "The report identifier",
+      "required": true,
+      "type": "integer",
+      "format": "int64"
+    },
+    "fileID": {
+      "name": "fileID",
+      "in": "path",
+      "description": "The file identifier",
+      "required": true,
+      "type": "string",
+      "maxLength": 40,
+      "minLength": 1
+    },
+    "fromTime": {
+      "name": "fromTime",
+      "in": "query",
+      "description": "Start of the time period",
+      "required": true,
+      "type": "string",
+      "format": "date-time"
+    },
+    "toTime": {
+      "name": "toTime",
+      "in": "query",
+      "description": "End of the time period",
+      "required": true,
+      "type": "string",
+      "format": "date-time"
+    },
+    "deadline": {
+      "name": "X-Request-Deadline",
+      "in": "header",
+      "description": "Maximum request processing time",
+      "required": false,
+      "type": "string",
+      "maxLength": 40,
+      "minLength": 1
+    },
+    "webhookID": {
+      "name": "webhookID",
+      "in": "path",
+      "description": "Webhook identifier",
+      "required": true,
+      "type": "string",
+      "maxLength": 40,
+      "minLength": 1
+    },
+    "partyID": {
+      "name": "partyID",
+      "description": "The participant's unique identifier within the system.",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "maxLength": 40,
+      "minLength": 1
+    }
+  },
+  "tags": [
+    {
+      "name": "Wallets",
+      "x-displayName": "Wallets",
+      "description": ""
+    },
+    {
+      "name": "Deposits",
+      "x-displayName": "Deposits",
+      "description": ""
+    },
+    {
+      "name": "Withdrawals",
+      "x-displayName": "Withdrawals",
+      "description": ""
+    },
+    {
+      "name": "Residences",
+      "x-displayName": "Residences",
+      "description": ""
+    },
+    {
+      "name": "Currencies",
+      "x-displayName": "Currencies",
+      "description": ""
+    },
+    {
+      "name": "Reports",
+      "x-displayName": "Reports",
+      "description": ""
+    },
+    {
+      "name": "Downloads",
+      "x-displayName": "File upload",
+      "description": ""
+    },
+    {
+      "name": "Webhooks",
+      "x-displayName": "Webhooks",
+      "description": "## Vality Webhooks Management API\nThis section describes methods that allow you to manage Webhooks, or tools for receiving asynchronous notifications via HTTP requests when one or a group of events of interest to you occurs, for example, that a withdrawal within the created wallet was successfully completed.\n## Vality Webhooks Events API\nAttention! Only the Webhooks Management API is part of the Vality system and hence this specification. To implement the notification handler, you will need to read the OpenAPI specification [Vality Wallets Webhook Events API](https://vality.github.io/swag-wallets-webhook-events/).\n"
+    },
+    {
+      "name": "Error Codes",
+      "x-displayName": "Error codes",
+      "description": "\n## Withdrawal errors\n\n| Code                   | Description                                                                                                                                                                                         |\n| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |\n| InvalidSenderResource  | Invalid transfer source (entered the number of a non-existent card, missing account, etc.)                                                                                                          |\n| InvalidReceiverResource| Wrong transfer receiver (invalid card number entered, etc.)                                                                                                                                         |\n| InsufficientFunds      | Insufficient funds on the bank card account                                                                                                                                                         |\n| PreauthorizationFailed | Pre-Authorization Rejected (Wrong 3D-Secure Code Entered, Cancel Link Clicked on 3D-Secure Form)                                                                                                    |\n| RejectedByIssuer       | The transfer was rejected by the issuer (prohibitions were established by the country of debiting, a ban on purchases on the Internet, the withdrawal was rejected by the issuer's antifraud, etc.) |\n"
+    }
+  ],
+  "paths": {
+    "/currencies/{currencyID}": {
+      "get": {
+        "operationId": "getCurrency",
+        "summary": "Get currency description",
+        "tags": [
+          "Currencies"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "name": "currencyID",
+            "in": "path",
+            "description": "Currency character code according to [ISO\n4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+            "type": "string",
+            "required": true,
+            "pattern": "^[A-Za-z]{3}$"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Currency found",
+            "schema": {
+              "$ref": "#/definitions/Currency"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/deposits": {
+      "get": {
+        "operationId": "listDeposits",
+        "summary": "Search for deposits",
+        "tags": [
+          "Deposits"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/partyID"
+          },
+          {
+            "name": "walletID",
+            "in": "query",
+            "description": "Identifier of the wallet",
+            "type": "string",
+            "maxLength": 40,
+            "minLength": 1,
+            "required": false
+          },
+          {
+            "name": "depositID",
+            "in": "query",
+            "description": "Identifier of the deposit",
+            "type": "string",
+            "required": false,
+            "maxLength": 50,
+            "minLength": 1
+          },
+          {
+            "name": "sourceID",
+            "in": "query",
+            "description": "Identifier of the funds source",
+            "type": "string",
+            "maxLength": 40,
+            "minLength": 1,
+            "required": false
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string",
+            "enum": [
+              "Pending",
+              "Succeeded",
+              "Failed"
+            ],
+            "required": false
+          },
+          {
+            "name": "createdAtFrom",
+            "in": "query",
+            "description": "Creation date from",
+            "type": "string",
+            "format": "date-time",
+            "required": false
+          },
+          {
+            "name": "createdAtTo",
+            "in": "query",
+            "description": "Creation date to",
+            "type": "string",
+            "format": "date-time",
+            "required": false
+          },
+          {
+            "$ref": "#/parameters/amountFrom"
+          },
+          {
+            "$ref": "#/parameters/amountTo"
+          },
+          {
+            "$ref": "#/parameters/currencyID"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "name": "continuationToken",
+            "in": "query",
+            "required": false,
+            "description": "A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search results",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "continuationToken": {
+                  "description": "A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n",
+                  "type": "string"
+                },
+                "result": {
+                  "description": "Found deposits",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Deposit"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/destinations": {
+      "get": {
+        "operationId": "listDestinations",
+        "summary": "List of destinations",
+        "tags": [
+          "Withdrawals"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/partyID"
+          },
+          {
+            "$ref": "#/parameters/currencyID"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "name": "continuationToken",
+            "in": "query",
+            "required": false,
+            "description": "A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search result",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "continuationToken": {
+                  "description": "A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n",
+                  "type": "string"
+                },
+                "result": {
+                  "description": "Destinations found",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Destination"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "operationId": "createDestination",
+        "summary": "Start a destination creation",
+        "tags": [
+          "Withdrawals"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "name": "destination",
+            "description": "Destination data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Destination"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Destination created",
+            "headers": {
+              "Location": {
+                "description": "The URI of the created destination",
+                "type": "string",
+                "format": "uri"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/Destination"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "409": {
+            "$ref": "#/responses/ConflictRequest"
+          },
+          "422": {
+            "description": "Incorrect destination data",
+            "schema": {
+              "$ref": "#/definitions/InvalidOperationParameters"
+            }
+          }
+        }
+      }
+    },
+    "/destinations/{destinationID}": {
+      "get": {
+        "operationId": "getDestination",
+        "summary": "Get a specific destination",
+        "tags": [
+          "Withdrawals"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/destinationID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Destination found",
+            "schema": {
+              "$ref": "#/definitions/Destination"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/external-ids/destinations/{externalID}": {
+      "get": {
+        "operationId": "getDestinationByExternalID",
+        "summary": "Get a destination by external identifier",
+        "tags": [
+          "Withdrawals"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/externalID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Destination found",
+            "schema": {
+              "$ref": "#/definitions/Destination"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/external-ids/withdrawals/{externalID}": {
+      "get": {
+        "operationId": "getWithdrawalByExternalID",
+        "summary": "Get withdrawal status by external identifier",
+        "tags": [
+          "Withdrawals"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/externalID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Withdrawal found",
+            "schema": {
+              "$ref": "#/definitions/Withdrawal"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/files/{fileID}/download": {
+      "post": {
+        "description": "Get a link to download a file",
+        "tags": [
+          "Downloads"
+        ],
+        "operationId": "downloadFile",
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/fileID"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Data to get file",
+            "schema": {
+              "$ref": "#/definitions/FileDownload"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/reports": {
+      "post": {
+        "description": "Generate a report with the specified type on the identity of the owner for the specified period of time",
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "createReport",
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/partyID"
+          },
+          {
+            "name": "ReportParams",
+            "in": "body",
+            "description": "Report generation options",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ReportParams"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Report created",
+            "schema": {
+              "$ref": "#/definitions/Report"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          }
+        }
+      },
+      "get": {
+        "description": "Get a list of owner identity reports for a period",
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "getReports",
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/partyID"
+          },
+          {
+            "$ref": "#/parameters/fromTime"
+          },
+          {
+            "$ref": "#/parameters/toTime"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Type of reports received",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "withdrawalRegistry"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reports found",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Report"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/reports/{reportID}": {
+      "get": {
+        "description": "Get a report for a given identifier",
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "getReport",
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/partyID"
+          },
+          {
+            "$ref": "#/parameters/reportID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Report found",
+            "schema": {
+              "$ref": "#/definitions/Report"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/residences/{residence}": {
+      "get": {
+        "operationId": "getResidence",
+        "summary": "Get a description of the residence region",
+        "tags": [
+          "Residences"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "name": "residence",
+            "in": "path",
+            "description": "The residence within which the services are provided,\n[ISO 3166-1] country or region code (https://en.wikipedia.org/wiki/ISO_3166-1)\n",
+            "type": "string",
+            "pattern": "^[A-Za-z]{3}$",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Residence region found",
+            "schema": {
+              "$ref": "#/definitions/Residence"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/wallets": {
+      "get": {
+        "operationId": "listWallets",
+        "summary": "List the wallets",
+        "tags": [
+          "Wallets"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/partyID"
+          },
+          {
+            "$ref": "#/parameters/currencyID"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "name": "continuationToken",
+            "in": "query",
+            "required": false,
+            "description": "A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search result",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "continuationToken": {
+                  "description": "A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n",
+                  "type": "string"
+                },
+                "result": {
+                  "description": "Wallets found",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Wallet"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/wallets/{walletID}": {
+      "get": {
+        "operationId": "getWallet",
+        "summary": "Get wallet data",
+        "tags": [
+          "Wallets"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/partyID"
+          },
+          {
+            "$ref": "#/parameters/walletID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Wallet found",
+            "schema": {
+              "$ref": "#/definitions/Wallet"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/wallets/{walletID}/account": {
+      "get": {
+        "operationId": "getWalletAccount",
+        "summary": "Get account status",
+        "tags": [
+          "Wallets"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/partyID"
+          },
+          {
+            "$ref": "#/parameters/walletID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Wallet account received",
+            "schema": {
+              "$ref": "#/definitions/WalletAccount"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/wallets/{walletID}/cash-limits": {
+      "get": {
+        "description": "Get wallet cash limits",
+        "operationId": "getWalletCashLimits",
+        "tags": [
+          "Wallets"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/walletID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cash limits found. Each item is scoped to a specific withdrawal method.\nIf a withdrawal method is absent in the list, that method is not allowed for the wallet.\n",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/WalletCashLimit"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/wallets/{walletID}/withdrawal-methods": {
+      "get": {
+        "summary": "Get withdrawal methods available for wallet",
+        "tags": [
+          "Wallets"
+        ],
+        "operationId": "getWithdrawalMethods",
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/partyID"
+          },
+          {
+            "$ref": "#/parameters/walletID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Methods found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "methods": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/WithdrawalMethod"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/webhooks": {
+      "post": {
+        "description": "Create a new webhook.",
+        "tags": [
+          "Webhooks"
+        ],
+        "operationId": "createWebhook",
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "name": "webhookParams",
+            "description": "Parameters of the created webhook",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Webhook"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Webhook created",
+            "schema": {
+              "$ref": "#/definitions/Webhook"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "422": {
+            "description": "Invalid data for webhook creation",
+            "schema": {
+              "$ref": "#/definitions/InvalidOperationParameters"
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Get list of existing webhooks.",
+        "tags": [
+          "Webhooks"
+        ],
+        "operationId": "getWebhooks",
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/partyID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of webhooks",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Webhook"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "422": {
+            "description": "Invalid data for obtaining webhooks",
+            "schema": {
+              "$ref": "#/definitions/InvalidOperationParameters"
+            }
+          }
+        }
+      }
+    },
+    "/webhooks/{webhookID}": {
+      "get": {
+        "description": "Get a webhook by its identifier.",
+        "tags": [
+          "Webhooks"
+        ],
+        "operationId": "getWebhookByID",
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/webhookID"
+          },
+          {
+            "$ref": "#/parameters/partyID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Webhook's data",
+            "schema": {
+              "$ref": "#/definitions/Webhook"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "422": {
+            "description": "Invalid data for obtaining a webhook",
+            "schema": {
+              "$ref": "#/definitions/InvalidOperationParameters"
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Remove the specified webhook.",
+        "tags": [
+          "Webhooks"
+        ],
+        "operationId": "deleteWebhookByID",
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/webhookID"
+          },
+          {
+            "$ref": "#/parameters/partyID"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Webhook successfully removed"
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          },
+          "422": {
+            "description": "Invalid data for removing webhook",
+            "schema": {
+              "$ref": "#/definitions/InvalidOperationParameters"
+            }
+          }
+        }
+      }
+    },
+    "/withdrawal-quotes": {
+      "post": {
+        "operationId": "createQuote",
+        "summary": "Quote preparation",
+        "description": "Fixing the exchange rate for making withdrawals with conversion",
+        "tags": [
+          "Withdrawals"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "name": "withdrawalQuoteParams",
+            "description": "Quote data for withdrawal",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/WithdrawalQuoteParams"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Received quote",
+            "schema": {
+              "$ref": "#/definitions/WithdrawalQuote"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "409": {
+            "$ref": "#/responses/ConflictRequest"
+          },
+          "422": {
+            "description": "Invalid data for getting a quote",
+            "schema": {
+              "$ref": "#/definitions/InvalidOperationParameters"
+            }
+          }
+        }
+      }
+    },
+    "/withdrawals": {
+      "get": {
+        "operationId": "listWithdrawals",
+        "summary": "Search of withdrawals",
+        "tags": [
+          "Withdrawals"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/partyID"
+          },
+          {
+            "name": "walletID",
+            "in": "query",
+            "description": "Identifier of the wallet",
+            "type": "string",
+            "maxLength": 40,
+            "minLength": 1,
+            "required": false
+          },
+          {
+            "name": "withdrawalID",
+            "in": "query",
+            "description": "Identifier of the funds withdrawal",
+            "type": "string",
+            "required": false,
+            "maxLength": 40,
+            "minLength": 1
+          },
+          {
+            "name": "externalID",
+            "in": "query",
+            "description": "Identifier of the external's ID",
+            "type": "string",
+            "required": false,
+            "maxLength": 40,
+            "minLength": 1
+          },
+          {
+            "name": "destinationID",
+            "in": "query",
+            "description": "Identifier of the destination",
+            "type": "string",
+            "maxLength": 40,
+            "minLength": 1,
+            "required": false
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "type": "string",
+            "enum": [
+              "Pending",
+              "Succeeded",
+              "Failed"
+            ],
+            "required": false
+          },
+          {
+            "name": "createdAtFrom",
+            "in": "query",
+            "description": "Creation date range start",
+            "type": "string",
+            "format": "date-time",
+            "required": false
+          },
+          {
+            "name": "createdAtTo",
+            "in": "query",
+            "description": "Creation date range end",
+            "type": "string",
+            "format": "date-time",
+            "required": false
+          },
+          {
+            "$ref": "#/parameters/amountFrom"
+          },
+          {
+            "$ref": "#/parameters/amountTo"
+          },
+          {
+            "$ref": "#/parameters/currencyID"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "name": "continuationToken",
+            "in": "query",
+            "required": false,
+            "description": "A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search result",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "continuationToken": {
+                  "description": "A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n",
+                  "type": "string"
+                },
+                "result": {
+                  "description": "Withdrawals found",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Withdrawal"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "operationId": "createWithdrawal",
+        "summary": "Create withdrawal",
+        "tags": [
+          "Withdrawals"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "name": "withdrawal",
+            "description": "Withdrawal data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/WithdrawalParameters"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Withdrawal started",
+            "headers": {
+              "Location": {
+                "description": "URI of started withdrawal",
+                "type": "string",
+                "format": "uri"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/Withdrawal"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "409": {
+            "$ref": "#/responses/ConflictRequest"
+          },
+          "422": {
+            "description": "Invalid data for withdrawal",
+            "schema": {
+              "$ref": "#/definitions/InvalidOperationParameters"
+            }
+          }
+        }
+      }
+    },
+    "/withdrawals/{withdrawalID}": {
+      "get": {
+        "operationId": "getWithdrawal",
+        "summary": "Get withdrawal status",
+        "tags": [
+          "Withdrawals"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/withdrawalID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Withdrawal found",
+            "schema": {
+              "$ref": "#/definitions/Withdrawal"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/withdrawals/{withdrawalID}/events": {
+      "get": {
+        "operationId": "pollWithdrawalEvents",
+        "summary": "Request withdrawal events",
+        "tags": [
+          "Withdrawals"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/withdrawalID"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/eventCursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Events found",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/WithdrawalEvent"
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/withdrawals/{withdrawalID}/events/{eventID}": {
+      "get": {
+        "operationId": "getWithdrawalEvents",
+        "summary": "Get an event of withdrawal",
+        "tags": [
+          "Withdrawals"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "$ref": "#/parameters/deadline"
+          },
+          {
+            "$ref": "#/parameters/withdrawalID"
+          },
+          {
+            "$ref": "#/parameters/eventID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Event found",
+            "schema": {
+              "$ref": "#/definitions/WithdrawalEvent"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Asset": {
+      "description": "The amount of money\n",
+      "type": "object",
+      "required": [
+        "amount",
+        "currency"
+      ],
+      "properties": {
+        "amount": {
+          "description": "The amount of money in minor units, for example, in cents\n",
+          "type": "integer",
+          "format": "int64",
+          "example": 1430000
+        },
+        "currency": {
+          "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "example": "USD"
+        }
+      }
+    },
+    "BankCardDestinationResource": {
+      "description": "Card",
+      "allOf": [
+        {
+          "$ref": "#/definitions/DestinationResource"
+        },
+        {
+          "$ref": "#/definitions/SecuredBankCard"
+        }
+      ]
+    },
+    "BankCardReceiverResource": {
+      "description": "Card",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ReceiverResource"
+        },
+        {
+          "$ref": "#/definitions/SecuredBankCard"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "paymentSystem": {
+              "description": "Payment system.\n\nThe set of systems available for making withdrawals can be found by calling the corresponding [operation](#operation/getWithdrawalMethods).\n",
+              "type": "string",
+              "readOnly": true
+            }
+          }
+        }
+      ]
+    },
+    "BankCardReceiverResourceParams": {
+      "description": "Банковская карта",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ReceiverResourceParams"
+        },
+        {
+          "$ref": "#/definitions/SecuredBankCard"
+        }
+      ]
+    },
+    "BankCardSenderResource": {
+      "description": "Банковская карта",
+      "allOf": [
+        {
+          "$ref": "#/definitions/SenderResource"
+        },
+        {
+          "$ref": "#/definitions/SecuredBankCard"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "paymentSystem": {
+              "description": "Payment system.\n\nThe set of systems available for making withdrawals can be found by calling the corresponding [operation](#operation/getWithdrawalMethods).\n",
+              "type": "string",
+              "readOnly": true
+            }
+          }
+        }
+      ]
+    },
+    "BankCardSenderResourceParams": {
+      "description": "Card",
+      "allOf": [
+        {
+          "$ref": "#/definitions/SenderResourceParams"
+        },
+        {
+          "$ref": "#/definitions/SecuredBankCard"
+        },
+        {
+          "type": "object",
+          "required": [
+            "authData"
+          ],
+          "properties": {
+            "authData": {
+              "description": "Authorization data received when saving the card",
+              "type": "string",
+              "maxLength": 1000
+            }
+          }
+        }
+      ]
+    },
+    "BrowserGetRequest": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BrowserRequest"
+        },
+        {
+          "type": "object",
+          "required": [
+            "uriTemplate"
+          ],
+          "properties": {
+            "uriTemplate": {
+              "description": "URL value template for browser navigation\n\nThe template is represented according to the standard\n[RFC6570](https://tools.ietf.org/html/rfc6570).\n",
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "BrowserPostRequest": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BrowserRequest"
+        },
+        {
+          "type": "object",
+          "required": [
+            "uriTemplate",
+            "form"
+          ],
+          "properties": {
+            "uriTemplate": {
+              "description": "URL value template for form submission\n\nThe template is represented according to the standard\n[RFC6570](https://tools.ietf.org/html/rfc6570).\n",
+              "type": "string"
+            },
+            "form": {
+              "$ref": "#/definitions/UserInteractionForm"
+            }
+          }
+        }
+      ]
+    },
+    "BrowserRequest": {
+      "type": "object",
+      "discriminator": "requestType",
+      "required": [
+        "requestType"
+      ],
+      "properties": {
+        "requestType": {
+          "description": "Type of browser operation",
+          "type": "string"
+        }
+      }
+    },
+    "CashLimitBound": {
+      "description": "Cash limit bound.",
+      "type": "object",
+      "required": [
+        "amount",
+        "inclusive"
+      ],
+      "properties": {
+        "amount": {
+          "type": "integer",
+          "format": "int64",
+          "minimum": 0
+        },
+        "inclusive": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ContactInfo": {
+      "description": "Contact details",
+      "type": "object",
+      "properties": {
+        "email": {
+          "description": "Email address",
+          "type": "string",
+          "format": "email",
+          "maxLength": 100
+        },
+        "phoneNumber": {
+          "description": "Mobile phone number with international prefix according to\n[E.164](https://en.wikipedia.org/wiki/E.164).\n",
+          "type": "string",
+          "format": "^\\+\\d{4,15}$"
+        }
+      }
+    },
+    "ContinuationToken": {
+      "description": "A token signalling that only part of the data has been transmitted in the response.\nTo retrieve the next part, you need repeat the request to the service again, specifying the same set of conditions and the received token.\nIf there is no token, the last piece of data is received.\n",
+      "type": "string"
+    },
+    "CryptoCurrency": {
+      "description": "Cryptocurrency.\n\nThe set of cryptocurrencies available for withdrawals can be found out by calling the appropriate [operation](#operation/getWithdrawalMethods).\n",
+      "type": "string",
+      "example": "BTC"
+    },
+    "CryptoWallet": {
+      "description": "Cryptocurrency wallet details",
+      "type": "object",
+      "required": [
+        "id",
+        "currency"
+      ],
+      "properties": {
+        "id": {
+          "description": "Identifier (aka address) of a cryptocurrency wallet",
+          "type": "string",
+          "minLength": 16,
+          "maxLength": 256,
+          "example": "zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQ"
+        },
+        "currency": {
+          "description": "Cryptocurrency.\n\nThe set of cryptocurrencies available for withdrawals can be found out by calling the appropriate [operation](#operation/getWithdrawalMethods).\n",
+          "type": "string",
+          "example": "BTC"
+        }
+      }
+    },
+    "CryptoWalletDestinationResource": {
+      "description": "Cryptocurrency funds",
+      "allOf": [
+        {
+          "$ref": "#/definitions/DestinationResource"
+        },
+        {
+          "$ref": "#/definitions/CryptoWallet"
+        }
+      ]
+    },
+    "Currency": {
+      "description": "Currency description",
+      "type": "object",
+      "required": [
+        "id",
+        "numericCode",
+        "name",
+        "exponent"
+      ],
+      "properties": {
+        "id": {
+          "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "example": "USD"
+        },
+        "numericCode": {
+          "description": "Digital currency code according to\n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm)\n",
+          "type": "string",
+          "pattern": "^[0-9]{3}$",
+          "example": "840"
+        },
+        "name": {
+          "description": "Human readable currency name\n",
+          "type": "string",
+          "example": "United States Dollar"
+        },
+        "sign": {
+          "description": "Currency unit sign\n",
+          "type": "string",
+          "example": "$"
+        },
+        "exponent": {
+          "description": "The number of acceptable decimal places in the amount of funds, \nin which the number of minor monetary units can be indicated\n",
+          "type": "integer",
+          "minimum": 0,
+          "example": 2
+        }
+      }
+    },
+    "CurrencyID": {
+      "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "example": "USD"
+    },
+    "Deposit": {
+      "description": "Deposit data",
+      "allOf": [
+        {
+          "type": "object",
+          "required": [
+            "wallet",
+            "source",
+            "body",
+            "id"
+          ],
+          "properties": {
+            "id": {
+              "description": "Deposit identifier",
+              "type": "string",
+              "example": "tZ0jUmlsV0",
+              "readOnly": true
+            },
+            "createdAt": {
+              "description": "Deposit start date and time",
+              "type": "string",
+              "format": "date-time",
+              "readOnly": true
+            },
+            "wallet": {
+              "description": "Identifier of the wallet",
+              "type": "string",
+              "example": "10068321"
+            },
+            "source": {
+              "description": "Funds source identifier",
+              "type": "string",
+              "example": "107498"
+            },
+            "body": {
+              "description": "The amount of funds received",
+              "type": "object",
+              "required": [
+                "amount",
+                "currency"
+              ],
+              "properties": {
+                "amount": {
+                  "description": "The amount of money in minor units, for example, in cents\n",
+                  "type": "integer",
+                  "format": "int64",
+                  "example": 1430000
+                },
+                "currency": {
+                  "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+                  "type": "string",
+                  "pattern": "^[A-Z]{3}$",
+                  "example": "USD"
+                }
+              }
+            },
+            "fee": {
+              "description": "Fee amount",
+              "type": "object",
+              "required": [
+                "amount",
+                "currency"
+              ],
+              "properties": {
+                "amount": {
+                  "description": "The amount of money in minor units, for example, in cents\n",
+                  "type": "integer",
+                  "format": "int64",
+                  "example": 1430000
+                },
+                "currency": {
+                  "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+                  "type": "string",
+                  "pattern": "^[A-Z]{3}$",
+                  "example": "USD"
+                }
+              }
+            },
+            "externalID": {
+              "description": "The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n",
+              "type": "string",
+              "example": "10036274"
+            },
+            "desc": {
+              "description": "Deposit information",
+              "type": "string"
+            }
+          }
+        },
+        {
+          "$ref": "#/definitions/DepositStatus"
+        }
+      ]
+    },
+    "DepositFailure": {
+      "type": "object",
+      "required": [
+        "code"
+      ],
+      "properties": {
+        "code": {
+          "description": "Deposit error code",
+          "type": "string"
+        },
+        "subError": {
+          "$ref": "#/definitions/SubFailure"
+        }
+      }
+    },
+    "DepositID": {
+      "description": "Deposit identifier",
+      "type": "string",
+      "example": "tZ0jUmlsV0"
+    },
+    "DepositStatus": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "description": "Status of deposit.\n\n| Meaning     | Explanation                                      |\n| ----------- | ------------------------------------------------ |\n| `Pending`   | Deposit in progress                              |\n| `Succeeded` | Deposit of funds made successfully               |\n| `Failed`    | Deposit of funds ended in failure                |\n",
+          "type": "string",
+          "enum": [
+            "Pending",
+            "Succeeded",
+            "Failed"
+          ],
+          "readOnly": true
+        },
+        "failure": {
+          "description": "> If `status` == `Failed`\n\nExplanation of the reason for failure\n",
+          "readOnly": true,
+          "type": "object",
+          "required": [
+            "code"
+          ],
+          "properties": {
+            "code": {
+              "description": "Deposit error code",
+              "type": "string"
+            },
+            "subError": {
+              "$ref": "#/definitions/SubFailure"
+            }
+          }
+        }
+      }
+    },
+    "Destination": {
+      "description": "Destination data",
+      "type": "object",
+      "required": [
+        "name",
+        "party",
+        "currency",
+        "resource",
+        "realm"
+      ],
+      "properties": {
+        "id": {
+          "description": "Destination identifier",
+          "type": "string",
+          "example": "107498",
+          "readOnly": true
+        },
+        "name": {
+          "description": "A human-readable name for the destination by which it is easily recognizable\n",
+          "type": "string",
+          "example": "Squarey plastic thingy"
+        },
+        "realm": {
+          "description": "Realm of destination.\n",
+          "type": "string",
+          "enum": [
+            "Live",
+            "Test"
+          ]
+        },
+        "createdAt": {
+          "description": "Date and time of creation of the destination of the funds",
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "isBlocked": {
+          "description": "Is the destination blocked?",
+          "type": "boolean",
+          "readOnly": true,
+          "example": false
+        },
+        "party": {
+          "description": "The participant's unique identifier within the system.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "currency": {
+          "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "example": "USD"
+        },
+        "resource": {
+          "$ref": "#/definitions/DestinationResource"
+        },
+        "additionalAuthData": {
+          "$ref": "#/definitions/DestinationAuthData"
+        },
+        "metadata": {
+          "description": "Some non-transparent for system set of data associated with this destination\n",
+          "type": "object",
+          "example": {
+            "color_hint": "olive-green"
+          }
+        },
+        "externalID": {
+          "description": "The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n",
+          "type": "string",
+          "example": "10036274"
+        }
+      }
+    },
+    "DestinationAuthData": {
+      "description": "Destination auth data to make withdrawals",
+      "type": "object",
+      "discriminator": "type",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "description": "The auth data type of the destination.\n",
+          "type": "string",
+          "enum": [
+            "SenderReceiverDestinationAuthData"
+          ]
+        }
+      }
+    },
+    "DestinationID": {
+      "description": "Destination identifier",
+      "type": "string",
+      "example": "107498"
+    },
+    "DestinationResource": {
+      "description": "Destination resource used to make withdrawals",
+      "type": "object",
+      "discriminator": "type",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "description": "The resource type of the destination.\n\nSee [Vality Withdrawal Resource API](?api/payres/swagger.yaml).\n",
+          "type": "string",
+          "enum": [
+            "BankCardDestinationResource",
+            "CryptoWalletDestinationResource",
+            "DigitalWalletDestinationResource"
+          ]
+        }
+      }
+    },
+    "DestinationsTopic": {
+      "description": "A coverage area that includes events by asset destinations within a particular wallet\n",
+      "allOf": [
+        {
+          "$ref": "#/definitions/WebhookScope"
+        },
+        {
+          "type": "object",
+          "required": [
+            "eventTypes"
+          ],
+          "properties": {
+            "eventTypes": {
+              "description": "Set of event types of the destination, which should be notified",
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "DestinationCreated",
+                  "DestinationUnauthorized",
+                  "DestinationAuthorized"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "DigitalWallet": {
+      "description": "Digital wallet data",
+      "type": "object",
+      "required": [
+        "id",
+        "provider"
+      ],
+      "properties": {
+        "id": {
+          "description": "Digital wallet ID",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "example": "zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQ"
+        },
+        "accountName": {
+          "description": "Name of the owner of the personal account to which the withdrawal will be made",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "accountIdentityNumber": {
+          "description": "National identification number of the wallet owner",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100
+        },
+        "provider": {
+          "description": "Digital wallet provider.\n\nThe set of providers available for making withdrawals can be found by calling\ncorresponding [operation](#operation/getWithdrawalMethods).\n",
+          "type": "string",
+          "example": "Paypal"
+        },
+        "token": {
+          "description": "A string containing authorization data for transactions on this digital wallet",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000,
+          "example": " eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+        }
+      }
+    },
+    "DigitalWalletDestinationResource": {
+      "description": "Digital wallet",
+      "allOf": [
+        {
+          "$ref": "#/definitions/DestinationResource"
+        },
+        {
+          "$ref": "#/definitions/DigitalWallet"
+        }
+      ]
+    },
+    "DigitalWalletProvider": {
+      "description": "Digital wallet provider.\n\nThe set of providers available for making withdrawals can be found by calling\ncorresponding [operation](#operation/getWithdrawalMethods).\n",
+      "type": "string",
+      "example": "Paypal"
+    },
+    "InvalidOperationParameters": {
+      "description": "Invalid input data for operation",
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "No such identity challenge type: fms.\n"
+        }
+      }
+    },
+    "ExternalID": {
+      "description": "The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n",
+      "type": "string",
+      "example": "10036274"
+    },
+    "FileDownload": {
+      "type": "object",
+      "required": [
+        "url",
+        "expiresAt"
+      ],
+      "properties": {
+        "url": {
+          "description": "URL of the file",
+          "type": "string"
+        },
+        "expiresAt": {
+          "description": "The date and time by which the link will be valid",
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "GenericProvider": {
+      "description": "Withdrawal service provider.\n\nThe set of providers available for making withdrawals can be found by calling\ncorresponding [operation](#operation/getWithdrawalMethods).\n",
+      "type": "string",
+      "example": "YourBankName"
+    },
+    "GrantToken": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4000,
+      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n"
+    },
+    "BadRequest": {
+      "type": "object",
+      "required": [
+        "errorType"
+      ],
+      "properties": {
+        "errorType": {
+          "description": "Error type",
+          "type": "string",
+          "enum": [
+            "SchemaViolated",
+            "NotFound",
+            "WrongType",
+            "NotInRange",
+            "WrongSize",
+            "WrongLength",
+            "WrongArray",
+            "NoMatch",
+            "InvalidResourceToken",
+            "InvalidToken"
+          ],
+          "example": "NotFound"
+        },
+        "name": {
+          "description": "Name or identifier of message element containing invalid data",
+          "type": "string",
+          "example": "X-Request-ID"
+        },
+        "description": {
+          "description": "Explanation of why the data is invalid",
+          "type": "string",
+          "example": "Required parameter was not sent"
+        }
+      }
+    },
+    "ConflictRequest": {
+      "type": "object",
+      "properties": {
+        "externalID": {
+          "description": "The passed value of `externalID` for which a request parameter conflict was detected",
+          "type": "string",
+          "example": "10036274"
+        },
+        "id": {
+          "description": "Identifier of the entity, created by a previous query with the specified `externalID'",
+          "type": "string"
+        },
+        "message": {
+          "description": "Human-readable description of the error",
+          "type": "string"
+        }
+      }
+    },
+    "BankCardPaymentSystem": {
+      "description": "Payment system.\n\nThe set of systems available for making withdrawals can be found by calling the corresponding [operation](#operation/getWithdrawalMethods).\n",
+      "type": "string"
+    },
+    "SecuredBankCard": {
+      "description": "Secure bank card details",
+      "type": "object",
+      "required": [
+        "token"
+      ],
+      "properties": {
+        "token": {
+          "description": "Token identifying the original card data",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000,
+          "example": "zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQg9xMkh"
+        },
+        "bin": {
+          "description": "[Identification number][1] of the card issuing bank\n\n[1]: https://en.wikipedia.org/wiki/Payment_card_number#Issuer_identification_number_(IIN)\n",
+          "type": "string",
+          "pattern": "^\\d{6,8}$",
+          "example": "424242",
+          "readOnly": true
+        },
+        "lastDigits": {
+          "description": "Card last digits",
+          "type": "string",
+          "pattern": "^\\d{2,4}$",
+          "example": "4242",
+          "readOnly": true
+        }
+      }
+    },
+    "PartyID": {
+      "description": "The participant's unique identifier within the system.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 40
+    },
+    "QuoteParameters": {
+      "description": "Quote request parameters",
+      "type": "object",
+      "required": [
+        "sender",
+        "receiver",
+        "partyID",
+        "body"
+      ],
+      "properties": {
+        "sender": {
+          "$ref": "#/definitions/SenderResource"
+        },
+        "receiver": {
+          "$ref": "#/definitions/ReceiverResource"
+        },
+        "partyID": {
+          "description": "The participant's unique identifier within the system.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "body": {
+          "description": "Transaction amount",
+          "type": "object",
+          "required": [
+            "amount",
+            "currency"
+          ],
+          "properties": {
+            "amount": {
+              "description": "The amount of money in minor units, for example, in cents\n",
+              "type": "integer",
+              "format": "int64",
+              "example": 1430000
+            },
+            "currency": {
+              "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+              "type": "string",
+              "pattern": "^[A-Z]{3}$",
+              "example": "USD"
+            }
+          }
+        }
+      }
+    },
+    "ReceiverResource": {
+      "description": "The beneficiary's resource used to make the transfers",
+      "type": "object",
+      "discriminator": "type",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "description": "The resource type of the receiver of the funds.\n\nSee [Vality Withdrawal Resource API](?api/payres/swagger.yaml).\n",
+          "type": "string",
+          "enum": [
+            "BankCardReceiverResource"
+          ]
+        }
+      }
+    },
+    "ReceiverResourceParams": {
+      "description": "Receiver resource parameters",
+      "type": "object",
+      "discriminator": "type",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "description": "The resource type of the receiver.\n\nSee [Vality Withdrawal Resource API](?api/payres/swagger.yaml).\n",
+          "type": "string",
+          "enum": [
+            "BankCardReceiverResourceParams"
+          ]
+        }
+      }
+    },
+    "Redirect": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/UserInteraction"
+        },
+        {
+          "type": "object",
+          "required": [
+            "request"
+          ],
+          "properties": {
+            "request": {
+              "$ref": "#/definitions/BrowserRequest"
+            }
+          }
+        }
+      ]
+    },
+    "Report": {
+      "type": "object",
+      "required": [
+        "id",
+        "createdAt",
+        "fromTime",
+        "toTime",
+        "status",
+        "type",
+        "files"
+      ],
+      "properties": {
+        "id": {
+          "description": "Report identifier",
+          "type": "integer",
+          "format": "int64"
+        },
+        "createdAt": {
+          "description": "Date and time of creation",
+          "type": "string",
+          "format": "date-time"
+        },
+        "fromTime": {
+          "description": "Date and time of the start of the period",
+          "type": "string",
+          "format": "date-time"
+        },
+        "toTime": {
+          "description": "Date and time of the end of period",
+          "type": "string",
+          "format": "date-time"
+        },
+        "status": {
+          "description": "Report generation status",
+          "type": "string",
+          "enum": [
+            "pending",
+            "created",
+            "canceled"
+          ]
+        },
+        "type": {
+          "description": "Report type",
+          "type": "string",
+          "enum": [
+            "withdrawalRegistry"
+          ]
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "description": "File identifier",
+                "type": "string",
+                "maxLength": 40,
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "ReportParams": {
+      "type": "object",
+      "required": [
+        "reportType",
+        "fromTime",
+        "toTime"
+      ],
+      "properties": {
+        "reportType": {
+          "description": "Type of report",
+          "type": "string",
+          "enum": [
+            "withdrawalRegistry"
+          ]
+        },
+        "fromTime": {
+          "description": "Start of the time period",
+          "type": "string",
+          "format": "date-time"
+        },
+        "toTime": {
+          "description": "End of the time period",
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "Residence": {
+      "description": "Description of the region of residence",
+      "type": "object",
+      "required": [
+        "id",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "description": "Residence symbol code by standard [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)\n",
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "example": "RUS"
+        },
+        "name": {
+          "description": "Human-readable name of the region of residence\n",
+          "type": "string",
+          "example": "The United States of America"
+        },
+        "flag": {
+          "description": "Residence region flag\n",
+          "type": "string",
+          "example": "🇺🇸"
+        }
+      }
+    },
+    "ResidenceID": {
+      "description": "Residence symbol code by standard [ISO 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)\n",
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "example": "RUS"
+    },
+    "SenderReceiverDestinationAuthData": {
+      "description": "Both sender and receiver auth data refs",
+      "allOf": [
+        {
+          "$ref": "#/definitions/DestinationAuthData"
+        },
+        {
+          "type": "object",
+          "required": [
+            "senderToken",
+            "receiverToken"
+          ],
+          "properties": {
+            "senderToken": {
+              "description": "Token identifying the sender auth data",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1000,
+              "example": "zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQg9xMkh"
+            },
+            "receiverToken": {
+              "description": "Token identifying the receiver auth data",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1000,
+              "example": "zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQg9xMkh"
+            }
+          }
+        }
+      ]
+    },
+    "SenderResource": {
+      "description": "The sender resource used to make transfers",
+      "type": "object",
+      "discriminator": "type",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "description": "The resource type of the sender of the funds.\n\nSee [Vality Withdrawal Resource API](?api/payres/swagger.yaml).\n",
+          "type": "string",
+          "enum": [
+            "BankCardSenderResource"
+          ]
+        }
+      }
+    },
+    "SenderResourceParams": {
+      "description": "Fund sender resource settings",
+      "type": "object",
+      "discriminator": "type",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "description": "The resource type of the sender of the funds.\n\nSee [Vality Withdrawal Resource API](?api/payres/swagger.yaml).\n",
+          "type": "string",
+          "enum": [
+            "BankCardSenderResourceParams"
+          ]
+        }
+      }
+    },
+    "SourceID": {
+      "description": "Funds source identifier",
+      "type": "string",
+      "example": "107498"
+    },
+    "SubFailure": {
+      "description": "Detailed description of the error\n",
+      "type": "object",
+      "required": [
+        "code"
+      ],
+      "properties": {
+        "code": {
+          "description": "Details of the error code",
+          "type": "string"
+        },
+        "subError": {
+          "$ref": "#/definitions/SubFailure"
+        }
+      }
+    },
+    "UserInteraction": {
+      "type": "object",
+      "discriminator": "interactionType",
+      "required": [
+        "interactionType"
+      ],
+      "properties": {
+        "interactionType": {
+          "description": "Type of interaction with the user",
+          "type": "string"
+        }
+      }
+    },
+    "UserInteractionChange": {
+      "type": "object",
+      "discriminator": "changeType",
+      "required": [
+        "changeType"
+      ],
+      "properties": {
+        "changeType": {
+          "description": "Type of change in user interaction.",
+          "type": "string",
+          "enum": [
+            "UserInteractionCreated",
+            "UserInteractionFinished"
+          ]
+        }
+      }
+    },
+    "UserInteractionCreated": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/UserInteractionChange"
+        },
+        {
+          "type": "object",
+          "required": [
+            "userInteraction"
+          ],
+          "properties": {
+            "userInteraction": {
+              "$ref": "#/definitions/UserInteraction"
+            }
+          }
+        }
+      ]
+    },
+    "UserInteractionFinished": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/UserInteractionChange"
+        }
+      ]
+    },
+    "UserInteractionForm": {
+      "description": "Browser submission form",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "key",
+          "template"
+        ],
+        "properties": {
+          "key": {
+            "description": "The value of the key of the form element to be send by means of browser\n",
+            "type": "string"
+          },
+          "template": {
+            "description": "The template for the form element value\nThe template is presented according to the standard\n[RFC6570](https://tools.ietf.org/html/rfc6570).\n",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Wallet": {
+      "description": "Wallet details",
+      "type": "object",
+      "required": [
+        "name",
+        "party",
+        "currency"
+      ],
+      "properties": {
+        "id": {
+          "description": "Identifier of the wallet",
+          "type": "string",
+          "example": "10068321",
+          "readOnly": true
+        },
+        "name": {
+          "description": "Human-readable name of the wallet, by which it is easy to recognize",
+          "type": "string",
+          "example": "Worldwide PHP Awareness Initiative"
+        },
+        "isBlocked": {
+          "description": "Is the wallet blocked?",
+          "type": "boolean",
+          "readOnly": true,
+          "example": false
+        },
+        "party": {
+          "description": "The participant's unique identifier within the system.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "currency": {
+          "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "example": "USD"
+        }
+      }
+    },
+    "WalletAccount": {
+      "description": "Wallet account status",
+      "type": "object",
+      "required": [
+        "own",
+        "available"
+      ],
+      "properties": {
+        "own": {
+          "description": "Own funds\n",
+          "type": "object",
+          "required": [
+            "amount",
+            "currency"
+          ],
+          "properties": {
+            "amount": {
+              "description": "The amount of money in minor units, for example, in cents\n",
+              "type": "integer",
+              "format": "int64",
+              "example": 1430000
+            },
+            "currency": {
+              "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+              "type": "string",
+              "pattern": "^[A-Z]{3}$",
+              "example": "USD"
+            }
+          }
+        },
+        "available": {
+          "description": "Funds available for use. Usually equal to own funds\nminus the sum of all pending transactions\n",
+          "type": "object",
+          "required": [
+            "amount",
+            "currency"
+          ],
+          "properties": {
+            "amount": {
+              "description": "The amount of money in minor units, for example, in cents\n",
+              "type": "integer",
+              "format": "int64",
+              "example": 1430000
+            },
+            "currency": {
+              "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+              "type": "string",
+              "pattern": "^[A-Z]{3}$",
+              "example": "USD"
+            }
+          },
+          "example": {
+            "amount": 1200000,
+            "currency": "USD"
+          }
+        }
+      }
+    },
+    "WalletCashLimit": {
+      "type": "object",
+      "required": [
+        "currency",
+        "withdrawalMethod",
+        "lowerBound",
+        "upperBound"
+      ],
+      "properties": {
+        "currency": {
+          "$ref": "#/definitions/CurrencyID"
+        },
+        "withdrawalMethod": {
+          "$ref": "#/definitions/WithdrawalMethod"
+        },
+        "lowerBound": {
+          "$ref": "#/definitions/CashLimitBound"
+        },
+        "upperBound": {
+          "$ref": "#/definitions/CashLimitBound"
+        }
+      }
+    },
+    "WalletID": {
+      "description": "Identifier of the wallet",
+      "type": "string",
+      "example": "10068321"
+    },
+    "WalletName": {
+      "description": "Human-readable name of the wallet, by which it is easy to recognize",
+      "type": "string",
+      "example": "Worldwide PHP Awareness Initiative"
+    },
+    "Webhook": {
+      "type": "object",
+      "required": [
+        "partyID",
+        "scope",
+        "url"
+      ],
+      "properties": {
+        "id": {
+          "description": "Identifier of the webhook\n",
+          "type": "string",
+          "readOnly": true
+        },
+        "partyID": {
+          "description": "The participant's unique identifier within the system.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "active": {
+          "description": "Is notification delivery currently enabled?\n",
+          "type": "boolean",
+          "readOnly": true
+        },
+        "scope": {
+          "$ref": "#/definitions/WebhookScope"
+        },
+        "url": {
+          "description": "The URL that will receive notifications of events that have occurred\n",
+          "type": "string",
+          "format": "uri",
+          "maxLength": 1000
+        },
+        "publicKey": {
+          "description": "The content of the public key used to check the authoritativeness of\nnotifications coming to `url`\n",
+          "type": "string",
+          "format": "hexadecimal",
+          "readOnly": true,
+          "example": "MIGJAoGBAM1fmNUvezts3yglTdhXuqG7OhHxQtDFA+Ss//YuUGjw5ossDbEMoS+SIFuYZ/UL9Xg0rEHNRSbmf48OK+mz0FobEtbji8MADayzGfFopXsfRFa7MVy3Uhu5jBDpLsN3DyJapAkK0TAYINlZXxVjDwxRNheTvC+xub5WNdiwc28fAgMBAAE="
+        }
+      }
+    },
+    "WebhookScope": {
+      "description": "The scope of a webhook, limiting the set of event types,\nfor which the notifications should be sent\n",
+      "type": "object",
+      "discriminator": "topic",
+      "required": [
+        "topic"
+      ],
+      "properties": {
+        "topic": {
+          "description": "Subject of notifications",
+          "type": "string",
+          "enum": [
+            "WithdrawalsTopic",
+            "DestinationsTopic"
+          ]
+        }
+      }
+    },
+    "Withdrawal": {
+      "description": "Funds withdrawal data",
+      "allOf": [
+        {
+          "type": "object",
+          "required": [
+            "wallet",
+            "party",
+            "destination",
+            "body"
+          ],
+          "properties": {
+            "id": {
+              "description": "Identifier of funds withdrawal",
+              "type": "string",
+              "example": "tZ0jUmlsV0",
+              "readOnly": true
+            },
+            "createdAt": {
+              "description": "Date and time the withdrawal started",
+              "type": "string",
+              "format": "date-time",
+              "readOnly": true
+            },
+            "wallet": {
+              "description": "Identifier of the wallet",
+              "type": "string",
+              "example": "10068321"
+            },
+            "party": {
+              "description": "The participant's unique identifier within the system.",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40
+            },
+            "destination": {
+              "description": "Destination identifier",
+              "type": "string",
+              "example": "107498"
+            },
+            "body": {
+              "description": "Amount of funds to be withdrawn",
+              "type": "object",
+              "required": [
+                "amount",
+                "currency"
+              ],
+              "properties": {
+                "amount": {
+                  "description": "The amount of money in minor units, for example, in cents\n",
+                  "type": "integer",
+                  "format": "int64",
+                  "example": 1430000
+                },
+                "currency": {
+                  "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+                  "type": "string",
+                  "pattern": "^[A-Z]{3}$",
+                  "example": "USD"
+                }
+              }
+            },
+            "fee": {
+              "description": "Fee amount",
+              "type": "object",
+              "required": [
+                "amount",
+                "currency"
+              ],
+              "properties": {
+                "amount": {
+                  "description": "The amount of money in minor units, for example, in cents\n",
+                  "type": "integer",
+                  "format": "int64",
+                  "example": 1430000
+                },
+                "currency": {
+                  "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+                  "type": "string",
+                  "pattern": "^[A-Z]{3}$",
+                  "example": "USD"
+                }
+              }
+            },
+            "metadata": {
+              "description": "Some non-transparent for system set of data associated with this withdrawal\n",
+              "type": "object",
+              "example": {
+                "notify_email": "iliketrains@example.com"
+              }
+            },
+            "externalID": {
+              "description": "The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n",
+              "type": "string",
+              "example": "10036274"
+            },
+            "contactInfo": {
+              "description": "Contact details",
+              "type": "object",
+              "properties": {
+                "email": {
+                  "description": "Email address",
+                  "type": "string",
+                  "format": "email",
+                  "maxLength": 100
+                },
+                "phoneNumber": {
+                  "description": "Mobile phone number with international prefix according to\n[E.164](https://en.wikipedia.org/wiki/E.164).\n",
+                  "type": "string",
+                  "format": "^\\+\\d{4,15}$"
+                }
+              }
+            },
+            "quote": {
+              "description": "Quote data for withdrawal",
+              "type": "object",
+              "required": [
+                "cashFrom",
+                "cashTo",
+                "createdAt",
+                "expiresOn"
+              ],
+              "properties": {
+                "cashFrom": {
+                  "x-rebillyMerge": [
+                    {
+                      "$ref": "#/definitions/Asset"
+                    },
+                    {
+                      "description": "Amount of funds in source currency"
+                    },
+                    {
+                      "readOnly": true
+                    }
+                  ]
+                },
+                "cashTo": {
+                  "x-rebillyMerge": [
+                    {
+                      "$ref": "#/definitions/Asset"
+                    },
+                    {
+                      "description": "Amount of funds in target currency"
+                    },
+                    {
+                      "readOnly": true
+                    }
+                  ]
+                },
+                "createdAt": {
+                  "description": "Date and time the quote was received",
+                  "type": "string",
+                  "format": "date-time",
+                  "readOnly": true
+                },
+                "expiresOn": {
+                  "description": "Quote expiration date and time",
+                  "type": "string",
+                  "format": "date-time",
+                  "readOnly": true
+                }
+              }
+            }
+          }
+        },
+        {
+          "$ref": "#/definitions/WithdrawalStatus"
+        }
+      ]
+    },
+    "WithdrawalEvent": {
+      "description": "An event that occurred during the funds withdrawal process\n",
+      "type": "object",
+      "required": [
+        "eventID",
+        "occuredAt",
+        "changes"
+      ],
+      "properties": {
+        "eventID": {
+          "description": "Identifier of the funds withdrawal event",
+          "type": "integer",
+          "format": "int32",
+          "example": 42
+        },
+        "occuredAt": {
+          "description": "Date and time the event occurrence",
+          "type": "string",
+          "format": "date-time"
+        },
+        "changes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WithdrawalEventChange"
+          }
+        }
+      }
+    },
+    "WithdrawalEventChange": {
+      "description": "Change that occurred in the funds withdrawal process\n",
+      "type": "object",
+      "discriminator": "type",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "description": "The type of change that occurred",
+          "type": "string",
+          "enum": [
+            "WithdrawalStatusChanged"
+          ]
+        }
+      }
+    },
+    "WithdrawalFailure": {
+      "type": "object",
+      "required": [
+        "code"
+      ],
+      "properties": {
+        "code": {
+          "description": "Withdrawal error code",
+          "type": "string"
+        },
+        "subError": {
+          "$ref": "#/definitions/SubFailure"
+        }
+      }
+    },
+    "WithdrawalID": {
+      "description": "Identifier of funds withdrawal",
+      "type": "string",
+      "example": "tZ0jUmlsV0"
+    },
+    "WithdrawalMethod": {
+      "type": "object",
+      "discriminator": "method",
+      "required": [
+        "method"
+      ],
+      "properties": {
+        "method": {
+          "description": "Withdrawal method",
+          "type": "string",
+          "enum": [
+            "WithdrawalMethodBankCard",
+            "WithdrawalMethodDigitalWallet",
+            "WithdrawalMethodGeneric"
+          ]
+        }
+      }
+    },
+    "WithdrawalMethodBankCard": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/WithdrawalMethod"
+        },
+        {
+          "type": "object",
+          "required": [
+            "paymentSystems"
+          ],
+          "properties": {
+            "paymentSystems": {
+              "description": "List of payment systems",
+              "type": "array",
+              "items": {
+                "description": "Payment system.\n\nThe set of systems available for making withdrawals can be found by calling the corresponding [operation](#operation/getWithdrawalMethods).\n",
+                "type": "string"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "WithdrawalMethodDigitalWallet": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/WithdrawalMethod"
+        },
+        {
+          "type": "object",
+          "required": [
+            "providers"
+          ],
+          "properties": {
+            "providers": {
+              "description": "List of digital wallet providers",
+              "type": "array",
+              "items": {
+                "description": "Digital wallet provider.\n\nThe set of providers available for making withdrawals can be found by calling\ncorresponding [operation](#operation/getWithdrawalMethods).\n",
+                "type": "string",
+                "example": "Paypal"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "WithdrawalMethodGeneric": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/WithdrawalMethod"
+        },
+        {
+          "type": "object",
+          "required": [
+            "providers"
+          ],
+          "properties": {
+            "providers": {
+              "description": "List of withdrawal service providers",
+              "type": "array",
+              "items": {
+                "description": "Withdrawal service provider.\n\nThe set of providers available for making withdrawals can be found by calling\ncorresponding [operation](#operation/getWithdrawalMethods).\n",
+                "type": "string",
+                "example": "YourBankName"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "WithdrawalParameters": {
+      "description": "Options of generated withdrawal",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Withdrawal"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "quoteToken": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4000,
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n",
+              "description": "Quote at which funds should be withdrawn.\n\nMust be [obtained](#operation/createQuote)\nin advance for each individual withdrawal operation with conversion.\n"
+            }
+          }
+        }
+      ]
+    },
+    "WithdrawalQuote": {
+      "description": "Quote data for withdrawal",
+      "type": "object",
+      "required": [
+        "cashFrom",
+        "cashTo",
+        "createdAt",
+        "expiresOn",
+        "quoteToken"
+      ],
+      "properties": {
+        "cashFrom": {
+          "description": "Amount of funds in source currency",
+          "type": "object",
+          "required": [
+            "amount",
+            "currency"
+          ],
+          "properties": {
+            "amount": {
+              "description": "The amount of money in minor units, for example, in cents\n",
+              "type": "integer",
+              "format": "int64",
+              "example": 1430000
+            },
+            "currency": {
+              "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+              "type": "string",
+              "pattern": "^[A-Z]{3}$",
+              "example": "USD"
+            }
+          },
+          "readOnly": true
+        },
+        "cashTo": {
+          "description": "Amount of funds in target currency",
+          "type": "object",
+          "required": [
+            "amount",
+            "currency"
+          ],
+          "properties": {
+            "amount": {
+              "description": "The amount of money in minor units, for example, in cents\n",
+              "type": "integer",
+              "format": "int64",
+              "example": 1430000
+            },
+            "currency": {
+              "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+              "type": "string",
+              "pattern": "^[A-Z]{3}$",
+              "example": "USD"
+            }
+          },
+          "readOnly": true
+        },
+        "createdAt": {
+          "description": "Date and time the quote was received",
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "expiresOn": {
+          "description": "Quote expiration date and time",
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "quoteToken": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000,
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5M\nDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o\n",
+          "description": "Quote at which funds should be withdrawn. Must be provided when creating withdrawal with conversion\n"
+        }
+      }
+    },
+    "WithdrawalQuoteParams": {
+      "description": "Quote parameters for withdrawal",
+      "type": "object",
+      "required": [
+        "walletID",
+        "partyID",
+        "currencyFrom",
+        "currencyTo",
+        "cash"
+      ],
+      "properties": {
+        "externalID": {
+          "description": "The unique identifier of the entity on your side.\n\nWhen specified, will be used to ensure idempotent processing of the operation.\n",
+          "type": "string",
+          "example": "10036274"
+        },
+        "walletID": {
+          "description": "Identifier of the wallet",
+          "type": "string",
+          "example": "10068321"
+        },
+        "partyID": {
+          "description": "The participant's unique identifier within the system.",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "destinationID": {
+          "description": "Destination identifier",
+          "type": "string",
+          "example": "107498"
+        },
+        "currencyFrom": {
+          "description": "Source currency code",
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "example": "USD"
+        },
+        "currencyTo": {
+          "description": "Target currency code",
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "example": "USD"
+        },
+        "cash": {
+          "description": "The amount of funds for receiving a quote in one of the exchange currencies",
+          "type": "object",
+          "required": [
+            "amount",
+            "currency"
+          ],
+          "properties": {
+            "amount": {
+              "description": "The amount of money in minor units, for example, in cents\n",
+              "type": "integer",
+              "format": "int64",
+              "example": 1430000
+            },
+            "currency": {
+              "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+              "type": "string",
+              "pattern": "^[A-Z]{3}$",
+              "example": "USD"
+            }
+          }
+        }
+      }
+    },
+    "WithdrawalReadQuote": {
+      "description": "Quote data for withdrawal",
+      "type": "object",
+      "required": [
+        "cashFrom",
+        "cashTo",
+        "createdAt",
+        "expiresOn"
+      ],
+      "properties": {
+        "cashFrom": {
+          "description": "Amount of funds in source currency",
+          "type": "object",
+          "required": [
+            "amount",
+            "currency"
+          ],
+          "properties": {
+            "amount": {
+              "description": "The amount of money in minor units, for example, in cents\n",
+              "type": "integer",
+              "format": "int64",
+              "example": 1430000
+            },
+            "currency": {
+              "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+              "type": "string",
+              "pattern": "^[A-Z]{3}$",
+              "example": "USD"
+            }
+          },
+          "readOnly": true
+        },
+        "cashTo": {
+          "description": "Amount of funds in target currency",
+          "type": "object",
+          "required": [
+            "amount",
+            "currency"
+          ],
+          "properties": {
+            "amount": {
+              "description": "The amount of money in minor units, for example, in cents\n",
+              "type": "integer",
+              "format": "int64",
+              "example": 1430000
+            },
+            "currency": {
+              "description": "Currency character code according to \n[ISO 4217](http://www.iso.org/iso/home/standards/currency_codes.htm).\n",
+              "type": "string",
+              "pattern": "^[A-Z]{3}$",
+              "example": "USD"
+            }
+          },
+          "readOnly": true
+        },
+        "createdAt": {
+          "description": "Date and time the quote was received",
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "expiresOn": {
+          "description": "Quote expiration date and time",
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        }
+      }
+    },
+    "WithdrawalStatus": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "description": "Withdrawal status.\n\n| Meaning     | Explanation                          |\n| ----------- | ------------------------------------ |\n| `Pending`   | Withdrawal in progress               |\n| `Succeeded` | Withdrawal completed successfully    |\n| `Failed`    | Withdrawal failed                    |\n",
+          "type": "string",
+          "enum": [
+            "Pending",
+            "Succeeded",
+            "Failed"
+          ],
+          "readOnly": true
+        },
+        "failure": {
+          "description": "> If `status` == `Failed`\n\nExplaining the reason for failure\n",
+          "readOnly": true,
+          "type": "object",
+          "required": [
+            "code"
+          ],
+          "properties": {
+            "code": {
+              "description": "Withdrawal error code",
+              "type": "string"
+            },
+            "subError": {
+              "$ref": "#/definitions/SubFailure"
+            }
+          }
+        }
+      }
+    },
+    "WithdrawalStatusChanged": {
+      "description": "Change of withdrawal status",
+      "allOf": [
+        {
+          "$ref": "#/definitions/WithdrawalEventChange"
+        },
+        {
+          "$ref": "#/definitions/WithdrawalStatus"
+        }
+      ]
+    },
+    "WithdrawalsTopic": {
+      "description": "Scope that includes withdrawal events within a specific wallet\n",
+      "allOf": [
+        {
+          "$ref": "#/definitions/WebhookScope"
+        },
+        {
+          "type": "object",
+          "required": [
+            "eventTypes"
+          ],
+          "properties": {
+            "walletID": {
+              "description": "Identifier of the wallet",
+              "type": "string",
+              "example": "10068321"
+            },
+            "eventTypes": {
+              "description": "Set of withdrawal event types to be notified about",
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "WithdrawalStarted",
+                  "WithdrawalSucceeded",
+                  "WithdrawalFailed"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

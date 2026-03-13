@@ -1,0 +1,315 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.1.0",
+    "title": "Vality Payment Resource API",
+    "description": "\nThe Vality Payment Resource API is used to tokenize sensitive data of users' payment resources.\n",
+    "termsOfService": "https://vality.dev/",
+    "contact": {
+      "name": "Support Team",
+      "email": "support@vality.dev",
+      "url": "https://vality.dev/"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "api.vality.dev",
+  "basePath": "/payres/v0",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json; charset=utf-8"
+  ],
+  "produces": [
+    "application/json; charset=utf-8"
+  ],
+  "securityDefinitions": {
+    "bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Use [JWT](https://jwt.io) for call authentication. The corresponding key is passed in the header.\n```shell\n Authorization: Bearer {TOKENIZATION|PRIVATE_JWT}\n```\n"
+    }
+  },
+  "security": [
+    {
+      "bearer": []
+    }
+  ],
+  "responses": {
+    "NotFound": {
+      "description": "The content you are looking for was not found"
+    },
+    "BadRequest": {
+      "description": "Invalid input data for operation",
+      "schema": {
+        "$ref": "#/definitions/BadRequest"
+      }
+    },
+    "Unauthorized": {
+      "description": "Authorization Error"
+    }
+  },
+  "parameters": {
+    "requestID": {
+      "name": "X-Request-ID",
+      "in": "header",
+      "description": "Unique identifier of the request to the system",
+      "required": true,
+      "type": "string",
+      "maxLength": 32,
+      "minLength": 1
+    }
+  },
+  "tags": [
+    {
+      "name": "Payment Resources",
+      "x-displayName": "Payment resources",
+      "description": ""
+    }
+  ],
+  "paths": {
+    "/bank-cards": {
+      "post": {
+        "operationId": "storeBankCard",
+        "summary": "Save card",
+        "tags": [
+          "Withdrawal Resources"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "name": "bankCard",
+            "description": "Сard details",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BankCard"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Card saved",
+            "schema": {
+              "$ref": "#/definitions/StoreBankCardResponse"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "422": {
+            "description": "Invalid сard details",
+            "schema": {
+              "$ref": "#/definitions/InvalidBankCard"
+            }
+          }
+        }
+      }
+    },
+    "/bank-cards/{token}": {
+      "get": {
+        "operationId": "getBankCard",
+        "summary": "Receive bank card details",
+        "tags": [
+          "Withdrawal Resources"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/requestID"
+          },
+          {
+            "name": "token",
+            "description": "Bank card details",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Card data found",
+            "schema": {
+              "$ref": "#/definitions/SecuredBankCard"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/responses/NotFound"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "AuthData": {
+      "type": "object",
+      "properties": {
+        "authData": {
+          "description": "Data for card withdrawal authorization",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000,
+          "example": "GVpEyibo60jJwyoJqriv1nAjiwfvzC9KVqFFjhhUA"
+        }
+      }
+    },
+    "BankCard": {
+      "description": "Bank card details",
+      "type": "object",
+      "required": [
+        "cardNumber"
+      ],
+      "properties": {
+        "type": {
+          "description": "Card",
+          "type": "string",
+          "enum": [
+            "BankCard"
+          ]
+        },
+        "cardNumber": {
+          "description": "Card number",
+          "type": "string",
+          "pattern": "^\\d{12,19}$",
+          "example": "4242424242424242"
+        },
+        "expDate": {
+          "description": "Сard expiration date",
+          "type": "string",
+          "pattern": "^\\d{2}\\/(\\d{2}|\\d{4})$",
+          "example": "12/21"
+        },
+        "cardHolder": {
+          "description": "Cardholder name",
+          "type": "string",
+          "pattern": "^[[:alpha:][:space:][:punct:]]+$",
+          "minLength": 1,
+          "maxLength": 100,
+          "example": "LEEROY JENKINS"
+        },
+        "cvv": {
+          "description": "Verification code",
+          "type": "string",
+          "pattern": "^\\d{3,4}$",
+          "example": "321"
+        }
+      }
+    },
+    "BankCardPaymentSystem": {
+      "description": "Payment system.\n\nThe set of systems available for making withdrawals can be found by calling the corresponding [operation](#operation/getWithdrawalMethods).\n",
+      "type": "string"
+    },
+    "InvalidBankCard": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Card is expired.\n"
+        }
+      }
+    },
+    "BadRequest": {
+      "type": "object",
+      "required": [
+        "errorType"
+      ],
+      "properties": {
+        "errorType": {
+          "description": "Error type",
+          "type": "string",
+          "enum": [
+            "SchemaViolated",
+            "NotFound",
+            "WrongType",
+            "NotInRange",
+            "WrongSize",
+            "WrongLength",
+            "WrongArray",
+            "NoMatch",
+            "InvalidResourceToken",
+            "InvalidToken"
+          ],
+          "example": "NotFound"
+        },
+        "name": {
+          "description": "Name or identifier of message element containing invalid data",
+          "type": "string",
+          "example": "X-Request-ID"
+        },
+        "description": {
+          "description": "Explanation of why the data is invalid",
+          "type": "string",
+          "example": "Required parameter was not sent"
+        }
+      }
+    },
+    "SecuredBankCard": {
+      "description": "Secure bank card details",
+      "type": "object",
+      "required": [
+        "token"
+      ],
+      "properties": {
+        "token": {
+          "description": "Token identifying the original card data",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000,
+          "example": "zu3TcwGI71Bpaaw2XkLWZXlhMdn4zpVzMQg9xMkh"
+        },
+        "bin": {
+          "description": "[Identification number][1] of the card issuing bank\n\n[1]: https://en.wikipedia.org/wiki/Payment_card_number#Issuer_identification_number_(IIN)\n",
+          "type": "string",
+          "pattern": "^\\d{6,8}$",
+          "example": "424242",
+          "readOnly": true
+        },
+        "lastDigits": {
+          "description": "Card last digits",
+          "type": "string",
+          "pattern": "^\\d{2,4}$",
+          "example": "4242",
+          "readOnly": true
+        }
+      }
+    },
+    "StoreBankCardResponse": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/SecuredBankCard"
+        },
+        {
+          "$ref": "#/definitions/AuthData"
+        }
+      ]
+    },
+    "ValidUntil": {
+      "type": "object",
+      "properties": {
+        "validUntil": {
+          "description": "The date and time by which the withdrawal resource token remains valid",
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        }
+      }
+    }
+  }
+}
