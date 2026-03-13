@@ -1120,14 +1120,6 @@ get_raw() ->
           <<"type">> => <<"string">>,
           <<"maxLength">> => 40,
           <<"minLength">> => 1
-        }, #{
-          <<"name">> => <<"partyID">>,
-          <<"in">> => <<"query">>,
-          <<"description">> => <<"The participant's unique identifier within the system.">>,
-          <<"required">> => false,
-          <<"type">> => <<"string">>,
-          <<"maxLength">> => 40,
-          <<"minLength">> => 1
         } ],
         <<"responses">> => #{
           <<"200">> => #{
