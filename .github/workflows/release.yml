@@ -1,0 +1,33 @@
+name: Release
+
+on:
+  push:
+    branches: [v1]
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - run: npm install
+      - run: npm run build
+
+      - name: Prepare api folder for release
+        run: |
+          mkdir -p release_api/wallet release_api/payres
+          cp web_deploy/swagger.json web_deploy/swagger.yaml release_api/wallet/
+          cp web_deploy/payres/swagger.json web_deploy/payres/swagger.yaml release_api/payres/
+
+      - name: Deploy to release branch
+        uses: JamesIves/github-pages-deploy-action@v4.4.1
+        with:
+          branch: release/v1
+          folder: release_api
+          target-folder: api
+          commit-message: release ${{ github.repository }}@${{ github.sha }} by ${{ github.actor }}
