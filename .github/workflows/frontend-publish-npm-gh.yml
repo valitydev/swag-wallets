@@ -4,24 +4,28 @@ on:
   push:
     branches: ["v1"]
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   publish:
     name: Publish to NPM & Github Pages
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: valitydev/action-frontend/setup-install@v3
         with:
-          registry-url: "https://registry.npmjs.org"
-      - run: npm install
+          release: true
+          node-version: "lts/*"
+          install: true
       - name: Bundle OpenAPI & Build Redocly Docs
         run: npm run build-web
       - name: Build Angular OpenAPI Library
         run: npm run build-ng-lib
       - name: Publish Angular OpenAPI Library
-        uses: valitydev/action-frontend/publish@v1
+        uses: valitydev/action-frontend/publish@v3
         with:
-          npm-token: ${{ secrets.NPM_TOKEN }}
           directory: ./lib
       - name: Publish Redocly Docs on Github Pages
         uses: peaceiris/actions-gh-pages@v3

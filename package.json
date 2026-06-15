@@ -2,6 +2,14 @@
   "name": "@vality/swag-wallets",
   "version": "0.1.3",
   "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/valitydev/swag-wallets.git"
+  },
   "scripts": {
     "start": "redocly preview-docs",
     "validate": "redocly lint",
