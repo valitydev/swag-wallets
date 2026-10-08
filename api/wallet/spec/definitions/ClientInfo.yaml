@@ -1,0 +1,11 @@
+type: object
+properties:
+  fingerprint:
+    description: User agent unique fingerprint
+    type: string
+    maxLength: 1000
+  ip:
+    description: Client IP-address
+    type: string
+    format: ip-address
+    maxLength: 45

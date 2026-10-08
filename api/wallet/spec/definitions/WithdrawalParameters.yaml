@@ -30,3 +30,8 @@ allOf:
 
               Must be [obtained](#operation/createQuote)
               in advance for each individual withdrawal operation with conversion.
+      clientInfo:
+        x-rebillyMerge:
+          - $ref: "#/definitions/ClientInfo"
+          - description: |
+              Withdrawal receipient's device data
