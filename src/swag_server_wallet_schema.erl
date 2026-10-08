@@ -2049,6 +2049,22 @@ get_raw() ->
         <<"amount">> => 0
       }
     },
+    <<"ClientInfo">> => #{
+      <<"type">> => <<"object">>,
+      <<"properties">> => #{
+        <<"fingerprint">> => #{
+          <<"type">> => <<"string">>,
+          <<"description">> => <<"User agent unique fingerprint">>,
+          <<"maxLength">> => 1000
+        },
+        <<"ip">> => #{
+          <<"type">> => <<"string">>,
+          <<"format">> => <<"ip-address">>,
+          <<"description">> => <<"Client IP-address">>,
+          <<"maxLength">> => 45
+        }
+      }
+    },
     <<"ContactInfo">> => #{
       <<"type">> => <<"object">>,
       <<"properties">> => #{
@@ -3232,6 +3248,9 @@ get_raw() ->
             <<"description">> => <<"Quote at which funds should be withdrawn.\n\nMust be [obtained](#operation/createQuote)\nin advance for each individual withdrawal operation with conversion.\n">>,
             <<"minLength">> => 1,
             <<"maxLength">> => 4000
+          },
+          <<"clientInfo">> => #{
+            <<"$ref">> => <<"#/definitions/WithdrawalParameters_clientInfo">>
           }
         }
       } ],
@@ -3769,6 +3788,23 @@ get_raw() ->
         }
       },
       <<"description">> => <<"Quote data for withdrawal">>
+    },
+    <<"WithdrawalParameters_clientInfo">> => #{
+      <<"type">> => <<"object">>,
+      <<"properties">> => #{
+        <<"fingerprint">> => #{
+          <<"type">> => <<"string">>,
+          <<"description">> => <<"User agent unique fingerprint">>,
+          <<"maxLength">> => 1000
+        },
+        <<"ip">> => #{
+          <<"type">> => <<"string">>,
+          <<"format">> => <<"ip-address">>,
+          <<"description">> => <<"Client IP-address">>,
+          <<"maxLength">> => 45
+        }
+      },
+      <<"description">> => <<"Withdrawal receipient's device data\n">>
     },
     <<"WithdrawalQuote_cashFrom">> => #{
       <<"type">> => <<"object">>,
