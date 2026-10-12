@@ -46,6 +46,8 @@ allOf:
       contactInfo:
         x-rebillyMerge:
           - $ref: "#/definitions/ContactInfo"
+      clientIdentity:
+        $ref: "#/definitions/ClientIdentity"
       quote:
         x-rebillyMerge:
           - $ref: "#/definitions/WithdrawalReadQuote"

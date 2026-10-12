@@ -1,0 +1,16 @@
+---
+description: |
+  Withdrawal recipient identification provided by the merchant.
+
+  Either an existing customer or a user in the merchant's system.
+type: object
+discriminator: clientIdentityType
+required:
+  - clientIdentityType
+properties:
+  clientIdentityType:
+    description: Recipient identification type
+    type: string
+    enum:
+      - ClientIdentityCustomer
+      - ClientIdentityUser

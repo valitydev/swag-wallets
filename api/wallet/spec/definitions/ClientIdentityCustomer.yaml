@@ -1,0 +1,11 @@
+---
+description: An existing customer as the withdrawal recipient
+allOf:
+  - $ref: "#/definitions/ClientIdentity"
+  - type: object
+    required:
+      - customerID
+    properties:
+      customerID:
+        description: Identifier of an existing customer to associate the withdrawal with
+        type: string
