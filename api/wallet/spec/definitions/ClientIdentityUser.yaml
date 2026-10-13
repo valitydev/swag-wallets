@@ -1,0 +1,16 @@
+---
+description: A user in the merchant's system as the withdrawal recipient
+allOf:
+  - $ref: "#/definitions/ClientIdentity"
+  - type: object
+    required:
+      - userID
+    properties:
+      userID:
+        description: |
+          Recipient identifier in the merchant's system.
+
+          Used to find an existing Customer — or create a new one — whose externalID matches the provided userID.
+        type: string
+        maxLength: 40
+        minLength: 1
