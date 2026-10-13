@@ -2049,6 +2049,52 @@ get_raw() ->
         <<"amount">> => 0
       }
     },
+    <<"ClientIdentity">> => #{
+      <<"type">> => <<"object">>,
+      <<"required">> => [ <<"clientIdentityType">> ],
+      <<"discriminator">> => <<"clientIdentityType">>,
+      <<"properties">> => #{
+        <<"clientIdentityType">> => #{
+          <<"type">> => <<"string">>,
+          <<"description">> => <<"Recipient identification type">>,
+          <<"enum">> => [ <<"ClientIdentityCustomer">>, <<"ClientIdentityUser">> ]
+        }
+      },
+      <<"description">> => <<"Withdrawal recipient identification provided by the merchant.\n\nEither an existing customer or a user in the merchant's system.\n">>,
+      <<"x-discriminator-is-enum">> => true
+    },
+    <<"ClientIdentityCustomer">> => #{
+      <<"allOf">> => [ #{
+        <<"$ref">> => <<"#/definitions/ClientIdentity">>
+      }, #{
+        <<"type">> => <<"object">>,
+        <<"required">> => [ <<"customerID">> ],
+        <<"properties">> => #{
+          <<"customerID">> => #{
+            <<"type">> => <<"string">>,
+            <<"description">> => <<"Identifier of an existing customer to associate the withdrawal with">>
+          }
+        }
+      } ],
+      <<"description">> => <<"An existing customer as the withdrawal recipient">>
+    },
+    <<"ClientIdentityUser">> => #{
+      <<"allOf">> => [ #{
+        <<"$ref">> => <<"#/definitions/ClientIdentity">>
+      }, #{
+        <<"type">> => <<"object">>,
+        <<"required">> => [ <<"userID">> ],
+        <<"properties">> => #{
+          <<"userID">> => #{
+            <<"type">> => <<"string">>,
+            <<"description">> => <<"Recipient identifier in the merchant's system.\n\nUsed to find an existing Customer — or create a new one — whose externalID matches the provided userID.\n">>,
+            <<"minLength">> => 1,
+            <<"maxLength">> => 40
+          }
+        }
+      } ],
+      <<"description">> => <<"A user in the merchant's system as the withdrawal recipient">>
+    },
     <<"ClientInfo">> => #{
       <<"type">> => <<"object">>,
       <<"properties">> => #{
@@ -3086,6 +3132,9 @@ get_raw() ->
           },
           <<"contactInfo">> => #{
             <<"$ref">> => <<"#/definitions/Withdrawal_contactInfo">>
+          },
+          <<"clientIdentity">> => #{
+            <<"$ref">> => <<"#/definitions/ClientIdentity">>
           },
           <<"quote">> => #{
             <<"$ref">> => <<"#/definitions/Withdrawal_quote">>
