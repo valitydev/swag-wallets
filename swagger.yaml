@@ -1236,6 +1236,49 @@ definitions:
         minimum: 0
       inclusive:
         type: boolean
+  ClientIdentity:
+    description: |
+      Withdrawal recipient identification provided by the merchant.
+
+      Either an existing customer or a user in the merchant's system.
+    type: object
+    discriminator: clientIdentityType
+    required:
+      - clientIdentityType
+    properties:
+      clientIdentityType:
+        description: Recipient identification type
+        type: string
+        enum:
+          - ClientIdentityCustomer
+          - ClientIdentityUser
+  ClientIdentityCustomer:
+    description: An existing customer as the withdrawal recipient
+    allOf:
+      - $ref: '#/definitions/ClientIdentity'
+      - type: object
+        required:
+          - customerID
+        properties:
+          customerID:
+            description: Identifier of an existing customer to associate the withdrawal with
+            type: string
+  ClientIdentityUser:
+    description: A user in the merchant's system as the withdrawal recipient
+    allOf:
+      - $ref: '#/definitions/ClientIdentity'
+      - type: object
+        required:
+          - userID
+        properties:
+          userID:
+            description: |
+              Recipient identifier in the merchant's system.
+
+              Used to find an existing Customer — or create a new one — whose externalID matches the provided userID.
+            type: string
+            maxLength: 40
+            minLength: 1
   ClientInfo:
     type: object
     properties:
@@ -2328,6 +2371,8 @@ definitions:
                   [E.164](https://en.wikipedia.org/wiki/E.164).
                 type: string
                 format: '^\+\d{4,15}$'
+          clientIdentity:
+            $ref: '#/definitions/ClientIdentity'
           quote:
             description: Quote data for withdrawal
             type: object
