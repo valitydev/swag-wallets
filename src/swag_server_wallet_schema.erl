@@ -2072,7 +2072,8 @@ get_raw() ->
         <<"properties">> => #{
           <<"customerID">> => #{
             <<"type">> => <<"string">>,
-            <<"description">> => <<"Identifier of an existing customer to associate the withdrawal with">>
+            <<"description">> => <<"Identifier of an existing customer to associate the withdrawal with">>,
+            <<"pattern">> => <<"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$">>
           }
         }
       } ],
