@@ -1263,6 +1263,7 @@ definitions:
           customerID:
             description: Identifier of an existing customer to associate the withdrawal with
             type: string
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
   ClientIdentityUser:
     description: A user in the merchant's system as the withdrawal recipient
     allOf:
