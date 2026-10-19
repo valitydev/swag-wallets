@@ -1846,7 +1846,8 @@
           "properties": {
             "customerID": {
               "description": "Identifier of an existing customer to associate the withdrawal with",
-              "type": "string"
+              "type": "string",
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
             }
           }
         }
